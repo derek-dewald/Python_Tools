@@ -264,4 +264,48 @@ def IterateThroughColumnsToVisualize(df,exclude=['time','DATE','POOL1_TRADER','P
                        binary_split_col='target')
             
 IterateThroughColumnsToVisualize(df1)
-                                
+
+
+def brackets(df,column_name,new_column_name,desired_list=[0,10,20,30,40,50,60,70,80,90,100],
+                      less_text='Less than',other_text='Between',greater_text='Greater than'):
+    
+    '''
+    Purpose: Simple pre-defined formula to create STR definiton of Value Bucket
+
+    Input: DataFrame, Column Name to Evaluate (No Format), New Column Name (No Format)
+    
+    Constraint: If Last Number is Lower bound constraint, then constraint = "lower", this duplicates the last item in the
+    list and ensures that Valuation is completed correctly. Else it is ignored.
+
+    List of values to evaluate, Maximum 10 values, can do less
+    
+    Default: list evenly spaced between 0 - 100
+
+    Notes: Should consider enhancing a output list of easy filtering.
+
+    '''
+ 
+    desired_list.append(desired_list[-1:][0])
+    
+    condition = []
+    value = []
+
+    for count,i in enumerate(desired_list):
+        if count == 0:
+            condition.append(df[column_name]<=i)
+        elif count == len(desired_list)-1:
+            condition.append(df[column_name]>=i)
+        else:
+            condition.append(df[column_name]<=i)
+        
+    for count,i in enumerate(desired_list):
+        if count == 0:
+            value.append(f"{less_text} {i:,}")
+        elif count == len(desired_list)-1:
+            value.append(f"{greater_text} {i:,}")
+        else:
+            value.append(f"{other_text} {desired_list[count-1]:,} and {desired_list[count]:,}")
+              
+    df[new_column_name]=np.select(condition,value)
+    
+    return df
