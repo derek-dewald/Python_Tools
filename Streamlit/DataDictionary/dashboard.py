@@ -1,20 +1,18 @@
-from dash import Dash, dcc, html
+import streamlit as st
 import plotly.express as px
 
-app = Dash(__name__)
+st.set_page_config(
+    page_title="Data Dictionary App",
+    page_icon="📖",
+    layout="wide"
+)
 
-# Example Data
+# Streamlit app layout
+st.title("Streamlit App")
+
+# Example data
 df = px.data.iris()
 
-# Create a Plotly figure
+# Display Plotly chart
 fig = px.scatter(df, x="sepal_width", y="sepal_length", color="species")
-
-# Define app layout
-app.layout = html.Div([
-    html.H1("My Plotly Dashboard"),
-    dcc.Graph(figure=fig)
-])
-
-# Run the app
-if __name__ == '__main__':
-    app.run_server(debug=True)
+st.plotly_chart(fig)
