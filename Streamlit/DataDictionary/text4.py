@@ -1,7 +1,6 @@
 from st_aggrid import AgGrid, GridOptionsBuilder
 import pandas as pd
 import streamlit as st
-import numpy as np
 
 st.set_page_config(
     page_title="Data Dictionary App",
@@ -14,7 +13,7 @@ url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXp
 df = pd.read_csv(url)
 
 # Text-based filter
-st.subheader("Key Word/ Phrase Search")
+st.subheader("Filter the Table")
 search_query = st.text_input("Search:", placeholder="Type to search...")
 
 # Columns to display in the AgGrid table
@@ -36,14 +35,12 @@ builder = GridOptionsBuilder.from_dataframe(filtered_df)
 builder.configure_default_column(
     wrapText=True,  # Enable text wrapping
     autoHeight=True,  # Adjust row height automatically
-    cellStyle={'textAlign': 'center'}
 )
-
 builder.configure_selection("single")  # Allow single row selection
 grid_options = builder.build()
 
 # Display the filtered table with AgGrid
-st.subheader("Key Terms and Classification")
+st.subheader("Filtered Table with Row Selection")
 response = AgGrid(
     filtered_df,
     gridOptions=grid_options,
@@ -63,23 +60,45 @@ try:
         transposed_df = pd.DataFrame({
             "Field": final_df.columns,
             "Value": final_df.iloc[0]
-        }).fillna("")
+        })
 
         transposed_df["Value"] = transposed_df.apply(
-            lambda row: f"[Open Link]({row['Value']})" if row["Field"] == "Link" and row["Value"] else row['Value'],  # Return blank if value is empty
-            axis=1
-            )
-        
-        transposed_df['Value'] = np.where(transposed_df['Value']=='[Open Link](nan)',"",transposed_df['Value'])
-        
+            lambda row: f"[Open Link]({row['Value']})" if row["Field"] == "Link" else row["Value"],
+            axis=1)
 
-        st.subheader("Key Term Refernece Material")
+        st.subheader("Details")
         for _, row in transposed_df.iterrows():
             if row["Field"] == "Link":
                 # Render the Link field as a markdown hyperlink
                 st.markdown(f"**{row['Field']}:** {row['Value']}")
             else:
                 st.write(f"**{row['Field']}:** {row['Value']}")
+
+
+
+
+        # Display transposed_df with AgGrid
+        st.subheader("Selected Row Details")
+        detail_builder = GridOptionsBuilder.from_dataframe(transposed_df)
+        detail_builder.configure_default_column(
+            wrapText=True,  # Enable text wrapping
+            autoHeight=True,  # Adjust row height automatically
+        )
+
+        # Set specific column width percentages
+        detail_builder.configure_column("Field", width=150)  # Adjust Field column width
+        detail_builder.configure_column("Value", width=600)  # Adjust Value column width
+
+        detail_grid_options = detail_builder.build()
+
+        AgGrid(
+            transposed_df,
+            gridOptions=detail_grid_options,
+            height=300,
+            width="100%",
+            fit_columns_on_grid_load=True,
+            allow_unsafe_jscode=True,
+        )
     else:
         st.write("No row selected.")
 except Exception as e:
