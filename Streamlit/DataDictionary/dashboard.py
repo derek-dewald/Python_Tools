@@ -78,6 +78,9 @@ try:
             if row["Field"] == "Link":
                 # Render the Link field as a markdown hyperlink
                 st.markdown(f"**{row['Field']}:** {row['Value']}")
+            elif row["Field"] == "Image":
+            # Render the Image field as an image
+                st.image(row["Value"], caption="Image Reference", use_column_width=True)
             else:
                 st.write(f"**{row['Field']}:** {row['Value']}")
     else:
