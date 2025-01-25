@@ -73,14 +73,24 @@ try:
         transposed_df['Value'] = np.where(transposed_df['Value']=='[Open Link](nan)',"",transposed_df['Value'])
         
 
-        st.subheader("Key Term Refernece Material")
+        st.subheader("Key Term Reference Material")
         for _, row in transposed_df.iterrows():
             if row["Field"] == "Link":
                 # Render the Link field as a markdown hyperlink
                 st.markdown(f"**{row['Field']}:** {row['Value']}")
             elif row["Field"] == "Image":
-            # Render the Image field as an image
-                st.image(row["Value"], caption="Image Reference", use_container_width=True)
+                # Render the Image field as an image, handle missing or empty values
+                if row["Value"] and not pd.isna(row["Value"]):  # Check if Value is valid
+                    st.image(
+                        row["Value"],
+                        caption="Image Reference",
+                        width=300
+                    )
+                else:
+                    st.warning("No image available for this field.")  # Gracefully handle missing images
+            elif row["Field"] == "Markdown":
+                # Render the Markdown field as LaTeX
+                st.latex(row["Value"])
             else:
                 st.write(f"**{row['Field']}:** {row['Value']}")
     else:
