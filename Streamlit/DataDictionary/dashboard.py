@@ -80,7 +80,7 @@ try:
                 st.markdown(f"**{row['Field']}:** {row['Value']}")
             elif row["Field"] == "Image":
             # Render the Image field as an image
-                st.image(row["Value"], caption="Image Reference", use_container_width=Truee)
+                st.image(row["Value"], caption="Image Reference", use_container_width=True)
             else:
                 st.write(f"**{row['Field']}:** {row['Value']}")
     else:
