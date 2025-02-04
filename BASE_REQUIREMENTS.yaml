@@ -1,0 +1,8 @@
+name: BaseRequirements  # Replace with your desired environment name
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pandas
+  - numpy
+  - notebook=6.5.6
