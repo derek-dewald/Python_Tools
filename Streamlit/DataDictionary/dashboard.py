@@ -92,7 +92,7 @@ try:
                 # Render the Markdown field as LaTeX
                 st.latex(row["Value"])
             else:
-                st.write(f"**{row['Field']}:** {row['Value']}")
+                st.write(f"**{row['Field']}:** \n{row['Value']}")
     else:
         st.write("No row selected.")
 except Exception as e:
