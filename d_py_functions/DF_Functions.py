@@ -35,3 +35,22 @@ def TextClean(df,
             df[column] = pd.to_numeric(df[column], errors='coerce')
 
     return df
+
+def FillFromAbove(df,
+                 column_name,
+                 new_column_name=''):
+    
+    '''
+    Purpose: Force Fill Information from above defined values when Blank. 
+
+
+    Example: 
+    df = pd.DataFrame({'Test': [None, 'Value1', None, 'Value2', None, None, 'Value3', None]})
+    FillFromAbove(df,'Test','Test1')
+    
+    
+    '''
+    if new_column_name=="":
+        new_column_name = column_name
+    
+    df[new_column_name] = df[column_name].ffill()
