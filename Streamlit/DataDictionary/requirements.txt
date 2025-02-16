@@ -3,7 +3,5 @@ pandas
 plotly
 numpy
 streamlit-aggrid
-os
-sys
 # matplotlib
 # scikit-learn
