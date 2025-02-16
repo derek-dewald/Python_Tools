@@ -1,4 +1,7 @@
+
+
 from IPython.display import display, HTML
+from Connections import ParamterMapping
 
 def CreateMarkdown(df,return_value=""):
     
@@ -61,3 +64,38 @@ def CreateMarkdown(df,return_value=""):
         
     else:
         return text
+    
+def CreateMarkdownfromProcess(process_name,return_value=""):
+    '''
+    Function to call Process Map from Google sheet with a single reference to the name of the process.
+    
+    Args:
+        process_name (str): Process Name as defined in Google Sheet
+        return_value (str): Value Desired to be returned, as required input from CreateMarkdown
+    
+    Returns:
+        If return_value == "", then Displayed Markdown
+        If return_value == "text", HTML formatted markdown text
+        otherwise, returns ""
+    
+    '''
+    # Call Parameter Mapping function to return DF of Process Sheet
+
+    try:
+        df = ParamterMapping('ProcessSheet')
+        df1 = df[df['Process']==process_name].drop('Process',axis=1)
+
+    except:
+        print('Could Not Retrieve Data')
+        return ""
+        
+
+    try:
+        if return_value =="":
+            return CreateMarkdown(df1)
+        elif return_value == "text":
+            return CreateMarkdown(df1,'text')
+    
+    except:
+        print("Could Not Format Data")
+        return ""
