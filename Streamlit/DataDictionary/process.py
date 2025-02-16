@@ -3,27 +3,42 @@ import os
 import pandas as pd
 import streamlit as st
 
-# Get path to the root folder (Python_Tools)
-base_dir = os.path.abspath(os.path.join(os.getcwd(), "../../"))
+# Get the absolute path of the root folder (Python_Tools)
+BASE_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "../../"))
 
-# Add the `d_py_functions` folder to the system path
-sys.path.append(os.path.join(base_dir, "d_py_functions"))
+# Add `d_py_functions` to the system path
+D_PY_FUNCTIONS_DIR = os.path.join(BASE_DIR, "d_py_functions")
+if D_PY_FUNCTIONS_DIR not in sys.path:
+    sys.path.append(D_PY_FUNCTIONS_DIR)
 
 # Now import your functions
-from Organization import CreateMarkdownfromProcess
-from Connections import ParamterMapping
+try:
+    from Organization import CreateMarkdownfromProcess
+    from Connections import ParamterMapping
+except ImportError as e:
+    st.error(f"Module Import Error: {e}")
 
-# List of processes
-p_list = ParamterMapping('ProcessSheet')['Process'].unique().tolist()
-p_list = [item for item in p_list if pd.notna(item)]
+# Fetch available processes
+try:
+    p_list = ParamterMapping('ProcessSheet')['Process'].unique().tolist()
+    p_list = [item for item in p_list if pd.notna(item)]
+except Exception as e:
+    st.error(f"Error fetching process list: {e}")
+    p_list = []
 
-# Dropdown to select the process
+# Streamlit UI
+st.title("📄 Markdown Generator for Processes")
+
+# Dropdown to select a process
 selected_process = st.selectbox("Select a Process:", p_list)
 
 if st.button("Generate Markdown"):
-    markdown_text = CreateMarkdownfromProcess(selected_process,return_value='text')
-    
-    if markdown_text:
-        st.markdown(markdown_text, unsafe_allow_html=True)
-    else:
-        st.error("No data found for the selected process.")
+    try:
+        markdown_text = CreateMarkdownfromProcess(selected_process, return_value='text')
+        
+        if markdown_text:
+            st.markdown(markdown_text, unsafe_allow_html=True)
+        else:
+            st.error("No data found for the selected process.")
+    except Exception as e:
+        st.error(f"Error generating Markdown: {e}")
