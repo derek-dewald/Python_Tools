@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/8e6f987a24e14c0dbb9416ff1dc2bf2c/artifacts
+end_time: 1740466006447
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: 8e6f987a24e14c0dbb9416ff1dc2bf2c
+run_name: ARDRegression
+run_uuid: 8e6f987a24e14c0dbb9416ff1dc2bf2c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466006437
+status: 4
+tags: []
+user_id: derekdewald

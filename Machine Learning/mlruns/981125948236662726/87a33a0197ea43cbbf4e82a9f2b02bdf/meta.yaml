@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/87a33a0197ea43cbbf4e82a9f2b02bdf/artifacts
+end_time: 1740466161536
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: 87a33a0197ea43cbbf4e82a9f2b02bdf
+run_name: ExtraTreeRegressor
+run_uuid: 87a33a0197ea43cbbf4e82a9f2b02bdf
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466161531
+status: 4
+tags: []
+user_id: derekdewald

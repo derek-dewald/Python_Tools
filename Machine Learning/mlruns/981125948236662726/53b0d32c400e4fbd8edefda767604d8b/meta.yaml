@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/53b0d32c400e4fbd8edefda767604d8b/artifacts
+end_time: 1740466163248
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: 53b0d32c400e4fbd8edefda767604d8b
+run_name: SVR
+run_uuid: 53b0d32c400e4fbd8edefda767604d8b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466163239
+status: 4
+tags: []
+user_id: derekdewald

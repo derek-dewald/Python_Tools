@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/8cc8464df61944bb83eb94765fbf5d19/artifacts
+end_time: 1740466270794
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: 8cc8464df61944bb83eb94765fbf5d19
+run_name: LinearRegression
+run_uuid: 8cc8464df61944bb83eb94765fbf5d19
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466270789
+status: 4
+tags: []
+user_id: derekdewald

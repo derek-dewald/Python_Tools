@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/e48571bb5ca84b40a9962147f75196e7/artifacts
+end_time: 1740466045120
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: e48571bb5ca84b40a9962147f75196e7
+run_name: HuberRegressor
+run_uuid: e48571bb5ca84b40a9962147f75196e7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466045103
+status: 4
+tags: []
+user_id: derekdewald

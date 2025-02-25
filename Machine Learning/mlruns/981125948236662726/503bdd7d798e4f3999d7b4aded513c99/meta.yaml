@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/503bdd7d798e4f3999d7b4aded513c99/artifacts
+end_time: 1740466007851
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: 503bdd7d798e4f3999d7b4aded513c99
+run_name: HistGradientBoostingRegressor
+run_uuid: 503bdd7d798e4f3999d7b4aded513c99
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466006726
+status: 4
+tags: []
+user_id: derekdewald

@@ -48,7 +48,7 @@ def plot_histograms(df, bins=30):
     plt.tight_layout()
     plt.show()
 
-    def plot_scatter_matrix(df, target_col='Target'):
+def plot_scatter_matrix(df, target_col='Target'):
     """
     Plots scatter plots of each feature against the target variable.
     

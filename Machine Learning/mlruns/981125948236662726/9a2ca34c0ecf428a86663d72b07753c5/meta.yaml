@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/9a2ca34c0ecf428a86663d72b07753c5/artifacts
+end_time: 1740466270713
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: 9a2ca34c0ecf428a86663d72b07753c5
+run_name: KNeighborsRegressor
+run_uuid: 9a2ca34c0ecf428a86663d72b07753c5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466270708
+status: 4
+tags: []
+user_id: derekdewald
