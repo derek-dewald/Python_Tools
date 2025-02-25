@@ -1,0 +1,20 @@
+artifact_path: HuberRegressor
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.8
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+mlflow_version: 2.18.0
+model_size_bytes: 1090
+model_uuid: e9f9f0670ba84684abd1b04e99783c7a
+run_id: 73613c7a5bce429f8540fd1e39b988da
+utc_time_created: '2025-02-25 06:53:06.254655'

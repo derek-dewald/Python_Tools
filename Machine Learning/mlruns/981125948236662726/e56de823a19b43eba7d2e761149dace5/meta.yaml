@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/e56de823a19b43eba7d2e761149dace5/artifacts
+end_time: 1740466270882
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: e56de823a19b43eba7d2e761149dace5
+run_name: MultiTaskElasticNetCV
+run_uuid: e56de823a19b43eba7d2e761149dace5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466270878
+status: 4
+tags: []
+user_id: derekdewald

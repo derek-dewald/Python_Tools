@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/0a18dee275a04f37b0d7fee8b0832443/artifacts
+end_time: 1740466270772
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: 0a18dee275a04f37b0d7fee8b0832443
+run_name: LassoLars
+run_uuid: 0a18dee275a04f37b0d7fee8b0832443
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466270767
+status: 4
+tags: []
+user_id: derekdewald

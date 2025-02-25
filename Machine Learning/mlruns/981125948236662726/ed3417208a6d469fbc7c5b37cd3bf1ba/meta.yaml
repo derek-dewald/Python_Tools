@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/ed3417208a6d469fbc7c5b37cd3bf1ba/artifacts
+end_time: 1740466006509
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: ed3417208a6d469fbc7c5b37cd3bf1ba
+run_name: CCA
+run_uuid: ed3417208a6d469fbc7c5b37cd3bf1ba
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466006506
+status: 4
+tags: []
+user_id: derekdewald

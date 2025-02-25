@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/cbfa574433aa4149b03438d8bb7eda24/artifacts
+end_time: 1740466400935
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: cbfa574433aa4149b03438d8bb7eda24
+run_name: PLSCanonical
+run_uuid: cbfa574433aa4149b03438d8bb7eda24
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466400926
+status: 4
+tags: []
+user_id: derekdewald

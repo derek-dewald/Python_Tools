@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/74dc3eebc0704390b5e1808e2c49b989/artifacts
+end_time: 1740466043127
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: 74dc3eebc0704390b5e1808e2c49b989
+run_name: ElasticNetCV
+run_uuid: 74dc3eebc0704390b5e1808e2c49b989
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466043109
+status: 4
+tags: []
+user_id: derekdewald

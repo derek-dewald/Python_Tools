@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/b3b25eab9f9c45d9a84189bcd9864ddf/artifacts
+end_time: 1740466271586
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: b3b25eab9f9c45d9a84189bcd9864ddf
+run_name: TweedieRegressor
+run_uuid: b3b25eab9f9c45d9a84189bcd9864ddf
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466271579
+status: 4
+tags: []
+user_id: derekdewald

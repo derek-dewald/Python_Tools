@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/2daca9e333ce4b3bbdc1a31e6585f2bf/artifacts
+end_time: 1740466046575
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: 2daca9e333ce4b3bbdc1a31e6585f2bf
+run_name: Ridge
+run_uuid: 2daca9e333ce4b3bbdc1a31e6585f2bf
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466046570
+status: 4
+tags: []
+user_id: derekdewald

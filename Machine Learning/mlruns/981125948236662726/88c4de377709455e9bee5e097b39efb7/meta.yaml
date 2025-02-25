@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/88c4de377709455e9bee5e097b39efb7/artifacts
+end_time: 1740466271569
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: 88c4de377709455e9bee5e097b39efb7
+run_name: TheilSenRegressor
+run_uuid: 88c4de377709455e9bee5e097b39efb7
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466271340
+status: 4
+tags: []
+user_id: derekdewald

@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/5552a8a3eb184f298431d0acc9a7c260/artifacts
+end_time: 1740466008293
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: 5552a8a3eb184f298431d0acc9a7c260
+run_name: QuantileRegressor
+run_uuid: 5552a8a3eb184f298431d0acc9a7c260
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466008107
+status: 4
+tags: []
+user_id: derekdewald

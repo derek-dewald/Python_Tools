@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/Machine%20Learning/mlruns/981125948236662726/6783f6f6a5d14129b4280079bbe4348d/artifacts
+end_time: 1740466270877
+entry_point_name: ''
+experiment_id: '981125948236662726'
+lifecycle_stage: active
+run_id: 6783f6f6a5d14129b4280079bbe4348d
+run_name: MultiTaskElasticNet
+run_uuid: 6783f6f6a5d14129b4280079bbe4348d
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740466270872
+status: 4
+tags: []
+user_id: derekdewald
