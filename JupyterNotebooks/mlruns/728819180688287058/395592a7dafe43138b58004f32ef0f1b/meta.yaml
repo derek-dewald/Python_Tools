@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/395592a7dafe43138b58004f32ef0f1b/artifacts
+end_time: 1741067367268
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: 395592a7dafe43138b58004f32ef0f1b
+run_name: RidgeClassifier
+run_uuid: 395592a7dafe43138b58004f32ef0f1b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741067366376
+status: 3
+tags: []
+user_id: derekdewald

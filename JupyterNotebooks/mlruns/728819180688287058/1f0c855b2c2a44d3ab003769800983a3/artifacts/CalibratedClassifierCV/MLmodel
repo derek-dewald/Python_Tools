@@ -1,0 +1,20 @@
+artifact_path: CalibratedClassifierCV
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.8
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+mlflow_version: 2.18.0
+model_size_bytes: 3290
+model_uuid: 5857c06467834364bf61b50c72180b0d
+run_id: 1f0c855b2c2a44d3ab003769800983a3
+utc_time_created: '2025-03-04 06:14:17.341926'

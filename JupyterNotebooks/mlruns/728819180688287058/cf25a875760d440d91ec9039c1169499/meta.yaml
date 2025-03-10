@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/cf25a875760d440d91ec9039c1169499/artifacts
+end_time: 1741069490542
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: cf25a875760d440d91ec9039c1169499
+run_name: KNeighborsClassifier
+run_uuid: cf25a875760d440d91ec9039c1169499
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741069489620
+status: 3
+tags: []
+user_id: derekdewald

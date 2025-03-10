@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/fc85094e72c140ee8bbbebf7621154e2/artifacts
+end_time: 1741069486132
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: fc85094e72c140ee8bbbebf7621154e2
+run_name: ExtraTreesClassifier
+run_uuid: fc85094e72c140ee8bbbebf7621154e2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741069484932
+status: 3
+tags: []
+user_id: derekdewald

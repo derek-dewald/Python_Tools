@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/eb5f9061597747d2a7903301dbe25dd2/artifacts
+end_time: 1741068540143
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: eb5f9061597747d2a7903301dbe25dd2
+run_name: LogisticRegression
+run_uuid: eb5f9061597747d2a7903301dbe25dd2
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741068540104
+status: 4
+tags: []
+user_id: derekdewald

@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/2b1a9b5d60c74b54bc640f4e13582142/artifacts
+end_time: 1741068541218
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: 2b1a9b5d60c74b54bc640f4e13582142
+run_name: MLPClassifier
+run_uuid: 2b1a9b5d60c74b54bc640f4e13582142
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741068541199
+status: 4
+tags: []
+user_id: derekdewald

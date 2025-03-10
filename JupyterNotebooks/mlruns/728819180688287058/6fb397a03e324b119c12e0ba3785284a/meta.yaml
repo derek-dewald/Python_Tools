@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/6fb397a03e324b119c12e0ba3785284a/artifacts
+end_time: 1740642323121
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: 6fb397a03e324b119c12e0ba3785284a
+run_name: LinearDiscriminantAnalysis
+run_uuid: 6fb397a03e324b119c12e0ba3785284a
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740642322230
+status: 3
+tags: []
+user_id: derekdewald

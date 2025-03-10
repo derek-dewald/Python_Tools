@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/08cf00b904084957af982c6905791a01/artifacts
+end_time: 1741069022203
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: 08cf00b904084957af982c6905791a01
+run_name: CategoricalNB
+run_uuid: 08cf00b904084957af982c6905791a01
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741069022166
+status: 4
+tags: []
+user_id: derekdewald

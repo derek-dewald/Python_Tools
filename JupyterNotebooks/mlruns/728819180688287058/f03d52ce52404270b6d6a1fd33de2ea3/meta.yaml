@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/f03d52ce52404270b6d6a1fd33de2ea3/artifacts
+end_time: 1741068545324
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: f03d52ce52404270b6d6a1fd33de2ea3
+run_name: RandomForestClassifier
+run_uuid: f03d52ce52404270b6d6a1fd33de2ea3
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741068545059
+status: 4
+tags: []
+user_id: derekdewald

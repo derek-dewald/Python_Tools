@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/0bdf0e771d78474189408e6580ecc4f4/artifacts
+end_time: 1740642319499
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: 0bdf0e771d78474189408e6580ecc4f4
+run_name: HistGradientBoostingClassifier
+run_uuid: 0bdf0e771d78474189408e6580ecc4f4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740642319480
+status: 4
+tags: []
+user_id: derekdewald

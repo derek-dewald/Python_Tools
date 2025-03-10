@@ -1,0 +1,20 @@
+artifact_path: LabelPropagation
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.8
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+mlflow_version: 2.18.0
+model_size_bytes: 8265
+model_uuid: 65cc07b3552e4edc9f265791fff17bb1
+run_id: ebac5f569b1a45539bbc1c89a0b24a39
+utc_time_created: '2025-03-04 06:12:13.599820'

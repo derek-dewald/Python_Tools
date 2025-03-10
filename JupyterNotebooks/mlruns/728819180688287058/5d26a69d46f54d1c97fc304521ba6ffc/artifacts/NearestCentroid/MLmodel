@@ -1,0 +1,20 @@
+artifact_path: NearestCentroid
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.8
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+mlflow_version: 2.18.0
+model_size_bytes: 827
+model_uuid: d47bde379761454598a374ed67468c9c
+run_id: 5d26a69d46f54d1c97fc304521ba6ffc
+utc_time_created: '2025-03-04 06:12:20.198173'
