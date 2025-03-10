@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/ed80d57115a94809966c69c3c5dd2f6c/artifacts
+end_time: 1740642329781
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: ed80d57115a94809966c69c3c5dd2f6c
+run_name: PassiveAggressiveClassifier
+run_uuid: ed80d57115a94809966c69c3c5dd2f6c
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740642328839
+status: 3
+tags: []
+user_id: derekdewald

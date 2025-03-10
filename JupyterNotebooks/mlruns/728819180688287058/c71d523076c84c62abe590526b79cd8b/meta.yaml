@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/c71d523076c84c62abe590526b79cd8b/artifacts
+end_time: 1741068730529
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: c71d523076c84c62abe590526b79cd8b
+run_name: GaussianNB
+run_uuid: c71d523076c84c62abe590526b79cd8b
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741068729706
+status: 3
+tags: []
+user_id: derekdewald

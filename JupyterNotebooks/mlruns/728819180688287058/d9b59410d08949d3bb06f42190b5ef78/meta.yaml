@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/d9b59410d08949d3bb06f42190b5ef78/artifacts
+end_time: 1741068745547
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: d9b59410d08949d3bb06f42190b5ef78
+run_name: RadiusNeighborsClassifier
+run_uuid: d9b59410d08949d3bb06f42190b5ef78
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741068744636
+status: 3
+tags: []
+user_id: derekdewald

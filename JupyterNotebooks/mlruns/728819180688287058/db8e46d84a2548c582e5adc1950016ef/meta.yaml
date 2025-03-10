@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/db8e46d84a2548c582e5adc1950016ef/artifacts
+end_time: 1741068725885
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: db8e46d84a2548c582e5adc1950016ef
+run_name: ComplementNB
+run_uuid: db8e46d84a2548c582e5adc1950016ef
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741068725029
+status: 3
+tags: []
+user_id: derekdewald

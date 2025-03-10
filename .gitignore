@@ -9,7 +9,6 @@
 __pycache__/
 
 # Include Python files and folders
-!*.py
-!*/
 Clean Up Historical Work.ipynb
 Archive
+Machine Learning/mlruns/

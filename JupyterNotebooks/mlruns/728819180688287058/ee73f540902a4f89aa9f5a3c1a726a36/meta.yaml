@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/ee73f540902a4f89aa9f5a3c1a726a36/artifacts
+end_time: 1741068546303
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: ee73f540902a4f89aa9f5a3c1a726a36
+run_name: SGDClassifier
+run_uuid: ee73f540902a4f89aa9f5a3c1a726a36
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741068546284
+status: 4
+tags: []
+user_id: derekdewald

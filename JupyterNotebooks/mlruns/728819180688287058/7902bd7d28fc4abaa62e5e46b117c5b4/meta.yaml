@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/7902bd7d28fc4abaa62e5e46b117c5b4/artifacts
+end_time: 1741068640478
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: 7902bd7d28fc4abaa62e5e46b117c5b4
+run_name: MultinomialNB
+run_uuid: 7902bd7d28fc4abaa62e5e46b117c5b4
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741068640458
+status: 4
+tags: []
+user_id: derekdewald

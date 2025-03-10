@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/437336ab6fc441d9b77b98633e5f2e19/artifacts
+end_time: 1740642330728
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: 437336ab6fc441d9b77b98633e5f2e19
+run_name: Perceptron
+run_uuid: 437336ab6fc441d9b77b98633e5f2e19
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740642329783
+status: 3
+tags: []
+user_id: derekdewald

@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/bdc0f8786f0149a1be121741d3db2dbc/artifacts
+end_time: 1741068645330
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: bdc0f8786f0149a1be121741d3db2dbc
+run_name: SVC
+run_uuid: bdc0f8786f0149a1be121741d3db2dbc
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741068645309
+status: 4
+tags: []
+user_id: derekdewald

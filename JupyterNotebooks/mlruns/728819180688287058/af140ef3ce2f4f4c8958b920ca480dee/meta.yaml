@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/af140ef3ce2f4f4c8958b920ca480dee/artifacts
+end_time: 1741069022164
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: af140ef3ce2f4f4c8958b920ca480dee
+run_name: CalibratedClassifierCV
+run_uuid: af140ef3ce2f4f4c8958b920ca480dee
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741069021143
+status: 3
+tags: []
+user_id: derekdewald

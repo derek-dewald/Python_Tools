@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/a12bdf9492da4b689fb2522960322a0e/artifacts
+end_time: 1741067360565
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: a12bdf9492da4b689fb2522960322a0e
+run_name: NearestCentroid
+run_uuid: a12bdf9492da4b689fb2522960322a0e
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741067359600
+status: 3
+tags: []
+user_id: derekdewald

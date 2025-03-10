@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/aeec458156454a65bc26d34761a73aff/artifacts
+end_time: 1741068732631
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: aeec458156454a65bc26d34761a73aff
+run_name: GradientBoostingClassifier
+run_uuid: aeec458156454a65bc26d34761a73aff
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741068731391
+status: 3
+tags: []
+user_id: derekdewald

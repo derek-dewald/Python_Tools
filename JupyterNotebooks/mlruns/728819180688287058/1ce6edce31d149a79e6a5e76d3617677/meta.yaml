@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/1ce6edce31d149a79e6a5e76d3617677/artifacts
+end_time: 1741068533026
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: 1ce6edce31d149a79e6a5e76d3617677
+run_name: AdaBoostClassifier
+run_uuid: 1ce6edce31d149a79e6a5e76d3617677
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741068531310
+status: 4
+tags: []
+user_id: derekdewald

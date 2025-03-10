@@ -1,0 +1,20 @@
+artifact_path: DummyClassifier
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.8
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+mlflow_version: 2.18.0
+model_size_bytes: 485
+model_uuid: a0afcd03c9634b5783558a99910c4262
+run_id: aee1c7b4416f46558d5c0349beb537db
+utc_time_created: '2025-03-04 06:08:54.200572'

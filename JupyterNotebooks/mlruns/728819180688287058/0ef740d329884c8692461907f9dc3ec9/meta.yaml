@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/0ef740d329884c8692461907f9dc3ec9/artifacts
+end_time: 1741068546328
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: 0ef740d329884c8692461907f9dc3ec9
+run_name: SelfTrainingClassifier
+run_uuid: 0ef740d329884c8692461907f9dc3ec9
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741068546324
+status: 4
+tags: []
+user_id: derekdewald

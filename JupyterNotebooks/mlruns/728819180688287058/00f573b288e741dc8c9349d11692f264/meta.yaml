@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/00f573b288e741dc8c9349d11692f264/artifacts
+end_time: 1741068638287
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: 00f573b288e741dc8c9349d11692f264
+run_name: LabelPropagation
+run_uuid: 00f573b288e741dc8c9349d11692f264
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1741068637335
+status: 3
+tags: []
+user_id: derekdewald

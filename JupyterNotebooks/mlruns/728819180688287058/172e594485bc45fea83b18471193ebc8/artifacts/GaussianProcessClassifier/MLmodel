@@ -1,0 +1,20 @@
+artifact_path: GaussianProcessClassifier
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.12.8
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+mlflow_version: 2.18.0
+model_size_bytes: 549778
+model_uuid: 48bd4b9fb0604de88729a97b00d6e0e9
+run_id: 172e594485bc45fea83b18471193ebc8
+utc_time_created: '2025-03-04 06:24:47.132079'

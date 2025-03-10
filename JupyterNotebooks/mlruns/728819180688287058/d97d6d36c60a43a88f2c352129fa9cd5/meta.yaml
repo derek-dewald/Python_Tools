@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/d97d6d36c60a43a88f2c352129fa9cd5/artifacts
+end_time: 1740643080769
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: d97d6d36c60a43a88f2c352129fa9cd5
+run_name: QuadraticDiscriminantAnalysis
+run_uuid: d97d6d36c60a43a88f2c352129fa9cd5
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740643079805
+status: 3
+tags: []
+user_id: derekdewald

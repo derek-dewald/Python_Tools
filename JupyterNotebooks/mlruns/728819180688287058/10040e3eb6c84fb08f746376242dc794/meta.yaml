@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/728819180688287058/10040e3eb6c84fb08f746376242dc794/artifacts
+end_time: 1740642324040
+entry_point_name: ''
+experiment_id: '728819180688287058'
+lifecycle_stage: active
+run_id: 10040e3eb6c84fb08f746376242dc794
+run_name: LinearSVC
+run_uuid: 10040e3eb6c84fb08f746376242dc794
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1740642323123
+status: 3
+tags: []
+user_id: derekdewald
