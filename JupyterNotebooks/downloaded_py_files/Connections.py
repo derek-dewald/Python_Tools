@@ -1,4 +1,5 @@
 import pandas as pd
+import datetime
 
 def ParamterMapping(Definition=""):
     
@@ -29,3 +30,30 @@ def ParamterMapping(Definition=""):
                     return df1['VALUE'].item()
         except:
             return df[df['Definition']==Definition] 
+
+
+def BackUpGoogleSheets(location='/Users/derekdewald/Documents/Python/Github_Repo/CSV Backup Files/'):
+    '''
+    Function to Create a Backup of Information Stored in Google Sheets.
+    
+    Parameters:
+        None
+        
+    Returns:
+        CSV Files 
+    
+    '''
+    
+    df = ParamterMapping()
+    
+    for row in range(len(df)):
+        try:
+            file_name = df['Definition'][row]
+            file_location = df['CSV'][row]
+            month = datetime.datetime.now().strftime('%b-%y')
+            
+            temp_df = pd.read_csv(file_location)
+            temp_df.to_csv(f'{location}{file_name}_{month}.csv',index=False)
+            print(f'Back Up Saved, {location}{file_name}')
+        except:
+            print(f'Counld Not Print Record {row}')
