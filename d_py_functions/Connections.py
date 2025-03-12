@@ -1,6 +1,48 @@
 import pandas as pd
 import datetime
 
+def DownloadFilesFromGit(user='derek-dewald',
+                        repo='Python_Tools',
+                        folder='d_py_functions',
+                        output_folder=""):
+    '''
+    Function to Download Files from Github to a dedicated folder. Specifically used when i DO NOT want to formally link to Github.
+    
+    Parameters:
+        User:
+        Repo:
+        folder:
+        output_folder:
+        
+    Returns:
+        Saves files to Output Folder.
+    
+
+    '''
+    
+    if len(output_folder) == 0:
+        output_folder = os.getcwd()
+    
+    api_url = f"https://api.github.com/repos/{user}/{repo}/contents/{folder}"
+    response = requests.get(api_url)
+
+    if response.status_code == 200:
+        files = response.json()
+        py_files = [file for file in files if file['name'].endswith('.py')]
+
+        for file in py_files:
+            file_url = file['download_url']
+            file_name = file['name']
+            file_response = requests.get(file_url)
+
+            if file_response.status_code == 200:
+                with open(os.path.join(output_folder, file_name), "w", encoding="utf-8") as f:
+                    f.write(file_response.text)
+                    
+        return True
+    else:
+        return False
+
 def ParamterMapping(Definition=""):
     
     '''
@@ -57,47 +99,3 @@ def BackUpGoogleSheets(location='/Users/derekdewald/Documents/Python/Github_Repo
             print(f'Back Up Saved, {location}{file_name}')
         except:
             print(f'Counld Not Print Record {row}')
-
-
-
-def DownloadFilesFromGit(user='derek-dewald',
-                        repo='Python_Tools',
-                        folder='d_py_functions',
-                        output_folder=""):
-    '''
-    Function to Download Files from Github to a dedicated folder. Specifically used when i DO NOT want to formally link to Github.
-    
-    Parameters:
-        User:
-        Repo:
-        folder:
-        output_folder:
-        
-    Returns:
-        Saves files to Output Folder.
-    
-
-    '''
-    
-    if len(output_folder) == 0:
-        output_folder = os.getcwd()
-    
-    api_url = f"https://api.github.com/repos/{user}/{repo}/contents/{folder}"
-    response = requests.get(api_url)
-
-    if response.status_code == 200:
-        files = response.json()
-        py_files = [file for file in files if file['name'].endswith('.py')]
-
-        for file in py_files:
-            file_url = file['download_url']
-            file_name = file['name']
-            file_response = requests.get(file_url)
-
-            if file_response.status_code == 200:
-                with open(os.path.join(output_folder, file_name), "w", encoding="utf-8") as f:
-                    f.write(file_response.text)
-                    
-        return True
-    else:
-        return False
