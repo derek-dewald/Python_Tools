@@ -1,3 +1,4 @@
+from statsmodels.stats.outliers_influence import variance_inflation_factor
 from sklearn.preprocessing import PolynomialFeatures
 import pandas as pd
 import numpy as np
@@ -104,107 +105,117 @@ def FillFromAbove(df,
     
     df[new_column_name] = df[column_name].ffill()
 
-def ColumnPartitioner(df,
-                      column_name,
-                      new_column_name='Partition',
-                      new_value_column='Total Balance in Partion',
-                      partitions=10,
-                      exclude_blanks=1,
-                      exclude_zeros=0,
-                      return_value=''):
-    '''
-    Function to create partions from Float or INT column which returns the Upper Partion Bound for a Column in a DataFrame. 
-    Inspired by the Decile Analysis, it quickly highlights the distribution of a given dataset.
-    
-    Args:
-        partitions:
-            Total Number of desired Partitions. Default 10 as a homage to DR and his love of the Decile Analysis.
-    
-        Exclude Blanks:
-            Binary flag to determine whether null value records  are to be considered in the Analysis. If 1 then 
-            they are excluded, otherwise, they are given a value of 0 and included. Note that this can Materially 
-            Impact Distribution and Inference, so should be carefully considered.
-        
-        Exclude Zeros:
-            Binary flag to determine whether 0 value records are to be considered in the analysis. If 1 then they are excluded,
-            otherwise they are included. Note that this can Materially Impact Distribution and Inference, so should be carefully
-            considered.
-        
-        Return Value:
-            Value to be returned:
-            default (""):       DF of Value at Individual Partition Locations
-            list_index(list):   Returns list of Index Locations in Dataframe
-            list_value(list):   List of Value at Individual Partition Locations 
-            merge(df):          New Column in existing DF which is numerical value of segment which value belongs
-            agg_value(df):      DF of Aggregate Value total Impact of Each Segment
-            position_value(df)  DF of Position (Transposed Default DF) and agg_value dataframe.
-            
 
-        New Column Name:
-            Name of New Column if original Partition is choosen. By Default, Parition is choosen.
-            
+def BracketColumn(df,
+                   column_name,
+                   new_column_name,
+                   bins=[0,10,20,30,40,50,60,70,80,90,100],
+                   formating="",
+                   assign_cat=0,
+                   last_bin_lowest_value=1,):
+    
     '''
-    if partitions <2:
-        return print('Requries a Minimum of 2 partitions, recommends no less than 3 partitions')
+    Function Created to analyze the contents of a Column in a Dataframe and return a summarized view of the distribution.
+    Function differs from ColumnPartioner, in that it does not look for uniformity, a higher level summary.
     
-    # Make a copy to ensure no overwriting
-    temp_df = df.copy()
-    
-    # Clean Dataset 
-    if exclude_blanks ==1:
-        blanks_removed = len(temp_df[temp_df[column_name].isnull()])
-        #print(f"Blank Entries Removed: {blanks_removed}")
-        temp_df = temp_df[temp_df[column_name].notnull()]
-    else:
-        temp_df[column_name] = temp_df[column_name].fillna(0)
+    Parameters:
+        df {dataframe}
         
-    if exclude_zeros ==1:
-        zeroes_removed = len(temp_df[temp_df[column_name]==0])
-        #print(f"Zero Entries Removed: {zeroes_removed}")
-        temp_df = temp_df[temp_df[column_name]!=0]
+        column_name (str): Column Name of DF column to review
         
-    column_list = temp_df[column_name].tolist()
-    column_list.sort()
-    length_of_df = len(column_list)
-    break_point = math.ceil(length_of_df/partitions)
-    
-    if partitions >=length_of_df:
-        return print(f'Sample Size insufficient to Warrant Calculation for column {column_name}, please review data')
+        new_column_name (str): Name of Column to be created in Dataframe as result of Function
         
-    record_position = list(range(0,length_of_df,break_point))
-    record_value = [column_list[x] for x in record_position]
-    #print(record_value)
+        bins [list]: Number of Bins to include in Segmentation. Need atleast 2, no upper bound limit.
+        
+        formating (str): Value which can be appended for str output in return value text. $ Only Viable in current iteration 
+        
+        assign_cat (int): Binary Flag which allows user to save the column in Categorical Order to ease filtering.
+        this does impact how groupby works and size of data, so proceed with caution.
+    
+        last_bin_lowst_value (int): Binary Flag, allows user to either Place a Floor on bottom limit based on Bin Value, or 
+        search everything below bottom limit. EI, if you have 0 for deposit it would not include balances below 0 in the count if 1.
+    
+    Returns:
+        Dataframe with New Column
     
     
-    # Parition Value DF
     
-    partition_df = pd.DataFrame(record_value,index=[f"{new_column_name} {x+1}" for x in range(len(record_value))],columns=[column_name]).T
+    '''
+    
+    df[column_name] = df[column_name].fillna(0)
+    
+    condition_list = []
+    value_list = []
+    
+    for count,value in enumerate(bins):
+        if count == 0:
+            if last_bin_lowest_value==1:
+                condition_list.append(df[column_name]==value)
+                value_list.append(f"Equal to {formating}{value}")
+            else:
+                condition_list.append(df[column_name]<=value)
+                value_list.append(f"Less than or Equal to {formating}{value}")
+        
+        elif count < len(bins)-1:
+            condition_list.append(df[column_name]<value)
+            value_list.append(f"Between {formating}{bins[count-1]} and {formating}{bins[count]}")
+        
+        else:
+            condition_list.append(df[column_name]<value)
+            value_list.append(f"Between {formating}{bins[count-1]} and {formating}{bins[count]}")
             
-    if return_value == '':
-        return partition_df
-    elif return_value == 'list_value':
-        return record_value
-    elif return_value == 'list_index':
-        return record_position
-    elif (return_value == 'merge')|(return_value == 'agg_value')|(return_value=='position_value'):
-        temp_df = temp_df.sort_values(column_name).reset_index(drop=True)
-        temp_df[new_column_name] = np.searchsorted(record_position,temp_df.index,side='right')
-        
-        if (return_value == 'agg_value')|(return_value=='position_value'):
-            agg_impact = temp_df[['Partition',column_name]].groupby('Partition').sum()[column_name].values
-            agg_impact_df = pd.DataFrame(agg_impact,
-                                         columns=['VALUE'],
-                                         index=[f"{new_value_column} {x+1}" for x in range(len(agg_impact))])
+            condition_list.append(df[column_name]>value)
+            value_list.append(f"Greater than {formating}{value}")
             
-            if return_value=='position_value':
-                agg_impact_df.reset_index(drop='True',inplace=True)
-                agg_impact_df['index'] = [f"{new_column_name} {x+1}" for x in range(len(agg_impact_df))]
-                agg_impact_df.set_index('index',inplace=True)
-                
-                temp_df1 =  partition_df.T.merge(agg_impact_df,
-                                                 left_index=True,
-                                                 right_index=True,
-                                                 how='left').rename(columns={'VALUE':"AGGREGATE_VALUE","VARIANCE":"PARTITION",})
-                return temp_df1
-            return agg_impact_df
-        return temp_df
+        df[new_column_name]=np.select(condition_list,value_list,'Problem')
+        
+        if assign_cat ==1:
+            df[new_column_name] = pd.Categorical(df[new_column_name], categories=value_list)
+    
+    print(df[new_column_name].value_counts())
+    
+def CleanStrtoNumber(df,
+                     column_name,
+                     new_column_name=""):
+    
+    '''
+    
+    
+    '''
+    
+    if new_column_name=="":
+        new_column_name = column_name
+        
+    df[new_column_name] = np.where((df[column_name]=="")|
+                                   (df[column_name].isnull()),0,df[column_name])
+
+  def VarianceInflationFactor(df):
+    """
+    Computes Variance Inflation Factor (VIF) for each numerical feature.
+    
+    Parameters:
+    df (pd.DataFrame): DataFrame containing numerical predictors.
+    
+    Returns:
+    pd.DataFrame: VIF values for each feature.
+    """
+    vif_data = pd.DataFrame()
+    vif_data["Feature"] = df.columns
+    vif_data["VIF"] = [variance_inflation_factor(df.values, i) for i in range(df.shape[1])]
+
+    condition = [vif_data['VIF']<=1,
+                 vif_data['VIF']<=5,
+                 vif_data['VIF']<=10,
+                 vif_data['VIF']>10]
+    
+    values = ['No Multicollinearity',
+              'Low to Moderate Multicollinearity',
+              'High Multicollinearity',
+              'Severe Multicollinearity'
+             ]
+        
+    vif_data['Assessement'] = np.select(condition,values,default="NA")
+    vif_data['Action'] = np.where(vif_data['VIF']>5,'Review','Pass')
+    
+    
+    return vif_data
