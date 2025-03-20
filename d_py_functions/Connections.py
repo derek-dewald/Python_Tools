@@ -1,5 +1,7 @@
 import pandas as pd
 import datetime
+import requests
+import os
 
 def DownloadFilesFromGit(user='derek-dewald',
                         repo='Python_Tools',
