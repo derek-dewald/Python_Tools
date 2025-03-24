@@ -189,7 +189,7 @@ def CleanStrtoNumber(df,
     df[new_column_name] = np.where((df[column_name]=="")|
                                    (df[column_name].isnull()),0,df[column_name])
 
-  def VarianceInflationFactor(df):
+def VarianceInflationFactor(df):
     """
     Computes Variance Inflation Factor (VIF) for each numerical feature.
     
