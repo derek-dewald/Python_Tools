@@ -174,6 +174,37 @@ def BracketColumn(df,
     
     print(df[new_column_name].value_counts())
     
+def VarianceInflationFactor(df):
+    """
+    Computes Variance Inflation Factor (VIF) for each numerical feature.
+    
+    Parameters:
+        df (pd.DataFrame): DataFrame containing numerical predictors.
+    
+    Returns:
+        pd.DataFrame: VIF values for each feature.
+    """
+    
+    vif_data = pd.DataFrame()
+    vif_data["Feature"] = df.columns
+    vif_data["VIF"] = [variance_inflation_factor(df.values, i) for i in range(df.shape[1])]
+
+    condition = [vif_data['VIF']<=1,
+                 vif_data['VIF']<=5,
+                 vif_data['VIF']<=10,
+                 vif_data['VIF']>10]
+    
+    values = ['No Multicollinearity',
+              'Low to Moderate Multicollinearity',
+              'High Multicollinearity',
+              'Severe Multicollinearity']
+        
+    vif_data['Assessement'] = np.select(condition,values,default="NA")
+    vif_data['Action'] = np.where(vif_data['VIF']>5,'Review','Pass')
+    
+    
+    return vif_data
+
 def CleanStrtoNumber(df,
                      column_name,
                      new_column_name=""):
@@ -188,34 +219,3 @@ def CleanStrtoNumber(df,
         
     df[new_column_name] = np.where((df[column_name]=="")|
                                    (df[column_name].isnull()),0,df[column_name])
-
-  def VarianceInflationFactor(df):
-    """
-    Computes Variance Inflation Factor (VIF) for each numerical feature.
-    
-    Parameters:
-    df (pd.DataFrame): DataFrame containing numerical predictors.
-    
-    Returns:
-    pd.DataFrame: VIF values for each feature.
-    """
-    vif_data = pd.DataFrame()
-    vif_data["Feature"] = df.columns
-    vif_data["VIF"] = [variance_inflation_factor(df.values, i) for i in range(df.shape[1])]
-
-    condition = [vif_data['VIF']<=1,
-                 vif_data['VIF']<=5,
-                 vif_data['VIF']<=10,
-                 vif_data['VIF']>10]
-    
-    values = ['No Multicollinearity',
-              'Low to Moderate Multicollinearity',
-              'High Multicollinearity',
-              'Severe Multicollinearity'
-             ]
-        
-    vif_data['Assessement'] = np.select(condition,values,default="NA")
-    vif_data['Action'] = np.where(vif_data['VIF']>5,'Review','Pass')
-    
-    
-    return vif_data
