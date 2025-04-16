@@ -63,8 +63,9 @@ def DuplicateFileorFolder(source_path, destination_path):
     print(f"Finished copying '{source_path}' to '{destination_path}'.")
 
 
-def ReadDirectory(folder="",
-                  file_type="",
+def ReadDirectory(location=None,
+                  file_type=None,
+                  match_str=None,
                   create_df=0):
                   
     """
@@ -79,15 +80,18 @@ def ReadDirectory(folder="",
     """
     
     # If no folder is provided, use the current working directory
-    if not folder:
+    if location ==None:
         file_list = os.listdir(os.getcwd())
     else:
-        file_list = os.listdir(folder)
-    
+        file_list = os.listdir(location)
+        
     # If no file type is provided, return all files in the directory
-    if file_type:
+    if file_type !=None:
         file_list = [x for x in file_list if file_type in x]
     
+    if match_str !=None:
+        file_list = [x for x in file_list if x.find(match_str)!=-1]
+        
     if create_df ==0:                  
         # Return files that match the specified file type
         return file_list
@@ -95,8 +99,7 @@ def ReadDirectory(folder="",
         final_df = pd.DataFrame()
         for file in file_list:
             if file_type=='csv':
-                final_df = pd.concat([final_df,pd.read_csv(file)])
+                final_df = pd.concat([final_df,pd.read_csv(f"{location}{file}")])
             elif file_type == 'xlsx':
-                final_df = pd.concat([final_df,pd.read_excel(file)])
+                final_df = pd.concat([final_df,pd.read_excel(f"{location}{file}")])
         return final_df
-
