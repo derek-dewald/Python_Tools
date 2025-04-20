@@ -1,4 +1,5 @@
 from IPython.display import display
+import inspect
 
 def ViewDF(df,global_=1):
     '''
@@ -21,3 +22,7 @@ def ViewDF(df,global_=1):
             'display.max_columns',None,
             'display.expand_frame_repr',False):
             display(df)
+
+
+def InspectFunction(function_name):
+    print(inspect.getsource(function_name))

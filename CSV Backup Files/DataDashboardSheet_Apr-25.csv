@@ -1,0 +1,994 @@
+Word,Category,Sub Categorization,Definition,Notes,Link,Image,Markdown Equation,Is Model,Learning Type,Algorithm Class,Assumes Normality,Interview Requirement
+Accuracy,Machine Learning,Evaluation,Number of correctly classified examples divided by the total number of classified examples.,,,,$$ Accuracy = \frac{TP + TN}{TP + TN + FP + FN} $$,,,,,
+Actions,Technology,Spark,"In Spark, actions trigger the execution of transformations and return a result to the driver. The collect action retrieves all elements of an RDD and brings them to the driver, while count returns the total number of elements in the RDD, and countByValue provides the frequency of each unique element. take retrieves the first N elements, top returns the largest N elements, and reduce applies a specified associative function to aggregate all the elements of the RDD into a single result.",,,,,,,,,
+Activation Functions,,Activation Function,,,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/ActivationFunctions.png,,,,,,
+Acyclic Graph,Statistics,Definition,"A graph that does not contain any cycles. This means there is no path in the graph that starts from a node and eventually returns to the same node. There are 2 types of Acyclic Graphs, Directed and Undirected. ",,,,big,,,,,
+Adadelta,Machine Learning,Optimization,Adaptive learning rate for nonstationary objectives.,,,,,,,,,
+Adagrad,Machine Learning,Loss Optimization,"Variation of Gradient Descent, which adapts the learning rate for each parameter by scaling it inversely proportional to the sum of past squared gradients. 
+",,,,"$$
+\theta_{t+1} = \theta_t - \frac{\alpha}{\sqrt{G_t + \epsilon}} \nabla J(\theta_t)
+$$
+
+where:
+- $( G_t = \sum_{i=1}^{t} \nabla J(\theta_i) \odot \nabla J(\theta_i) )$ (element-wise sum of squared gradients),
+- $( \epsilon )$ is a small constant to prevent division by zero.",,,,,
+Adagrad,Machine Learning,Optimization,Adapts learning rate per parameter. Good for sparse data.,,,,,,,,,
+Adam,,Loss Optimization,"Variation of Gradient Descent, which combines both momentum and RMSprop, maintaining an exponentially decaying average of past gradients and squared gradients.",,,,"$$
+m_t = \beta_1 m_{t-1} + (1 - \beta_1) \nabla J(\theta_t)
+$$
+
+$$
+v_t = \beta_2 v_{t-1} + (1 - \beta_2) (\nabla J(\theta_t))^2
+$$
+
+Bias correction:
+
+$$
+\hat{m_t} = \frac{m_t}{1 - \beta_1^t}, \quad \hat{v_t} = \frac{v_t}{1 - \beta_2^t}
+$$
+
+Parameter update:
+
+$$
+\theta_{t+1} = \theta_t - \frac{\alpha}{\sqrt{\hat{v_t}} + \epsilon} \hat{m_t}
+$$
+
+where:
+- $( m_t )$ and $( v_t )$ are the first and second moment estimates,
+- $( beta_1)$ and $( beta_2 )$ control their decay rates (typically $( 0.9 )$ and $( 0.999 $) respectively).",,,,,
+AdamW,Machine Learning,Optimization,"Variant of Adam with weight decay, prevents overfitting.",,,,,,,,,
+Addition Rule,,,,,,,$$ P(A \cup B) = P(A) + P(B) - P(A \cap B) $$,,,,,
+Adjacency Matrix,,,,,,,,,,,,
+Adjusted Rand Score,,,,,,,,,,,,
+Affine Layer,,,,,,,,,,,,
+Agglomerative,,,,,,,,,,,,
+alpha,Machine Learning,Hyperparameter,"Controls L1/L2 regularization strength in models like Ridge, Lasso, and Naive Bayes. Higher values reduce overfitting but may underfit.","[0.0001, 0.001, 0.01, 0.1, 1.0]",,,,,,,,
+Anchoring Effect,Behavioural Economics,,"A cognitive bias where people rely too heavily on the first piece of information (the “anchor”) when making decisions. Once an anchor is set, it influences subsequent judgments, even if it’s arbitrary or unrelated. For example, when asked whether the Eiffel Tower is taller or shorter than 500 feet, people’s estimates will cluster around that number. This bias can affect pricing, negotiations, and even forecasting.",,,,,,,,,
+Anomaly Detection,,,,,,,,,,,,
+Anscombe Quartet,,,,,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/Anscombe_Quartet.png,,,,,,
+Area Under the Curve,,,,,,,,,,,,
+Armature,Story Telling,,"""The armature is the core message, moral, or truth your story is built to prove.. It’s the invisible backbone of your narrative — the reason you’re telling the story in the first place. Think of it like the wire frame inside a sculpture: you don’t see it, but without it, the whole structure collapses.""",,,,"## 🎬 Story Structure
+
+### 🎭 Act 1
+- **Once upon a time...**  
+- **And every day...**  
+- **Until one day...**
+
+### 🔥 Act 2
+- **And because of this...**  
+- **And because of this...**
+
+### 🎉 Act 3
+- **Until finally...**  
+- **And ever since that day...**",,,,,
+Artificial Intelligence,,,,,,,,,,,,
+ASGI,,,,,,,,,,,,
+Association Rule Learning,,,,,,,,,,,,
+Autocorrelation,,,"Autocorrelation, also known as serial correlation, measures the correlation of a time series with a lagged version of itself. In other words, it assesses how a variable's current values relate to its past values over different time intervals. Autocorrelation can provide insights into the patterns and structures within the data, helping to identify cycles, trends, and other temporal dependencies.",,,,,,,,,
+AutoRegressive Integrated Moving Average,Machine Learning,,"Popular statistical method used for time series analysis and forecasting. It combines three components—autoregression (AR), differencing (I), and moving average (MA)—to model and predict future points in a time series. Here's a breakdown of each component.",,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/scikit_learn_models.png,,,,,,
+Await,,,"Used with coroutines (functions defined using the async def syntax) to pause execution of the current coroutine until the awaited coroutine is completed. When you await a coroutine, it allows other code to run concurrently while waiting for the awaited coroutine to finish its execution. This is particularly useful for I/O-bound operations like network requests, file operations, or database queries, where you want to avoid blocking the event loop.",,,,,,,,,
+Azure Data Factory,,,,,,,,,,,,
+Azure Synapse Analytics,Technology,,"Azure Synapse Analytics provides a single, cloud-scale platform that supports multiple analytical technologies; enabling a consolidated and integrated experience for data engineers, data analysts, data scientists, and other professionals who need to work with data.",,,,,,,,,
+Backpropagation,Machine Learning,,,,,,,,,,,
+BAFU,,,Billions and Fudged Up.,,,,,,,,,
+Bag of Words,Machine Learning,,"Can count the number of times a word appears, don’t have to, whether a word is included is usually most important. Multihot encoding, order does not matter, collapse to ta single vector. Word n grams, byte n-grams. Reduce difference for amazing and amaze. Split contraction, replace numbers with NUM, separate punctuation, lowercasing. You shall know a word by the company that it keeps. John Firth. Contectual embedding. Words that appear in similar sentences or appear together with other words.",,,,,,,,,
+Bagging,Machine Learning,,"Bagging is an ensemble technique that trains multiple models (usually of the same type) on different random subsets of the training data (with replacement), and then aggregates their predictions (e.g., by majority vote for classification or averaging for regression). Reduce variance and help prevent overfitting.",,,,,,,,,
+Base Rate Fallacy,Behavioural Economics,,"People ignore or undervalue general statistical information (the base rate) and focus instead on specific information, often leading to incorrect conclusions. In decision-making, individuals may give more weight to anecdotal or vivid information, despite the broader statistical reality that should influence their judgment. Imagine a test for a rare disease that is 95% accurate. The disease affects 1 in 10,000 people. If a person tests positive, many might assume the likelihood of them having the disease is high. However, considering the base rate (the rarity of the disease), the probability of actually having the disease is still very low. In this scenario, the base rate fallacy would be ignoring the low prevalence of the disease (the base rate) and overestimating the accuracy of the test result, leading to an exaggerated belief in the likelihood of the person having the disease. The fallacy demonstrates how people's intuitive reasoning often neglects the significance of background statistical data in favor of more attention-grabbing or salient information.",,,,,,,,,
+Basis Vocabulary,,,,,,,,,,,,
+Batch and API Processing,Technology,,"Batch processing is simplier, and more heavily reliant on transformations conducted with a Data Warehouse, API, great for smaller, incremental review or transaction level processes.",,,,,,,,,
+Batch Learning,,,,,,,,,,,,
+Bayes Theorem,Statistics,Definition,Bayes' theorem describes how to update probabilities based on new evidence. ,,,,"$$
+P(A | B) = \frac{P(B | A) P(A)}{P(B)}
+$$
+
+where:
+- \( P(A | B) \) is the **posterior probability** (probability of \( A \) given \( B \)).
+- \( P(B | A) \) is the **likelihood** (probability of \( B \) given \( A \)).
+- \( P(A) \) is the **prior probability** (initial probability of \( A \)).
+- \( P(B) \) is the **marginal probability** (total probability of \( B \)).
+
+### **Example:**
+Suppose a medical test for a disease has:
+- **Sensitivity**: $( P(\text{Positive} | \text{Disease}) = 0.99 )$
+- **False positive rate**: $( P(\text{Positive} | \neg \text{Disease}) = 0.05 )$
+- **Prevalence**: $( P(\text{Disease}) = 0.01 )$
+
+Using Bayes' theorem, the probability that a person actually has the disease given a positive test result is:
+
+$$
+P(\text{Disease} | \text{Positive}) = \frac{0.99 \times 0.01}{(0.99 \times 0.01) + (0.05 \times 0.99)}
+$$",,,,,
+BayesianRidge,Machine Learning,Model,,,,,,1.0,,,,
+Be Mindful of what is presented.Think about Meaning,Behavioural Economics,Books Read,"In February 2018, there were fourteen murders in New York City, but fifteen in London.[1] But what should we conclude? Nothing. We should conclude nothing because that pair of numbers alone tells us very little. If we want to understand what’s happening, we need to step back and take in a broader perspective. Here are a few facts worth knowing about murders in London and New York. London had 184 murders in 1990, while New York suffered 2,262—more than ten times as many. It’s with that image in mind of New York as a murderous place that Londoners are alarmed at the idea that they might have become as rotten as the Big Apple. But London’s murder rate has fallen, not risen, since 1990. In 2017, there were 130 murders in London, including ten people killed in terrorist attacks. London was safe in 1990 and it’s a little bit safer today. As for New York, murders fell to 292 in 2017. That means New York is still more dangerous than London, but much, much safer than in 1990.",,,,,,,,,
+Beaucratic Politics,,,That people only do what is best for them and the decision is made based solely on who is making the decision. They are operating solely on their own best interests.,,,,,,,,,
+BERT,,,,,,,,,,,,
+Bias,,,"Bias refers to the systematic error in a model that causes it to consistently deviate from the true value or correct predictions. It occurs when an algorithm makes incorrect assumptions about the data, leading to errors. High Bias (Underfitting): The model is too simple and cannot capture patterns. Low Bias, High Variance (Overfitting). The model memorizes the data but does not generalize.",,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/bias.png,"### **Unbiased Estimator Equation**
+A parameter estimate \( \hat{\theta} \) is **unbiased** if its expected value equals the true parameter \( \theta \):
+
+$$
+\mathbb{E}[\hat{\theta}] = \theta
+$$
+
+where:
+- $ \mathbb{E}[\hat{\theta}] $ is the expected value of the estimator.
+- $ \theta $ is the true parameter.
+
+### **Example: Sample Mean as an Unbiased Estimator**
+The **sample mean** $ \bar{X} $ is an **unbiased estimator** of the population mean $ \mu $:
+
+$$
+\mathbb{E}[\bar{X}] = \mu
+$$
+
+where:
+- $ \bar{X} = \frac{1}{n} \sum_{i=1}^{n} X_i $ is the sample mean.
+- $ X_i $ are independent and identically distributed (i.i.d.) random variables.
+- $ \mu $ is the true mean of the population.",,,,,
+Bias Variance Trade Off,,,"The bias-variance trade-off is a key concept in machine learning that highlights the balance between two sources of error: bias and variance. The challenge is to find a model that strikes the right balance between bias and variance, as reducing one typically increases the other. The ultimate goal is to minimize the total error, which is the sum of bias error, variance error, and irreducible noise inherent in the data. Achieving this balance ensures the model generalizes well to new, unseen data, avoiding both underfitting and overfitting. More Data vs More Data Science - Bias vs Variance Trade-Off (Bias - Data Scientist, Variance - Data)
+Reducible Error, irreducible error. In statistics and machine learning, the bias–variance tradeoff describes the relationship between a model's complexity, the accuracy of its predictions, and how well it can make predictions on previously unseen data that were not used to train the model. In general, as we increase the number of tunable parameters in a model, it becomes more flexible, and can better fit a training data set. It is said to have lower error, or bias. However, for more flexible models, there will tend to be greater variance to the model fit each time we take a set of samples to create a new training data set. It is said that there is greater variance in the model's estimated parameters.
+ High-variance learning methods may be able to represent their training set well but are at risk of overfitting to noisy or unrepresentative training data. In contrast, algorithms with high bias typically produce simpler models that may fail to capture important regularities (i.e. underfit) in the data.
+Only load the model once",,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/bias.png,,,,,,
+Biased Assimilation,Behavioural Economics,Books Read,Tendency to interpret information in a way that supports a desired conclusion. ,,,,,,,,,
+Big O,Statistics,Definition,Big O notation is a mathematical way to describe the efficiency of an algorithm in terms of time complexity (speed) and space complexity (memory usage). It tells us how the algorithm scales as the input size (n) grows.,,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/BigO.png,"| **Big O Notation** | **Name**            | **Example Algorithm**        | **Growth Rate** |
+|-------------------|------------------|----------------------|----------------|
+| $( O(1) $)        | Constant Time     | Accessing an array element $( arr[i] $) | Stays the same |
+| $( O(\log n) $)    | Logarithmic Time  | Binary search        | Grows very slowly |
+| $( O(n) $)        | Linear Time       | Looping through an array | Grows proportionally |
+| $( O(n \log n) $)  | Quasilinear Time  | Merge Sort, Quick Sort (best/avg) | Slightly worse than linear |
+| $( O(n^2) $)       | Quadratic Time    | Nested loops (e.g., Bubble Sort) | Grows fast |
+| $( O(2^n) $)       | Exponential Time  | Recursive Fibonacci  | Grows extremely fast |
+| $( O(n!) $)       | Factorial Time    | Traveling Salesman Problem | Grows impossibly fast |
+",,,,,
+Binary Classification,Machine Learning,,"Multiclass, multinomial",,,,,,,,,
+Blind spot bias,Behavioural Economics,,"Cognitive bias where people are unaware of their own biases, while easily recognizing the biases in others.  People tend to believe they are more objective, rational, and less susceptible to biases than others, even though they may exhibit the same biases in their own thinking. Self-awareness gap: People can easily identify cognitive biases (like confirmation bias, motivated reasoning, or stereotyping) in others, but fail to recognize these biases in themselves. Overconfidence in objectivity: Individuals often overestimate their own ability to reason without bias, which can lead to an inflated sense of confidence in their decisions and beliefs. Resistance to feedback: Blind spot bias can make people resistant to feedback, because they believe that they’re viewing situations or information more objectively than they actually are.",,,,,,,,,
+BLUF,,,Bottom Line Up Front,,,,,,,,,
+Boolean,,,True or False,,,,,,,,,
+booster,Machine Learning,Hyperparameter,Type of boosting algorithm used in XGBoost.,"['gbtree', 'gblinear', 'dart']",,,,,,,,
+Boosting,Machine Learning,,"Boosting is an ensemble technique that trains models sequentially, where each new model tries to correct the errors of the previous ones. The final prediction is a weighted combination of all models. Reduce bias and build a strong learner from weak learners.",,,,,,,,,1.0
+BOW,,,,,,,,,,,,
+Broadcasting,Spark,,"The mechanism of efficiently sharing a read-only variable (such as a dataset, configuration, or lookup table) across all nodes in a Spark cluster without sending it multiple times. Normally, when Spark performs operations on distributed data, each worker node gets its own copy of any common variables, which can be inefficient for large datasets. By using broadcast variables, Spark sends the data to all nodes only once, storing it in a serialized and cached form on each worker. This minimizes communication costs and memory usage, significantly speeding up tasks like joins or lookups, where the same data needs to be accessed by multiple nodes repeatedly. Broadcasting is crucial for performance optimization in large-scale data processing.",,,,,,,,,
+C,Machine Learning,Hyperparameter,"Inverse of regularization strength in Logistic Regression and SVM. Lower values increase regularization, reducing model complexity.","[0.001, 0.01, 0.1, 1, 10]",,,,,,,,
+Cache,Data Engineering,,"Cache takes load away from critical systems. Databases. Things that are looked up every second, minute. Can Cache at every layer.  Memory Buffers exist everywhere. Authentication is terrible caching. Don't Cache purchases and refunds. Search Queries, too broad. Can't cache transaction.",,,,,,,,,
+Capital Pi Notation (Product),Statistics,Definition,"Mathematical symbol used to represent the product of a sequence of terms, similar to how Sigma notation represents summation.",,,,"#### Product Notation (Capital Pi) (Π)
+
+The product of a sequence is defined as:
+
+$$
+P = \prod_{i=1}^{n} a_i = a_1 \cdot a_2 \cdot \dots \cdot a_n
+$$
+
+##### Example Calculation:
+$
+$
+\prod_{i=1}^{4} i = 1 \times 2 \times 3 \times 4 = 24
+$$",,,,,
+Cassandra,,,,,,,,,,,,
+"Centroid, distance average, centroid repeat",,,,,,,,,,,,
+Chain of Thought Prompting,Machine Learning,Natural Language Processing,"hain-of-thought (CoT) prompting is a technique in natural language processing (NLP) where a model is encouraged to provide intermediate reasoning steps when solving complex tasks or answering questions. Instead of directly generating an answer, the model walks through the reasoning process step by step, mimicking how humans think through problems. This approach helps improve the accuracy and interpretability of the model’s output, especially for tasks that involve logical reasoning, arithmetic, decision-making, or multi-step instructions.",,,,,,,,,
+Chain Rule,,,,,,,"$h(x) = f(g(x))$
+$h'(x) = f'(g(x)) \cdot g'(x)$",,,,,
+CI/CD,,,"CI/CD is a software development practice that automates the process of integrating, testing, and deploying code changes. It helps teams deliver software faster, with fewer bugs, and in a more reliable manner.",,,,,,,,,
+Classification,,,,,,,,,,,,
+CLT,,,,,,,,,,,,
+Clustering,,,,,,,,,,,,
+Co-Occurance Matrix,,,,,,,,,,,,
+colsample_bytree,Machine Learning,Hyperparameter,Fraction of features used per tree in boosting algorithms. Lower values reduce overfitting.,"[0.5, 0.7, 1.0]",,,,,,,,
+Command line Shells,,,"Zsh and Bash are both command-line shells, with Bash being the default on most Linux systems and Zsh becoming the default on macOS since Catalina. Zsh offers more advanced features like better auto-completion, global aliases, and plugin support (e.g., Oh My Zsh), while Bash is more universally compatible, especially for scripting and Linux servers. If you're on macOS or prefer customization, Zsh is a great choice, but if you need maximum compatibility with Linux systems and scripts, Bash remains a solid option.",,,,,,,,,
+Compiled,,,"Source Code - Compiler - Object/ Machine Code - Machine/ VM - Output.
+Compiler turns it into different code, could be machine code such as C, or could be into object. Compiled code can run more quicly.",,,,,,,,,
+Concatenate String,,,Feature of Dynamically Typed Language. Not Always available in languages,,,,,,,,,
+Confirmation Bias,Behavioural Economics,,"Also known as Selective Perception. What people see can be strongly shaped by what they believe, using the example of a study which occurred during a especially dirty Princeton Dartmouth Football game. After the game people were asked to comment which team was ""Dirtier"" and results were based on which team individuals had allegiance with.",,,,,,,,,
+Confirmation bias ,Behavioural Economics,,"Tendency to search for, interpret, and remember information in a way that confirms one’s preexisting beliefs or hypotheses. People often ignore or downplay evidence that contradicts their views. This bias can reinforce stereotypes, polarize opinions, and skew data interpretation. It’s especially important to watch for in research, media consumption, and decision-making.",,,,,,,,,
+Confusion Matrix,Statistics,,,,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/confusion_matrix.png,,,,,,
+Continuous,Statistics,Definition,Random variable that can take on infinitely many values within a given range. It is described by a probability density function (PDF) instead of a PMF.,,,,"A continuous random variable \( X \) has a probability density function (PDF) \( f(x) \), where:
+
+$$
+P(a \leq X \leq b) = \int_{a}^{b} f(x) dx
+$$
+
+and the total probability satisfies:
+
+$$
+\int_{-\infty}^{\infty} f(x) dx = 1
+$$
+
+### **Example:**
+Consider a standard normal distribution \( X \sim N(0,1) \), which has the probability density function:
+
+$$
+f(x) = \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}}
+$$
+
+The probability that \( X \) lies between -1 and 1 is:
+
+$$
+P(-1 \leq X \leq 1) = \int_{-1}^{1} \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}} dx
+$$
+",,,,,
+Control,Experiement Design,,"The ability to influence or manipulate a system's behavior or outcomes through deliberate intervention. Focuses on cause-effect relationships that can be reliably acted upon. Doesn't necessarily require full understanding — only that the action works. Example: A thermostat controls room temperature by adjusting heating/cooling based on feedback.
+
+We control things without understanding - A Pilot.",,,,,,,,,
+Convex,Statistics,,"Non Convex - Don’t know you’re getting optimal. Depends on where you start, can get different results.",,,,,,,,,
+Cosine Similarity,,,"Cosine similarity is a measure of similarity between two sequences of numbers. For defining it, the sequences are viewed as vectors in an inner product space, and the cosine similarity is defined as the cosine of the angle between them, that is, the dot product of the vectors divided by the product of their lengths. More formally, cosine similarity between two non-zero vectors A and B builds on the Euclidean dot product formula. It follows that the cosine similarity does not depend on the magnitudes of the vectors, but only on their angle. The cosine similarity always belongs to the interval [-1,1]. For example, two proportional vectors have a cosine similarity of 1, two orthogonal vectors have a similarity of 0, and two opposite vectors have a similarity of -1. The cosine similarity is particularly used in positive space, where the outcome is neatly bounded in [0,1].",,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/cosine_similiarity.png,,,,,,
+Cost Function,,,,,,,,,,,,
+Cross Encoding,,,"Binary, Categorical, Sparese",,,,"$$
+H(P, Q) = -\frac{1}{N} \sum_{i=1}^{N} \sum_{c=1}^{C} Y_{i,c} \log(\hat{Y}_{i,c})
+$$",,,,,
+Cross Validation,,,,,,,,,,,,
+Curse of Dimensionality,,,,,,,,,,,,
+Daemonize,,,"Refers to the process of detaching a program or service from the controlling terminal and running it in the background as a daemon. Detaching from Terminal: The program or service is detached from the terminal or shell session that started it. This means that the program no longer depends on the terminal window for input or output, and it continues running even if the terminal session is closed. Background Execution: The program or service continues running in the background, often as a background process or daemon. It may continue to perform its intended tasks without requiring interaction from the user. Independence from User Sessions: Daemonized programs or services are typically independent of any user login sessions. They may run continuously, responding to events or requests, until explicitly stopped or terminated.",,,,,,,,,
+Dangling Node,,,,,,,,,,,,
+Dark Data,,,"There are people, opinions, and information which is underrepresented and not known, how can you identify it, or at a minimum acknowledge that it exists and you dont know it.",,,,,,,,,
+Data Consolidation,,,"Data consolidation is the process of combining data that has been extracted from multiple data sources into a consistent structure - usually to support analytics and reporting. Commonly, data from operational systems is extracted, transformed, and loaded into analytical stores such as a data lake or data warehouse.",,,,,,,,,
+Data Integration,,,"Data Integration involves establishing links between operational and analytical services and data sources to enable secure, reliable access to data across multiple systems. For example, a business process might rely on data that is spread across multiple systems, and a data engineer is required to establish links so that the required data can be extracted from all of these systems.",,,,,,,,,
+Data Leakage,,,"Data Leakage is the inadvertent use of information in the model training process that would not be available at prediction time, often resulting from the inclusion of future data, target labels, or improperly pre-processed features during training. It causes problems because it artificially inflates model performance metrics, leading to overfitting and poor generalization to unseen data",,,,,,,,,
+Data Transformation,,,"Operational data usually needs to be transformed into suitable structure and format for analysis, often as part of an extract, transform, and load (ETL) process; though increasingly a variation in which you extract, load, and transform (ELT) the data is used to quickly ingest the data into a data lake and then apply ""big data"" processing techniques to transform it. Regardless of the approach used, the data is prepared to support downstream analytical needs.",,,,,,,,,
+Data Visualization,,,"Interact with data without the need to understand how the data is formatted, structured, or what is its data type.",,,,,,,,,
+Decision Trees,Machine Learning,Model,"Algorithm which splits data into branches based on feature values to make decisions or predicitions. Each internal node represents a feature, each branch represens a a decision rule and each leaf node represents an outcome. Decision Trees are popular because they are simple to interpret, require litte data preprocessing and can handle both classificaiton and regression. Their strengths include handling both numerical and catoegorical data, providiing clear visual representations of decisions. They are prone to overfitting and sensitive to noisy data. They work well in scenarios where interpretabiltiy is important, but struggle with high dimensional data when complex relationships exist. ",,,,,1.0,Supervised,Regression/ Classification,,
+Decison Making,Experiement Design,,"The process of selecting a course of action from a set of alternatives, often under conditions of uncertainty. Involves choosing, not necessarily knowing or controlling. Can be based on intuition, heuristics, data, or optimization. Example: Choosing to launch a product based on positive A/B test results, even if the underlying behavior change isn't fully understood.
+
+Good Decision Process and Good Decision don’t always result in a good outcome. 
+Decision review process, comes in at the wrong time, only when the outcome wasn't consistent with what was desired.
+The Elevator is slow. Solution: Fix Elevator …or install mirror.
+Dog adoption: Find people willing to adopt a dog. Alternative: Determine if the people giving the dog away don’t want to.",,,,,,,,,
+Deep Belief Networks,,,,,,,,,,,,
+Dendogram,,,,,,,,,,,,
+Derivative,Statistics,Definition,A function which measures the rate at which the function value changes as its input changes. The process of finding a derivative is reffered to as differentiation.,,,,"$$
+f'(x) = \lim_{{h \to 0}} \frac{f(x + h) - f(x)}{h}
+$$
+
+### Example Calculation:
+For the function \( f(x) = x^2 \), the derivative is calculated as:
+
+$$
+\frac{d}{dx} x^2 = 2x
+$$
+
+Thus, at \( x = 3 \):
+
+$$
+f'(3) = 2(3) = 6
+$$",,,,,
+Descriptive analytics,,,Answers the question “What is happening in my business?”. The data to answer this question is typically answered through the creation of a data warehouse in which historical data is persisted in relational tables for multidimensional modeling and reporting.,,,,,,,,,
+Determinism,,,"Given an initial state, the future state is completely predictable.",,,,,,,,,
+Diagnostic analytics,,,"Deals with answering the question “Why is it happening?”. This may involve exploring information that already exists in a data warehouse, but typically involves a wider search of your data estate to find more data to support this type of analysis.",,,,,,,,,
+Dice Similarity,,,"Dice similarity is another measure of similarity between two sequences of numbers. The metric equals twice the number of elements common to both sets divided by the sum of the number of elements in each set. Between two non-zero sets. In comparing two documents, dice coefficient represents the shared word rate across both documents.",,,,,,,,,
+Differentiability,,,,,,,,,,,,
+Dimensionality Reduction,,,,,,,,,,,,
+Discrete,Statistics,Definition,Random variable that takes on a countable number of distinct values. These values are typically integers or countable values,,,,"A discrete random variable \( X \) has a probability mass function (PMF) given by:
+
+$$
+P(X = x) = p(x), \quad \sum_{x} p(x) = 1
+$$
+
+where \( p(x) \) is the probability of \( X \) taking a specific value \( x \).
+
+### **Example:**
+Consider rolling a six-sided die. The possible outcomes are:
+
+$$
+X = \{1, 2, 3, 4, 5, 6\}
+$$
+
+Each outcome has an equal probability:
+
+$$
+P(X = x) = \frac{1}{6}, \quad x \in \{1,2,3,4,5,6\}
+$$",,,,,
+Distributed Computing,Data Engineering,Spark,"A simple way to think about distributed systems is that they are a group of independent computers that appear to the end user as a single computer. They allow for horizontal scaling. That means adding more computers rather than upgrading a single system (vertical scaling). The latter is relatively expensive and often insufficient for large workloads. Distributed systems are great for scaling and reliability but also introduce complexity when it comes to design, construction, and debugging. One should understand this trade-off before opting for such a tool. A great tool when: Data does not fit into RAM, must be partitioned, Increases Cost of Moving Data, Memory Faster than Harddrive, Increased cost and risk of failure.",,,,,,,,,
+Docker,,,,,,,,,,,,
+Dot Product,Statistics,Definition,Operation between two vectors (not full matrices). It results in a single scalar value. Is the same as matrix multiplcation when the Matrix are Vectors.,,,,"$$
+\begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix} \times
+\begin{bmatrix} 7 & 8 \\ 9 & 10 \\ 11 & 12 \end{bmatrix}
+$$
+
+<br>
+$$
+\begin{bmatrix} (1\cdot7 + 2\cdot9 + 3\cdot11) & (1\cdot8 + 2\cdot10 + 3\cdot12) \\ (4\cdot7 + 5\cdot9 + 6\cdot11) & (4\cdot8 + 5\cdot10 + 6\cdot12) \end{bmatrix}$$<br>
+$$
+\begin{bmatrix} 58 & 64 \\ 139 & 154 \end{bmatrix} $$ ",,,,,
+Driver Functionality,Spark,,"
+In Apache Spark, the driver communicates with the worker nodes (also called executors) through a component called the cluster manager (e.g., YARN, Mesos, or Spark’s built-in standalone cluster manager). Here's how the communication happens in a typical Spark application: Driver Program: The driver is the central coordinator of a Spark job. It runs the main application and is responsible for creating the SparkContext, defining the Directed Acyclic Graph (DAG) of operations, and dividing this into tasks. Task Scheduling: The driver communicates with the cluster manager to allocate resources (executors) on worker nodes. Once the cluster manager allocates the resources, the driver program divides the job into tasks and assigns them to these executors on the worker nodes. Sending Tasks: The driver sends tasks to the worker nodes (executors) via TCP/IP communication. Each worker node runs the tasks on its data partitions, performing the required transformations or actions. The tasks can include operations like map, filter, reduce, etc. Collecting Results: As the executors process the tasks, they send the results back to the driver. For narrow transformations, the results might be processed locally without much communication, while for wide transformations (which involve shuffling), workers may need to exchange data among themselves before sending results to the driver. Heartbeat Mechanism: Executors periodically send a heartbeat signal back to the driver to confirm they are alive and processing tasks. If the driver detects a failure (e.g., missed heartbeats), it can reschedule tasks on other worker nodes. The driver coordinates the entire job, and executors perform the actual computation, reporting back results, task statuses, and progress to the driver. This distributed system architecture enables Spark to efficiently handle large-scale data processing.",,,,,,,,,
+Dynamically Typed,,,,,,,,,,,,
+Echo,,,"The echo command prints text or variable values in the terminal, often used to check environment variables like echo $SHELL or echo $PATH. ",,,,,,,,,
+Edges and Nodes,,,,,,,,,,,,
+Elastic Search,,,,,,,,,,,,
+ElasticNet Regularization,Machine Learning,Regularization,Approach which combines L1 and L2 Regularization.,,,,,1.0,,,,
+Embarrassingly Parallel,,,,,,,,,,,,
+Embedding,,,,,,,,,,,,
+Encoder,,,"Different Type of Options, including One-Hot, Ordinal. Ordinal convert text to labels, need to be concerned as it gives relative similarity and vale as models interpret not as unique, rather as which is included in computation.",,,,,,,,,
+ENN,,,"Edited Nearest Neighbors: This is an undersampling technique. After SMOTE generates synthetic samples, ENN removes samples from both the majority and minority classes that are misclassified by their nearest neighbors. This step helps to clean the dataset by removing noise and samples near the class boundaries, making the dataset more balanced and reducing the risk of overfitting",,,,,,,,,
+Ensemble Learning,,,"Aggregate the prediction of a group of predictions. Often used at the end of project after you've put together a series of high quality models. Take a Logistic Classifier, Random Forest, SVM and several other models, average them out and take the most frequent entry. Ensembles work best when the error is independently distributed, if trained on the same data set it is highly likely they will contain the same error.",,,,,,,,,
+Entropy,,,"A measure of uncertainty or impurity in a dataset. In decision trees, it helps to determine the best split at each node by evaluating how pure the resulting subsets are",,,,"
+$$
+H(S) = - \sum_{i=1}^{C} p_i \log_2 p_i
+$$
+where:
+- $ H(S) $ is the entropy of the dataset $ S $.
+- $ C $ is the number of classes.
+- $ p_i $ is the proportion of samples in class $ i $.
+
+If all samples belong to one class: $ H = - (1 \log_2 1 + 0 \log_2 0) = 0 $ <br>
+If the classes are evenly split (50%-50%): $ H = - (0.5 \log_2 0.5 + 0.5 \log_2 0.5) = 1 $ <br>
+If one class is dominant (e.g., 75%-25% split): $ H = - (0.75 \log_2 0.75 + 0.25 \log_2 0.25) = 0.81 $",,,,,
+Error,,,"Reducible, Irreducible",,,,,,,,,
+Estimators,Machine Learning,,.fit(),,,,,,,,,
+Euclidean Distance,,,"The Euclidean norm, also called the L2 norm, is the most common type of norm. It measures the straight-line distance from the origin to the point represented by the vector",,,,"
+\**Step 1: Calculate \( \|w\| \) (Euclidean Norm)**
+
+$$
+\|w\| = \sqrt{2^2 + (-3)^2 + 6^2} = \sqrt{4 + 9 + 36} = \sqrt{49} = 7
+$$
+
+**Step 2: Apply the Distance Formula**
+
+$$
+d = \frac{|5 - 1|}{\|w\|} = \frac{4}{7} \approx 0.571
+$$
+
+**Result:** The distance between the two planes is approximately **0.571 units**.
+
+$$
+ ||w|| = \sqrt{\sum \left (w_i \right)^2}
+$$",,,,,
+ExtraTreesClassifier,Machine Learning,,,,,,,1.0,,,,
+F1 Score,Machine Learning,,"F1 is harmonic mean is a type of average that is calculated by dividing the number of values by the sum of the reciprocals of the values, making it useful for situations where rates or ratios are involved, such as calculating average speeds or in situations where equal weighting is given to each data point’s contribution to the average. The F-score (or F1-score) is a measure of a model’s accuracy that considers both precision and recall. The F1-score is particularly useful when your dataset is imbalanced, and you want to ensure both precision and recall are considered. For example, if you only focus on precision, you might ignore false negatives (missed positive cases), and if you focus only on recall, you could have many false positives. The F1-score provides a balanced assessment by combining both metrics. The F Score is a Harmonic Mean, which means that it gives additional consideration to the effect of Lower Values (1/ sum (1/x)). Using travel time as an example, if you travelled 20 Miles (10 Miles at 30 MPH and 10 Miles at 60 MPH) your harmonic mean would be 36, not 45.",,,,,,,,,
+Fact Believability,Behavioural Economics,Books Read,"Facts about this epidemic that have lasted a few days are far more reliable than the latest ‘facts’ that have just come out, which may be erroneous or unrepresentative and thus misleading . . . a question that today can be answered [by] only informed belief may perhaps be answered with a fact tomorrow.",The Firth Risk,,,,,,,,
+Facts Vs Statistics,Behavioural Economics,Books Read,"More likely to die in accident in evening than in morning. More drivers in evening than in morning.
+More likely to die in clear weather than fog. More time occurs without fog, what does it actually mean???
+9:1000 vs 16:1000 deaths in Navy vs NY. Who is in Navy, young healthy men, vs everyone else.
+Polio record cases 1952, more babies, financial incentives, changes on reporting standards, etc..
+Population in rural China, 28M then 5years later 108M. Survey 1 was related to Military conscription, Survey 2 famine and relief",DATASCI200,,,,,,,,
+False Negative,,,,,,,,,,,,
+False Positive,,,,,,,,,,,,
+Fast statistics ,Behavioural Economics,Books Read,"Immoderate, intuitive, visceral, and powerful.",,,,,,,,,
+FastAPI,Technology,,"Simplified Framework for creating API and dstributing. You lose some control relative to Flask, however you gain simplicity, do not need to think about and address ever detail.",,,,,,,,,
+Feed Forward,,,,,,,,,,,,
+Force Fill,,,,,,,,,,,,
+Function,,,"Mathematical principle, where you take a input, apply some calculation to it and arrive at a output. For a something to be considred a function, for any given input, there must be a single output (ie a circle is not a function as there are two values).",,,,,,,,,
+Functional,,,,,,,,,,,,
+Functional Programming,,,,,,,,,,,,
+GaussianNB,,,,,,,,1.0,,,,
+Generalized Additive Model ,,,"statistical model that extends Generalized Linear Models (GLMs) by allowing the relationships between predictors and the response variable to be non-linear, while still maintaining additivity.",,,,"$$
+g(E[Y]) = \beta_0 + f_1(X_1) + f_2(X_2) + \dots + f_n(X_n)
+$$",,,,,
+Generator Verifier Gap,Machine Learning,Natural Language Processing,"The Generator-Verifier Gap is a concept in artificial intelligence (particularly in large language models) that highlights the asymmetry in capabilities between the generation process (how a model generates text or solutions) and the verification process (how well the model can assess or verify its own outputs). The idea stems from the observation that generating a response often requires less rigor than verifying its correctness, which can create a gap in reliability and accuracy",,,,,,,,,
+Goal Setting,Experiement Design,,"Identification of what the goal should be. Not just on how we get to the goal, but what is the right goal.",,,,,,,,,
+Gradient,Statistics,Definition,A vector containing its partial derivatives with respect to each variable. It points in the direction of the steepest ascent.,,,,"$$
+\nabla f = \left( \frac{\partial f}{\partial x}, \frac{\partial f}{\partial y} \right)
+$$
+
+### Example Calculation:
+Given \( f(x, y) = x^2 + y^2 \), the gradient is:
+
+$$
+\nabla f = \left( \frac{\partial}{\partial x} (x^2 + y^2), \frac{\partial}{\partial y} (x^2 + y^2) \right)
+$$
+
+Computing the partial derivatives:
+
+$$
+\nabla f = \left( 2x, 2y \right)
+$$
+
+At \( (x, y) = (1, 2) \):
+
+$$
+\nabla f(1,2) = (2(1), 2(2)) = (2, 4)
+$$
+
+This means the function increases most rapidly in the direction of **(2,4)**.",,,,,
+GradientBoostingClassifier,Machine Learning,,,,,,,1.0,,,,
+Graphs,Statistics,Definition,"A graph is a mathematical structure used to model pairwise relationships between objects. It consists of: Vertices (Nodes) – Represent the entities (e.g., people, cities, tasks). Edges (Connections) – Represent relationships or links between nodes.",,,,"$$
+\begin{array}{|c|c|c|c|}
+\hline
+\textbf{Graph Type} & \textbf{Definition} & \textbf{Use Cases} & \textbf{Examples} \\
+\hline
+\text{DAG} & \text{Directed, no cycles} & \text{Task scheduling, neural networks, version control} & \text{Git commits, data pipelines} \\
+\hline
+\text{Cyclic Graph} & \text{Contains at least one cycle} & \text{Transportation, social networks, web navigation} & \text{Road networks, social media, web crawling} \\
+\hline
+\text{Tree (Acyclic)} & \text{Hierarchical, undirected, no cycles} & \text{File systems, decision trees, search trees} & \text{File explorer, corporate org charts} \\
+\hline
+\end{array}
+$$",,,,,
+Grid Search,,,,,,,,,,,,
+Group Think,,,"Small groups make bad decisions in high stress sitations. Issues: premature closure, drink the cool-aid, not quesitoning basic assumptions, resistance to discreptant information.",,,,,,,,,
+Hadoop,Spark,,"Hadoop - Working in Cluster. Master, Exectuor, HDFS Controls abstraction, even though data might not be in current abstraction. Hadoop makes blocks of 128 MB. Regardless of Size. Built for scalability, not performance. Moving data expensive.",,,,,,,,,
+Handshake,,,,,,,,,,,,
+Hard Voting,,,"Ensemble model gives same weight to all predictions, regardless of confidence or accuracy.",,,,,,,,,
+Harmonic Mean,Statistics,,"The harmonic mean is a type of average that is particularly useful when dealing with rates, ratios, or quantities that involve reciprocal relationships. It is defined as the reciprocal of the arithmetic mean of the reciprocals of a given set of numbers",,,,"The **harmonic mean** of a set of $n$ numbers $x_1, x_2, \dots, x_n$ is given by:
+
+$$
+H = \frac{n}{\sum\limits_{i=1}^{n} \frac{1}{x_i}}
+$$",,,,,
+HDFS,,,,,,,,,,,,
+Heirachracal clustering,,,,,,,,,,,,
+High Level Language,,,"Abstracts away computer details. Don't have to worry about details of the computer, Hardware, Memory, etc. Pros: User friendly. R, Python, VB, Ruby, Javascript, Go",,,,,,,,,
+Higher Order Functions,,,Functions that feed into other functions,,,,,,,,,
+Hinge Loss,Machine Learning,Loss Optimization,"Loss function used primarily for binary classification, especially in Support Vector Machines (SVMs). It's designed to maximize the margin between classes — that is, push predictions to be confidently correct. It penalizes predictions that are: On the wrong side of the decision boundary Or correct but not confidently correct (i.e., too close to the margin)",,,,,,,,,
+Hive,,,,,,,,,,,,
+How to calculate dot products.,,,,,,,,,,,,
+How to calculate eucledian distance,,,,,,,,,,,,
+How to Estimate/ Guess.,Behavioural Economics,,"The population of the United States is 325 million. The population of the United Kingdom is 65 million. The population of the world is 7.5 billion. Name any particular age (under the age of sixty). There are about 800,000 people of that age in the UK. If a policy involves all three-year-olds, for example, there are 800,000 of them. In the United States, there are about 4 million people of any particular age (under the age of sixty). Distance around the Earth: 40,000 kilometers, or 25,000 miles. It varies depending on whether you go around the poles or around the equator, but not much. The drive from Boston to Seattle: 3,000 miles.
+
+Length of a bed: 2 meters (or 7 feet). As Elliott points out, this helps you visualize the size of a room: How many beds is that? The gross domestic product of the United States: about $20 trillion (or $20,000 billion). It’s a lot of walls, if that’s really how you want to spend it. 100,000 words: the length of a medium-size novel. 1,454 feet: the height of the Empire State Building to its tip. (It’s also about 102 stories.)",,,,,,,,,
+Huber Loss,Machine Learning,Loss Optimization,Loss function used in regression problems that is robust to outliers — it's essentially a blend between Mean Squared Error (MSE) and Mean Absolute Error (MAE). Regression with noisy or outlier-prone data Situations where you want the stability of MSE but the robustness of MAE,,,,,,,,,
+I/O,,,,,,,,,,,,
+Identity Access Management (IAM),,,,,,,,,,,,
+IID,,,,,,,,,,,,
+Illusion of Asymmetric Insights,Behavioural Economics,,"The Belief that we know others better than they know us and that we may have insights about them that they lack (but not vice versa). As explained by the fill in the blanks word game, the words don’t define me, yet they do define others. CIA Officers. Judges. ",,,,,,,,,
+Inference,,,,,,,,,,,,
+Information Gain,Statistics,Definition,"
+Information Gain measures the reduction in uncertainty or impurity in a dataset when it is split based on a feature. A higher Information Gain indicates a better split, meaning the feature helps in making more distinct and informative classifications.",,,,"$$
+IG = H(\text{Parent}) - \sum_{i=1}^{k} \frac{n_i}{N} H(\text{Child}_i)
+$$
+
+where:
+- $ H(\text{Parent}) $ is the entropy before the split.
+- $ H(\text{Child}_i) $ is the entropy of the $ i^{th} $ child node.
+- $ \frac{n_i}{N} $ is the proportion of samples in each child node.
+- $ k $ is the number of child nodes.",,,,,
+Ingress,,,"In networking, ""ingress"" refers to the incoming data traffic entering a network. It's the data flow from external sources toward a particular network or device within that network. Managing ingress traffic is crucial for network security and performance optimization. Network administrators often implement measures such as firewalls, access control lists (ACLs), and intrusion detection/prevention systems (IDS/IPS) to regulate and protect against unwanted or malicious ingress traffic. Additionally, Quality of Service (QoS) mechanisms may be employed to prioritize certain types of ingress traffic for better network performance.",,,,,,,,,
+Inspection,Machine Learning,,,,,,,,,,,
+Instance Based Learning,Machine Learning,Definition,"A type of learning where the algorithm memorizes training examples and makes predictions by comparing new inputs to stored instances, rather than building a general model. Examples include k-Nearest Neighbors (k-NN) and case-based reasoning.",,,,,,,,,
+Interpreted,,,"Source Code - Interpreter - Output. Code is ready to run, but it's not written in Binary, Interpreter turns it into Machine Code. Python often presented as Interpreted, but not strictly true.",,,,,,,,,
+Interpreted Language,,,,,,,,,,,,
+Intertemporal choice,Behavioural Economics,, Refers to decisions that involve trade-offs between costs and benefits occurring at different points in time,,,,,,,,,
+Inverted Matrix,,,,,,,,,,,,
+Istio,,,"Open-source service mesh platform that provides a way to connect, secure, control, and observe microservices running in a Kubernetes cluster or any other platform that supports the Envoy proxy. Traffic Management: Istio provides advanced traffic management capabilities such as intelligent routing, load balancing, and traffic splitting. It allows you to implement A/B testing, canary deployments, blue-green deployments, and other deployment strategies for your microservices. Security: Istio enhances the security of microservices by providing features like mutual TLS (mTLS) authentication, encryption of service-to-service communication, and fine-grained access control policies. It helps protect against network attacks and unauthorized access to services. Observability: Istio provides rich observability features that allow you to monitor and trace requests flowing through your microservices. It integrates with monitoring tools like Prometheus, Grafana, Jaeger, and Kiali to provide insights into service performance, latency, and errors. Policy Enforcement: Istio allows you to enforce policies for access control, rate limiting, and quotas across your microservices. It provides a centralized policy framework that enables you to define and enforce policies consistently across your entire service mesh. Resilience: Istio helps improve the resilience of microservices by providing features like circuit breaking, retries, timeouts, and fault injection. It allows you to handle failures gracefully and prevent cascading failures in your distributed systems. Integration with Kubernetes: Istio is designed to work seamlessly with Kubernetes, leveraging its native features like labels, selectors, and annotations. It integrates with the Kubernetes API server to dynamically configure and manage networking, security, and traffic routing for microservices.
+At its core, Istio is powered by Envoy, which is a high-performance proxy designed for cloud-native applications. Istio deploys Envoy proxies alongside each microservice to intercept and manage traffic flowing between services within the mesh. Overall, Istio provides a comprehensive set of features for managing microservices in a distributed environment, making it easier to build, deploy, and operate resilient and secure applications at scale.",,,,,,,,,
+Jaccard similarity,,,"Jaccard similarity is another measure of similarity between two sequences of numbers. It is defined by the intersection divided by the union of two sets of numbers. Between two non-zero sets.Jaccard similarity is the ratio of shared elements to unshared elements.  I.e., Jaccard Similarity = (number of non-zero elements in both sets) / (number non-zero elements in either set). The Jaccard similarity always belongs to the interval [0,1].",,,,,,,,,
+JDBC,,,,,,,,,,,,
+K Fold Cross Validation,,,,,,,,,,,,
+K Means Clustering,,,,,,,,,,,,
+Kaftka,,,,,,,,,,,,
+Kernel Methods,,,,,,,,,,,,
+Kmeans can only do circular clusters because of centroids,,,,,,,,,,,,
+Kubernetes,,,,,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/kubernetes.png,,,,,,
+Kurtosis,Statistics,Definition,"Kurtosis measures the tailedness of a distribution (how extreme the outliers are).It describes whether the data has **heavy tails (high kurtosis)** or **light tails (low kurtosis)**. A normal distribution has a **kurtosis of 3** (excess kurtosis = 0), lower means there are less extreme observation values, and higher means there are more. More can be a problem as it may impact the distribution (if the values are not consistent with the actual distribution), and not enough can result in the model not sufficiently understanding the distribution.",,,,"$$
+\text{Kurtosis} = \frac{n(n+1)}{(n-1)(n-2)(n-3)} \sum_{i=1}^{n} \left( \frac{x_i - \bar{x}}{s} \right)^4 - \frac{3(n-1)^2}{(n-2)(n-3)}
+$$
+
+- **Kurtosis ≈ 3** → Normal distribution (**Mesokurtic**)
+- **Kurtosis > 3** → Heavy tails, more extreme outliers (**Leptokurtic**)
+- **Kurtosis < 3** → Light tails, fewer outliers (**Platykurtic**)",,,,,
+Kustomize,,,"Tool for customizing Kubernetes configurations. It allows you to manage Kubernetes manifest files (YAML) in a more modular and flexible way, making it easier to manage configurations across different environments (such as development, staging, and production) or for different teams. Configuration Management: Kustomize provides a way to customize Kubernetes resources without modifying the original YAML files. This enables you to manage configurations separately from application code, making it easier to maintain and update configurations over time. Template-free Configuration: Unlike tools like Helm, Kustomize does not use templates for generating Kubernetes manifests. Instead, it uses a patch-based approach where you can define patches to apply to base configuration files. This makes configurations more maintainable and easier to understand. Environment-specific Configurations: With Kustomize, you can define overlays for different environments (such as development, staging, and production) that contain environment-specific configurations. This allows you to manage configuration drift and keep environment-specific settings separate from the base configuration. Resource Composition: Kustomize supports resource composition, allowing you to create reusable components and compose them together to generate complete configurations. This promotes code reuse and modularity in your Kubernetes configurations. Integration with GitOps: Kustomize is often used in conjunction with GitOps practices, where configuration changes are managed through version control systems like Git. By storing configurations in version control, you can track changes, collaborate with teams, and automate deployment workflows.",,,,,,,,,
+Lady Lovelace,,,,,,,,,,,,
+Lag,,,"A lag can be introduced to identify a relationship which occurs over a period of time, opposed to immediatley. A common example is Economic Data, when you need to wait to see the impact of the effect, such as inflation rate.
+",,,,,,,,,
+lambda,Machine Learning,Hyperparameter,"L2 regularization term (Ridge) used in models like XGBoost, LightGBM, and other ensemble methods to prevent overfitting.","[0, 0.01, 0.1, 1, 10]",,,,,,,,
+Lasso Regression,Machine Learning,Regularization,"Technique used to prevent overfitting by adding penalty term to loss function. Adds the absolute values of the coefficients as a penalty term. This leads to sparse models, as some coefficients become exactly zero",,,,"$$
+J(\theta) = \sum_{i=1}^{m} \left( y_i - \hat{y}_i \right)^2 + \lambda \sum_{j=1}^{n} |\theta_j|
+$$",1.0,,,,1.0
+Leakage,,,,,,,,,,,,
+Leaky Relu,,Activation Function,,,,,,,,,,
+Learning Algorithm,Machine Learning,,"Method or set of rules that a computer follows to improve its performance on a task through experience. It is the core mechanism behind machine learning and is responsible for finding patterns in data, making predictions, or optimizing decision-making. 
+Three components; Loss Function, Optimization Criterion, Optimization Routine",,,,,,,,,
+learning_rate,Machine Learning,Hyperparameter,"Controls how the model updates weights during training. If it is too high, it will converge fast, and might skip optimal values, or not converge as it jumps back and forth between increasing and decreasing. Too Low and it will fail to converge, or potentially get stuck in a local minima.","[0.01, 0.05, 0.1, 0.2]",,,,,,,,
+LightGBM,,,,,,,,,,,,
+Linear Regression,Machine Learning,Model,Linear Regression models the relationship between an independent variable ( X ) and a dependent variable ( Y ) using a linear function.,"Cost function for Linear Regression is usually Mean Squared Error. While it does not have to be, it is convenient for a number of reasons. 1) Rarely Overfits, which Polynomial equations frequently do. 2) It always has a derivative, which makes it convenient for using closed forms solutions (saving computation complexity). ",,,"$$
+Y = w_0 + w_1 X + \epsilon
+$$
+$$
+Y = w_0 + w_1 X_1 + w_2 X_2 + \dots + w_n X_n + \epsilon
+$$
+$$
+MSE = \frac{1}{N} \sum_{i=1}^{N} (Y_i - \hat{Y}_i)^2
+$$
+
+A linear model can be written as:
+
+$$
+\mathbf{y} = \mathbf{X} \boldsymbol{\beta} + \boldsymbol{\epsilon}
+$$
+
+where:
+- $( \mathbf{y} \in \mathbb{R}^{n \times 1})$ is the vector of observed values
+- $( \mathbf{X} \in \mathbb{R}^{n \times p} )$ is the design matrix (with \( n \) samples and \( p \) features),
+- $( \boldsymbol{\beta} \in \mathbb{R}^{p \times 1} )$ is the vector of coefficients,
+- $( \boldsymbol{\epsilon} \in \mathbb{R}^{n \times 1} )$ is the error term.
+
+The closed-form solution for the ordinary least squares (OLS) estimate of \( \boldsymbol{\beta} \) is:
+
+$$
+\hat{\boldsymbol{\beta}} = (\mathbf{X}^T \mathbf{X})^{-1} \mathbf{X}^T \mathbf{y}
+$$
+
+provided that $( \mathbf{X}^T \mathbf{X} )$ is invertible.
+
+This formula is derived by minimizing the sum of squared errors:
+
+$$
+\mathcal{L}(\boldsymbol{\beta}) = \|\mathbf{y} - \mathbf{X} \boldsymbol{\beta} \|^2
+$$
+
+Taking the derivative with respect to $( \boldsymbol{\beta} )$ and setting it to zero:
+
+$$
+\frac{\partial \mathcal{L}}{\partial \boldsymbol{\beta}} = -2 \mathbf{X}^T (\mathbf{y} - \mathbf{X} \boldsymbol{\beta}) = 0
+$$
+
+Solving for $( \boldsymbol{\beta} )$ gives the closed-form solution above.
+",1.0,,,,
+LLM,Machine Learning,Model,,,,,,1.0,,,,
+Log Loss,,,"Log Loss is used in binary classification tasks where the output is a probability between 0 and 1. It penalizes incorrect predictions with a logarithmic scale, meaning that confident wrong predictions are penalized more than less confident ones.",,,,"
+$$\text{Log Loss} = -\frac{1}{n} \sum_{i=1}^n \left[ y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i) \right]$$
+
+$$\text{Log Loss} = -\frac{1}{n} \sum_{i=1}^n \sum_{j=1}^k y_{ij} \log(\hat{y}_{ij})$$",,,,,
+Logistic Regression,Machine Learning,Model,"Logistic Regression is used for binary classification. It predicts the probability that an instance belongs to a particular class.
+",,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/logistic.png,"### **Definition:**
+Logistic Regression is used for **binary classification**. It predicts the probability that an instance belongs to a particular class.
+
+### **Equation:**
+Logistic regression applies the **sigmoid function** to a linear model:
+
+$$
+P(Y = 1 | X) = \sigma(w_0 + w_1 X_1 + w_2 X_2 + \dots + w_n X_n)
+$$
+
+where the **sigmoid function** \( \sigma(z) \) is:
+
+$$
+\sigma(z) = \frac{1}{1 + e^{-z}}
+$$
+
+This ensures that the output is in the range \( (0,1) \), representing a probability.
+
+### **Decision Rule:**
+To classify an instance:
+- If $( P(Y=1|X) \geq 0.5 )$, predict class **1**.
+- Otherwise, predict class **0**.
+
+### **Objective Function:**
+Logistic regression minimizes the **log-loss (cross-entropy loss)**:
+
+$$
+J(\theta) = -\frac{1}{N} \sum_{i=1}^{N} \left[ Y_i \log(\hat{Y}_i) + (1 - Y_i) \log(1 - \hat{Y}_i) \right]
+$$
+where $( \hat{Y}_i )$ is the predicted probability.",1.0,Supervised,,,
+Loss Function,Statistics,Definition,"A loss function is a mathematical function that quantifies the difference between the predicted output of a model and the actual target value. It serves as an optimization objective, guiding the model to learn by minimizing the error during training.",,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/Loss_Functions.png,,,,,,
+Low Level Language,,,"Allocates control of computer resources, very specific. Cons: Difficult to code, difficult to interpret Pros: Very Fast. Machine Code: Binary, difficult to read, very few directly use. C++ not low level, but amongst the more popular lower level, Java - Higher than C++ not High.",,,,,,,,,
+Machine Learning,,,"Using a process to enable computers to iteratively learn from the data and improve analysis, outcomes or understanding. Intersection of statistics, artificial intelligence and computer science. Machine's don't learn, they find optimal mathematical formulas based on the data it is presented. There is an assumption that this data set is both representative of other data sets,  and possess similiar statistical distributions', You can argue this is not learning, because slight variances can result in materially different responses and output, Term synonymous with machines doing tasks without explicitly being programmed. Building a statistical model, based on a dataset",,,,,,,,,
+Markov Chains,,,"Discrete stochastic process. Loan Repayment as example, 30, 60, 90 Default and possible movements within. Sink - Absorbing State. Statelessness. Only care about where you are. Steady State Distribution of the Random Graph",,,,,,,,,
+Matrix,Statistics,Definition,,,,,"#### Addition
+$$
+A + B =
+\begin{bmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{bmatrix} +
+\begin{bmatrix} b_{11} & b_{12} \\ b_{21} & b_{22} \end{bmatrix} =
+\begin{bmatrix} a_{11} + b_{11} & a_{12} + b_{12} \\ a_{21} + b_{21} & a_{22} + b_{22} \end{bmatrix}
+$$
+
+$$
+\begin{bmatrix} 10 & 8 \\ 6 & 4 \end{bmatrix} +
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} =
+\begin{bmatrix} 11 & 10 \\ 9 & 8 \end{bmatrix}
+$$
+
+
+#### Subtraction
+$$
+A - B =
+\begin{bmatrix} a_{11} & a_{12} \\ a_{21} & a_{22} \end{bmatrix} -
+\begin{bmatrix} b_{11} & b_{12} \\ b_{21} & b_{22} \end{bmatrix} =
+\begin{bmatrix} a_{11} - b_{11} & a_{12} - b_{12} \\ a_{21} - b_{21} & a_{22} - b_{22} \end{bmatrix}
+$$
+
+$$
+\begin{bmatrix} 10 & 8 \\ 6 & 4 \end{bmatrix} -
+\begin{bmatrix} 1 & 2 \\ 3 & 4 \end{bmatrix} =
+\begin{bmatrix} 9 & 6 \\ 3 & 0 \end{bmatrix}
+$$
+
+
+#### Multiplication 
+$$
+\begin{bmatrix} 1 & 2 & 3 \\ 4 & 5 & 6 \end{bmatrix} \times
+\begin{bmatrix} 7 & 8 \\ 9 & 10 \\ 11 & 12 \end{bmatrix}
+$$
+
+$$
+\begin{bmatrix} 
+(1\cdot7 + 2\cdot9 + 3\cdot11) & (1\cdot8 + 2\cdot10 + 3\cdot12) \\ 
+(4\cdot7 + 5\cdot9 + 6\cdot11) & (4\cdot8 + 5\cdot10 + 6\cdot12) 
+\end{bmatrix}
+$$
+
+$$
+\begin{bmatrix} 58 & 64 \\ 139 & 154 \end{bmatrix}
+$$
+",,,,,
+max_depth,Machine Learning,Hyperparameter,Maximum depth of each tree in the model. Larger values allow more complex splits but can lead to overfitting.,"[3,5,10,20]",,,,,,,,
+max_features,Machine Learning,Hyperparameter,Number of features considered for each split in Random Forest.,"['sqrt', 'log2', None]",,,,,,,,
+Mean Absolute Error,,,Manhattan Norm. L1 Norm,,,,,,,,,
+Micro services,,,Exchanges operational complexity for logistical complexity.,,,,,,,,,
+Min Max Scaler,Machine Learning,,,,,,,1.0,,,,
+min_samples_leaf,Machine Learning,Hyperparameter,Minimum number of samples required to be in a leaf node. Higher values make trees more conservative.,"[1, 5, 10, 20]",,,,,,,,
+min_samples_split,Machine Learning,Hyperparameter,Minimum number of samples required to split a node. Higher values prevent overfitting by reducing splits.,"[2, 5, 10, 20]",,,,,,,,
+Minikube,,,"Open-source tool that allows you to run a single-node Kubernetes cluster locally on your machine. Kubernetes is a powerful container orchestration platform that automates the deployment, scaling, and management of containerized applications. Minikube enables developers to test and develop Kubernetes applications on their local development environment without needing access to a full-scale Kubernetes cluster. It provides a lightweight, easy-to-use solution for getting started with Kubernetes development. Local Kubernetes Cluster: Minikube sets up a local Kubernetes cluster on your machine using a lightweight virtualization technology such as VirtualBox, KVM, or Docker. Easy Installation: Minikube can be easily installed on various operating systems, including Linux, macOS, and Windows, making it accessible to a wide range of developers.
+Cluster Operations: Minikube provides commands to start, stop, delete, and manage the local Kubernetes cluster, allowing developers to perform cluster operations conveniently from the command line. Addon Support: Minikube supports various Kubernetes addons, such as dashboard, ingress controller, metrics server, and more, allowing developers to extend the functionality of their local Kubernetes cluster as needed. Integration with kubectl: Minikube seamlessly integrates with kubectl, the Kubernetes command-line tool, enabling developers to interact with the local Kubernetes cluster using familiar Kubernetes commands.",,,,,,,,,
+MLPClassifier,,,,,,,,1.0,,,,
+MLPRegressor,,,,,,,,1.0,,,,
+MNist,,,,,,"https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/Mnist_Simple_results.png
+https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/MNist_Results.png",,,,,,
+Model Based Learning,Machine Learning,Definition,"A type of learning where the algorithm builds a general model from training data by identifying patterns and relationships. Once trained, the model is used to make predictions on new data. Examples include linear regression and neural networks.",,,,,,,,,
+Momentum,Machine Learning,Loss Optimization,"Variation of Gradient Descent, which accelerates learning by accumulating a moving average of past gradients.",,,,"$$
+v_t = \beta v_{t-1} + (1 - \beta) \nabla J(\theta_t)
+$$
+
+$$
+\theta_{t+1} = \theta_t - \alpha v_t
+$$
+
+where:
+- $( v_t )$ is the velocity term (exponential moving average of gradients),
+- $( \beta )$ is the momentum factor (typically \( 0.9 \)).
+",,,,,
+Monolithic Architecture,,,"Single System to rule all components. Single Deployment, Simple Architecture, Many interconnected functional use cases and logic between use cases. Couples the data layer to ever part of application/ business logic",,,,,,,,,
+Motivated reasoning,Behavioural Economics,,"Cognitive phenomenon where people process information in a biased way to support their existing beliefs, desires, or emotions. Instead of evaluating evidence objectively, individuals interpret information in a way that aligns with their preferred conclusions or outcomes. Directional reasoning: When people want to arrive at a specific conclusion, they give more weight to evidence that supports their desired belief and discount or dismiss evidence that contradicts it. Accuracy reasoning: In contrast, this occurs when individuals are genuinely motivated to arrive at a correct or objective conclusion. They carefully analyze all available evidence regardless of whether it supports their initial belief.",,,,,,,,,
+Motivated Reasoning,Behavioural Economics,Books Read,"Type of cognitive bias where people process information in a way that aligns with their preexisting beliefs, desires, or emotions, rather than objectively evaluating the facts",,,,,,,,,
+Multihot Encoding,,,,,,,,,,,,
+MultinomialNB,,,,,,,,1.0,,,,
+n_estimators,Machine Learning,Hyperparameter,"Number of Trees within the Model, With more trees, the model increases accuracy but slower training, with a risk of overfitting, where as too few layers, the model is faster, but less accurate and might not generalize well.","[50,100,150,200]",,,,,,,,
+Nadam,Machine Learning,Optimization,Adam optimizer with Nesterov momentum for better convergence.,,,,,,,,,
+Naïve Bayes,,,,,,,,,,,,
+Naive realism,Behavioural Economics,Books Read,The sense that we are seeing reality as it truly is without filters or errors.,,,,,,,,,
+Naïve Realism,Behavioural Economics,,People view the worl the way I view the world.,,,,,,,,,
+Narrow Transformation,Spark,,"Each partition of the parent RDD is used by at most one partition of the child RDD. This means that data is not shuffled across the network between partitions, and each transformation can be executed locally on the same node. Examples of narrow transformations include map, filter, and flatMap. Because they don't involve data movement, narrow transformations are more efficient.]",,,,,,,,,
+Nature of Individuals,Experiement Design,,"Need to contend with the strategic nature of people - A person might try and ""fool"" you to think they are someone or something that they are not. A piece of steel is not going to if you're looking to understand how it performs under various types of stress.",,,,,,,,,
+Network Topology,,,Arrangement of devices with respect to each other.,,,,,,,,,
+Neural Network,Machine Learning,Model,,,https://playground.tensorflow.org/,,,1.0,,,,
+NGNX,,,"Popular open-source web server, reverse proxy server, load balancer, and HTTP cache. It's known for its high performance, stability, and scalability, making it a widely used component in modern web architectures.",,,,,,,,,
+Non Parametric,,,"Model that does not assume a fixed functional form or a predetermined number of parameters. Instead, the complexity of the model can grow with the amount of data, allowing it to adapt flexibly to different patterns in the data.",,,,,,,,,
+Normal Distance,,,,,,,,,,,,
+Normalization,Statistics,Scaling,"Normalization scales the values of a feature to a fixed range, typically [0, 1] or [-1, 1]. It is also called Min-Max Scaling.  Normalization works best when  the data does not follow a normal (Gaussian) distribution and features have a materially different scale. Commonly used for KNN, NN, SVM with non-linear Kernels.",,,,"$$
+X' = \frac{X - X_{\min}}{X_{\max} - X_{\min}}
+$$",,,,,
+Object,,,,,,,,,,,,
+Objective Function,,,,,,,,,,,,
+Objects,,,"Everything in Python is an object.  On object is baseically a storage Container.
+Every object has a type. Can be located by memory location, or by assignment of variable",,,,,,,,,
+Occam's Razor,Theory,,"Philosophical principle that suggests when faced with multiple explanations for a phenomenon, the simplest one is often the best. It emphasizes minimizing unnecessary assumptions and complexity while ensuring the explanation or solution remains sufficient to address the problem. Simpler models or explanations are easier to understand, communicate, and test, they avoid overfitting, and provides a heuristic for prioritizing hypotheses that require fewer assumptions, allowing for a more structured and efficient approach to problem-solving.",,,,,,,,,
+One Hot Encoding,,,,,,,,,,,,
+Online Learning,,,,,,,,,,,,
+OOV,,,,,,,,,,,,
+Optimizer,,,,,,,,,,,,
+Optimizer,,,,,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/Optimizer_Performance.png,,,,,,
+Organizational Process,,," ""Standard Operating Procedure"". In a situation, what does the organization do? A complex entity manages a problem in a relatively similar manner, break pieces out into a number of parts, which are delegated, those decisions are often further delegated, with the ultimate objective of responding in the short run to choose a sufficient decision (not optimal). They also don't look at the problem as a whole.  THey will try and figure out a way to improve eventually, but just need to respond in the immediate. Normally with tools and techniques that are simple, available and already known, such that its minimally disruptive.",,,,,,,,,
+Organizations,Behavioural Economics,," Great at solving Problems. Bad at diagnosing problems. 
+You should never trust large organizations, on the best day they’re incompetent, on a bad day they’re crooked.",,,,,,,,,
+Overlap Similarity,,,"The overlap coefficient is another measure of similarity between two sequences of numbers. It measures the overlap between two finite sets by using the size of the intersection divided by the smaller of the size of the two sets.In comparing two documents, overlap coefficient can be thought of as the percent of words in the document with fewer unique words that are also in the other document. If set A is a subset of B or the converse, then the overlap coefficient is equal to 1.",,,,,,,,,
+Oversampling,,,"Technique used in machine learning to address class imbalance, where the minority class has significantly fewer instances than the majority class. It involves increasing the number of samples in the minority class to balance the dataset. By doing this, oversampling helps to prevent models from being biased toward the majority class and improves the model’s ability to learn patterns from the minority class",,,,,,,,,
+Pareto Principle,Definition,,"80/20 Rule, is a principle named after the Italian economist Vilfredo Pareto, who observed that roughly 80% of the effects come from 20% of the causes.",,,,,,,,,
+Parkinson's law of triviality,Definition,,"When a group is asked to make decisions, they often spend the most time on the simplest, least important aspects because these are easier to understand and discuss. For example, in a meeting to approve the budget for a nuclear power plant, more time might be spent discussing the design of a bike shed for employees than on the complex technicalities of the plant itself. This is because everyone understands and feels competent to discuss the bike shed, but few are knowledgeable enough to weigh in on the technical aspects of the power plant. Misallocation of Resources: The law of triviality suggests that important decisions are often overshadowed by trivial ones, leading to a misallocation of attention and resources. Cognitive Bias: People tend to focus on topics they feel more comfortable with, even if those topics are less critical. This can result in ineffective decision-making where the more significant and complex issues are neglected.",,,,,,,,,
+Parkinson's' Law,Definition,,work expands to fill the time available for its completion,,,,,,,,,
+Partitioning,,,,,,,,,,,,
+Path,,,"The PATH variable is a list of directories that the shell searches to find executable programs, and adding a new directory (e.g., export PATH=""$HOME/bin:$PATH"") allows you to run scripts or programs from that location. Managing PATH correctly ensures that the right versions of commands and tools are used in your terminal",,,,,,,,,
+Pearson's R,,,,,,,,,,,,
+Perceptron,,,,,,,,1.0,,,,
+Pipeline Function,,,,,,,,,,,,
+Postings,,,,,,,,,,,,
+Precision,Machine Learning,Evaluation,"Precision is the ratio of correct positive predictions to the overall number of Positive Predictions.  It is useful when false positives are costly (e.g., spam detection, where predicting a normal email as spam is bad).",,,,$$ P = \frac{TP}{TP + FP} $$,,,,,
+Prediction,,,,,,,,,,,,
+Prediction Probability,,,How confident the model is with respect to the prediction.,,,,,,,,,
+Predictive Analytics,,,which enables you to answer the question “What is likely to happen in the future based on previous trends and patterns?”,,,,,,,,,
+Predictors,Machine Learning,,Linear Regression,,,,,,,,,
+Prescriptive analytics,,,"Enables autonomous decision making based on real-time or near real-time analysis of data, using predictive analytics.",,,,,,,,,
+Principle Component Analysis (PCA),,,,,,,,1.0,,,,
+Problem Definition,Experiement Design,,"There are distinct Types of Problems. Type 1 Problem - Question and Answer are Clear. Type 2 Problem - The Question is Clear, but the answer is unclear and abstract. Type 3 Problem - Question and Answer are both abstract..
+How to differentiate different type of problems, so you can understand the type of problem you need to solve.
+Type 1: What should the price of peaches be?
+Type 2: What is our strategy for selling fruit?
+Type 3: What are customer doing actually doing when they buy fruit? What needs are they fullfilling?",,,,,,,,,
+Procedural,,,,,,,,,,,,
+Pydantic,Technology,,"Pydantic is a data validation and settings management library in Python, primarily used to validate data against a specific data model (schema) and to parse and serialize complex data types. A ""Pydantic model"" refers to a class definition in Python that inherits from pydantic.BaseModel. These models define the structure of data that you expect to receive or send in your application and allow you to enforce constraints on that data.",,,,,,,,,
+PySpark ,Data Engineering,Spark,Spark’s Python API. Think of it as a Python-based wrapper on top of core Spark.,,,,,,,,,
+Q Learning,,,,,,,,,,,,
+Qualitative Approach,Experiement Design,,"Observation, Open Ended Survey, Interviews, Case Studies, Participants, opposed to Subjects",,,,,,,,,
+Question,Experiement Design,,"""The questions that get posed have been limited by imagination and data. The questions were a function of what data is available. The Drunk looking under the lamp post for their keys because that’s where the light is.
+Hard to get serious about focusing on questions that they can't see how to answer.
+Looking for where the light will be, not simply where the light is. 
+Data about people is increasingly available, likely where the change will be.""",,,,,,,,,
+Race Conditions,,,Multiple processes on same resources. Solved in Hadoop syntonization. Bariier. No reduce until mapper finish,,,,,,,,,
+RAG,,,,,,,,,,,,
+Random Surfer,,,,,,,,,,,,
+RandomForestClassifier,Machine Learning,,,,,,,1.0,,,,
+Randomized Grid Search,,,,,,,,,,,,
+Randomized Search CV,,,,,,,,,,,,
+Rational Actor,,,"Whoever is making the decision is going to intellegently work through the decision, look at the information available, do a calculation of what the highest payoff is and land on that option.",,,,,,,,,
+Recall,Machine Learning,Evaluation,"Recall is the correct positive predicitions to the overall number of positive examples. It is useful when false negatives are costly (e.g., medical diagnosis, where missing a disease case can be dangerous).",,,,$$ R = \frac{TP}{TP + FN} $$,,,,,
+Reciever Operating Characterisitcs (ROC) ,,,,,,,,,,,,
+Regression,,,,,,,,,,,,
+Regularization,Machine Learning,Regularization,"Technique used to prevent overfitting by adding a penalty term to the loss function. It discourages the model from fitting too closely to the training data, ensuring better generalization to unseen data. Traditionnaly results in bias, at benefit of materially lowering Variance.
+
+ There are two common types of regularization: L1 Regularization (Lasso Regression): Adds the absolute values of the coefficients as a penalty term. This leads to sparse models, as some coefficients become exactly zero. L2 Regularization (Ridge Regression): Adds the squared values of the coefficients as a penalty term. This shrinks the coefficients but does not eliminate them.",,,,"Lasso: $
+J(\theta) = \sum_{i=1}^{m} \left( y_i - \hat{y}_i \right)^2 + \lambda \sum_{j=1}^{n} |\theta_j|
+$
+
+Ridge:$
+J(\theta) = \sum_{i=1}^{m} \left( y_i - \hat{y}_i \right)^2 + \lambda \sum_{j=1}^{n} \theta_j^2
+$",,,,,1.0
+Reinforcement Learning,,,,,,,,,,,,
+Relu,Machine Learning,Activation Function,,,,,,,,,,
+Research Approach,Experiement Design,,"Broad Plan. I includes phiosophical world view about research, design and methods",,,,,,,,,
+Research Design,Experiement Design,,"Articulate the type of inquiry, qualitative, quantitative, mixed and the specific procedures in the study. Akin to a Recipe",,,,,,,,,
+Research Method,Experiement Design,,"Planned data collection, analysis and interpretation",,,,,,,,,
+Resilient Distributed Dataset (RDD),Spark,,"Fundamental data structure in Apache Spark, representing an immutable, distributed collection of objects that can be processed in parallel across a cluster. RDDs provide fault tolerance through lineage, which means they can automatically recompute lost data due to node failures by keeping track of the transformations applied to the original dataset. They support two types of operations: transformations (e.g., map, filter) that define a new RDD from an existing one, and actions (e.g., collect, reduce) that return a result or save it to external storage. RDDs are designed to handle large-scale data processing efficiently, providing users with control over partitioning and persistence in memory or on disk. RDD are Key Value Pairs. They are also the original and simplest from of Data in spark.",,,,,,,,,
+Rest API,,,"Representational State Transfer Application Programming Interfaces are a type of web API (Application Programming Interface) that adheres to the principles of REST. REST is an architectural style for designing networked applications, and it was introduced by Roy Fielding in his doctoral dissertation in 2000.",,,,,,,,,
+Restricted Boltzmann Machines,,,,,,,,,,,,
+Ridge Regression,Machine Learning,Regularization,Technique used to prevent overfitting by adding penalty term to loss function. Adds the squared values of the coefficients as a penalty term. This shrinks the coefficients but does not eliminate them.,"The equation that you use to calculate the cost function is not the function which is tested, you use the unconstrained model. ",,,"$$
+J(\theta) = \sum_{i=1}^{m} \left( y_i - \hat{y}_i \right)^2 + \lambda \sum_{j=1}^{n} \theta_j^2
+$$",1.0,,,,1.0
+RMSprop,Machine Learning,Loss Optimization,"Variation of Gradient Descent, which adapts the learning rate by dividing by an exponentially weighted moving average of past squared gradients. Adapts learning rates based on recent gradient magnitudes. Good for RNNs.",,,,"$$
+G_t = \beta G_{t-1} + (1 - \beta) \nabla J(\theta_t)^2
+$$
+
+$$
+\theta_{t+1} = \theta_t - \frac{\alpha}{\sqrt{G_t + \epsilon}} \nabla J(\theta_t)
+$$
+
+where:
+- $( G_t )$ is the exponentially decaying average of squared gradients.
+",,,,,
+RNN,Machine Learning,,"Recurrent Neural Network (RNN) is a type of neural network designed for processing sequences of data by maintaining a memory of previous inputs. Unlike traditional feedforward neural networks, RNNs have connections that loop back on themselves, allowing them to retain information from previous time steps and use it to influence current outputs. This makes them well-suited for tasks involving time series, sequential data, or context-dependent tasks such as speech recognition, language modeling, and machine translation.",,,,,,,,,
+Robust Scaler,Machine Learning,,,,,,,1.0,,,,
+Rolling Windows,,,,,,,,,,,,
+Root Mean Squared Error,,,Euclidean Norm. L2 Norm,,,,$MSE = \frac{1}{n} \sum_{i=1}^n (y_i - \hat{y}_i)^2$,,,,,
+Scalar,Statistics,Definition,,,,,,,,,,
+Semi Structured Data,,,"Semi-structured data is data such as JavaScript object notation (JSON) files, which may require flattening prior to loading into your source system. When flattened, this data doesn't have to fit neatly into a table structure.",,,,,,,,,
+Semi Supervised,,,,,,,,,,,,
+Shapley Additive Explanations (SHAP),,,"Method for interpreting machine learning models based on Shapley values from cooperative game theory. SHAP assigns importance values to individual features in a predictive model, showing how each feature contributes to the model's output.",,,,,,,,,
+Sigmoid,Machine Learning,Activation Function,,,,,$\sigma(x) = \frac{1}{1 + e^{-x}}$,,,,,
+Sign,Statistics,Definition,"Mathematical Function, utilized to return a binary value 1,-1,0 regardless of actual function. Utilized in piecewise functions and gradient descent algorithms, specifically SVM.",,,,"$$
+\text{sgn}(x) =
+\begin{cases} 
+-1 & \text{if } x < 0, \\
+0 & \text{if } x = 0, \\
+1 & \text{if } x > 0.
+\end{cases}
+$$",,,,,
+Skewness,Statistics,Definition,Skewness measures the asymmetry of the distribution of a dataset. ,,,,"$$
+\text{Skewness} = \frac{n}{(n-1)(n-2)} \sum_{i=1}^{n} \left( \frac{x_i - \bar{x}}{s} \right)^3
+$$
+- **Skewness = 0** → Perfectly symmetric (normal distribution)
+- **Skewness > 0** → Right-skewed (positive skew, tail on the right)
+- **Skewness < 0** → Left-skewed (negative skew, tail on the left)
+- **|Skewness| > 1** → Highly skewed (might need transformation)",,,,,
+Slow statistics,Behavioural Economics,Books Read,Thoughtful gathering of unbiased information.,,,,,,,,,
+SMOTE,,,"Synthetic Minority Over-sampling Technique: This technique addresses the issue of class imbalance by generating synthetic samples for the minority class. It creates new samples by interpolating between existing ones rather than simply duplicating the minority class examples, which helps prevent overfitting.",,,,,,,,,
+SMOTEENN,,,"Synthetic Minority Over-sampling Technique combined with Edited Nearest Neighbors: a hybrid method used in machine learning to handle class imbalance, which occurs when one class in the dataset is significantly underrepresented compared to another. SMOTEENN combines two techniques",,,,,,,,,
+Soft Voting,,,"Ensemble model gives greater weight to predictions which are most confident, less weighting to models which are not confident.",,,,,,,,,
+Softmax,Machine Learning,Activation Function,,,,,$\sigma(z)_i = \frac{\sigma(xW^T_j)}{\sum_{j=1}^k \sigma(xW^T_j)}$,,,,,
+Spark,Spark,,"Apache Spark is an open-source, distributed computing system designed for fast processing of large-scale data by performing tasks in-memory, which significantly speeds up computation compared to disk-based systems like Hadoop. Spark is particularly known for its lazy evaluation model, where transformations on data (such as map or filter) are not executed immediately but are only computed when an action (like collect or reduce) is triggered. This allows Spark to optimize the execution plan by minimizing the number of data passes and combining transformations. Unlike traditional systems that rely heavily on disk storage, Spark primarily keeps data in memory, leading to faster processing, though it can spill to disk if memory limits are exceeded. This design makes it highly efficient for iterative machine learning algorithms and interactive data analytics. Overhead using PySpark because of conversation to Java, P4J Python for Java.Difference Between PySpark and Python Terminal. PySpark, session is already active.",,,,,,,,,
+Spark,Data Engineering,Spark,"A fast and general engine for large scale data processing. Distributes information across nodes to limit strain and bottleneck on individual machine. Runs ontop of a cluster Manager, script like any other script, Spark knows how to distribute . Master Program run code and manages interactions between slave tasks (executors). Can run ontop of a Hadoop Cluster – Yarn. Fault tolerant – allows node to go down without crashing or restarting job. A distributed processing framework written primarily in the Scala programming language. The framework offers different language APIs on top of the core Scala-based framework. Spark maintains MapReduce’s linear scalability and fault tolerance, but extends it in three important ways: First, rather than relying on a rigid map-then-reduce format, its engine can execute a more general directed acyclic graph of operators. This means that in situations where MapReduce must write out intermediate results to the distributed filesystem, Spark can pass them directly to the next step in the pipeline. Second, it complements its computational capability with a rich set of transformations that enable users to express computation more naturally. Out-of-the-box functions are provided for various tasks, including numerical computation, datetime processing, and string manipulation. Third, Spark extends its predecessors with in-memory processing. This means that future steps that want to deal with the same dataset need not recompute it or reload it from disk. Spark is well-suited for highly iterative algorithms as well as ad hoc queries.","Spark vs Map Reduce: Map Reduce requires files to be stored in HDFS. Map Reduce prints to Disk. Spark replacement to Map Reduce, not Hadoop.",,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/spark.png,,,,,,
+SparkConf,Spark,,"This is used to configure the settings of Spark, such as the master node, application name, etc",,,,,,,,,
+SparkContext,Spark,,"The entry point to low-level Spark functionalities, including creating and managing RDDs. It provides the connection to the cluster and manages job execution.",,,,,,,,,
+SparkSQL,Data Engineering,Spark,"A Spark module for structured data processing. It is part of the core Spark framework and accessible through all of its language APIs, including PySpark.",,,,,,,,,
+Spurious Correlation,,,"If you look hard enough, you can prove anything.",,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/Correlation_Visual.png,,,,,,
+SSH,,,,,,,,,,,,
+SSL,,,,,,,,,,,,
+Stacking,,,,,,,,,,,,
+Standard Scaler,Machine Learning,,,,,,,1.0,,,,
+Standarization,Machine Learning,Definition,"Transforming the data utilzing a mathematical technique in an effort to create a different disstribution, which might enhance the ability, consistency or performance of the ML Model.  Standard types include, Min Max, Standardization, ____. Generally, useful for distance calculation, eliminating cardinality from values (Age, Ordinal Rankings, standardizing valuation of distinct features. Particularly helpful in gradient descent process, to smooth learning.",,,,"### ** You Should Standardize If:**
+**You’re Using Distance-Based Algorithms**  
+   - Algorithms that rely on **distance metrics** (e.g., Euclidean, Manhattan) perform better when features are standardized.
+   - Examples:
+     - $K$-Nearest Neighbors (KNN)
+     - Support Vector Machines (SVM)
+     - Principal Component Analysis (PCA)
+     - $K$-Means Clustering
+     - Linear Regression (if gradient descent is used)
+
+**Your Features Have Different Scales**  
+   - If some features are on **very different scales**, standardization helps **prevent one feature from dominating the model**.
+   - Example:
+     - **Feature 1:** Age $(20$ to $80)$
+     - **Feature 2:** Salary $(20,000$ to $200,000)$
+   - **Without standardization**, the model might focus too much on salary because it has larger values.
+
+**You’re Using Regularization (Lasso, Ridge, ElasticNet)**  
+   - Standardization ensures that **penalty terms** ($L_1, L_2$) are applied **fairly across all features**.
+
+ **Your Model is Sensitive to Outliers**  
+   - Standardizing data **reduces the impact of extreme values** by centering around zero.
+
+---
+
+### ** You Can Skip Standardization If:**
+**You’re Using Tree-Based Models**  
+   - **Decision Trees, Random Forests, Gradient Boosting (XGBoost, LightGBM, CatBoost)** **do not require standardization**.
+   - These models are not affected by feature magnitudes because they split data **based on thresholds, not distance**.
+
+**Your Features Are Already on Similar Scales**  
+   - If all features are on similar scales (e.g., all between $0$ and $1$), standardization may not add much value.
+
+**You’re Working with Categorical Variables**  
+   - Standardization applies only to **numerical features**.
+   - **One-hot encoded variables do not need standardization**.",,,,,
+Standarization (Z-Score),Statistics,Scaling,"Standardization transforms data so that it has a mean of 0 and standard deviation of 1. When the data follows a normal (Gaussian) distribution or approximately so. When features have very different ranges but need to be compared. Commonly used for:  Linear Regression, Logistic Regression, PCA, SVM with linear kernels, K-Means Clustering",,,,"$$
+X' = \frac{X - \mu}{\sigma}
+$$",,,,,
+Stateless,,,Stateless - not using global variables,,,,,,,,,
+Statistical Inference,Statistics,Definition,,,,,"#### Random
+- The sample must be **randomly selected** to avoid bias.
+
+#### Independent
+- Each observation must be **independent** of others.
+
+#### Sufficient Records
+- A larger sample **reduces variability** and provides **better estimates**. Small samples often lead to **higher standard errors** and **less reliable inferences**.
+
+#### Normal Distribution
+- Many tests (**t-test, ANOVA, regression**) assume **normally distributed data. If n is large**, normality is **less of a concern** (CLT applies).
+- **Shapiro-Wilk Test:** Checks for normality.
+- **Q-Q Plot:** Data should align with the diagonal.
+
+#### Homoscedasticity (Equal Variance) 
+- The variance should be **constant** across different levels of the independent variable. Unequal variance (heteroscedasticity) can **bias standard errors**.
+- **Levene’s Test:** Tests for equal variances.
+- **Residual Plot:** If residuals show a **funnel shape**, variance is **not equal**.",,,,,
+Stochastic Gradient Descent,,,"Stochastic Gradient Descent (SGD) is a widely used optimization algorithm in machine learning, particularly for training models like neural networks. Its primary goal is to minimize a loss function, which measures the error between the model's predictions and the actual outcomes, by iteratively adjusting the model’s parameters.
+
+Traditional Gradient Descent vs. Stochastic Gradient Descent
+In Batch Gradient Descent, the algorithm computes the gradient of the loss function with respect to the model’s parameters using the entire dataset before updating the parameters. While this approach provides a precise update direction, it is computationally expensive and slow for large datasets since it requires processing all data points in each iteration.
+
+Stochastic Gradient Descent (SGD) addresses this issue by approximating the gradient. Instead of computing gradients over the full dataset, SGD updates the model’s parameters using just a single data point at each step. This significantly reduces computational cost per iteration, making the algorithm much faster. However, since updates are based on a single random sample, they introduce high variance (noise), causing fluctuations that may prevent smooth convergence.
+
+Mini-Batch Gradient Descent: A Compromise
+To balance efficiency and stability, a common alternative is Mini-Batch Gradient Descent. Instead of using the full dataset (Batch Gradient Descent) or a single data point (SGD), Mini-Batch Gradient Descent computes updates using a small batch of randomly selected data points (e.g., 32, 64, or 128 samples per batch). This approach:
+
+Reduces noise compared to SGD while still being computationally efficient.
+Leverages vectorized operations for faster computation using modern hardware (e.g., GPUs).
+Smooths out updates while still allowing some stochasticity to escape local minima.
+Benefits & Trade-offs of SGD
+Faster updates: Each iteration is computationally cheaper than full-batch gradient descent.
+Better exploration: The randomness in updates helps escape local minima.
+Higher variance: The noisier updates may lead to less stable convergence, requiring techniques like learning rate decay or momentum to improve performance.
+Slower convergence: Since updates are less precise, SGD may take longer to reach the optimal solution.
+Conclusion
+SGD, Mini-Batch Gradient Descent, and Batch Gradient Descent each offer different trade-offs in terms of speed, stability, and computational efficiency. In practice, Mini-Batch Gradient Descent is the most commonly used approach for deep learning, as it provides a balance between computational efficiency and convergence stability.",,,,"$$
+\theta_{t+1} = \theta_t - \alpha \nabla J(\theta_t)
+$$
+
+where:
+- \( \theta_t \) are the parameters at step \( t \),
+- \( \alpha \) is the learning rate,
+- \( \nabla J(\theta_t) \) is the gradient of the loss function \( J \).
+
+Predicitions: $\sigma(XW^T)$
+Differences: $\sigma(XW^T) - Y$
+Gradient: $\frac{1}{m} (\sigma(XW^T) -Y)$",,,,,
+Storage Driven Rounding Errors,,,"Because Python Stores only 16 decimals, it can result in rounding errors. Some numbers are obvious, such as Pie, Root 2, etc. Some numbers are less obvious, such as 1/10, as it is because of how they are represented in Binary, which is less obvious.",,,,,,,,,
+Stripe,,,,,,,,,,,,
+Strong Learner,,,Achieves a high level of accuracy,,,,,,,,,
+Strongly Typed,,,,,,,,,,,,
+Strongly Typed,,,Restrict Operation you can perform based on Object Type Python is Strongly Typed,,,,,,,,,
+Structured Data,,,Structured data primarily comes from table-based source systems such as a relational database or from a flat file such as a comma separated (CSV) file. The primary element of a structured file is that the rows and columns are aligned consistently throughout the file.,,,,,,,,,
+subsample,Machine Learning,Hyperparameter,Fraction of samples used per boosting iteration. Lower values add randomness and reduce overfitting.,"[0.5, 0.7, 0.9, 1.0]",,,,,,,,
+Subtraction Rule,,,,,,,,,,,,
+Summation Notation,Statistics,Definition,,,,,"#### Summation Notation (Σ)
+
+The summation of a sequence is defined as:
+
+$$
+S = \sum_{i=1}^{n} a_i = a_1 + a_2 + \dots + a_n
+$$
+
+##### Example Calculation:
+$$
+\sum_{i=1}^{5} i = 1 + 2 + 3 + 4 + 5 = 15
+$$",,,,,
+Supervised,,,,,,,,,,,,
+Support Vector Machines,Machine Learning,Model,"Finda the optimal hyperplane that best separates data points of different classes in a feature space. The hyperplane is chosen to maximize the margin, which is the distance between the hyperplane and the nearest data points from each class, known as support vectors. By default, generally a Linear Line, however can utilize Kernels to change, such that datasets where decision boundary is not linearly seperable can become so in higher dimensions.",,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/SVM.png,"### Support Vector Machine (SVM) Formula
+
+For a binary classification problem with data points $(x_i, y_i)$, where $x_i \in \mathbb{R}^n$ and $y_i \in \{-1, 1\}$, the equation of the hyperplane is: $\mathbf{w} \cdot \mathbf{x} + b = 0$.
+
+Where:
+- $\mathbf{w}$ is the weight vector (normal to the hyperplane),
+- $b$ is the bias term,
+- $\mathbf{x}$ is the feature vector.
+
+---
+
+### Optimization Objective
+
+The goal is to maximize the margin $\frac{2}{\|\mathbf{w}\|}$ while ensuring correct classification of all points. This is formulated as:
+
+$$
+\min_{\mathbf{w}, b} \ \frac{1}{2} \|\mathbf{w}\|^2
+$$
+
+**Subject to the constraints:**
+
+$$
+y_i(\mathbf{w} \cdot \mathbf{x}_i + b) \geq 1, \quad \forall i
+$$",1.0,,Classification,,
+SVR,,,,,,,,1.0,,,,
+Swagger,,,,,,,,,,,,
+Synonyym Detection,,,,,,,,,,,,
+Tail Recursive Functions,,,,,,,,,,,,
+Tanh,Machine Learning,Activation Function,,,,,,,,,,
+Think about the Medium,Behavioural Economics,Books Read,"Weekly, daily, hourly—the metronome of the news clock changes the very nature of what is news. Daily news always seems more informative than rolling news; weekly news is typically more informative than daily news.",,,,,,,,,
+TLL,,,,,,,,,,,,
+Tomek Links,,,"This is a more advanced method of undersampling, where pairs of nearest neighbor samples from different classes are identified, and if these pairs are very close to each other (called Tomek links), the majority class sample is removed. This method helps clean up overlapping data points near the decision boundary",,,,,,,,,
+Transfer Learning,,,,,,,,,,,,
+Transformations,Spark,,"In Spark, transformations are operations that create a new RDD from an existing one. The map transformation applies a 1-to-1 function mapping, creating a new RDD where each input element has one corresponding output, while flatMap allows 1-to-X mapping, potentially returning more or fewer elements than the input. Other transformations include filter (selects elements that satisfy a condition), distinct (removes duplicates), sample (extracts a random subset), union (combines two RDDs), intersection (returns common elements between multiple RDDs), subtract (removes elements found in another RDD), and cartesian (produces all combinations of elements from two RDDs).",,,,,,,,,
+Transformers,Machine Learning,,.transform(),,,,,,,,,
+True Negative,,,,,,,,,,,,
+True Positive,,,,,,,,,,,,
+Truth-default theory ,Behavioural Economics,,"54% accurate identifying liar. We can identify truth tellers far more easily, bad at identifying liars. We start in a default position of believing people and only when substantial evidence to the contrary presents itself do we change our position. In fact, we can even trivialize information away that in hindsight it rather pertinent. In a social experiement, teacher leaves room, answers are available, rando we’ve never met encouraging us to cheat.",,,,,,,,,
+Undersampling,,,"Technique used in machine learning to address class imbalance, where the majority class significantly outnumbers the minority class. In this context, undersampling refers to reducing the number of instances in the majority class to balance it with the minority class. This is done by randomly or strategically removing instances from the majority class, making the dataset more balanced and allowing the machine learning algorithm to perform better on both classes.",,,,,,,,,
+Understanding,Experiement Design,,"The ability to explain, describe, or predict the behavior of a system based on its underlying structure, mechanisms, or causal relationships. Involves forming mental models, theories, or hypotheses about how things work. Often grounded in observation, reasoning, or data analysis. Example: Understanding that increasing interest rates tends to reduce inflation through decreased spending.
+
+We can can decide without understanding. Decision-making can be pragmatic, not always rooted in deep understanding
+We can Understand, without control - Tornado.",,,,,,,,,
+Unitended Consequences KPIs,Behavioural Economics,Books Read,"Must consider what adverse effects one might create when measuring. Doctors won’t operate on sick patients. Data needs to be understood. Maximum day wait for appointment, doctors stopped taking appointments.
+",,,,,,,,,
+Unstructured Data,,,"Unstructured data includes data stored as key-value pairs that don't adhere to standard relational models and Other types of unstructured data that are commonly used include portable data format (PDF), word processor documents, and images.",,,,,,,,,
+Unsupervised,,,,,,,,,,,,
+Vanishing Gradient,Machine Learning,,"Vanishing gradient problem occurs during the training of deep neural networks, particularly in Recurrent Neural Networks (RNNs) and deep feedforward networks. It happens when gradients (the values used to update a model’s weights during backpropagation) become very small as they are propagated back through the layers. This results in the early layers of the network receiving tiny weight updates, which can prevent the network from learning effectively, especially for long-range dependencies The key reason lies in the chain rule used during backpropagation to calculate gradients. When the network is deep (or when RNNs process long sequences), the gradients are multiplied many times by the weights of the network’s layers. If these weights are small, repeated multiplication can shrink the gradients exponentially as they move back through each layer. This causes the gradients to approach zero, effectively stopping the early layers from learning.",,,,,,Supervised,Neural Networks,,
+Variance,,,"Variance refers to errors caused by models that are too sensitive to small fluctuations in the training data, often resulting in overfitting. High-variance model is overly flexible, capturing noise as if it were meaningful patterns.",,,,,,,,,
+Variance Inflation Factor,Statistics,Definition,"A measure used to detect multicollinearity in a regression model. Multicollinearity occurs when two or more independent variables are highly correlated, which can distort the estimated coefficients and make it difficult to determine their individual effect on the dependent variable.",,,,"$$
+VIF_i = \frac{1}{1 - R^2_i}
+$$
+
+where:
+
+- $VIF_i$ is the Variance Inflation Factor for the $i$th predictor variable.
+- $R_i^2$ is the coefficient of determination obtained by regressing $X_i$ on all the other independent variables in the model.",,,,,
+Variety,,,,,,,,,,,,
+Vector,Statistics,Definition,,,,,,,,,,
+Velocity,,,,,,,,,,,,
+Visualization,,,,,,,,,,,,
+Volume,,,,,,,,,,,,
+Weak Learner,,,Performs only slightly better than Guessing/ Random.,,,,,,,,,
+Weakly Typed,,,Does not restrict operations which can be performed. Results in more errors.,,,,,,,,,
+What Meaning Does a KPI actually have?,Behavioural Economics,Books Read,"Before we figure out whether nurses have had a pay raise, first find out what is meant by “nurse.” 
+Before lamenting the prevalence of self-harm in young people, stop to consider whether you know what “self-harm” is supposed to mean. Before concluding that inequality has soared, ask, “Inequality of what?” Demanding a short, sharp answer to the question “Has inequality risen?” is not only unfair, but strangely incurious. If we are curious instead, and ask the right questions, deeper insight is within easy reach.
+Net Wealth not indicative of poverty, Doctor who just finished med school with $100k in debt.
+The billion poorest people who have a net worth of Zero might be poorer than someone with $5 as $0 doesn’t add up fast.",,,,,,,,,
+Wicked Problems,Experiement Design,,"Complex, messy issue that is difficult or impossible to solve definitively because of incomplete, contradictory, and changing requirements. The term comes from social planning and was first introduced by Horst Rittel and Melvin Webber in 1973.",,,,"## 🔍 Characteristics of a Wicked Problem
+
+1. **No Definitive Problem Statement**  
+   - You can't clearly define the problem without trying to solve it.
+
+2. **No Stopping Rule**  
+   - You can’t definitively say when the problem is “solved.”
+
+3. **Solutions Are Not True or False**  
+   - Only better, worse, or acceptable — not objectively correct.
+
+4. **Every Solution Is a One-Shot Operation**  
+   - There is no trial-and-error. Every action has lasting consequences.
+
+5. **No Immediate or Ultimate Test of a Solution**  
+   - Effects may take time and are difficult to measure.
+
+6. **Every Solution Alters the Problem**  
+   - Solving one part often creates or reveals new problems.
+
+7. **No Enumerated Set of Solutions**  
+   - There's no fixed list of possible solutions.
+
+8. **Every Wicked Problem Is Essentially Unique**  
+   - Even if it looks similar to another, the context makes it unique.
+
+9. **Every Wicked Problem Can Be Considered a Symptom of Another**  
+   - It's often intertwined with or caused by other complex problems.
+
+10. **Stakeholders Have Conflicting Values**  
+    - What’s “better” for one group may be “worse” for another.",,,,,
+Wide Transformation,Spark,,"Data from multiple partitions of the parent RDD may be needed to compute a single partition of the child RDD, requiring a shuffle across the network. This occurs when Spark needs to rearrange or aggregate data, like during groupByKey, reduceByKey, or join operations. Wide transformations are more costly in terms of performance because they involve data shuffling and coordination across multiple nodes.",,,,,,,,,
+WSGI,,,,,,,,,,,,
+X,,,"Input, Predictor, Independent, Feature, Variable",,,,,,,,,
+XGBoost,Machine Learning,Model,,,,,,1.0,,,,
+XOR,,,"Not Linearly Seperable. Problem for ML. Nand as Function of (x1,x2) new function (h1, h2) - ",,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/X_OR.png,,,,,,
+Y,,,"Output, Response, Dependent",,,,,,,,,
+Ostrich Effect,Behavioural Economics,,"cognitive bias where people avoid information they perceive as potentially unpleasant or negative—like an ostrich metaphorically ""burying its head in the sand"" to avoid danger (even though real ostriches don’t actually do this).",,,,,,,,,
+Biases,Behavioural Economics,,,,,,,,,,,
+Nodes,Graph Theory,,,,,,,,,,,
+Edges,Graph Theory,,,,,,,,,,,
+Edge Weght,Graph Theory,,,,,,,,,,,
+Centrality,Graph Theory,,,,,,,,,,,
+Page Rank,Graph Theory,,,,,,,,,,,
+Grapth Theory,Graph Theory,,,,,,,,,,,

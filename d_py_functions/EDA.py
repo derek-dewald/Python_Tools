@@ -1,7 +1,11 @@
 ## File Description: This File is for Functions related to completing EDA. Including Setting up standard processes. Individual Image or DF manipulation which might be utilized in this function, but exist for broader purposes should be stored in more generic categories.
 
+import sys
+sys.path.append("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions")
 
-from Visualization import Heatmap,plot_histogram,plot_scatter_matrix
+from Visualization import Heatmap,plot_histograms,plot_scatter_matrix
+import matplotlib.pyplot as plt
+import seaborn as sns
 from scipy.stats import skew, kurtosis
 import pandas as pd
 import numpy as np

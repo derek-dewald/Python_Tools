@@ -115,7 +115,7 @@ def CreateMonthList(month_int=0,
     
     
     final_months = month_int + months
-    month_list = pd.date_range(end=pd.Timestamp.today(),periods=final_months,freq='M').normalize()
+    month_list = pd.date_range(end=pd.Timestamp.today(),periods=final_months,freq='ME').normalize()
     month_list = month_list.union([pd.Timestamp.today().normalize()-datetime.timedelta(days=end_date_yesterday)])
     
     if return_value =='month_str':
@@ -207,7 +207,7 @@ def ManualConvertDate(df,
     return df.merge(temp_df,on=column_name,how='left')
 
 
-def generate_day_list(start_date,end_date= None):
+def generate_day_list(start_date=datetime.datetime(2025,1,1),end_date= None):
     if end_date is None:
         end_date = datetime.datetime.now() - datetime.timedelta(days=1)
     

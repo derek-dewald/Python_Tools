@@ -1,0 +1,53 @@
+Process,Title,Header,Description
+Machine Learning Project,Problem Definition,Clearly Defined Problem Statement,"Problem statement should include a clear, specific, well considered, and relate to a meaningful solvable, problem. Additionally, the problem statement should highlight why the issue is relavant, and how the problem is known to exist (Facts, Stats, Magnitude)."
+Machine Learning Project,Problem Definition,Current State,"It is crirically important that problems are substantiated, clear, and comprehensively understood, at both executive and L6 levels. It is important to have 360 perspective of what the problem is, not simply 1 persons, or a small groups perspective (regardless of how influential that individual is)."
+Machine Learning Project,Problem Definition,Historical Context,"You can not create a best in class solution, without knowing what has come before, why those solutoins did not fully satisfy, and where the risks lie."
+Machine Learning Project,Problem Desired End State,"Specific Description of Requirements, Desires and Expectations.","Needs to be very clear, such that a proposed solution can be measured as to whether it meets the criteria, while all KPIs are not necessarily defined yet several primary related to needs and expectations should be defined, and considered for plausibility. "
+Machine Learning Project,Problem Desired End State,How will the tool be used?,"Understand very specifically, at a operational level, how will the tool be used (ie, individual a will open dashboard, they will review, if A then B, if C then D, if E then F."
+Machine Learning Project,Model Conceptualization,"on problem statement and desired end state, conceptualize the types of solutions and models which could be developed and implemente",
+Machine Learning Project,Model Conceptualization,Identify types of Models and Architectures which might be relevant in solving problem and delievering fundamental components of desired end state,
+Machine Learning Project,Model Conceptualization,Estimate baseline development cost for each model architecture,
+Machine Learning Project,Model Conceptualization,Identify and define model evaluation criteria and MVP performance requirements,
+Machine Learning Project,Model Conceptualization,Ensure to include a technical description of why the particular model type is appropriate or not in the context of desired solution,
+Machine Learning Project,Model Conceptualization,"If any core components of desired end state are missing from solutions, validate with Stakeholders to clarify before proceeding forward",
+Machine Learning Project,Model Conceptualization,"Where possible, try to retain as much flexibility and optionality as possible, explicilty noting development time required for baseline solution",
+Machine Learning Project,Data Collection,"Identify Data Elements which are required, desired, and available",
+Machine Learning Project,Data Collection,Locate and Confirm Data Availability,"Ensure accountability of this action is clear, where data is not available what will be done, change approach, obtain data, engineer data?"
+Machine Learning Project,Data Collection,Completed Dictionary for all data elements included,
+Machine Learning Project,Data Collection,"For elements which are not available, ensure individuals are assigned as Data Stewards and a delivery dates (including refresh requirements are identified)",
+Machine Learning Project,Data Collection,"For new data, ensure Data Validaion, Quality and refresh frequency are explicitly dicussed and ownership for each assigned",
+Machine Learning Project,EDA and Data Preprocessing,Build Environment,"Poetry, Virtual Environment, Other."
+Machine Learning Project,EDA and Data Preprocessing,Explore dataset which are to be used for model creation once creat,Exploration approach situatioal contigent on SME knowledge and availability. Refer to EDA - Approach.
+Machine Learning Project,EDA and Data Preprocessing,Complete EDA Checklist,
+Machine Learning Project,EDA and Data Preprocessing,Insights report,
+Machine Learning Project,Baseline Model Selection & Validation,"Run initial ML pipeline, review outputs, validate model, features and preliminary results before tuning and finalization",
+Machine Learning Project,Baseline Model Selection & Validation,"Identify which models have best performance, rationalize performance",
+Machine Learning Project,Baseline Model Selection & Validation,"Identify Feature Importance, and determine if model structure is appropriate or changes are appropriate",
+Machine Learning Project,Baseline Model Selection & Validation,"Test alternative feature structure, explore feature engineering and explore for any unknown, or unexpected results",
+Machine Learning Project,Baseline Model Selection & Validation,Speed Vs Accuracy,"Is it better to be Accurate, Fast or available immediately."
+Machine Learning Project,Baseline Model Selection & Validation,Don't Let Perfect be the Enemy of Completion.,"Does the accuracy of the data change the result, if not then it's not germane to the decision "
+Machine Learning Project,Tune Model,"Hyperparameter tune models which meet MVP requirements, appear to be best in class and viable for implementation",
+BLUE,Linearity,Relationship between Independent and Dependent should be Linear. With finite variance,
+BLUE,Independence.,Observations should be independent of each other. No Correlation between errors of residuals. Errors are autocorrelated with self. Durbin Watson,
+BLUE,Homoscedasticity,Variance of the residuals should be constant.,
+BLUE,Normality of Residuals,Residuals should be normally distributed.,
+BLUE,No Perfect Collinearity,No perfect linear relationship between residuals,
+Presentation Tenants,The Message,"Tell them what you’re going to tell them, tell them, and then tell them what you’re told them.",
+Presentation Tenants,The Message,Storytelling beats data 100% of the time.,
+Presentation Tenants,The Message,"Is the glass half full, half empty. If it's half full, do you have what you really want in the glass?",
+Presentation Tenants,Design Principles,"Eyes, not Mind.",
+Presentation Tenants,No No's,Do not make the user think,
+Presentation Tenants,No No's,Do not make the user remember,
+Presentation Tenants,No No's,Do not use 3D unless absolutely necessary.,Hard to Comprehend. Distract Attention.
+Presentation Tenants,No No's,Pie Charts. They Suck.,
+Kubernetes Production Environment,Lifecycle,Kubernetes Handles,
+Kubernetes Production Environment,Access Control,Role Based (IAM),"The more we know about the motivations and incentives of decision makers, the more we can control the communication. "
+Kubernetes Production Environment,Infrastructure,"CPU, Memory, Disk, Network",
+Kubernetes Production Environment,Metrics,,
+Kubernetes Production Environment,Centralized Logging,,
+Kubernetes Production Environment,Exteneral DNS,,
+Kubernetes Production Environment,SSL/ TLS Certificates,,
+Kubernetes Production Environment,"Warnings, Notifications (Metrics Based)",,
+Kubernetes Production Environment,Cost Management,,
+Kubernetes Production Environment,VIsualization,,
+Kubernetes Production Environment,Load Balancer,,
