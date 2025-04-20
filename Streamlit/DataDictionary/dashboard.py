@@ -39,7 +39,7 @@ builder.configure_default_column(
     cellStyle={'textAlign': 'center'}
 )
 
-builder.configure_selection("single", use_checkbox=True) # Allow single row selection
+builder.configure_selection("single")  # Allow single row selection
 grid_options = builder.build()
 
 # Display the filtered table with AgGrid
@@ -54,6 +54,12 @@ response = AgGrid(
 )
 
 selected_rows = response.get("selected_rows", [])
+
+#Troubleshoot
+st.write("🔎 Selected rows from AgGrid:", selected_rows)
+st.write("🧾 First Word from DataFrame:", repr(df['Word'].iloc[0]))
+
+
 try:
     # Merge selected rows with the original DataFrame
     selected_data = pd.DataFrame(selected_rows)
