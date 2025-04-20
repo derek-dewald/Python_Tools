@@ -54,7 +54,7 @@ response = AgGrid(
 )
 
 selected_rows = response.get("selected_rows", [])
-
+st.write("✅ DEBUG Selected rows:", response.get("selected_rows", []))
 #Troubleshoot
 st.write("🔎 Selected rows from AgGrid:", selected_rows)
 st.write("🧾 First Word from DataFrame:", repr(df['Word'].iloc[0]))
