@@ -4,7 +4,7 @@ import pandas as pd
 
 import os
 import sys 
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(os.getcwd()), '..', 'd_py_functions')))
+sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'd_py_functions')))
 
 from Organization import CreateMarkdownfromProcess
 
