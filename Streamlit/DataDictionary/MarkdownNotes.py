@@ -12,7 +12,7 @@ process_list = [
     "Machine Learning Project",
     "BLUE"]
 
-st.title("📋 Process Documentation Dashboard")
+st.title("D's Documented Processes (For Reference)")
 
 for process in process_list:
     try:
