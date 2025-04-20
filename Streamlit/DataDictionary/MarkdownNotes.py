@@ -1,16 +1,14 @@
 import streamlit as st
 import pandas as pd
-
-
 import os
 import sys 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'd_py_functions')))
 
 from Organization import CreateMarkdownfromProcess
 
-process_list = [
-    "Machine Learning Project",
-    "BLUE"]
+df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vSbgjQNDbwl_UjsXd-zN6dCDofE_mdHJli1kPPp5bmv6gagoT8CEGMa38UWdJ4B9GHXd_ULozunfX1h/pub?output=csv')
+
+process_list = df['Process'].unique().tolist()
 
 st.title("D's Documented Processes (For Reference)")
 
