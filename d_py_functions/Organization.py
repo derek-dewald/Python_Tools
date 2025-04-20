@@ -144,7 +144,7 @@ def CreateMarkdown(df,return_value=""):
             # Add Level 3 content (Column 3) only if it exists
             if isinstance(row.iloc[2], str) and row.iloc[2].strip():
                 #text += f"    <ul><li>{row.iloc[2]}</li></ul>\n"  # L3 indented under L2
-                text += f'    <ul style="margin-left: 20px;"><li>{row.iloc[2]}</li></ul>\n'
+                text += f'    <ul><li style="margin-left: 20px;">{row.iloc[2]}</li></ul>\n'
 
     text += "</ul>\n"  # Close any remaining lists
     # Moved because Streamlit does not like displasy.
