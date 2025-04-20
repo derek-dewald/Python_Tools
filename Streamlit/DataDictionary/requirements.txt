@@ -2,6 +2,6 @@ streamlit
 pandas
 plotly
 numpy
-streamlit-aggrid
+streamlit-aggrid==0.3.4
 # matplotlib
 # scikit-learn
