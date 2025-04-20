@@ -39,7 +39,7 @@ builder.configure_default_column(
     cellStyle={'textAlign': 'center'}
 )
 
-builder.configure_selection("single")  # Allow single row selection
+builder.configure_selection("single", use_checkbox=False)
 grid_options = builder.build()
 
 # Display the filtered table with AgGrid
