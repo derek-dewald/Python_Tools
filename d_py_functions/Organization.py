@@ -1,6 +1,6 @@
 from SharedFolder import ReadDirectory
 from Connections import ParamterMapping
-from IPython.display import display, HTML
+#from IPython.display import display, HTML
 import pandas as pd
 import ast
 
@@ -146,13 +146,14 @@ def CreateMarkdown(df,return_value=""):
                 text += f"    <ul><li>{row.iloc[2]}</li></ul>\n"  # L3 indented under L2
 
     text += "</ul>\n"  # Close any remaining lists
-
-    if return_value =="":# Display the formatted HTML output in Jupyter Notebook
-        display(HTML(text))
-        
-    else:
-        return text
+    # Moved because Streamlit does not like displasy.
+    #if return_value =="":# Display the formatted HTML output in Jupyter Notebook
+    #    display(HTML(text))
+    #    
+    #else:
+    #    return text
     
+    return text
     
 def CreateMarkdownfromProcess(process_name=None,return_value=""):
     '''
