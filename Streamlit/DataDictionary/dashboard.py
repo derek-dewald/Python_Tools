@@ -31,18 +31,25 @@ if search_query:
 else:
     filtered_df = df[visible_columns]
 
-# Configure AgGrid options
+filtered_df = filtered_df.reset_index(drop=True)
+
+# Step 2: Build grid options with row ID specified
 builder = GridOptionsBuilder.from_dataframe(filtered_df)
 builder.configure_default_column(
-    wrapText=True,  # Enable text wrapping
-    autoHeight=True,  # Adjust row height automatically
+    wrapText=True,
+    autoHeight=True,
     cellStyle={'textAlign': 'center'}
 )
 
 builder.configure_selection("single", use_checkbox=False)
+
+# NEW: explicitly set the row ID field for AgGrid
+builder.configure_column("index", hide=True)  # hide the index column from view
+builder.configure_grid_options(getRowNodeId='data.index')  # required to track selection
+
 grid_options = builder.build()
 
-# Display the filtered table with AgGrid
+# Step 3: Display the table with updated options
 st.subheader("Key Terms and Classification")
 response = AgGrid(
     filtered_df,
@@ -50,7 +57,9 @@ response = AgGrid(
     height=300,
     width="100%",
     fit_columns_on_grid_load=True,
-    allow_unsafe_jscode=True,  # Required for advanced JavaScript features
+    allow_unsafe_jscode=True,
+    update_mode='SELECTION_CHANGED',  # OPTIONAL: triggers update on row click
+    reload_data=True  # OPTIONAL: forces rerender of AgGrid data
 )
 
 selected_rows = response.get("selected_rows", [])
