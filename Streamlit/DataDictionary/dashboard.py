@@ -14,7 +14,7 @@ url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXp
 df = pd.read_csv(url)
 
 # Text-based filter
-st.subheader("Key Word/ Phrase Search")
+st.subheader("Key Word/ Phrase Search - V2")
 search_query = st.text_input("Search:", placeholder="Type to search...")
 
 # Columns to display in the AgGrid table
