@@ -57,8 +57,6 @@ response = AgGrid(
 )
 
 selected_rows = response.get("selected_rows", [])
-st.write("✅ DEBUG Selected rows:", selected_rows)
-st.write("🧾 First Word from DataFrame:", repr(df['Word'].iloc[0]))
 
 try:
     # Merge selected row with full data
