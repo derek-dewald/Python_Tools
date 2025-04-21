@@ -46,6 +46,9 @@ def DataFrameColumnObservations(df,
     if include_obs==0:
         return final_df.drop([f"{column}_OBS" for x in columns],axis=1)
     
+    else:
+        return final_df
+    
 
 def CombineLists(list_,
                  combo=1,
@@ -71,11 +74,6 @@ def CombineLists(list_,
             return list(map(list,permutations(list_,r)))
     
     return list(map(list,product(*list_)))
-
-dates=['month','month_str','month_dt']
-dates1 = [['month','month_str','month_dt'],['month','month_str','month_dt']]
-
-
 
 def FilterDataframe(df,
                     binary_include={},

@@ -1,4 +1,4 @@
-from st_aggrid import AgGrid, GridOptionsBuilder
+from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
 import pandas as pd
 import streamlit as st
 import numpy as np
@@ -31,25 +31,20 @@ if search_query:
 else:
     filtered_df = df[visible_columns]
 
-filtered_df = filtered_df.reset_index(drop=True)
+filtered_df = filtered_df.reset_index(drop=False)  # preserve index for row identification
 
-# Step 2: Build grid options with row ID specified
+# Build AgGrid options
 builder = GridOptionsBuilder.from_dataframe(filtered_df)
 builder.configure_default_column(
     wrapText=True,
     autoHeight=True,
     cellStyle={'textAlign': 'center'}
 )
-
 builder.configure_selection("single", use_checkbox=False)
-
-# NEW: explicitly set the row ID field for AgGrid
-builder.configure_column("index", hide=True)  # hide the index column from view
-builder.configure_grid_options(getRowNodeId='data.index')  # required to track selection
-
+builder.configure_column("index", hide=True)  # keep for selection reference
 grid_options = builder.build()
 
-# Step 3: Display the table with updated options
+# Render AgGrid
 st.subheader("Key Terms and Classification")
 response = AgGrid(
     filtered_df,
@@ -58,22 +53,17 @@ response = AgGrid(
     width="100%",
     fit_columns_on_grid_load=True,
     allow_unsafe_jscode=True,
-    update_mode='SELECTION_CHANGED',  # OPTIONAL: triggers update on row click
-    reload_data=True  # OPTIONAL: forces rerender of AgGrid data
+    update_mode=GridUpdateMode.SELECTION_CHANGED  # critical fix
 )
 
 selected_rows = response.get("selected_rows", [])
-st.write("✅ DEBUG Selected rows:", response.get("selected_rows", []))
-#Troubleshoot
-st.write("🔎 Selected rows from AgGrid:", selected_rows)
+st.write("✅ DEBUG Selected rows:", selected_rows)
 st.write("🧾 First Word from DataFrame:", repr(df['Word'].iloc[0]))
 
-
 try:
-    # Merge selected rows with the original DataFrame
+    # Merge selected row with full data
     selected_data = pd.DataFrame(selected_rows)
     if not selected_data.empty:
-        # Merge the selected row and mimic transposed view
         final_df = df.merge(selected_data[['Word']], on='Word', how='inner')
         transposed_df = pd.DataFrame({
             "Field": final_df.columns,
@@ -81,37 +71,30 @@ try:
         }).fillna("")
 
         transposed_df["Value"] = transposed_df.apply(
-            lambda row: f"[Open Link]({row['Value']})" if row["Field"] == "Link" and row["Value"] else row['Value'],  # Return blank if value is empty
+            lambda row: f"[Open Link]({row['Value']})" if row["Field"] == "Link" and row["Value"] else row['Value'],
             axis=1
-            )
-        
-        transposed_df['Value'] = np.where(transposed_df['Value']=='[Open Link](nan)',"",transposed_df['Value'])
-        
+        )
+        transposed_df['Value'] = np.where(
+            transposed_df['Value'] == '[Open Link](nan)', "", transposed_df['Value']
+        )
 
         st.subheader("Key Term Reference Material")
         for _, row in transposed_df.iterrows():
             if row["Field"] == "Link":
-                # Render the Link field as a markdown hyperlink
                 st.markdown(f"**{row['Field']}:** {row['Value']}")
             elif row["Field"] == "Image":
-                # Render the Image field as an image, handle missing or empty values
-                if row["Value"] and not pd.isna(row["Value"]):  # Check if Value is valid
-                    st.image(
-                        row["Value"],
-                        caption="Image Reference",
-                        width=300
-                    )
+                if row["Value"] and not pd.isna(row["Value"]):
+                    st.image(row["Value"], caption="Image Reference", width=300)
                 else:
-                    st.warning("No image available for this field.")  # Gracefully handle missing images
+                    st.warning("No image available for this field.")
             elif row["Field"] == "Markdown":
-                # Render the Markdown field as LaTeX
                 st.latex(row["Value"])
             else:
                 st.write(f"**{row['Field']}:** \n{row['Value']}")
     else:
         st.write("No row selected.")
 except Exception as e:
-    st.write("An error occurred:", e)
+    st.error(f"An error occurred: {e}")
 
 st.markdown(
     """
