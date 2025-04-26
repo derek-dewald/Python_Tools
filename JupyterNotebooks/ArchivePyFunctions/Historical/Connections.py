@@ -1,5 +1,4 @@
 import pandas as pd
-import webbrowser
 import datetime
 import requests
 import os
@@ -102,35 +101,3 @@ def BackUpGoogleSheets(location='/Users/derekdewald/Documents/Python/Github_Repo
             print(f'Back Up Saved, {location}{file_name}')
         except:
             print(f'Counld Not Print Record {row}')
-
-
-
-def GoogleProcessSheetLinks():
-     
-    '''
-    Function to Google Mapping Sheet, Navigate to Specific Sites.
-    Provides Options, Enable Selection based on inputs.
-    
-    Parameters:
-    
-        
-    Returns:
-        
-    
-    '''
-
-    df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vSwDznLz-GKgWFT1uN0XZYm3bsos899I9MS-pSvEoDC-Cjqo9CWeEuSdjitxjqzF3O39LmjJB0_Fg-B/pub?output=csv')
-    
-    display(df)
-    
-    p = input('Which Process would You like to review?')
-    v = input('What would you like to return?')
-    
-    df1 = df[df['Definition']==p]
-    
-    if v.lower() =='link':
-        webbrowser.open(df1['Link'].item())
-    elif v.lower() == 'csv':
-        return pd.read_csv(df1['CSV'].item())
-    elif v.lower()=='streamlit':
-        webbrowser.open(df1['Streamlit'].item())

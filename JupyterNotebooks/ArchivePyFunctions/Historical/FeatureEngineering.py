@@ -205,59 +205,17 @@ def VarianceInflationFactor(df):
     
     return vif_data
 
-def BalanceTargetDistribution(df,
-                              Target,
-                              desired_percentage,
-                              TargetValue=1):
+def CleanStrtoNumber(df,
+                     column_name,
+                     new_column_name=""):
     
     '''
-    Function to support reduction of Dataset based on desire to Target weight the percentage of observations.
-    
-    Parameters:
-        df (DataFrame)
-        Target (str): Column Name of Target
-        desired_percentage (float): Number between 0 - 1, which is desired weighting of Target between 1 and 0.
-        Target Value (int): Value used to balance, perferably Int, can be str.
-        
-        
-    Returns:
-        Dataset
-    
-    '''
-    df = df.copy()
-
-    df0 = df[df[Target]==TargetValue].copy()
-    df1 = df[df[Target]!=TargetValue].copy()
-    
-    if (desired_percentage>0)&(desired_percentage<1):
-        req_columns = int(round(len(df0)/desired_percentage,0))
-        
-        return pd.concat([df0,df1.sample(req_columns)]).sample(frac=1).reset_index(drop=True)
-        
-    else:
-        print('Desired Percentage Outside of Allowable Range (0-1), Please Select a New Value')
-
-
-def CompareTextColumns(df,
-                       col1,
-                       col2,
-                       new_column_name=''):
-    '''
-    Function to Create a Binary Flag when to Dataframe Columns are Equal.
-
-
-    Parameters
-        df (dataframe)
-        col1 (str): Name of Column 1
-        col2 (str): Name of Column 2 (to be compared with column1)
-        new_column_name (str): Name of New Column, if left blank then it will be Default to BINARY_MATCH_
     
     
     '''
     
-    if new_column_name=='':
-        new_column_name = f'BINARY_MATCH_{col1}_{col2}'
-    
-    df[new_column_name] = np.where(df[col1].str.strip().str.lower()==df[col2].str.strip().str.lower(),1,0)
-    
-    
+    if new_column_name=="":
+        new_column_name = column_name
+        
+    df[new_column_name] = np.where((df[column_name]=="")|
+                                   (df[column_name].isnull()),0,df[column_name])

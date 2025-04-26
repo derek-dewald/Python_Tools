@@ -205,16 +205,3 @@ def ManualConvertDate(df,
     temp_df = pd.DataFrame(new_list,columns=[new_format]).merge(pd.DataFrame(og_list,columns=[og_format]),left_index=True,right_index=True,how='left').rename(columns={new:new_column_name})
     
     return df.merge(temp_df,on=column_name,how='left')
-
-
-def generate_day_list(start_date=datetime.datetime(2025,1,1),end_date= None):
-    if end_date is None:
-        end_date = datetime.datetime.now() - datetime.timedelta(days=1)
-    
-    # Generate the list of dates
-    date_list = [start_date + datetime.timedelta(days=i) for i in range((end_date - start_date).days + 1)]
-    
-    return date_list
-
-def print_current_time():
-    print(f"Current Time: {datetime.datetime.now().strftime('%H:%M:%S')}")

@@ -91,3 +91,75 @@ def FilterDataframe(df,
             temp_df = temp_df[temp_df[key]!=value].copy()
 
     return temp_df
+
+
+def TransposePivotTable(df,
+                        reset_index=1,
+                       x_axis='X_Axis',
+                       y_axis='Y_Axis',
+                       value='VALUE'):
+    '''
+    Function to take Pivot Table and Turn it into a Vertically Stacked List.
+    
+    Parameters:
+        reset_index(int): Binary Flag to determine whether intex needs to be reset or not.
+        x_axis (str): Column Naming from X_axis. Default X_Axis
+        y_axis (str):
+        value (str):
+        
+    Returns
+        Dataframe
+    
+    '''
+    
+    if reset_index==1:
+        df1 = df.stack().reset_index()
+    else:
+        df1 = df.stack()
+    try:
+        df1 =  df1.rename(columns={'level_0':x_axis,'level_1':y_axis,0:value})
+    except:
+        pass
+    
+    df1 = df1[df1[x_axis] < df1[y_axis]].copy()
+    
+    return df1[df1[x_axis]!=df1[y_axis]].sort_values(value)
+
+
+def MissingCartesianProducts(list1_,
+                             list2_,
+                             columns,
+                             merge_df=None,
+                             remove_values=['0',"",'N/A']):
+    '''
+    Function which Looks at the Combination of Two Lists and explores all possible Combinations. 
+    Developed for the purpose of understanding how many combinations exist and generating a list of Values which do not
+    exist, this list can be valueable for pending to previously Aggregagted Datasets to insure all possible records have
+    representation
+    
+    Parameters
+        list1_ (list)
+        list2_ (list)
+        columns (Columns to be included, should represent the expected Column Name of list1_ and list2_)
+        merge_df (Dataframe): To be used to Validate the number of missing records, if not included, then 
+        returns only combination.
+    
+    Returns
+    
+    
+    '''
+
+    list1_ = [x for x in list1_ if x not in remove_values]
+    list2_ = [x for x in list2_ if x not in remove_values]
+    
+    required_records = CombineLists([list1_,list2_])
+    df = pd.DataFrame(required_records,columns=['METRIC_NAME','BRANCHNAME'])
+    
+    if len(merge_df)==0:
+        return df
+    
+    else:
+        df = df.merge(merge_df[columns].drop_duplicates(),on=columns,how='left',indicator=True)
+        print(f"Distribution of Records and Missing Records:\n{df['_merge'].value_counts()}")
+        df = df[df['_merge']=='left_only'].drop('_merge',axis=1)
+        return df

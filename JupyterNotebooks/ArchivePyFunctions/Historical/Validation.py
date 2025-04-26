@@ -237,27 +237,3 @@ def ColumnStatisticalReview(df,
     
     except:
         return temp_df
-    
-
-
-    def CountBlanksZeroes(df):
-        '''
-        Function to Count the Number of Blanks, Zereos and Nulls in a Dataframe. 
-
-        Parameters:
-            df (dataframe)
-
-        Returns
-            Dataframe, with all columns as column and 3 rows, with count of observed values.
-        
-        
-        '''
-    
-        final_dict = {}
-        
-        for column in df.columns:
-            final_dict[column] = {'Blanks':len(df[df[column]==""]),
-                                'Zeros':len(df[(df[column]==0)|(df[column]=="0")]),
-                                'Null':len(df[df[column].isnull()])}
-            
-        return pd.DataFrame(final_dict)

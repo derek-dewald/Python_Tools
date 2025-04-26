@@ -3,12 +3,6 @@ import pandas as pd
 import numpy as np
 import datetime
 
-# Will Not work on GitHub
-import sys
-sys.path.append("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/")
-
-from Connections import ParamterMapping
-
 def JupyterNotebookMarkdown(df,return_value=""):
     
     '''
@@ -68,41 +62,3 @@ def JupyterNotebookMarkdown(df,return_value=""):
         
     else:
         return text
-    
-
-def DataFrameFromProcess(process_name=None,
-                        return_value = 'Markdown'):
-    
-    '''
-    Function to Extract Data from Process Sheet and Return Markdown Text in Jupyter Notebook.
-    Created because Streamlit functionality Changed and could not support HTML Display functionality.
-    
-    Parameters:
-        process_name (str): Value in Column Process, From Google SHeet Process.
-        return_value (str): Markdown (returns Markdown value), otherwise it returns filtered dataframe
-    
-    Returns: 
-        Based on return_value and process name. Dataframe, Filtered Data Frame or HTML Markdown text.
-    
-    '''
-    
-    try:
-        df = pd.read_csv(ParamterMapping('ProcessSheet')['CSV'].item())
-    except:
-        print('Could Not Extract DataFrame')
-    
-    if process_name ==None:
-        return JupyterNotebookMarkdown(df)
-    
-    try:
-        df1 = df[df['Process']==process_name].copy()
-    except:
-        print('Could Not Filter Process Name')
-        return df
-    
-    if return_value == 'Markdown':
-        try:
-            return JupyterNotebookMarkdown(df1)
-        except:
-            print('Could Not Render JupyterNotebookMarkdown')
-            return df1
