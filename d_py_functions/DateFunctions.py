@@ -218,3 +218,12 @@ def generate_day_list(start_date=datetime.datetime(2025,1,1),end_date= None):
 
 def print_current_time():
     print(f"Current Time: {datetime.datetime.now().strftime('%H:%M:%S')}")
+
+
+
+def FIRST_DAY_OF_MONTH(x,):
+    try:
+        x = pd.to_datetime(x,errors='coerce').replace(day=1)
+    except:
+        pass
+    return x.date() 

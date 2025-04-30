@@ -115,7 +115,7 @@ def CreateMonthList(month_int=0,
     
     
     final_months = month_int + months
-    month_list = pd.date_range(end=pd.Timestamp.today(),periods=final_months,freq='ME').normalize()
+    month_list = pd.date_range(end=pd.Timestamp.today(),periods=final_months,freq='M').normalize()
     month_list = month_list.union([pd.Timestamp.today().normalize()-datetime.timedelta(days=end_date_yesterday)])
     
     if return_value =='month_str':
@@ -215,3 +215,6 @@ def generate_day_list(start_date=datetime.datetime(2025,1,1),end_date= None):
     date_list = [start_date + datetime.timedelta(days=i) for i in range((end_date - start_date).days + 1)]
     
     return date_list
+
+def print_current_time():
+    print(f"Current Time: {datetime.datetime.now().strftime('%H:%M:%S')}")

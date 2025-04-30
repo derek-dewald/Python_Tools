@@ -1,0 +1,32 @@
+name: D
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pandas
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - statsmodels
+  - scipy
+  - streamlit
+  - streamlit-aggrid
+  - mlflow
+  - pyarrow
+  - sqlalchemy
+  - xgboost
+  - opencv
+  - notebook
+  - jupyterlab
+  - ipykernel
+  - flask
+  - requests
+  - beautifulsoup4
+  - click
+  - plotly
+  - cryptography
+  - paramiko
+  - typing-extensions
+  - pyyaml
+  - pip

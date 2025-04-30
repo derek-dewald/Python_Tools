@@ -11,7 +11,8 @@ import pandas as pd
 import numpy as np
 import math
 
-
+from DFProcessing import TransposePivotTable
+from FeatureEngineering import BracketColumn
 
 def analyze_distribution(df):
     """
@@ -177,3 +178,40 @@ def ColumnPartitioner(df,
                 return temp_df1
             return agg_impact_df
         return temp_df
+
+def CalculateColumnWiseCorrelation(df,
+                                   column_name=None,
+                                   tail_head_count=5):
+    
+    '''
+    Function to summarize Correlation Coeffient within dataframe Columns (or sample of columns if defined).
+    Differs from Heatmap, in that it is a numerical lead summary.
+    
+    Parameters
+        df (dataframe)
+        column_name (list): List of Column Names to be included in summary, default to include all as indicated by None
+        tail_head_count (int): Number of Records to return Top and Bottom (specifically includes in seperate DF)
+    
+    Return
+        Multiple DataFrames
+        
+    '''
+    
+    if column_name == None:
+        column_name = df.columns.tolist()
+       
+    df1 = TransposePivotTable(df[column_name].fillna(0).corr(),value="CorrelationCoefficient")
+    
+    BracketColumn(df1,'CorrelationCoefficient','Segment',[-1,-.5,0,.5,1])
+    
+    bot = df1.head(tail_head_count).copy()
+    bot['Description'] = [f'Top {x} Negative Correlation' for x in range(1,tail_head_count+1)]
+    
+    top = df1.tail(tail_head_count).copy()
+    top['Description'] = [f'Top {x-1} Positive Correlation' for x in range(tail_head_count+1,1,-1)]
+    
+    temp_ = pd.concat([bot,top]).reset_index(drop=True)
+    
+    display(temp_)
+    
+    return df1,temp_

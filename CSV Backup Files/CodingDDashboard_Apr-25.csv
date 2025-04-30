@@ -264,3 +264,4 @@ Python,Documentation,"import os
 os.listdir()",Return Contents of Directory,
 Python,Documentation,"import os
 os.getcwd()",Return Current Working Directory,
+Python,,os.cpu_count(),Identify Number of Cores CPU Has.,

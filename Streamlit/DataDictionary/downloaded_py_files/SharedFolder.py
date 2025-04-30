@@ -1,5 +1,8 @@
-import os
+from concurrent.futures import ThreadPoolExecutor
+import pandas as pd
 import shutil
+import os
+
 
 
 def DuplicateFileorFolder(source_path, destination_path):
@@ -66,7 +69,8 @@ def DuplicateFileorFolder(source_path, destination_path):
 def ReadDirectory(location=None,
                   file_type=None,
                   match_str=None,
-                  create_df=0):
+                  create_df=0,
+                  number_of_CPUs=1):
                   
     """
     Function which reads reads a directory and returns a list of files included within
@@ -81,9 +85,9 @@ def ReadDirectory(location=None,
     
     # If no folder is provided, use the current working directory
     if location ==None:
-        file_list = os.listdir(os.getcwd())
-    else:
-        file_list = os.listdir(location)
+        location = os.getcwd() +"\\"
+    
+    file_list = os.listdir(location)
         
     # If no file type is provided, return all files in the directory
     if file_type !=None:
@@ -96,10 +100,26 @@ def ReadDirectory(location=None,
         # Return files that match the specified file type
         return file_list
     else:
-        final_df = pd.DataFrame()
-        for file in file_list:
+        if number_of_CPUs==1:
+            final_df = pd.DataFrame()
+            for file in file_list:
+                if file_type=='csv':
+                    final_df = pd.concat([final_df,pd.read_csv(f"{location}{file}")])
+                elif file_type == 'xlsx':
+                    final_df = pd.concat([final_df,pd.read_excel(f"{location}{file}")])
+            return final_df
+        
+        else:
             if file_type=='csv':
-                final_df = pd.concat([final_df,pd.read_csv(f"{location}{file}")])
-            elif file_type == 'xlsx':
-                final_df = pd.concat([final_df,pd.read_excel(f"{location}{file}")])
-        return final_df
+                def read_file(file):
+                    return pd.read_csv(file)
+            else:
+                def read_file(file):
+                    return pd.read_excel(file)
+            
+            file_list = [f"{location}{x}" for x in file_list]
+            
+            with ThreadPoolExecutor(max_workers=number_of_CPUs) as executor:
+                dfs = list(executor.map(read_file,file_list))
+            
+            return pd.concat(dfs,ignore_index=True)  

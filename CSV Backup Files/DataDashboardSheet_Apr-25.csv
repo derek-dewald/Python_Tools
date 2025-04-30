@@ -4,7 +4,7 @@ Actions,Technology,Spark,"In Spark, actions trigger the execution of transformat
 Activation Functions,,Activation Function,,,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/ActivationFunctions.png,,,,
 Acyclic Graph,Statistics,Definition,"A graph that does not contain any cycles. This means there is no path in the graph that starts from a node and eventually returns to the same node. There are 2 types of Acyclic Graphs, Directed and Undirected. ",,,,big,,,
 Adadelta,Machine Learning,Optimization,Adaptive learning rate for nonstationary objectives.,,,,,,,
-Adagrad,Machine Learning,Loss Optimization,"Variation of Gradient Descent, which adapts the learning rate for each parameter by scaling it inversely proportional to the sum of past squared gradients. 
+Adagrad,Machine Learning,Optimization,"Variation of Gradient Descent, which adapts the learning rate for each parameter by scaling it inversely proportional to the sum of past squared gradients. 
 ",,,,"$$
 \theta_{t+1} = \theta_t - \frac{\alpha}{\sqrt{G_t + \epsilon}} \nabla J(\theta_t)
 $$
@@ -12,8 +12,7 @@ $$
 where:
 - $( G_t = \sum_{i=1}^{t} \nabla J(\theta_i) \odot \nabla J(\theta_i) )$ (element-wise sum of squared gradients),
 - $( \epsilon )$ is a small constant to prevent division by zero.",,,
-Adagrad,Machine Learning,Optimization,Adapts learning rate per parameter. Good for sparse data.,,,,,,,
-Adam,,Loss Optimization,"Variation of Gradient Descent, which combines both momentum and RMSprop, maintaining an exponentially decaying average of past gradients and squared gradients.",,,,"$$
+Adam,,Optimization,"Variation of Gradient Descent, which combines both momentum and RMSprop, maintaining an exponentially decaying average of past gradients and squared gradients.",,,,"$$
 m_t = \beta_1 m_{t-1} + (1 - \beta_1) \nabla J(\theta_t)
 $$
 
@@ -41,7 +40,7 @@ Addition Rule,,,,,,,$$ P(A \cup B) = P(A) + P(B) - P(A \cap B) $$,,,
 Adjacency Matrix,,,,,,,,,,
 Adjusted Rand Score,,,,,,,,,,
 Affine Layer,,,,,,,,,,
-Agglomerative,,,,,,,,,,
+Agglomerative,Machine Learning,Model,"Agglomerative Clustering is a type of hierarchical clustering that uses a bottom-up approach. Each data point starts in its own cluster, and pairs of clusters are merged step by step based on similarity until all points are in one cluster (or a stopping criterion is met). Strengths: Doesn’t require you to specify the number of clusters up front (if using a dendrogram). Can capture nested cluster structure. Weaknesses; Computationally expensive for large datasets (O(n²)).Once merged, clusters can't be split.",,,,,,Unsupervised,Clustering
 alpha,Machine Learning,Hyperparameter,"Controls L1/L2 regularization strength in models like Ridge, Lasso, and Naive Bayes. Higher values reduce overfitting but may underfit.","[0.0001, 0.001, 0.01, 0.1, 1.0]",,,,,,
 Anchoring Effect,Behavioural Economics,,"A cognitive bias where people rely too heavily on the first piece of information (the “anchor”) when making decisions. Once an anchor is set, it influences subsequent judgments, even if it’s arbitrary or unrelated. For example, when asked whether the Eiffel Tower is taller or shorter than 500 feet, people’s estimates will cluster around that number. This bias can affect pricing, negotiations, and even forecasting.",,,,,,,
 Anomaly Detection,,,,,,,,,,
@@ -101,7 +100,7 @@ $$",,,
 BayesianRidge,Machine Learning,Model,,,,,,1.0,,
 Be Mindful of what is presented.Think about Meaning,Behavioural Economics,Books Read,"In February 2018, there were fourteen murders in New York City, but fifteen in London.[1] But what should we conclude? Nothing. We should conclude nothing because that pair of numbers alone tells us very little. If we want to understand what’s happening, we need to step back and take in a broader perspective. Here are a few facts worth knowing about murders in London and New York. London had 184 murders in 1990, while New York suffered 2,262—more than ten times as many. It’s with that image in mind of New York as a murderous place that Londoners are alarmed at the idea that they might have become as rotten as the Big Apple. But London’s murder rate has fallen, not risen, since 1990. In 2017, there were 130 murders in London, including ten people killed in terrorist attacks. London was safe in 1990 and it’s a little bit safer today. As for New York, murders fell to 292 in 2017. That means New York is still more dangerous than London, but much, much safer than in 1990.",,,,,,,
 Beaucratic Politics,,,That people only do what is best for them and the decision is made based solely on who is making the decision. They are operating solely on their own best interests.,,,,,,,
-BERT,,,,,,,,,,
+BERT,Machine Learning,Model,"Bidirectional Encoder Representations from Transformers. It’s a deep learning model for NLP developed by Google in 2018 that understands the context of words in a sentence by looking in both directions — left and right. This is a major upgrade over older models that only read text left-to-right or right-to-left. BERT is like someone reading a sentence and filling in blanks based on the full context.GPT is like someone writing a sentence one word at a time, based only on what they’ve written so far.",,,,,,Unsupervised,Large Language Model
 Bias,,,"Bias refers to the systematic error in a model that causes it to consistently deviate from the true value or correct predictions. It occurs when an algorithm makes incorrect assumptions about the data, leading to errors. High Bias (Underfitting): The model is too simple and cannot capture patterns. Low Bias, High Variance (Overfitting). The model memorizes the data but does not generalize.",,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/bias.png,"### **Unbiased Estimator Equation**
 A parameter estimate \( \hat{\theta} \) is **unbiased** if its expected value equals the true parameter \( \theta \):
 
@@ -224,7 +223,9 @@ Data Integration,,,"Data Integration involves establishing links between operati
 Data Leakage,,,"Data Leakage is the inadvertent use of information in the model training process that would not be available at prediction time, often resulting from the inclusion of future data, target labels, or improperly pre-processed features during training. It causes problems because it artificially inflates model performance metrics, leading to overfitting and poor generalization to unseen data",,,,,,,
 Data Transformation,,,"Operational data usually needs to be transformed into suitable structure and format for analysis, often as part of an extract, transform, and load (ETL) process; though increasingly a variation in which you extract, load, and transform (ELT) the data is used to quickly ingest the data into a data lake and then apply ""big data"" processing techniques to transform it. Regardless of the approach used, the data is prepared to support downstream analytical needs.",,,,,,,
 Data Visualization,,,"Interact with data without the need to understand how the data is formatted, structured, or what is its data type.",,,,,,,
-Decision Trees,Machine Learning,Model,"Algorithm which splits data into branches based on feature values to make decisions or predicitions. Each internal node represents a feature, each branch represens a a decision rule and each leaf node represents an outcome. Decision Trees are popular because they are simple to interpret, require litte data preprocessing and can handle both classificaiton and regression. Their strengths include handling both numerical and catoegorical data, providiing clear visual representations of decisions. They are prone to overfitting and sensitive to noisy data. They work well in scenarios where interpretabiltiy is important, but struggle with high dimensional data when complex relationships exist. ",,,,,1.0,Supervised,Regression/ Classification
+Decision Trees,Machine Learning,Model,"An ensemble of decision trees using bagging to reduce overfitting and improve accuracy. ModelStrengths: Reduces overfitting, robust to noise, handles high-dimensional data well. Model Weaknesses': ""Computationally expensive, less interpretable than a single tree.
+
+Algorithm which splits data into branches based on feature values to make decisions or predicitions. Each internal node represents a feature, each branch represens a a decision rule and each leaf node represents an outcome. Decision Trees are popular because they are simple to interpret, require litte data preprocessing and can handle both classificaiton and regression. Their strengths include handling both numerical and catoegorical data, providiing clear visual representations of decisions. They are prone to overfitting and sensitive to noisy data. They work well in scenarios where interpretabiltiy is important, but struggle with high dimensional data when complex relationships exist. ",,,,,1.0,Supervised,Regression/ Classification
 Decison Making,Experiement Design,,"The process of selecting a course of action from a set of alternatives, often under conditions of uncertainty. Involves choosing, not necessarily knowing or controlling. Can be based on intuition, heuristics, data, or optimization. Example: Choosing to launch a product based on positive A/B test results, even if the underlying behavior change isn't fully understood.
 
 Good Decision Process and Good Decision don’t always result in a good outcome. 
@@ -232,7 +233,7 @@ Decision review process, comes in at the wrong time, only when the outcome wasn'
 The Elevator is slow. Solution: Fix Elevator …or install mirror.
 Dog adoption: Find people willing to adopt a dog. Alternative: Determine if the people giving the dog away don’t want to.",,,,,,,
 Deep Belief Networks,,,,,,,,,,
-Dendogram,,,,,,,,,,
+Dendogram,Machine Learning,,"tree-like diagram that shows how data points are hierarchically clustered — it's one of the key tools for interpreting the results of hierarchical clustering, like agglomerative clustering.",,,,,,,
 Derivative,Statistics,Definition,A function which measures the rate at which the function value changes as its input changes. The process of finding a derivative is reffered to as differentiation.,,,,"$$
 f'(x) = \lim_{{h \to 0}} \frac{f(x + h) - f(x)}{h}
 $$
@@ -402,18 +403,18 @@ Harmonic Mean,Statistics,,"The harmonic mean is a type of average that is partic
 $$
 H = \frac{n}{\sum\limits_{i=1}^{n} \frac{1}{x_i}}
 $$",,,
-HDFS,,,,,,,,,,
+HDFS,Data Engineering,Spark,"It is the storage layer of the Apache Hadoop ecosystem, designed to store and manage large volumes of data across a distributed cluster of machines. Files are split into blocks (default: 128MB or 256MB).These blocks are distributed across multiple nodes in a cluster.Each block is replicated (default: 3 copies) across different machines. If one node fails, data is still accessible from other nodes.Files in HDFS are typically written once and read many times. Optimized for streaming reads of large files, not quick random access.",,,,,,,
 Heirachracal clustering,,,,,,,,,,
 High Level Language,,,"Abstracts away computer details. Don't have to worry about details of the computer, Hardware, Memory, etc. Pros: User friendly. R, Python, VB, Ruby, Javascript, Go",,,,,,,
 Higher Order Functions,,,Functions that feed into other functions,,,,,,,
-Hinge Loss,Machine Learning,Loss Optimization,"Loss function used primarily for binary classification, especially in Support Vector Machines (SVMs). It's designed to maximize the margin between classes — that is, push predictions to be confidently correct. It penalizes predictions that are: On the wrong side of the decision boundary Or correct but not confidently correct (i.e., too close to the margin)",,,,,,,
+Hinge Loss,Machine Learning,Optimization,"Loss function used primarily for binary classification, especially in Support Vector Machines (SVMs). It's designed to maximize the margin between classes — that is, push predictions to be confidently correct. It penalizes predictions that are: On the wrong side of the decision boundary Or correct but not confidently correct (i.e., too close to the margin)",,,,,,,
 Hive,,,,,,,,,,
 How to calculate dot products.,,,,,,,,,,
 How to calculate eucledian distance,,,,,,,,,,
 How to Estimate/ Guess.,Behavioural Economics,,"The population of the United States is 325 million. The population of the United Kingdom is 65 million. The population of the world is 7.5 billion. Name any particular age (under the age of sixty). There are about 800,000 people of that age in the UK. If a policy involves all three-year-olds, for example, there are 800,000 of them. In the United States, there are about 4 million people of any particular age (under the age of sixty). Distance around the Earth: 40,000 kilometers, or 25,000 miles. It varies depending on whether you go around the poles or around the equator, but not much. The drive from Boston to Seattle: 3,000 miles.
 
 Length of a bed: 2 meters (or 7 feet). As Elliott points out, this helps you visualize the size of a room: How many beds is that? The gross domestic product of the United States: about $20 trillion (or $20,000 billion). It’s a lot of walls, if that’s really how you want to spend it. 100,000 words: the length of a medium-size novel. 1,454 feet: the height of the Empire State Building to its tip. (It’s also about 102 stories.)",,,,,,,
-Huber Loss,Machine Learning,Loss Optimization,Loss function used in regression problems that is robust to outliers — it's essentially a blend between Mean Squared Error (MSE) and Mean Absolute Error (MAE). Regression with noisy or outlier-prone data Situations where you want the stability of MSE but the robustness of MAE,,,,,,,
+Huber Loss,Machine Learning,Optimization,Loss function used in regression problems that is robust to outliers — it's essentially a blend between Mean Squared Error (MSE) and Mean Absolute Error (MAE). Regression with noisy or outlier-prone data Situations where you want the stability of MSE but the robustness of MAE,,,,,,,
 I/O,,,,,,,,,,
 Identity Access Management (IAM),,,,,,,,,,
 IID,,,,,,,,,,
@@ -467,7 +468,7 @@ Learning Algorithm,Machine Learning,,"Method or set of rules that a computer fol
 Three components; Loss Function, Optimization Criterion, Optimization Routine",,,,,,,
 learning_rate,Machine Learning,Hyperparameter,"Controls how the model updates weights during training. If it is too high, it will converge fast, and might skip optimal values, or not converge as it jumps back and forth between increasing and decreasing. Too Low and it will fail to converge, or potentially get stuck in a local minima.","[0.01, 0.05, 0.1, 0.2]",,,,,,
 LightGBM,,,,,,,,,,
-Linear Regression,Machine Learning,Model,Linear Regression models the relationship between an independent variable ( X ) and a dependent variable ( Y ) using a linear function.,"Cost function for Linear Regression is usually Mean Squared Error. While it does not have to be, it is convenient for a number of reasons. 1) Rarely Overfits, which Polynomial equations frequently do. 2) It always has a derivative, which makes it convenient for using closed forms solutions (saving computation complexity). ",,,"$$
+Linear Regression,Machine Learning,Model,"Linear Regression models the relationship between an independent variable ( X ) and a dependent variable ( Y ) using a linear function. Model strengths include : Simple, interpretable, computationally efficient, works well for linearly separable data. Weaknesses, Assumes linear relationships, sensitive to outliers.","Cost function for Linear Regression is usually Mean Squared Error. While it does not have to be, it is convenient for a number of reasons. 1) Rarely Overfits, which Polynomial equations frequently do. 2) It always has a derivative, which makes it convenient for using closed forms solutions (saving computation complexity). ",,,"$$
 Y = w_0 + w_1 X + \epsilon
 $$
 $$
@@ -516,8 +517,8 @@ Log Loss,,,"Log Loss is used in binary classification tasks where the output is 
 $$\text{Log Loss} = -\frac{1}{n} \sum_{i=1}^n \left[ y_i \log(\hat{y}_i) + (1 - y_i) \log(1 - \hat{y}_i) \right]$$
 
 $$\text{Log Loss} = -\frac{1}{n} \sum_{i=1}^n \sum_{j=1}^k y_{ij} \log(\hat{y}_{ij})$$",,,
-Logistic Regression,Machine Learning,Model,"Logistic Regression is used for binary classification. It predicts the probability that an instance belongs to a particular class.
-",,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/logistic.png,"### **Definition:**
+Logistic Regression,Machine Learning,Model,"A regression model that predicts probabilities using the sigmoid function for binary classification problems.
+Model Strengths include; Simple, interpretable, performs well for linearly separable data. Model Weaknesses: Struggles with non-linear relationships, assumes linear relationship between features and log-odds.",,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/logistic.png,"### **Definition:**
 Logistic Regression is used for **binary classification**. It predicts the probability that an instance belongs to a particular class.
 
 ### **Equation:**
@@ -612,7 +613,7 @@ MLPRegressor,,,,,,,,1.0,,
 MNist,,,,,,"https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/Mnist_Simple_results.png
 https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/MNist_Results.png",,,,
 Model Based Learning,Machine Learning,Definition,"A type of learning where the algorithm builds a general model from training data by identifying patterns and relationships. Once trained, the model is used to make predictions on new data. Examples include linear regression and neural networks.",,,,,,,
-Momentum,Machine Learning,Loss Optimization,"Variation of Gradient Descent, which accelerates learning by accumulating a moving average of past gradients.",,,,"$$
+Momentum,Machine Learning,Optimization,"Variation of Gradient Descent, which accelerates learning by accumulating a moving average of past gradients.",,,,"$$
 v_t = \beta v_{t-1} + (1 - \beta) \nabla J(\theta_t)
 $$
 
@@ -719,7 +720,7 @@ Restricted Boltzmann Machines,,,,,,,,,,
 Ridge Regression,Machine Learning,Regularization,Technique used to prevent overfitting by adding penalty term to loss function. Adds the squared values of the coefficients as a penalty term. This shrinks the coefficients but does not eliminate them.,"The equation that you use to calculate the cost function is not the function which is tested, you use the unconstrained model. ",,,"$$
 J(\theta) = \sum_{i=1}^{m} \left( y_i - \hat{y}_i \right)^2 + \lambda \sum_{j=1}^{n} \theta_j^2
 $$",1.0,,
-RMSprop,Machine Learning,Loss Optimization,"Variation of Gradient Descent, which adapts the learning rate by dividing by an exponentially weighted moving average of past squared gradients. Adapts learning rates based on recent gradient magnitudes. Good for RNNs.",,,,"$$
+RMSprop,Machine Learning,Optimization,"Variation of Gradient Descent, which adapts the learning rate by dividing by an exponentially weighted moving average of past squared gradients. Adapts learning rates based on recent gradient magnitudes. Good for RNNs.",,,,"$$
 G_t = \beta G_{t-1} + (1 - \beta) \nabla J(\theta_t)^2
 $$
 
@@ -879,7 +880,9 @@ $$
 \sum_{i=1}^{5} i = 1 + 2 + 3 + 4 + 5 = 15
 $$",,,
 Supervised,,,,,,,,,,
-Support Vector Machines,Machine Learning,Model,"Finda the optimal hyperplane that best separates data points of different classes in a feature space. The hyperplane is chosen to maximize the margin, which is the distance between the hyperplane and the nearest data points from each class, known as support vectors. By default, generally a Linear Line, however can utilize Kernels to change, such that datasets where decision boundary is not linearly seperable can become so in higher dimensions.",,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/SVM.png,"### Support Vector Machine (SVM) Formula
+Support Vector Machines,Machine Learning,Model,"Finda the optimal hyperplane that best separates data points of different classes in a feature space. The hyperplane is chosen to maximize the margin, which is the distance between the hyperplane and the nearest data points from each class, known as support vectors. By default, generally a Linear Line, however can utilize Kernels to change, such that datasets where decision boundary is not linearly seperable can become so in higher dimensions.
+
+ModelStrengths: Effective in high-dimensional spaces, works well with clear margins of separation. Model Weaknesses:Computationally expensive, struggles with large datasets.",,,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/SVM.png,"### Support Vector Machine (SVM) Formula
 
 For a binary classification problem with data points $(x_i, y_i)$, where $x_i \in \mathbb{R}^n$ and $y_i \in \{-1, 1\}$, the equation of the hyperplane is: $\mathbf{w} \cdot \mathbf{x} + b = 0$.
 
@@ -992,3 +995,5 @@ Edge Weght,Graph Theory,,,,,,,,,
 Centrality,Graph Theory,,,,,,,,,
 Page Rank,Graph Theory,,,,,,,,,
 Grapth Theory,Graph Theory,,,,,,,,,
+KNN,Machine Learning,Model,"A model that classifies points based on their proximity to neighbors.. ModelStrengths: Simple to implement, works well with small datasets. Model Weaknesses: Computationally expensive with large datasets, sensitive to irrelevant features.",,,,,,,
+Ada,Machine Learning,Model,"Boosting technique that combines multiple weak learners (usually decision stumps) into a strong learner. ModelStrengths: Handles weak learners well, reduces overfitting. Model Weaknesses: Sensitive to noisy data, requires careful tuning of learning rate.",,,,,,,
