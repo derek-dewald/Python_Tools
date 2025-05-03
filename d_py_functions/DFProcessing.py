@@ -135,57 +135,6 @@ def ColumnStatisticalCompare(df,df1,column_name):
     
     return temp_df
 
-def ColumnElementalChange(df,
-                          df1,
-                          column_name,
-                          primary_key=['MEMBERNBR']):
-    '''
-    Function to Compare the Element Level change of two dataframes. Includes: Summary of Records Increasing and Decreasing,
-    A summary of where the respective partitions are 
-    
-    Args:
-        column_name (str): Name of Column to which you wish to analyze
-        primary_key (list): List of Primary Key(s), used for purposes of Merging df and df1
-        
-    Returns:
-        Single Rowed Dataframe including a summary of Record Changing Count (Increase, Decrease, No Change), 
-        Position of respective Partitions in Dataset (remembering Position 0 is MIN value and position -1 is 90% value)
-        Total Value Change which is attributed to respective Partition.
-        
-    '''
-    
-    # Using primary Key and Column Name create conditions for Merge
-    key = primary_key.copy()
-    key.append(column_name)    
-    
-    # Merge DF and DF1 for record level comparison 
-    temp_df = df[key].rename(columns={column_name:f"{column_name}_DF"}).merge(df1[key].rename(columns={column_name:f"{column_name}_DF1"}),
-                                                                                                       on=primary_key,
-                                                                                                       how='outer',
-                                                                                                       indicator=True)
-    # Create a Column to Track Change at Record Level 
-    temp_df['VARIANCE'] = temp_df[f"{column_name}_DF"].fillna(0) - temp_df[f"{column_name}_DF1"].fillna(0)
-    
-    # Create a variable which defines change in text terms, Increase, Decrease, No Change, Null Value Detered
-    CategorizeBinaryChange(temp_df,'VARIANCE')
-    
-    # Add Partition Column for Purposes of Calculating Aggregate Change
-    agg_impact_df = ColumnPartitioner(temp_df,'VARIANCE',return_value='agg_value')
-    
-    # Create a Dataframe Stacked Vertically for Increase, Decrease, No CHange
-    chg_val_df = pd.DataFrame(temp_df['CHANGE_CLASSIFICATION'].value_counts()).rename(columns={'count':'VALUE'})
-
-    # Create a DataFrame Stacked Vertically for Decile Partions
-    partition_val_df = ColumnPartitioner(temp_df,'VARIANCE',new_column_name='Variance Partition').T.rename(columns={'VARIANCE':'VALUE'})
-
-    # Add all individual elements
-    final_df = pd.concat([chg_val_df,
-                          partition_val_df,
-                          agg_impact_df])
-                        
-    return final_df
-
-
 def DFStructureReview(df,
                       primary_key='',
                       df1=""):
@@ -685,3 +634,100 @@ def MissingCartesianProducts(list1_,
         print(f"Distribution of Records and Missing Records:\n{df['_merge'].value_counts()}")
         df = df[df['_merge']=='left_only'].drop('_merge',axis=1)
         return df
+    
+
+def TranposeNonTimeSeriesDF(df, index, columns):
+    '''
+    Transposes a non-time-series DataFrame from wide to long format by melting specified columns.
+
+    This is especially useful for flattening columns into a single column to support tools 
+    like Power BI, where long format enables dynamic pivoting and aggregation.
+
+    Parameters:
+        df (DataFrame): The input pandas DataFrame.
+        index (list): Columns to retain as identifiers (will remain unchanged).
+        columns (list): Columns to unpivot into key-value pairs.
+
+    Returns:
+        DataFrame: A long-format DataFrame with 'variable' and 'value' columns.
+    '''
+    return df.melt(id_vars=index, value_vars=columns)
+
+
+
+
+
+def ColumnElementalChange(df,
+                          df1,
+                          column_name,
+                          primary_key=['MEMBERNBR']):
+    '''
+    Function to Compare the Element Level change of two dataframes. Includes: Summary of Records Increasing and Decreasing,
+    A summary of where the respective partitions are 
+    
+    Args:
+        column_name (str): Name of Column to which you wish to analyze
+        primary_key (list): List of Primary Key(s), used for purposes of Merging df and df1
+        
+    Returns:
+        Single Rowed Dataframe including a summary of Record Changing Count (Increase, Decrease, No Change), 
+        Position of respective Partitions in Dataset (remembering Position 0 is MIN value and position -1 is 90% value)
+        Total Value Change which is attributed to respective Partition.
+        
+    '''
+    
+    # Using primary Key and Column Name create conditions for Merge
+    key = primary_key.copy()
+    key.append(column_name)    
+    
+    # Merge DF and DF1 for record level comparison 
+    temp_df = df[key].rename(columns={column_name:f"{column_name}_DF"}).merge(df1[key].rename(columns={column_name:f"{column_name}_DF1"}),
+                                                                                                       on=primary_key,
+                                                                                                       how='outer',
+                                                                                                       indicator=True)
+    # Create a Column to Track Change at Record Level 
+    
+    try:
+        temp_df['VARIANCE'] = temp_df[f"{column_name}_DF"].fillna(0) - temp_df[f"{column_name}_DF1"].fillna(0)
+        
+        # Create a variable which defines change in text terms, Increase, Decrease, No Change, Null Value Detered for VALUES
+        CategorizeBinaryChange(temp_df,'VARIANCE')
+    
+    except:
+        temp_df['VARIANCE'] = np.where(temp_df[f"{column_name}_DF"].fillna(0) != temp_df[f"{column_name}_DF1"].fillna(0),1,0)
+        print(temp_df['VARIANCE'].sum())
+
+    # Developing Components that deal with text.
+    return temp_df
+        
+    
+    # Add Partition Column for Purposes of Calculating Aggregate Change
+    agg_impact_df = ColumnPartitioner(temp_df,'VARIANCE',return_value='agg_value')
+    
+    # Create a Dataframe Stacked Vertically for Increase, Decrease, No CHange
+    chg_val_df = pd.DataFrame(temp_df['CHANGE_CLASSIFICATION'].value_counts()).rename(columns={'CHANGE_CLASSIFICATION':'VALUE'})
+
+    # Create a DataFrame Stacked Vertically for Decile Partions
+    partition_val_df = ColumnPartitioner(temp_df,'VARIANCE',new_column_name='Variance Partition').T.rename(columns={'VARIANCE':'VALUE'})
+
+    # Add all individual elements
+    final_df = pd.concat([chg_val_df,
+                          partition_val_df,
+                          agg_impact_df])
+                        
+    return final_df
+
+
+def ConvertDicttoDF(dict_, key_name="KEY", value_name="VALUE"):
+    '''
+    Function to convert a straight Dictionary into a Dataframe.
+
+    Parameters
+    dict_ (dict)
+    key_name (str): Name of the column for dictionary keys. Default is 'KEY'.
+    value_name (str): Name of the column for dictionary values. Default is 'VALUE'.
+
+    Returns
+        DataFrame
+    '''
+    return pd.DataFrame.from_dict(dict_, orient='index', columns=[value_name]).reset_index().rename(columns={'index': key_name})

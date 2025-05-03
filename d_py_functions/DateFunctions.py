@@ -76,25 +76,6 @@ def CalculateDaysFromtoday(df,
     
     df[new_column_name] = (reference_date-df[column_name])/datetime.timedelta(365.25)
 
-
-def MonthSelector(month_int=1,
-                  return_value='month_dt',
-                  end_date_yesterday=1):
-    
-        
-    '''
-    Function to 
-    
-    
-    Parameters:
-        
-    
-    Return:
-        
-    '''
-    
-    return CreateMonthList(month_int=month_int,months=1,return_value=return_value,end_date_yesterday=end_date_yesterday)[0]
-
 def CreateMonthList(month_int=0,
                     months=36,
                     end_date_yesterday=1,
@@ -116,7 +97,7 @@ def CreateMonthList(month_int=0,
     
     final_months = month_int + months
     month_list = pd.date_range(end=pd.Timestamp.today(),periods=final_months,freq='M').normalize()
-    month_list = month_list.union([pd.Timestamp.today().normalize()-datetime.timedelta(days=end_date_yesterday)])
+    #month_list = month_list.union([pd.Timestamp.today().normalize()-datetime.timedelta(days=end_date_yesterday)])
     
     if return_value =='month_str':
         month_list = [x.strftime('%b-%y') for x in month_list]
@@ -227,3 +208,31 @@ def FIRST_DAY_OF_MONTH(x,):
     except:
         pass
     return x.date() 
+
+def MonthSelector(month_int=1,
+                  return_value='month_dt',
+                  end_date_yesterday=1):
+    
+        
+    '''
+    Function to return the Date based on Binary Int. 1 Represents month end last month, 0 Today (can change to yesterday with default binary flag)
+    
+    
+    Parameters:
+        month_int (int): Representative of the desired month 0 (today), 1 (last month end), 2 (2 Months, If in FebX it would be 31DecX)
+        end_date_yesterday (int): OPtional function to overwrite today to be yesterday when 0 for SQL db queries.
+    
+    Return:
+        
+    '''
+    
+    if (month_int==0) & (end_date_yesterday==1):
+        value_ = (datetime.datetime.now()-datetime.timedelta(days=1)).replace(hour=0,minute=0,second=0,microsecond=0)
+        if return_value=='month_dt':
+            return value_
+        elif return_value =='month_str':
+            return value_.strftime('%b-%y')
+        elif return_value =='month':
+            return value_.strftime('%d-%b-%y')
+    else:
+        return CreateMonthList(month_int=month_int,months=1,return_value=return_value)[0]
