@@ -1,0 +1,20 @@
+artifact_path: BaggingClassifier
+flavors:
+  python_function:
+    env:
+      conda: conda.yaml
+      virtualenv: python_env.yaml
+    loader_module: mlflow.sklearn
+    model_path: model.pkl
+    predict_fn: predict
+    python_version: 3.11.11
+  sklearn:
+    code: null
+    pickled_model: model.pkl
+    serialization_format: cloudpickle
+    sklearn_version: 1.6.1
+mlflow_version: 2.18.0
+model_size_bytes: 8096121
+model_uuid: 91e66e3bb4a2402180c45bb1d45fd62a
+run_id: f3a3817b8adb4686a3e094190d39714f
+utc_time_created: '2025-05-06 06:46:10.060233'

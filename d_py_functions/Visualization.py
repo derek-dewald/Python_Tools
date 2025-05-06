@@ -6,6 +6,7 @@ import matplotlib.pyplot as plt
 import seaborn as sns
 import pandas as pd
 import numpy as np
+import math
 
 def SimpleBar(df,
               x_axis,
@@ -245,7 +246,22 @@ def JupyterNotebookMarkdown(df,return_value=""):
         
     else:
         return text
+    
 
+
+def Scatter(df,
+            X,
+            y,
+            title='Scatter Plot',
+            x_axis='Feature',
+            y_axis='Target'):
+    
+    plt.scatter(df[X], df[y], color="blue", alpha=0.5)
+    plt.title(title)
+    plt.xlabel(x_axis)
+    plt.ylabel(y_axis)
+    plt.grid(True)
+    plt.show()
 
 
 
@@ -310,3 +326,27 @@ def pixelate_image(image_path, PixelSizeList=[10,50,75,100,125]):
     print(f"Pixelated image saved at: {image_path}")
     
     return pixelated_path
+
+
+
+def TrainingTestPerformanceChart(train_errors,test_errors,LossType='Mean Squared Error'):
+    '''
+    Function to Graphically Depict Testing and Training of ML Function.
+
+    Parameters
+        training_errors (list): List of Training Errors
+        test_errors (list): List of Test Errors
+        LossType(str): Type of Loss which was calculated (Default Mean Squre Error)
+
+    Returns
+        Matplotlib Visualization
+        
+    '''
+
+    records = len(train_errors)
+    
+    plt.plot(records,train_errors,label='Training Errors')
+    plt.plot(records,test_errors,label='Test Errors')
+    plt.xlabel('Observations')
+    plt.ylabel(LossType)
+    plt.legend()

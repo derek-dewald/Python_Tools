@@ -1,0 +1,15 @@
+artifact_uri: file:///Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/mlruns/108116423005335943/9e36b9dd798d431c9c12e4dc96669e37/artifacts
+end_time: 1746514089213
+entry_point_name: ''
+experiment_id: '108116423005335943'
+lifecycle_stage: active
+run_id: 9e36b9dd798d431c9c12e4dc96669e37
+run_name: DummyClassifier
+run_uuid: 9e36b9dd798d431c9c12e4dc96669e37
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1746514087978
+status: 3
+tags: []
+user_id: derekdewald
