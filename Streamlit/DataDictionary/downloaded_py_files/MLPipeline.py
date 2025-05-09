@@ -1,86 +1,9 @@
+from sklearn.base import ClassifierMixin, RegressorMixin, ClusterMixin, TransformerMixin
+from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.utils import all_estimators
+
 import numpy as np
 import pandas as pd
-
-from sklearn.preprocessing import StandardScaler, MinMaxScaler
-
-def apply_scaling(X_train, X_test, scaler=None):
-    """
-    Applies optional scaling to training and test datasets.
-    
-    Parameters:
-        X_train (np.array or pd.DataFrame): Training features.
-        X_test (np.array or pd.DataFrame): Test features.
-        scaler (str or None): Type of scaling to apply. 
-                              Options: 'standard', 'normalization', or None.
-    
-    Returns:
-        Scaled X_train and X_test.
-    """
-    scalers = {
-        'standard': StandardScaler(),
-        'normal': MinMaxScaler()
-    }
-
-    if scaler in scalers:
-        scaler_instance = scalers[scaler]
-        X_train = scaler_instance.fit_transform(X_train)
-        X_test = scaler_instance.transform(X_test)
-
-    return X_train, X_test
-
-def GenerateSKLearnModelList(model_type_list=["classifier", "regressor", "cluster", "transformer",None],
-                             export=0):
-    
-    '''
-    Function to Generate a list of All ML Models contained with SKlearn and to Bring Visability into how they are 
-    labelled, specifically to understand which models will be called when Classifier, Regressor, Cluster or Transformer
-    is applied
-    
-    Parameters:
-        model_type_list (List): List of values which can be input into all_estimators
-        export: (int): Binary Choice, 1 Returns CSV, 0 Returns Nothing.
-    
-    Returns:
-        Dataframe
-    
-    '''
-    
-    final_df = pd.DataFrame()
-    
-    for model_type in model_type_list:
-        if model_type==None:
-            temp_df = pd.DataFrame(all_estimators(type_filter=None), columns=['Model Name', 'Estimator Class'])
-            temp_df['ModelType'] = "All"
-            final_df = pd.concat([final_df,temp_df])
-        else:
-            temp_df = pd.DataFrame(all_estimators(type_filter=model_type), columns=['Model Name', 'Estimator Class'])
-            temp_df['ModelType'] = model_type
-            final_df = pd.concat([final_df,temp_df])
-            
-    final_df = final_df.drop_duplicates(['Model Name','Estimator Class']).reset_index(drop=True)
-        
-    # Extract full module path and class name
-    final_df['Full Class Path'] = final_df['Estimator Class'].astype(str)
-    
-    # Create a unique identifier (Primary Key) using module path + model name
-    final_df['Primary Key'] = final_df['Full Class Path'].str.replace("<class '", "").str.replace("'>", "")
-
-    # Split the class path into separate columns
-    split_columns = final_df['Primary Key'].str.split('.', expand=True)
-    split_columns.columns = [f'Part_{i+1}' for i in range(split_columns.shape[1])]
-
-    # Concatenate the original DataFrame with the split columns
-    final_df = pd.concat([final_df, split_columns], axis=1).drop('Part_1', axis=1)
-
-    if export == 0:
-        return final_df
-    else:
-        final_df.to_csv('SKLearnModels.csv', index=False)
-        return final_df
-        
-
-
-
 
 def ClassificationMetrics(df,
                           prediction='PREDICTION',
@@ -92,7 +15,6 @@ def ClassificationMetrics(df,
     
     Parameters
         
-    
     Returns
             
     '''
@@ -133,3 +55,87 @@ def ClassificationMetrics(df,
     results_dict['AUC']       = roc_auc_score(df[actual],df[prediction])
     
     return df,pd.DataFrame([results_dict.values()],columns=results_dict.keys())
+
+
+def apply_scaling(X_train, X_test, scaler=None):
+    """
+    Applies optional scaling to training and test datasets.
+    
+    Parameters:
+        X_train (np.array or pd.DataFrame): Training features.
+        X_test (np.array or pd.DataFrame): Test features.
+        scaler (str or None): Type of scaling to apply. 
+                              Options: 'standard', 'normalization', or None.
+    
+    Returns:
+        Scaled X_train and X_test.
+    """
+    scalers = {
+        'standard': StandardScaler(),
+        'normal': MinMaxScaler()
+    }
+
+    if scaler in scalers:
+        scaler_instance = scalers[scaler]
+        X_train = scaler_instance.fit_transform(X_train)
+        X_test = scaler_instance.transform(X_test)
+
+    return X_train, X_test, scaler_instance
+
+
+def SKLearnModelList(regressor_type=None):
+    '''
+    Function to generate a list of all scikit-learn estimators with type classification.
+    
+    Imports List from all_estimators (sklearn.utils) 
+    Imports D-Data Dashboard and Merges Column Dataset Size, to help filter for model processes.
+
+    Parameter:
+        Regressor_type: returns a list of relevant regressors if a specific regressor type is Picked. Types include: 
+    
+    Returns:
+        df_final (pd.DataFrame): DataFrame of all estimators with class path, type labels, and module split.
+    '''
+    
+    # 1. Get all estimators
+    estimators = all_estimators(type_filter=None)
+    
+    # 2. Convert to DataFrame
+    df = pd.DataFrame(estimators, columns=['Model Name', 'Estimator Class'])
+
+    # Merge In Dataset Size to prevent running of REALLY slow models.
+    temp = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv')[['Word','Dataset Size']].rename(columns={'Word':'Model Name'})
+    df = df.merge(temp,on='Model Name',how='left')
+    
+    # 3. Extract full class path
+    df['Full Class Path'] = df['Estimator Class'].astype(str).str.replace("<class '", "", regex=False).str.replace("'>", "", regex=False)
+    
+    # 4. Extract class type via mixin inspection
+    def get_estimator_types(cls):
+        types = []
+        try:
+            if issubclass(cls, ClassifierMixin):
+                types.append("classifier")
+            if issubclass(cls, RegressorMixin):
+                types.append("regressor")
+            if issubclass(cls, ClusterMixin):
+                types.append("cluster")
+            if issubclass(cls, TransformerMixin):
+                types.append("transformer")
+        except:
+            types.append("unknown")
+        return ', '.join(types) if types else 'unknown'
+    
+    df['Estimator Type'] = df['Estimator Class'].apply(get_estimator_types)
+    
+    # 5. Split module path
+    path_split = df['Full Class Path'].str.split('.', expand=True)
+    path_split.columns = [f'Part_{i+1}' for i in range(path_split.shape[1])]
+    
+    # 6. Combine and return
+    df_final = pd.concat([df, path_split], axis=1)
+
+    if regressor_type==None:
+        return df_final
+    else:
+        return df_final[df_final['Estimator Type'].str.contains(regressor_type)]

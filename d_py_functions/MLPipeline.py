@@ -1,60 +1,76 @@
 from sklearn.base import ClassifierMixin, RegressorMixin, ClusterMixin, TransformerMixin
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
+from sklearn.model_selection import train_test_split
 from sklearn.utils import all_estimators
+from sklearn.metrics import roc_auc_score
 
 import numpy as np
 import pandas as pd
+import datetime
+import time
+import sys
+
 
 def ClassificationMetrics(df,
                           prediction='PREDICTION',
                           actual='ACTUAL',
+                          AUC_Score=0,
                           new_column_name='RESULT'):
-    '''
-    Function
-        
+    """
+    Function to generate summary statitics related to a ML Model Run.
+    Removed Classification of TP,FN, FP, TN from df as when running many models quantum of data is high ,also it doesn't make a ton of sense in Multivariante classifications.
     
-    Parameters
-        
-    Returns
-            
-    '''
-    results_dict = {}
+    Parameters:
+        df (pDataFrame): DataFrame with predictions and actual values.
+        prediction (str): Name of prediction column.
+        actual (str): Name of actual/true label column.
+        AUC_Score (float): Optional AUC.
+        new_column_name (str): Name of column to store TP/TN/FP/FN tags.
+
+    Returns:
+        metrics_summary_df (DataFrame)
+    """
+
+    classes = sorted(df[actual].unique())
+    metrics_list = []
+    df = df.copy()
+
+    for cls in classes:
+        # Create One-vs-Rest binary views
+        is_actual = df[actual] == cls
+        is_pred   = df[prediction] == cls
+
+        # Aggregate metrics per class
+        TP = ( is_pred &  is_actual).sum()
+        FP = ( is_pred & ~is_actual).sum()
+        FN = (~is_pred &  is_actual).sum()
+        TN = (~is_pred & ~is_actual).sum()
+
+        precision = TP / (TP + FP) if (TP + FP) > 0 else 0
+        recall    = TP / (TP + FN) if (TP + FN) > 0 else 0
+        f1        = 2 * precision * recall / (precision + recall) if (precision + recall) > 0 else 0
+        accuracy  = (TP + TN) / (TP + FP + FN + TN) if (TP + FP + FN + TN) > 0 else 0
+
+        metrics_list.append({
+            "Class": cls,
+            "TP": TP,
+            "FP": FP,
+            "FN": FN,
+            "TN": TN,
+            "Precision": precision,
+            "Recall": recall,
+            "F1": f1,
+            "Accuracy": accuracy,
+            "AUC": AUC_Score
+        })
+
+    result_df = pd.DataFrame(metrics_list)
     
-    condition = [(df[prediction]==1)&(df[actual]==df[prediction]),
-                 (df[prediction]==0)&(df[actual]==df[prediction]),
-                 (df[prediction]==1)&(df[actual]!=df[prediction]),
-                 (df[prediction]==0)&(df[actual]!=df[prediction])]
+    result_df.loc['Total',:] = result_df.mean()
+    result_df['Class'] = result_df['Class'].astype(str)
+    result_df.loc['Total','Class'] = 'Macro'
     
-    values = ['True Positives','True Negatives','False Positives (I)','False Negatives (II)']
-    
-    df[new_column_name] = np.select(condition,values)
-    
-    results_dict['True Positives'] =       len(df[df['RESULT']=='True Positives'])
-    results_dict['True Negatives'] =       len(df[df['RESULT']=='True Negatives'])
-    results_dict['False Positives (I)'] =  len(df[df['RESULT']=='False Positives (I)'])
-    results_dict['False Negatives (II)'] = len(df[df['RESULT']=='False Negatives (II)'])
-    
-    
-    results_dict['Total Records'] = len(df)
-    results_dict['Correct Predictions'] =   len(df[df['RESULT'].isin(['True Negatives','True Positives'])])
-    results_dict['Incorrect Predictions'] = len(df[df['RESULT'].isin(['False Negatives (II)','False Positives (I)'])])
-    results_dict['Actual Positives'] = len(df[df['RESULT'].isin(['False Negatives (II)','True Positives'])])
-    results_dict['Actual Negatives'] = len(df[df['RESULT'].isin(['False Positives (I)','True Negatives'])])
-    
-    try:
-        results_dict['Recall'] = results_dict['True Positives']/(results_dict['True Positives']+results_dict['False Negatives (II)'])     # How Many Positives were Actually Predicted
-        results_dict['Precision']    = results_dict['True Positives']/(results_dict['True Positives']+results_dict['False Positives (I)']) # How Many Predictions were Correct
-        results_dict['F1'] = 2*(results_dict['Precision']*results_dict['Recall'])/(results_dict['Precision']+results_dict['Recall'])  # Harmonic Mean 
-        
-    except:
-        results_dict['Recall'] = 0
-        results_dict['Precision'] = 0
-        results_dict['F1'] = 0
-        
-    results_dict['Accuracy']  = results_dict['Correct Predictions']/results_dict['Total Records']     # How Correct your Model was overall
-    results_dict['AUC']       = roc_auc_score(df[actual],df[prediction])
-    
-    return df,pd.DataFrame([results_dict.values()],columns=results_dict.keys())
+    return result_df
 
 
 def apply_scaling(X_train, X_test, scaler=None):
@@ -139,3 +155,137 @@ def SKLearnModelList(regressor_type=None):
         return df_final
     else:
         return df_final[df_final['Estimator Type'].str.contains(regressor_type)]
+    
+
+def MLPipelineSample(df, 
+                     scaler,
+                     ml_model_type='regressor',
+                     target_column='Target',
+                     sample_override=0,
+                     test_size=0.2):
+    """
+    Runs multiple scikit-learn estimators with MLflow tracking.
+
+    Args:
+        df (DataFrame): Input dataset.
+        project_name (str): MLflow experiment name.
+        scaler (str): One of None, 'normal', or 'standard'.
+        ml_model_type (str): 'classifier', 'regressor', 'cluster', 'transformer'
+        target_column (str): Name of the target column.
+        test_size (float): Proportion of data used for testing.
+
+    Returns:
+        pd.DataFrame: Summary of model performance.
+    """
+
+    # Get model list (you must have this function already working)
+    sklearn_models_df = SKLearnModelList()
+
+    if len(df)<5000*(1+test_size):
+        model_list = sklearn_models_df[(sklearn_models_df['Dataset Size'].str.contains('small',case=False))&(sklearn_models_df['Estimator Type'].str.contains(ml_model_type,case=False))]
+    elif len(df)<100000*(1+test_size):
+        model_list = sklearn_models_df[(sklearn_models_df['Dataset Size'].str.contains('medium',case=False))&(sklearn_models_df['Estimator Type'].str.contains(ml_model_type,case=False))]
+    elif len(df)>100000*(1+test_size):
+        model_list = sklearn_models_df[(sklearn_models_df['Dataset Size'].str.contains('large',case=False))&(sklearn_models_df['Estimator Type'].str.contains(ml_model_type,case=False))]
+
+    if len(df)>5000 & sample_override==0:
+        df = df.sample(frac=.15).copy()
+        
+    # Prepare data
+    X = df.drop(columns=[target_column])
+    y = df[target_column]
+
+    # Train-test split
+    X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
+
+    # Apply scaler
+    X_train, X_test, _ = apply_scaling(X_train, X_test, scaler=scaler)
+
+    results_df = pd.DataFrame()
+
+    for _, row in model_list.iterrows():
+        name = row['Model Name']
+        estimator_class = row['Estimator Class']
+        print(f'Generating Predicition for {name}, {estimator_class}')
+               
+        try:
+            start_time = time.time()
+            model = estimator_class()
+            model.fit(X_train, y_train)
+            y_pred = model.predict(X_test)
+
+            # Calculate AUC Score Outside of Classification as it requires information not being passed.
+            if hasattr(model, "predict_proba"):
+                y_proba = model.predict_proba(X_test)
+                AUC_Score = roc_auc_score(y_test, y_proba, multi_class="ovr")
+                print(AUC_Score)
+            else:
+                AUC_Score = 0            
+            
+            binary_df = pd.concat([pd.DataFrame(y_pred,columns=['PREDICTION']),pd.DataFrame(y_test).rename(columns={target_column:'ACTUAL'}).reset_index(drop=True)],axis=1)            
+            model_perfom_stats =  ClassificationMetrics(binary_df,AUC_Score=AUC_Score)
+            model_perfom_stats['Model'] = name
+            model_perfom_stats['Scaler'] = scaler
+
+            end_time = time.time()
+            elapsed = end_time - start_time
+            model_perfom_stats['Time'] = elapsed
+            results_df = pd.concat([results_df,model_perfom_stats])
+            print(f'{name} Successfully Completed in {elapsed}.')
+
+        except Exception as e:
+            print(f"Model Generation and Results Failed: {e}\n")
+    return results_df
+
+
+# def ClassificationMetrics(df,
+#                           prediction='PREDICTION',
+#                           actual='ACTUAL',
+#                           AUC_Score=0,
+#                           new_column_name='RESULT'):
+#     '''
+#     Function
+        
+    
+#     Parameters
+        
+#     Returns
+            
+#     '''
+#     results_dict = {}
+    
+#     condition = [(df[prediction]==1)&(df[actual]==df[prediction]),
+#                  (df[prediction]==0)&(df[actual]==df[prediction]),
+#                  (df[prediction]==1)&(df[actual]!=df[prediction]),
+#                  (df[prediction]==0)&(df[actual]!=df[prediction])]
+    
+#     values = ['True Positives','True Negatives','False Positives (I)','False Negatives (II)']
+    
+#     df[new_column_name] = np.select(condition,values,default='Unknown')
+    
+#     results_dict['True Positives'] =       len(df[df['RESULT']=='True Positives'])
+#     results_dict['True Negatives'] =       len(df[df['RESULT']=='True Negatives'])
+#     results_dict['False Positives (I)'] =  len(df[df['RESULT']=='False Positives (I)'])
+#     results_dict['False Negatives (II)'] = len(df[df['RESULT']=='False Negatives (II)'])
+    
+    
+#     results_dict['Total Records'] = len(df)
+#     results_dict['Correct Predictions'] =   len(df[df['RESULT'].isin(['True Negatives','True Positives'])])
+#     results_dict['Incorrect Predictions'] = len(df[df['RESULT'].isin(['False Negatives (II)','False Positives (I)'])])
+#     results_dict['Actual Positives'] = len(df[df['RESULT'].isin(['False Negatives (II)','True Positives'])])
+#     results_dict['Actual Negatives'] = len(df[df['RESULT'].isin(['False Positives (I)','True Negatives'])])
+    
+#     try:
+#         results_dict['Recall'] = results_dict['True Positives']/(results_dict['True Positives']+results_dict['False Negatives (II)'])     # How Many Positives were Actually Predicted
+#         results_dict['Precision']    = results_dict['True Positives']/(results_dict['True Positives']+results_dict['False Positives (I)']) # How Many Predictions were Correct
+#         results_dict['F1'] = 2*(results_dict['Precision']*results_dict['Recall'])/(results_dict['Precision']+results_dict['Recall'])  # Harmonic Mean 
+        
+#     except:
+#         results_dict['Recall'] = 0
+#         results_dict['Precision'] = 0
+#         results_dict['F1'] = 0
+        
+#     results_dict['Accuracy']  = results_dict['Correct Predictions']/results_dict['Total Records']     # How Correct your Model was overall
+#     results_dict['AUC'] = AUC_Score
+
+#     return df,pd.DataFrame([results_dict.values()],columns=results_dict.keys())
