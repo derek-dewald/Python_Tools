@@ -3,6 +3,9 @@ from sklearn import datasets
 import pandas as pd
 import numpy as np
 
+from TextFunctions import extract_doc_sections_all
+from MLPipeline import SKLearnModelList
+
 def sklearn_dataset(df):
     # Load the diabetes dataset
     df1 = pd.DataFrame(df['data'],columns=df['feature_names'])
@@ -208,3 +211,23 @@ def MNIST_SKLEARN(normalize=True, flatten=False, random_state=42,return_value=No
         return pd.concat([pd.DataFrame(X),pd.DataFrame(y,columns=['Target'])],axis=1),pd.DataFrame()
     else:
         return X,y
+    
+
+def GenerateSKModelDoc():
+
+    sklearn_model_df = SKLearnModelList()
+       
+    param_df = pd.DataFrame()
+    desc_df = pd.DataFrame()
+
+    for index,row in sklearn_model_df.iterrows():
+        temp_para,temp_desc = extract_doc_sections_all(row['Estimator Class'],model_name=row['Model Name'])
+        param_df = pd.concat([param_df,temp_para])
+        desc_df = pd.concat([desc_df,temp_desc])
+
+    sklearn_model_df = sklearn_model_df.merge(desc_df,on='Model Name',how='left') 
+
+    sklearn_model_df.to_csv('SKLearnModels.csv',index=False)
+    param_df.to_csv('SKlearnParameterList.csv',index=False)
+    
+    return sklearn_model_df,param_df

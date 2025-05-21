@@ -1,8 +1,9 @@
+from sklearn.metrics import roc_auc_score,mean_absolute_error, mean_squared_error, r2_score
 from sklearn.base import ClassifierMixin, RegressorMixin, ClusterMixin, TransformerMixin
 from sklearn.preprocessing import StandardScaler, MinMaxScaler
 from sklearn.model_selection import train_test_split
 from sklearn.utils import all_estimators
-from sklearn.metrics import roc_auc_score
+from DFProcessing import ConvertDicttoDF
 
 import numpy as np
 import pandas as pd
@@ -157,21 +158,61 @@ def SKLearnModelList(regressor_type=None):
         return df_final[df_final['Estimator Type'].str.contains(regressor_type)]
     
 
+def CalculateRegressionPerformance(df,
+                                   p,
+                                   y='y',
+                                   y_pred='y_pred'):
+    
+    '''
+    Function to Generate a series of Performance Metrics for Regression Models.
+
+    Parameters:
+        df (Dataframe)
+        p (int): Predictors, Number of X Variables (Independent Variables in Model)
+        y (float): Target Value, Actual Observed Value
+        y_pred (float) : Y-Hat, Model Predicted Value
+    '''
+
+    y = df[y].to_numpy()
+    y_pred = df[y_pred].to_numpy()
+    
+    dict_ = {}
+    dict_['MAE'] = mean_absolute_error(y, y_pred)
+    dict_['MSE'] = mean_squared_error(y, y_pred)
+    dict_['RMSE'] = np.sqrt(dict_['MSE'])
+    dict_['R2'] = r2_score(y, y_pred)
+    dict_['MAPE'] = np.mean(np.abs((y - y_pred) / y)) * 100
+    dict_['SMAPE'] = 100 * np.mean(2 * np.abs(y_pred - y) / (np.abs(y) + np.abs(y_pred)))
+
+    # Adjusted R^2 (assuming p predictors, here p=2 as example)
+    n = len(y)
+    dict_['ADJ_R2'] = 1 - (1 - dict_['R2']) * (n - 1) / (n - p - 1)
+
+    return pd.DataFrame(dict_.values(),index=dict_.keys(),columns=['VALUES']).T
+
+
 def MLPipelineSample(df, 
                      scaler,
                      ml_model_type='regressor',
                      target_column='Target',
                      sample_override=0,
+                     run_all_size_models=0,
                      test_size=0.2):
     """
-    Runs multiple scikit-learn estimators with MLflow tracking.
+    Function to run the relevant models in SKlearn against Data set. Primary input is ml_model_type, which determines which class of models to run. 
+    Models are selected from SKlearn library based on model Type. 
 
-    Args:
-        df (DataFrame): Input dataset.
-        project_name (str): MLflow experiment name.
+    This function is really meant to be a first pass on a sample of to provide insights into which models are likely to perform well.
+
+    Parameters:
+        df (DataFrame): Input dataset in form of DataFrame, with Target column labeled Target as default (it can be specified to change).
         scaler (str): One of None, 'normal', or 'standard'.
         ml_model_type (str): 'classifier', 'regressor', 'cluster', 'transformer'
         target_column (str): Name of the target column.
+        sample_override (int): Binary flag to determine whether the entirety of Dataset should be run. Default is to NOT override and run a sample as defined by test size.
+        run_all_size_models: (int): Binary flag to determine whether all models of the seleect model type should be run. Default is only to run models of relevant size, however
+        override provided, espcially in the case of Smaller models, or models with limit parameters, which might run quickly against all models. Change implemented for Iris Dataset
+        which ran in 1 second for selected models and 3 seconds for ALL models, opposed to MNIST, which timed out on all models.
         test_size (float): Proportion of data used for testing.
 
     Returns:
@@ -181,14 +222,17 @@ def MLPipelineSample(df,
     # Get model list (you must have this function already working)
     sklearn_models_df = SKLearnModelList()
 
-    if len(df)<5000*(1+test_size):
-        model_list = sklearn_models_df[(sklearn_models_df['Dataset Size'].str.contains('small',case=False))&(sklearn_models_df['Estimator Type'].str.contains(ml_model_type,case=False))]
-    elif len(df)<100000*(1+test_size):
-        model_list = sklearn_models_df[(sklearn_models_df['Dataset Size'].str.contains('medium',case=False))&(sklearn_models_df['Estimator Type'].str.contains(ml_model_type,case=False))]
-    elif len(df)>100000*(1+test_size):
-        model_list = sklearn_models_df[(sklearn_models_df['Dataset Size'].str.contains('large',case=False))&(sklearn_models_df['Estimator Type'].str.contains(ml_model_type,case=False))]
+    if run_all_size_models==0:
+        if len(df)<5000*(1+test_size):
+            model_list = sklearn_models_df[(sklearn_models_df['Dataset Size'].str.contains('small',case=False))&(sklearn_models_df['Estimator Type'].str.contains(ml_model_type,case=False))]
+        elif len(df)<100000*(1+test_size):
+            model_list = sklearn_models_df[(sklearn_models_df['Dataset Size'].str.contains('medium',case=False))&(sklearn_models_df['Estimator Type'].str.contains(ml_model_type,case=False))]
+        elif len(df)>100000*(1+test_size):
+            model_list = sklearn_models_df[(sklearn_models_df['Dataset Size'].str.contains('large',case=False))&(sklearn_models_df['Estimator Type'].str.contains(ml_model_type,case=False))]
+    else:
+        model_list = sklearn_models_df[(sklearn_models_df['Estimator Type'].str.contains(ml_model_type,case=False))]
 
-    if len(df)>5000 & sample_override==0:
+    if (len(df)>5000) & (sample_override==0):
         df = df.sample(frac=.15).copy()
         
     # Prepare data
@@ -213,29 +257,36 @@ def MLPipelineSample(df,
             model = estimator_class()
             model.fit(X_train, y_train)
             y_pred = model.predict(X_test)
+            binary_df = pd.concat([pd.DataFrame(y_pred,columns=['PREDICTION']),pd.DataFrame(y_test).rename(columns={target_column:'ACTUAL'}).reset_index(drop=True)],axis=1) 
 
-            # Calculate AUC Score Outside of Classification as it requires information not being passed.
-            if hasattr(model, "predict_proba"):
-                y_proba = model.predict_proba(X_test)
-                AUC_Score = roc_auc_score(y_test, y_proba, multi_class="ovr")
-                print(AUC_Score)
-            else:
-                AUC_Score = 0            
+            if ml_model_type == 'classifier':
+                # Calculate AUC Score Outside of Classification as it requires information not being passed.
+                if hasattr(model, "predict_proba"):
+                    y_proba = model.predict_proba(X_test)
+                    AUC_Score = roc_auc_score(y_test, y_proba, multi_class="ovr")
+                    print(AUC_Score)
+                else:
+                    AUC_Score = 0            
+                   
+                model_perfom_stats =  ClassificationMetrics(binary_df,AUC_Score=AUC_Score)
+                
+            elif ml_model_type == 'regressor':
+                model_perfom_stats = CalculateRegressionPerformance(binary_df,p=len(X.columns),y='ACTUAL',y_pred='PREDICTION')
             
-            binary_df = pd.concat([pd.DataFrame(y_pred,columns=['PREDICTION']),pd.DataFrame(y_test).rename(columns={target_column:'ACTUAL'}).reset_index(drop=True)],axis=1)            
-            model_perfom_stats =  ClassificationMetrics(binary_df,AUC_Score=AUC_Score)
+            else:
+                print('Need to develop Performance Measurement Metrics')
+                pass
+            
             model_perfom_stats['Model'] = name
             model_perfom_stats['Scaler'] = scaler
-
-            end_time = time.time()
-            elapsed = end_time - start_time
-            model_perfom_stats['Time'] = elapsed
+            model_perfom_stats['Time'] = time.time() - start_time
             results_df = pd.concat([results_df,model_perfom_stats])
-            print(f'{name} Successfully Completed in {elapsed}.')
+            print(f'{name} Successfully Completed in {time.time() - start_time:.2f} seconds.')
 
         except Exception as e:
             print(f"Model Generation and Results Failed: {e}\n")
     return results_df
+
 
 
 # def ClassificationMetrics(df,
@@ -289,3 +340,94 @@ def MLPipelineSample(df,
 #     results_dict['AUC'] = AUC_Score
 
 #     return df,pd.DataFrame([results_dict.values()],columns=results_dict.keys())
+
+
+# def MLPipeline(df, 
+#                project_name,
+#                scaler,
+#                ml_model_type='regressor',
+#                target_column='Target',
+#                test_size=0.2):
+#     """
+#     Runs multiple scikit-learn estimators with MLflow tracking.
+
+#     Args:
+#         df (DataFrame): Input dataset.
+#         project_name (str): MLflow experiment name.
+#         scaler (str): One of None, 'normal', or 'standard'.
+#         ml_model_type (str): 'classifier', 'regressor', 'cluster', 'transformer'
+#         target_column (str): Name of the target column.
+#         test_size (float): Proportion of data used for testing.
+
+#     Returns:
+#         pd.DataFrame: Summary of model performance.
+#     """
+
+#     # Set MLflow experiment
+#     #mlflow.set_experiment(project_name)
+
+#     # Prepare data
+#     X = df.drop(columns=[target_column])
+#     y = df[target_column]
+
+#     # Train-test split
+#     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=test_size, random_state=42)
+
+#     # Apply scaler
+#     X_train, X_test, _ = apply_scaling(X_train, X_test, scaler=scaler)
+
+#     # Get model list (you must have this function already working)
+#     sklearn_models_df = SKLearnModelList()
+
+#     if len(X_train)<5000:
+#         model_list = sklearn_models_df[(sklearn_models_df['Dataset Size'].str.contains('small',case=False))&(sklearn_models_df['Estimator Type'].str.contains(ml_model_type,case=False))]
+#     elif len(X_train)<100000:
+#         model_list = sklearn_models_df[(sklearn_models_df['Dataset Size'].str.contains('medium',case=False))&(sklearn_models_df['Estimator Type'].str.contains(ml_model_type,case=False))]
+#     elif len(X_train)>100000:
+#         model_list = sklearn_models_df[(sklearn_models_df['Dataset Size'].str.contains('large',case=False))&(sklearn_models_df['Estimator Type'].str.contains(ml_model_type,case=False))]
+
+#     results = []
+
+#     for _, row in model_list.iterrows():
+#         name = row['Model Name']
+#         estimator_class = row['Estimator Class']
+#         print(f'Generating Predicition for {name}, started processing {datetime.datetime.now()}')
+#         try:
+#             start_time = time.time()
+#             model = estimator_class()
+
+#             #with mlflow.start_run(run_name=name):
+#             model.fit(X_train, y_train)
+#             y_pred = model.predict(X_test)
+
+#             if ml_model_type == "classifier":
+#                 metric = accuracy_score(y_test, y_pred)
+#                 mlflow.log_metric("Accuracy", metric)
+#             else:
+#                 metric = mean_squared_error(y_test, y_pred) ** 0.5
+#                 mlflow.log_metric("RMSE", metric)
+
+#                 #mlflow.sklearn.log_model(model, name)
+#                 #mlflow.log_param("Model", name)
+#                 #mlflow.log_param("Training Time", round(time.time() - start_time, 2))
+
+#             results.append({
+#                 "Model": name,
+#                 "Metric": metric,
+#                 "Time (s)": round(time.time() - start_time, 2)
+#                 })
+
+#         except Exception as e:
+#             print(f"{name} failed: {str(e)}")
+
+#     return pd.DataFrame(results)
+
+
+# results_df = MLPipeline(df,
+#                         project_name='MNIST_ML_Comparison',
+#                         scaler='normal',
+#                         ml_model_type='classifier',
+#                         target_column='Target',
+#                         test_size=0.2)
+
+# results_df

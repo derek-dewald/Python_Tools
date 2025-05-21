@@ -1,0 +1,29 @@
+name: TF
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.10
+  - pandas
+  - numpy
+  - scikit-learn
+  - matplotlib
+  - seaborn
+  - statsmodels
+  - scipy
+  - mlflow
+  - pyarrow
+  - xgboost
+  - opencv
+  - notebook
+  - jupyterlab
+  - ipykernel
+  - flask
+  - requests
+  - paramiko
+  - typing-extensions
+  - pyyaml
+  - pip
+  - pip:
+      - tensorflow==2.13.0
+      - keras==2.13.1
