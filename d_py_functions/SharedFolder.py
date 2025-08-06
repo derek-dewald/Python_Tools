@@ -9,7 +9,7 @@ def DuplicateFileorFolder(source_path, destination_path):
     """
     Function to copy a file or folder to another location while handling errors.
 
-    Args:
+    Parameters:
         source_path (str): Path to the file or folder to copy.
         destination_path (str): Destination path where the file or folder should be stored.
     
@@ -75,7 +75,7 @@ def ReadDirectory(location=None,
     """
     Function which reads reads a directory and returns a list of files included within
 
-    Args:
+    Parameters:
     folder (str): The path to the directory. Defaults to the current working directory if not provided.
     file_type (str): The file extension or type to filter by (e.g., '.ipynb'). If empty, returns all files.
 
@@ -123,3 +123,78 @@ def ReadDirectory(location=None,
                 dfs = list(executor.map(read_file,file_list))
             
             return pd.concat(dfs,ignore_index=True)  
+        
+
+
+def crawl_directory_with_progress(root_dir, progress_step=5,print_=1):
+    """
+    Recursively crawl through a directory, track progress every `progress_step` percent.
+    
+    Parameters:
+        root_dir (str): Root directory to start from.
+        progress_step (int): Percent steps at which to report progress (e.g. 5 for 5%).
+
+    Returns:
+        pd.DataFrame: DataFrame with file path, name, and type.
+    """
+    start_time = time.time()
+    file_records = []
+
+    # Step 1: Count total directories to visit (quick)
+    total_dirs = sum(1 for _ in os.walk(root_dir))
+    
+    print(total_dirs)
+    
+    if total_dirs == 0:
+        print("No directories found.")
+        return pd.DataFrame()
+
+    # Progress tracking
+    next_progress_mark = progress_step
+    visited_dirs = 0
+
+    for dirpath, dirnames, filenames in os.walk(root_dir):
+        visited_dirs += 1
+
+        for file in filenames:
+            file_path = os.path.join(dirpath, file)
+            file_name = os.path.basename(file)
+            file_ext = os.path.splitext(file)[1].lower().lstrip('.')  # remove dot
+            
+            file_records.append({
+                'file_path': file_path,
+                'file_name': file_name,
+                'file_type': file_ext
+            })
+
+        # Print progress every 5%
+        if print_==1:
+            percent_complete = (visited_dirs / total_dirs) * 100
+            if percent_complete >= next_progress_mark:
+                elapsed = time.time() - start_time
+                estimated_total = elapsed / (percent_complete / 100)
+                remaining = estimated_total - elapsed
+
+                print(f"[{percent_complete:.1f}%] Done - "
+                      f"Elapsed: {elapsed:.1f}s - "
+                      f"ETA: {remaining:.1f}s remaining "
+                      f"(Total est: {estimated_total:.1f}s)")
+
+                next_progress_mark += progress_step
+
+    total_time = time.time() - start_time
+    if print_==1:
+        print(f"✅ Done. Total time: {total_time:.2f} seconds. Files found: {len(file_records)}")
+    return pd.DataFrame(file_records)
+
+
+def MakeFolder(folder,
+               path_):
+    
+    location = f"{path_}{folder}\\"
+    
+    if os.path.exists(f"{location}"):
+        print(f"{location} exits")
+    else:
+        os.makedirs(f"{location}")
+        print('New Folder Created')

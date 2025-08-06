@@ -1,10 +1,7 @@
 from SharedFolder import ReadDirectory
 from Connections import ParamterMapping
-#from IPython.display import display, HTML
 import pandas as pd
 import ast
-
-
 
 def extract_function_details_ast(file_content,file_name):
     '''

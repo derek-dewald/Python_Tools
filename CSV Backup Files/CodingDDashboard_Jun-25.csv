@@ -270,3 +270,5 @@ COALESCE(Column1,Column2,','Default')",COALESCE,Can Add a default condition
 SQL,TBD,"nvl(column1,column2) as FieldName",nvl,"Oracle Specific , can only check 2 conditions."
 Streamlit,TBD,"Repository: derek-dewald/Python_Tools
 Main File Path: Streamlit/DataDictionary/MarkdownNotes.py",Deploying Dashboard,
+Python,Hack,".replace(hour=0, minute=0, second=0, microsecond=0)",Datetime Normalization,
+Python,Hack,pd.DataFrame(df[column_name].value_counts(dropna=False),Value Count Including Null,

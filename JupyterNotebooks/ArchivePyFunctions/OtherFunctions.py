@@ -1,4 +1,4 @@
-from IPython.core.display import display, HTML
+from IPython.display import display, HTML
 import pandas as pd
 import numpy as np
 import datetime

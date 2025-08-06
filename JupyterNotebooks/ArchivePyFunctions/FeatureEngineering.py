@@ -260,4 +260,69 @@ def CompareTextColumns(df,
     
     df[new_column_name] = np.where(df[col1].str.strip().str.lower()==df[col2].str.strip().str.lower(),1,0)
     
+
+
+def CategorizeBinaryChange(df,
+                           change_column='VARIANCE'):
+    '''
+    Function to Simply Apply a Condition to generate whether a particular column, which is meant to be a Change over a 
+    time series dataset, has Increased, Decreased or Stayed the Same. Can be stand alone, created for use in ColumnElementalChange
     
+    Args:
+        change_column (str): Name of Column Created. 
+        
+    Returns:
+        dataframe, with change_column added
+        
+    '''
+    
+    condition = [
+        df[change_column]>0,
+        df[change_column]<0,
+        df[change_column]==0
+    ]
+        
+    value = ['Records Increasing',
+             'Records Decreasing',
+             'Records Not Changing']
+        
+    df['CHANGE_CLASSIFICATION'] = np.select(condition,value,'Null Value Present')
+    
+    try:
+        # Supplement Change to increase visability of granularity so we can understand true variance, in addition to Add/Losses
+        df['CHANGE_CLASSIFICATION'] = np.where(df['_merge']=='right_only','Records Lost',df['CHANGE_CLASSIFICATION'])
+        df['CHANGE_CLASSIFICATION'] = np.where(df['_merge']=='left_only','Records Added',df['CHANGE_CLASSIFICATION'])
+        
+    except:
+        pass
+    
+def ConvertToBinary(df, column_name, return_value=1):
+    '''
+    Function to convert a column into a Binary Variable. Specifically useful when aggregating counts, and in place you'd like to return
+    a simple binary indicator of the possession of a particular attribute.
+
+    Parameters
+    df (DataFrame)
+    column_name (str): The column to be converted.
+    return_value  (int): Binary Flag, 1 for Int, 'Y' for text.
+
+    Returns
+        Modifies the DataFrame in place.
+    '''
+    if str(return_value) == '1':
+        df[column_name] = np.where(df[column_name] > 0, 1, 0)
+    else:
+        df[column_name] = np.where(df[column_name] > 0, 'Y', 'N')
+
+def FirstObservanceFlag(df, column_name):
+    '''
+    Function to creates a binary flag column indicating the first observation of a Value in a Column. Reteurns a 0 for all subsequent values
+
+    Parameters
+    df (DataFrame)
+    column_name (str): The column name where values will be counted
+
+    Returns
+        Modifies the DataFrame in place.
+    '''
+    df['FirstObs'] = (~df[column_name].duplicated()).astype(int)

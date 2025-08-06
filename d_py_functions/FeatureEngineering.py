@@ -105,14 +105,13 @@ def FillFromAbove(df,
     
     df[new_column_name] = df[column_name].ffill()
 
-
 def BracketColumn(df,
-                   column_name,
-                   new_column_name,
-                   bins=[0,10,20,30,40,50,60,70,80,90,100],
-                   formating="",
-                   assign_cat=0,
-                   last_bin_lowest_value=1,):
+                  column_name,
+                  new_column_name,
+                  bins=[0,10,20,30,40,50,60,70,80,90,100],
+                  formating="",
+                  assign_cat=0,
+                  last_bin_lowest_value=1,):
     
     '''
     Function Created to analyze the contents of a Column in a Dataframe and return a summarized view of the distribution.
@@ -138,8 +137,6 @@ def BracketColumn(df,
     Returns:
         Dataframe with New Column
     
-    
-    
     '''
     
     df[column_name] = df[column_name].fillna(0)
@@ -151,21 +148,21 @@ def BracketColumn(df,
         if count == 0:
             if last_bin_lowest_value==1:
                 condition_list.append(df[column_name]==value)
-                value_list.append(f"Equal to {formating}{value}")
+                value_list.append(f"{count+1})Equal to {formating}{value:,}")
             else:
-                condition_list.append(df[column_name]<=value)
-                value_list.append(f"Less than or Equal to {formating}{value}")
+                condition_list.append(df[column_name]<value)
+                value_list.append(f"{count+1})Less than {formating}{value:,}")
         
         elif count < len(bins)-1:
-            condition_list.append(df[column_name]<value)
-            value_list.append(f"Between {formating}{bins[count-1]} and {formating}{bins[count]}")
+            condition_list.append(df[column_name]<=value)
+            value_list.append(f"{count+1})Between {formating}{bins[count-1]:,} and {formating}{bins[count]:,}")
         
         else:
-            condition_list.append(df[column_name]<value)
-            value_list.append(f"Between {formating}{bins[count-1]} and {formating}{bins[count]}")
+            condition_list.append(df[column_name]<=value)
+            value_list.append(f"{count+1})Between {formating}{bins[count-1]:,} and {formating}{bins[count]:,}")
             
             condition_list.append(df[column_name]>value)
-            value_list.append(f"Greater than {formating}{value}")
+            value_list.append(f"{count+1})Greater than {formating}{value:,}")
             
         df[new_column_name]=np.select(condition_list,value_list,'Problem')
         
@@ -173,6 +170,7 @@ def BracketColumn(df,
             df[new_column_name] = pd.Categorical(df[new_column_name], categories=value_list)
     
     print(df[new_column_name].value_counts())
+
     
 def VarianceInflationFactor(df):
     """
@@ -326,3 +324,56 @@ def FirstObservanceFlag(df, column_name):
         Modifies the DataFrame in place.
     '''
     df['FirstObs'] = (~df[column_name].duplicated()).astype(int)
+
+
+def CreateRandomDFColumn(df, value_list, new_column_name):
+    '''
+    Function to Create a New Column in a Dataframe by randomly Selecting values from a list
+
+    Parameters:
+    df (Dataframe)
+    value_list (list): List of values to be randomly choosen from
+    new_column_name: Name of New Column
+    
+    Returns:
+        new dataframe column
+    
+    '''
+    
+    df[new_column_name] = np.random.choice(value_list, size=len(df))
+
+
+def BinaryComplexEquivlancey(df, col, col1, new_column_name):
+    '''
+    Function to Compare Whether two Columns are Equal. 
+    Equivalancy in this broadened definition includes Null to Null, Null to 0, "" to Null. and 0 to 0.
+
+    Parameters:
+        df (dataframe)
+        col(str): Column Name from Dataframe
+        col1(str): Column Name from Dataframe (should 
+        new_column_name (str): Name of New Binary Column
+
+    Returns:
+        New Dataframe Column, NEW_COLUMN_NAME.
+     
+    '''
+    try:
+        # Try numeric comparison
+        df[new_column_name] = np.where(
+            (df[col].isna() & df[col1].isna()) |
+            ((df[col].fillna(0) == 0) & df[col1].isna()) |
+            ((df[col1].fillna(0) == 0) & df[col].isna()) |
+            (df[col].fillna(0) == df[col1].fillna(0)),
+            1, 0
+        )
+    except Exception:
+        # Fallback to string comparison
+        df[new_column_name] = np.where(
+            (df[col].isna() & df[col1].isna()) |
+            ((df[col].fillna('') == '') & df[col1].isna()) |
+            ((df[col1].fillna('') == '') & df[col].isna()) |
+            (df[col].fillna('').astype(str).str.strip().str.lower() ==
+             df[col1].fillna('').astype(str).str.strip().str.lower()),
+            1, 0
+        )

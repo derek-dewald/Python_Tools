@@ -731,3 +731,21 @@ def ConvertDicttoDF(dict_, key_name="KEY", value_name="VALUE"):
         DataFrame
     '''
     return pd.DataFrame.from_dict(dict_, orient='index', columns=[value_name]).reset_index().rename(columns={'index': key_name})
+
+def ConvertListstoDF(dict_lists):
+    '''
+    Function to Take a Dictionary of Lists and convert into a Dataframe. 
+
+    dict_lists = {'Column1':list1,'Column2':List2}
+
+    Parameter:
+        Dictionary of Lists, Keys will become column Name
+
+    Returns
+        DataFrame
+    
+    
+
+    '''
+
+    return pd.DataFrame(dict_lists)

@@ -78,3 +78,10 @@ TensorFlow,Metrics,Precision
 TensorFlow,Metrics,Recall
 TensorFlow,,Epochs
 TensorFlow,,Batch Size
+Building In TensorFlow,Sequential,"Simplest Method. Define Each Layer Directly, or via .add()"
+Building In TensorFlow,Functional API,
+Building In TensorFlow,Model Subclassing,
+Building In TensorFlow,Transfer Learning,"Using .layers from trained model can, utilize previously trained Neurons/Nodes as inputs for different models. "
+Building In TensorFlow,Callbacks,Object that is passed into the model which provides additional control during the .fit() process to empower the user.
+Building In TensorFlow,,
+Building In TensorFlow,,
