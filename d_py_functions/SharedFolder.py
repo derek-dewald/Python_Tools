@@ -1,9 +1,10 @@
+# File Description: File related to Foldes and Files on Local Computer.
+
 from concurrent.futures import ThreadPoolExecutor
 import pandas as pd
 import shutil
+import ast
 import os
-
-
 
 def DuplicateFileorFolder(source_path, destination_path):
     """
@@ -198,3 +199,106 @@ def MakeFolder(folder,
     else:
         os.makedirs(f"{location}")
         print('New Folder Created')
+
+def ExtractPythonFunctionDetail(file_path, keywords=None):
+    """
+    Extracts function details from a .py file using AST parsing.
+    
+    Parameters:
+        file_path (str): Path to the Python file.
+        keywords (list): List of keywords to look for in docstrings (default: [parameters:, returns:, date created:, date last modified:]).
+        
+    Returns:
+        pd.DataFrame: DataFrame with function details.
+
+    Date Created: August 17, 2025.
+    Date Last Modified: 
+    """
+    if keywords is None:
+        keywords = ["parameters:", "returns:", "date created:", "date last modified:"]
+
+    # Normalize keywords (all lowercase, ensure ":" at end)
+    keywords = [k.lower() if k.endswith(":") else k.lower() + ":" for k in keywords]
+
+    with open(file_path, "r", encoding="utf-8") as f:
+        file_content = f.read()
+
+    tree = ast.parse(file_content)
+    function_data = []
+
+    for node in tree.body:
+        if isinstance(node, ast.FunctionDef):
+            function_name = node.name
+            docstring = ast.get_docstring(node) or "No description available"
+            function_code = ast.get_source_segment(file_content, node).strip()
+
+            # Parse docstring content
+            doc_lines = docstring.split("\n")
+            description_text = []
+            sections = {k[:-1].capitalize(): [] for k in keywords}  # e.g. "Returns" -> []
+
+            current_section = None
+            for line in doc_lines:
+                stripped = line.strip()
+                low = stripped.lower()
+                # Detect new section
+                if any(low.startswith(k) for k in keywords):
+                    for k in keywords:
+                        if low.startswith(k):
+                            current_section = k[:-1].capitalize()
+                            # ✅ Remove only the keyword prefix
+                            content = stripped[len(k):].strip()
+                            sections[current_section].append(content)
+                            break
+                elif stripped:  # inside a section or description
+                    if current_section:
+                        sections[current_section].append(stripped)
+                    else:
+                        description_text.append(stripped)
+
+            # Build record
+            function_data.append({
+                "Function Name": function_name,
+                "Description": " ".join(description_text).strip(),
+                **{sec: " ".join(val).strip() for sec, val in sections.items()},
+                "Code": function_code
+            })
+
+    return pd.DataFrame(function_data)
+
+
+def ExtractPythonFiles(folder=None,export_file=None):
+    
+    '''
+    Function to Read a Specifically Determine folder, to look for all of the .py files in it and read them, 
+    using the function ExtractPythonFunctionDetail.
+
+    Parameters:
+        folder (str): Folder location of a series of .py files to be Read. Default Location, '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/'
+        export_file (str): Name of Excel File to Be export if included, by default it will not exclude a file.
+
+    Returns:
+        pd.DataFrame() with Listing of All functions read, in format, Function Name, Description, Parameters, Returns, Date Created, Date Last Modified, Code
+
+    Date Created: August 17, 20225
+    Date Last Modified: 
+
+    '''
+
+    if not folder:
+        folder = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/'
+
+    files = ReadDirectory(folder)
+    files = [x for x in files if (x.find('.py')!=-1)&(x.find('__')==-1)]
+
+    final_df = pd.DataFrame()
+
+    for file in files:
+        temp_df = ExtractPythonFunctionDetail(f"{folder}{file}")
+        temp_df['File'] = file
+        final_df = pd.concat([final_df,temp_df]).reset_index(drop=True)
+
+    if export_file:
+        final_df.to_excel(f"{export_file}.xlsx",index=False)
+
+    return final_df

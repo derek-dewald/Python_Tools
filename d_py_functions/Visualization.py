@@ -1,4 +1,5 @@
 ## File Description: This file should include functions related to visualization tools. Creating, manipulating, saving graphs, Images, etc. Please include all formating functions within this workbook.
+
 emoji_dict = {
     "Status / Progress / Outcome": [
         '✅', '✔️', '⏸️', '🟢', '🟡', '🔴', '⏳', '🕐', '📤', '📥', '🗂️'

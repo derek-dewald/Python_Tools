@@ -1,3 +1,5 @@
+# File Description: Related to teh Creation of Enhancements to Dataframes which result in the creation of New DataFrames, Columns, Rows, Etc. 
+
 from statsmodels.stats.outliers_influence import variance_inflation_factor
 from sklearn.preprocessing import PolynomialFeatures
 import pandas as pd

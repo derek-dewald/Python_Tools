@@ -1,3 +1,5 @@
+# File Description: Generation of Test Data Sets, Toy Data sets,  quick Access to Scikit Learn Files and other non file based Information.
+
 from sklearn.datasets import fetch_openml
 from sklearn import datasets
 import pandas as pd
@@ -178,41 +180,6 @@ def GenerateFakeMemberDF(mbrs,months,attrition_perc=.05,growth_max_perc=.1):
     return final_df
 
 
-def MNIST_SKLEARN(normalize=True, flatten=False, random_state=42,return_value=None):
-    """
-    Loads the MNIST dataset from OpenML and returns train/test sets.
-
-    Parameters:
-        normalize (bool): If True, scale pixel values to [0, 1].
-        flatten (bool): If True, keep images as (784,) instead of (28, 28).
-        random_state (int): Random seed for reproducibility.
-
-    Returns:
-        
-    """
-    print("Downloading MNIST from OpenML...")
-    mnist = fetch_openml('mnist_784', version=1, as_frame=False)
-
-    # Raw data and labels
-    X, y = mnist["data"], mnist["target"]
-
-    # Convert labels to integers
-    y = y.astype(np.uint8)
-
-    # Normalize pixel values
-    if normalize:
-        X = X / 255.0
-
-    # Reshape to (28, 28) images unless flatten=True
-    if not flatten:
-        X = X.reshape(-1, 28, 28)
-
-    if return_value =='df':
-        return pd.concat([pd.DataFrame(X),pd.DataFrame(y,columns=['Target'])],axis=1),pd.DataFrame()
-    else:
-        return X,y
-    
-
 def GenerateSKModelDoc():
 
     sklearn_model_df = SKLearnModelList()
@@ -231,3 +198,34 @@ def GenerateSKModelDoc():
     param_df.to_csv('SKlearnParameterList.csv',index=False)
     
     return sklearn_model_df,param_df
+
+
+def MNIST_SKLEARN(normalize=True, flatten=False, random_state=42,return_value=None):
+    """
+    Loads the MNIST dataset from OpenML and returns train/test sets.
+
+    Parameters:
+        normalize (bool): If True, scale pixel values to [0, 1].
+        flatten (bool): If True, keep images as (784,) instead of (28, 28).
+        random_state (int): Random seed for reproducibility.
+
+    Returns:
+        
+    """
+    from tensorflow.keras.datasets import mnist
+    
+    (X_train, y_train), (X_test, y_test) = mnist.load_data()
+
+    print(X_train.shape)
+    
+    if flatten:
+        X_train = X_train.reshape(len(X_train), -1)
+        X_test  = X_test.reshape(len(X_test), -1)
+
+    if normalize:
+        X_train = X_train / 255.0
+        X_test = X_test / 255.0
+
+    print(X_train.shape)
+    
+    return X_train,y_train,X_test,y_test

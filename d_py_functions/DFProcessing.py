@@ -1,4 +1,5 @@
-## File Description: A more generalized Libary, including simple tricks, shortcuts and helpful functions for reviewing, summarizing or understanding. More Information, and less Procedural related. EDA for standardized processes.
+# File Description: File Related to all things Dataframe Manipulation. Functions related to Pandas Dataframes. Does not include Creation of New Data. 
+
 
 from itertools import product,permutations,combinations
 from FeatureEngineering import BracketColumn,CategorizeBinaryChange

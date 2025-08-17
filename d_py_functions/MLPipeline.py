@@ -1,3 +1,5 @@
+# File Description: All things related to Machine Learning, Functions, Pipeline, etc.
+
 from sklearn.metrics import roc_auc_score,mean_absolute_error, mean_squared_error, r2_score
 from sklearn.base import ClassifierMixin, RegressorMixin, ClusterMixin, TransformerMixin
 from sklearn.preprocessing import StandardScaler, MinMaxScaler

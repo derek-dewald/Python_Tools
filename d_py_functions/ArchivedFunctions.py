@@ -1,3 +1,5 @@
+# File Description: Archived Functions is a List of Historically Created Files which are no longer in active use, but stored for the purposes of context. No Active Files should be included, it should bot be linked or referenced. MOVE FILES from this location if referenced.
+
 def CreateCalculatedField(df, primary_key, calc_instructions, include_all=1):
 
     '''
