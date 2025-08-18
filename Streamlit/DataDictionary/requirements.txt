@@ -4,5 +4,6 @@ plotly
 numpy
 streamlit-aggrid==0.3.4
 openpyxl>=3.1
+ipython>=8.0
 # matplotlib
 # scikit-learn
