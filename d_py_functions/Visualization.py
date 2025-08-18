@@ -1,3 +1,10 @@
+from matplotlib.ticker import FuncFormatter
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pandas as pd
+import numpy as np
+import math
+
 ## File Description: This file should include functions related to visualization tools. Creating, manipulating, saving graphs, Images, etc. Please include all formating functions within this workbook.
 
 emoji_dict = {
@@ -122,14 +129,6 @@ hex_color_list = ['#808080','#efc050','#0000cd','#060','#ff4040','#FFC0CB','#EED
                   '#9f00ff', '#004242', '#a4f4f9', '#645452', '#f5deb3', '#fff', '#f5f5f5', '#a2add0','#9BCD9B',
                   '#ff43a4', '#fc6c85', '#722f37', '#673147', '#c9a0dc', '#c19a6b', '#738678', '#0f4d92']
 
-
-from IPython.display import display, HTML
-from matplotlib.ticker import FuncFormatter
-import matplotlib.pyplot as plt
-import seaborn as sns
-import pandas as pd
-import numpy as np
-import math
 
 def SimpleBar(df,
               x_axis,
@@ -303,85 +302,6 @@ def ConvertAxisValue(x, scale):
     else:
         return f'{x:.1f}'  # Format as default with one decimal place
     
-def JupyterNotebookMarkdown(df, return_value=""):
-    '''
-    Function to Create a Markdown file from Process DF, which is a data frame of the structure, 
-    Title, Header, Description
-
-    Args:
-        df (DataFrame): Must include columns Title, Header, Description
-        return_value (str): 
-            If "", renders HTML in notebook.
-            If text, returns HTML Markdown string.
-    
-    Returns:
-        str or display: Based on return_value
-    '''
-    try:
-        df1 = df[['Title', 'Header', 'Description']]
-    except:
-        print('DataFrame must include columns: Title, Header, Description')
-        return ''
-
-    text = ""
-    step_number = 1
-    last_title = None
-    last_header = None
-    open_l2 = False  # Track if L2 <ul> is open
-    open_l3 = False  # Track if L3 <ul> is open
-
-    for _, row in df1.iterrows():
-        curr_title = row['Title']
-        curr_header = row['Header']
-        curr_description = row['Description']
-
-        # If new Title
-        if curr_title != last_title:
-            if open_l3:
-                text += "</ul>\n"
-                open_l3 = False
-            if open_l2:
-                text += "</ul>\n"
-                open_l2 = False
-            if last_title is not None:
-                text += "</ul>\n"  # Close previous title's outer <ul>
-
-            text += f"<h4>{step_number}. {curr_title}</h4>\n<ul>\n"
-            step_number += 1
-            last_title = curr_title
-            last_header = None  # Reset header context
-
-        # If new Header
-        if curr_header != last_header and isinstance(curr_header, str) and curr_header.strip():
-            if open_l3:
-                text += "</ul>\n"
-                open_l3 = False
-            if open_l2:
-                text += "</ul>\n"
-                open_l2 = False
-
-            text += f"  <ul><li>{curr_header}</li>\n"
-            open_l2 = True
-            last_header = curr_header
-
-        # If Description exists
-        if isinstance(curr_description, str) and curr_description.strip():
-            if not open_l3:
-                text += "    <ul>\n"
-                open_l3 = True
-            text += f"      <li>{curr_description}</li>\n"
-
-    # Close any open lists at the end
-    if open_l3:
-        text += "    </ul>\n"
-    if open_l2:
-        text += "  </ul>\n"
-    text += "</ul>\n"
-
-    if return_value == "":
-        display(HTML(text))
-    else:
-        return text
 def Scatter(df,
             X,
             y,

@@ -1,96 +1,33 @@
 # File Description: 
-
+from IPython.display import display, HTML
 from SharedFolder import ReadDirectory
 from Connections import ParamterMapping
 import pandas as pd
-import ast
 
-def extract_function_details_ast(file_content,file_name):
+def D_Notes_Reader(topic=None):
     '''
-    Extracts structured function details from a Python script using AST.
-    
-    Parameters:
-    file_content (str): The raw string content of a Python script.
+    Function to read Notes Files Saved in Google Docs
+
+    Parameters: 
+        topic (str): Argument to enable Filtering of Returned Dataframe to a Specific Topic. If a Filter is not applied it can be difficult
+        to read the output as it's one continuous text without the Header Comments.
 
     Returns:
-    dict: A dictionary with function names as keys and metadata (description, args, return, code).
+        Printed version of Notes (Powerpoint Like Format)
 
-    '''
-    
-    tree = ast.parse(file_content)  # Parse the script into an AST
-    function_data = {}
-
-    for node in tree.body:
-        if isinstance(node, ast.FunctionDef):  # Identify function definitions
-            function_name = node.name
-            docstring = ast.get_docstring(node) or "No description available"
-
-            # Extract arguments from function signature
-            args = [arg.arg for arg in node.args.args]
-
-            # Extract return type annotation if present
-            return_type = ast.unparse(node.returns) if node.returns else "None"
-
-            # Extract function code using AST
-            function_code = ast.get_source_segment(file_content, node).strip()
-
-            # Process the docstring to separate description, args, and return
-            description_text = []
-            args_text = []
-            return_text = "None"
-
-            if docstring:
-                doc_lines = docstring.split("\n")
-                found_args = False
-
-                for line in doc_lines:
-                    stripped = line.strip()
-
-                    if stripped.lower().startswith(("args:", "parameters:")):  # Start of args
-                        found_args = True
-                        continue
-                    elif stripped.lower().startswith("returns:"):  # Start of return
-                        return_text = stripped.replace("Returns:", "").strip()
-                        found_args = False
-                        continue
-
-                    if not found_args:
-                        description_text.append(stripped)
-                    else:
-                        args_text.append(stripped)
-                        
-            function_data[function_name] = {
-                "Description": "\n".join(description_text).strip(),
-                "Arguments": args_text if args_text else args,
-                "Return": return_text,
-                "Code":function_code,
-                'File':file_name
-            }
-            
-    return function_data
-
-
-def ReadPythonFiles(location='/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/'):
+    Date Created: August 17, 20225
+    Date Last Modified: 
     
     '''
-    Function which reads a Folder, iterating through all files saved, looking for .py files utilizing athe Extract Function Details AST 
- 
- 
-     Args:
-         location (str): Folder
-         
-    Returns:
-        Dataframe of Functions with description.
-
-    '''    
-    py_file_dict = {}
     
-    for file_name in [x for x in ReadDirectory(location) if x.find('.py')!=-1 and x.find('__')==-1]:
-        with open(f"{location}{file_name}", "r", encoding="utf-8") as file:
-            data = file.read()
-            py_file_dict.update(extract_function_details_ast(data,file_name))
+    df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv')
+    if topic:
+        temp = df[df['Process']==topic]
+        if len(temp)>0:
+            return JupyterNotebookMarkdown(temp)
+    else:
+        return JupyterNotebookMarkdown(df)
             
-    return pd.DataFrame(py_file_dict).T
 
 def CreateMarkdown(df, return_value=""):
     '''
@@ -215,3 +152,91 @@ def display_term_latex_dynamic(row):
                     display(Math(cleaned))
     if pd.notna(row['Link']):
         display(Markdown(f"[More Info]({row['Link']})"))
+
+
+
+    
+def JupyterNotebookMarkdown(df, return_value=""):
+    '''
+    Function to Create a Markdown file from Process DF, which is a data frame of the structure, 
+    Title, Header, Description
+
+    Args:
+        df (DataFrame): Must include columns Title, Header, Description
+        return_value (str): 
+            If "", renders HTML in notebook.
+            If text, returns HTML Markdown string.
+    
+    Returns:
+        str or display: Based on return_value
+
+
+    Date Created:
+    Date Last Maintained: August 17, 2025
+
+    '''
+    try:
+        df1 = df[['Title', 'Header', 'Description']]
+    except:
+        print('DataFrame must include columns: Title, Header, Description')
+        return ''
+
+    text = ""
+    step_number = 1
+    last_title = None
+    last_header = None
+    open_l2 = False  # Track if L2 <ul> is open
+    open_l3 = False  # Track if L3 <ul> is open
+
+    for _, row in df1.iterrows():
+        curr_title = row['Title']
+        curr_header = row['Header']
+        curr_description = row['Description']
+
+        # If new Title
+        if curr_title != last_title:
+            if open_l3:
+                text += "</ul>\n"
+                open_l3 = False
+            if open_l2:
+                text += "</ul>\n"
+                open_l2 = False
+            if last_title is not None:
+                text += "</ul>\n"  # Close previous title's outer <ul>
+
+            text += f"<h4>{step_number}. {curr_title}</h4>\n<ul>\n"
+            step_number += 1
+            last_title = curr_title
+            last_header = None  # Reset header context
+
+        # If new Header
+        if curr_header != last_header and isinstance(curr_header, str) and curr_header.strip():
+            if open_l3:
+                text += "</ul>\n"
+                open_l3 = False
+            if open_l2:
+                text += "</ul>\n"
+                open_l2 = False
+
+            text += f"  <ul><li>{curr_header}</li>\n"
+            open_l2 = True
+            last_header = curr_header
+
+        # If Description exists
+        if isinstance(curr_description, str) and curr_description.strip():
+            if not open_l3:
+                text += "    <ul>\n"
+                open_l3 = True
+            text += f"      <li>{curr_description}</li>\n"
+
+    # Close any open lists at the end
+    if open_l3:
+        text += "    </ul>\n"
+    if open_l2:
+        text += "  </ul>\n"
+    text += "</ul>\n"
+
+    if return_value == "":
+        display(HTML(text))
+    else:
+        return text
