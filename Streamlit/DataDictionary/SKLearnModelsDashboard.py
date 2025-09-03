@@ -1,5 +1,9 @@
-from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
+# ---- Streamlit MUST be configured first ----
 import streamlit as st
+st.set_page_config(page_title="SKLearn Dashboards", layout="wide")
+
+# ---- Imports ----
+from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
 import pandas as pd
 import numpy as np
 import requests
@@ -7,25 +11,75 @@ import os
 import ast
 import sys
 
-# Ensure your custom function directory is in the path
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'd_py_functions')))
+# ---- Sidebar: quick cache + debug panel ----
+with st.sidebar.expander("🧹 Cache / Debug"):
+    if st.button("Clear data cache"):
+        st.cache_data.clear()
+        st.success("Cache cleared — rerun the app.")
+    try:
+        import platform
+        st.caption("Versions")
+        st.write({
+            "python": platform.python_version(),
+            "streamlit": st.__version__,
+            "pandas": pd.__version__,
+            "requests": requests.__version__,
+        })
+    except Exception:
+        pass
 
-from Organization import CreateMarkdownfromProcess
+# ---- Utilities ----
+def read_csv_clean(url, required_cols=None):
+    """Read CSV from URL, strip headers, and optionally enforce required columns."""
+    df = pd.read_csv(url)
+    df.columns = df.columns.str.strip()
+    if required_cols:
+        missing = [c for c in required_cols if c not in df.columns]
+        if missing:
+            st.error(f"Missing expected columns: {missing}")
+            st.caption("Here are the columns we actually got:")
+            st.write(list(df.columns))
+            st.stop()
+    return df
 
+# Ensure your custom function directory is in the path (fail-soft import)
+try:
+    sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..', '..', 'd_py_functions')))
+except Exception:
+    pass
+
+try:
+    from Organization import CreateMarkdownfromProcess
+    _org_import_err = None
+except Exception as e:
+    CreateMarkdownfromProcess = None
+    _org_import_err = str(e)
+
+# ---- Tabs / Pages ----
 def show_documented_processes_reference():
     st.title("📘 D's Documented Processes (For Reference)")
 
-    # Load process list
+    if CreateMarkdownfromProcess is None:
+        st.error(
+            "Could not import `CreateMarkdownfromProcess` from Organization.py.\n\n"
+            f"Details: {_org_import_err}"
+        )
+        return
+
     try:
         df = pd.read_csv(
             'https://docs.google.com/spreadsheets/d/e/2PACX-1vSbgjQNDbwl_UjsXd-zN6dCDofE_mdHJli1kPPp5bmv6gagoT8CEGMa38UWdJ4B9GHXd_ULozunfX1h/pub?output=csv'
         )
+        df.columns = df.columns.str.strip()
+        if 'Process' not in df.columns:
+            st.error("Google Sheet is missing the 'Process' column.")
+            st.write("Columns present:", list(df.columns))
+            return
         process_list = df['Process'].dropna().unique().tolist()
     except Exception as e:
         st.error(f"Failed to load process list: {e}")
         return
 
-    # Show each process as expandable markdown section
     for process in process_list:
         try:
             html_text = CreateMarkdownfromProcess(process, return_value="text")
@@ -37,20 +91,18 @@ def show_documented_processes_reference():
         except Exception as e:
             st.error(f"❌ Error displaying '{process}': {e}")
 
+
 def show_keyword_reference_browser():
     st.title("🔍 Key Term Search and Reference")
 
-    # Load data from Google Sheets
     url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?gid=0&single=true&output=csv'
-    df = pd.read_csv(url)
+    df = read_csv_clean(url, ['Word', 'Category', 'Sub Categorization'])
 
-    # Text-based filter input
     st.subheader("Key Word / Phrase Search")
     search_query = st.text_input("Search:", placeholder="Type to search...")
 
     visible_columns = ['Word', 'Category', 'Sub Categorization']
 
-    # Apply text filter
     if search_query:
         filtered_df = df[
             df.apply(
@@ -63,7 +115,6 @@ def show_keyword_reference_browser():
 
     filtered_df = filtered_df.reset_index(drop=False)
 
-    # Configure AgGrid
     builder = GridOptionsBuilder.from_dataframe(filtered_df)
     builder.configure_default_column(
         wrapText=True,
@@ -79,26 +130,30 @@ def show_keyword_reference_browser():
         filtered_df,
         gridOptions=grid_options,
         height=300,
-        width="100%",
         fit_columns_on_grid_load=True,
         allow_unsafe_jscode=True,
         update_mode=GridUpdateMode.SELECTION_CHANGED
     )
 
     selected_rows = response.get("selected_rows", [])
-
     try:
         selected_data = pd.DataFrame(selected_rows)
         if not selected_data.empty:
+            if 'Word' not in selected_data.columns:
+                st.warning("Selection payload missing 'Word' column. Raw payload:")
+                st.write(selected_data)
+                return
+
             final_df = df.merge(selected_data[['Word']], on='Word', how='inner')
-            transposed_df = pd.DataFrame({
-                "Field": final_df.columns,
-                "Value": final_df.iloc[0]
-            }).fillna("")
+            # Safe transpose
+            row0 = final_df.iloc[0].copy()
+            transposed_df = row0.reset_index()
+            transposed_df.columns = ["Field", "Value"]
+            transposed_df = transposed_df.fillna("")
 
             # Format links and cleanup
             transposed_df["Value"] = transposed_df.apply(
-                lambda row: f"[Open Link]({row['Value']})" if row["Field"] == "Link" and row["Value"] else row['Value'],
+                lambda r: f"[Open Link]({r['Value']})" if r["Field"] == "Link" and isinstance(r["Value"], str) and r["Value"].strip() else r['Value'],
                 axis=1
             )
             transposed_df['Value'] = np.where(
@@ -113,12 +168,12 @@ def show_keyword_reference_browser():
                 if field == "Link":
                     st.markdown(f"**{field}:** {value}")
                 elif field == "Image":
-                    if value and not pd.isna(value):
+                    if isinstance(value, str) and value.strip():
                         st.image(value, caption="Image Reference", width=300)
                     else:
                         st.warning("⚠️ No image available.")
                 elif field == "Markdown":
-                    st.latex(value)
+                    st.markdown(value or "")
                 else:
                     st.write(f"**{field}:**\n{value}")
         else:
@@ -131,12 +186,13 @@ def show_keyword_reference_browser():
     🔗 [Open Raw Data in Google Sheets](https://docs.google.com/spreadsheets/d/1tZ-_5Vv99_bm9CCEdDDN0KkmsFNcjWeKM86237yrCTQ/edit?gid=0#gid=0)
     """)
 
-# --- Configuration for each page ---
-column_dict1 = {'Description':300,'Model':150,'Name':100}
-column_order1 = ['Model','Name','Default','Type','Description','Section']
 
-column_dict2 = {'Model Name':150,'Sklearn Desc':350}
-column_order2 = ['Model Name','Estimator Type','Dataset Size','Full Class Path','Sklearn Desc']
+# --- Configuration for SKLearn dashboards ---
+column_dict1 = {'Description': 300, 'Model': 150, 'Name': 100}
+column_order1 = ['Model', 'Name', 'Default', 'Type', 'Description', 'Section']
+
+column_dict2 = {'Model Name': 150, 'Sklearn Desc': 350}
+column_order2 = ['Model Name', 'Estimator Type', 'Dataset Size', 'Full Class Path', 'Sklearn Desc']
 
 
 GITHUB_USER = "derek-dewald"
@@ -149,21 +205,25 @@ os.makedirs(LOCAL_DIR, exist_ok=True)
 @st.cache_data
 def fetch_and_save_python_files():
     api_url = f"https://api.github.com/repos/{GITHUB_USER}/{GITHUB_REPO}/contents/{FOLDER_PATH}"
-    response = requests.get(api_url)
+    response = requests.get(api_url, timeout=30)
 
     if response.status_code == 200:
-        files = response.json()
-        py_files = [file for file in files if file['name'].endswith('.py')]
+        files = response.json() or []
+        py_files = [file for file in files if isinstance(file, dict) and file.get('name', '').endswith('.py')]
 
         for file in py_files:
-            file_url = file['download_url']
-            file_name = file['name']
-            file_response = requests.get(file_url)
-            if file_response.status_code == 200:
+            try:
+                file_url = file['download_url']
+                file_name = file['name']
+                file_response = requests.get(file_url, timeout=30)
+                file_response.raise_for_status()
                 with open(os.path.join(LOCAL_DIR, file_name), "w", encoding="utf-8") as f:
                     f.write(file_response.text)
+            except Exception as e:
+                st.warning(f"Skipped {file.get('name')}: {e}")
         return True
     else:
+        st.error(f"GitHub API error {response.status_code}: {response.text[:200]}")
         return False
 
 def extract_function_details_ast(file_content, file_name):
@@ -175,7 +235,7 @@ def extract_function_details_ast(file_content, file_name):
             function_name = node.name
             docstring = ast.get_docstring(node) or "No description available"
             args = [arg.arg for arg in node.args.args]
-            return_type = ast.unparse(node.returns) if node.returns else "None"
+            return_type = ast.unparse(node.returns) if getattr(node, "returns", None) else "None"
             function_code = ast.get_source_segment(file_content, node).strip()
 
             description_text, args_text, return_text = [], [], "None"
@@ -231,19 +291,22 @@ def show_function_browser():
         fetch_and_save_python_files()
         df = read_python_files()
 
-    df_display = df.drop(columns=["Code", "Arguments", "Return"])
+    df_display = df.drop(columns=[c for c in ["Code", "Arguments", "Return"] if c in df.columns])
     df_display = df_display.loc[:, ~df_display.columns.duplicated()].copy()
 
-    files = ["Show All"] + sorted(df["File"].unique().tolist())
+    files = ["Show All"] + sorted(df["File"].dropna().astype(str).unique().tolist()) if "File" in df.columns else ["Show All"]
     selected_file = st.selectbox("📁 Filter by File", files, index=0)
 
-    if selected_file != "Show All":
+    if selected_file != "Show All" and "File" in df_display.columns:
         df_display = df_display[df_display["File"] == selected_file]
 
     builder = GridOptionsBuilder.from_dataframe(df_display)
-    builder.configure_column("Function Name", width=120)
-    builder.configure_column("Description", width=800)
-    builder.configure_column("File", width=120)
+    if "Function Name" in df_display.columns:
+        builder.configure_column("Function Name", width=160)
+    if "Description" in df_display.columns:
+        builder.configure_column("Description", width=800)
+    if "File" in df_display.columns:
+        builder.configure_column("File", width=160)
     builder.configure_selection("single")
     builder.configure_default_column(
         wrapText=True,
@@ -266,35 +329,39 @@ def show_function_browser():
     selected_function = None
 
     if isinstance(selected_rows, pd.DataFrame) and not selected_rows.empty:
-        selected_function = selected_rows.iloc[0]["Function Name"]
+        selected_function = selected_rows.iloc[0].get("Function Name")
     elif isinstance(selected_rows, list) and len(selected_rows) > 0:
         selected_function = selected_rows[0].get("Function Name")
 
-    if selected_function:
+    if selected_function and "Function Name" in df.columns and "Code" in df.columns:
         function_row = df[df["Function Name"] == selected_function]
-        function_code = function_row["Code"].values[0]
-        st.code(function_code, language="python")
+        if not function_row.empty:
+            function_code = function_row["Code"].values[0]
+            st.code(function_code, language="python")
+
 
 def show_ds_coding_dashboard():
-    # Load data from Google Sheets
     url = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv'
-    df = pd.read_csv(url)
+    df = read_csv_clean(url)
 
-    # Clean Description column
-    df['Description'] = df['Description'].fillna("").astype(str)
+    # Ensure columns exist even if the sheet schema changed
+    for c in ["Program", "Classification", "Description", "Command_Code", "Comments"]:
+        if c not in df.columns:
+            df[c] = ""
+    df["Description"] = df["Description"].fillna("").astype(str)
 
     st.title("📖 DS Coding Dashboard")
 
     # Filters
     col1, col2, col3 = st.columns(3)
     with col1:
-        programs = ["All"] + sorted(df['Program'].dropna().unique().tolist())
+        programs = ["All"] + sorted(df['Program'].dropna().astype(str).unique().tolist())
         selected_program = st.selectbox("Select Program", programs)
     with col2:
-        classifications = ["All"] + sorted(df['Classification'].dropna().unique().tolist())
+        classifications = ["All"] + sorted(df['Classification'].dropna().astype(str).unique().tolist())
         selected_classification = st.selectbox("Select Classification", classifications)
     with col3:
-        descriptions = ["All"] + sorted(df['Description'].dropna().unique().tolist())
+        descriptions = ["All"] + sorted(df['Description'].dropna().astype(str).unique().tolist())
         selected_description = st.selectbox("Select Description", descriptions)
 
     # Apply filters
@@ -306,14 +373,20 @@ def show_ds_coding_dashboard():
     if selected_description != "All":
         filtered_df = filtered_df[filtered_df['Description'] == selected_description]
 
-    # Drop unneeded columns for display
-    display_df = filtered_df.drop(['Program', 'Classification'], axis=1)
+    # Drop unneeded columns for display (avoid KeyError)
+    display_df = filtered_df.drop(['Program', 'Classification'], axis=1, errors="ignore")
 
     # Configure AgGrid
     builder = GridOptionsBuilder.from_dataframe(display_df)
-    builder.configure_column('Command_Code', width=350, wrapText=True, suppressSizeToFit=True, cellStyle={'whiteSpace': 'normal', 'textAlign': 'center'})
-    builder.configure_column('Description', width=200, wrapText=True, suppressSizeToFit=True, cellStyle={'whiteSpace': 'normal', 'textAlign': 'center'})
-    builder.configure_column('Comments', width=800, wrapText=True, suppressSizeToFit=True, cellStyle={'whiteSpace': 'normal', 'textAlign': 'center'})
+    if "Command_Code" in display_df.columns:
+        builder.configure_column('Command_Code', width=350, wrapText=True, suppressSizeToFit=True,
+                                 cellStyle={'whiteSpace': 'normal', 'textAlign': 'center'})
+    if "Description" in display_df.columns:
+        builder.configure_column('Description', width=200, wrapText=True, suppressSizeToFit=True,
+                                 cellStyle={'whiteSpace': 'normal', 'textAlign': 'center'})
+    if "Comments" in display_df.columns:
+        builder.configure_column('Comments', width=800, wrapText=True, suppressSizeToFit=True,
+                                 cellStyle={'whiteSpace': 'normal', 'textAlign': 'center'})
 
     builder.configure_default_column(
         wrapText=True,
@@ -347,10 +420,7 @@ def show_ds_coding_dashboard():
 
 
 def show_function_catalog_viewer():
-    import io, re, requests
-    import pandas as pd
-    import streamlit as st
-
+    import io, re
     st.title("📒 Function Catalog Viewer")
 
     GITHUB_BLOB_URL = (
@@ -383,7 +453,6 @@ def show_function_catalog_viewer():
                 df[c] = pd.to_datetime(df[c], errors="coerce")
         return df
 
-    # Load
     try:
         xls_bytes = fetch_workbook_bytes(RAW_URL)
         df = read_first_sheet(xls_bytes)
@@ -451,7 +520,6 @@ def show_function_catalog_viewer():
     if sel_dlm != "All":
         view = apply_date_filter(view, "Date Last Modified", sel_dlm)
 
-    # Text filter
     search_text = st.text_input("Search text", "")
     if search_text:
         import re as _re
@@ -465,7 +533,6 @@ def show_function_catalog_viewer():
 
     st.divider()
 
-    # Wrapped table
     def wrap_df_for_display(df_in: pd.DataFrame) -> str:
         wrap_candidates = [c for c in ["Description","Parameters","Returns","Raises","Examples"] if c in df_in.columns]
         styles = []
@@ -482,28 +549,37 @@ def show_function_catalog_viewer():
         st.markdown(wrap_df_for_display(view), unsafe_allow_html=True)
 
 
-
 def StreamlitBaseDashboard(google_drive_csv,
-                            filter_columns,
-                            title,
-                            column_order,
-                            column_widths=None,
-                            default_width=100):
+                           filter_columns,
+                           title,
+                           column_order,
+                           column_widths=None,
+                           default_width=100):
 
     st.title(title)
 
-    df = pd.read_csv(google_drive_csv)
+    df = read_csv_clean(google_drive_csv)
     df.columns = df.columns.str.strip()
-    df = df[column_order]  # Ensure column order after stripping headers
+
+    # Only keep present columns; warn if some are missing
+    missing = [c for c in column_order if c not in df.columns]
+    if missing:
+        st.warning(f"Some expected columns were not found and will be skipped: {missing}")
+    present_order = [c for c in column_order if c in df.columns]
+    if not present_order:
+        st.error("None of the expected columns are present. Cannot render table.")
+        st.write("Columns present:", list(df.columns))
+        return
+    df = df[present_order]
 
     st.subheader("🔽 Filters")
     filtered_df = df.copy()
     for col in filter_columns:
-        if col in df.columns:
-            unique_vals = sorted(df[col].dropna().unique())
+        if col in filtered_df.columns:
+            unique_vals = sorted(filtered_df[col].dropna().astype(str).unique())
             selected_val = st.selectbox(f"Select {col}", ["(All)"] + unique_vals)
             if selected_val != "(All)":
-                filtered_df = filtered_df[filtered_df[col] == selected_val]
+                filtered_df = filtered_df[filtered_df[col].astype(str) == selected_val]
         else:
             st.warning(f"Column '{col}' not found in the data.")
 
@@ -525,42 +601,46 @@ def StreamlitBaseDashboard(google_drive_csv,
     grid_options = gb.build()
     AgGrid(filtered_df, gridOptions=grid_options, height=600, fit_columns_on_grid_load=False)
 
+# ---- Router (wrapped so errors appear in the UI) ----
+page = st.sidebar.selectbox(
+    "Select Page",
+    [
+        'Data Dictionary',
+        "Code Dashboard",
+        "Python Function Dashboard",
+        'Process Dashboard',
+        "SKLearn Model Viewer",
+        "SKLearn Parameter Dashboard",
+        'Raw Function Extract'
+    ]
+)
 
-# ✅ Must be the first Streamlit command
-st.set_page_config(page_title="SKLearn Dashboards", layout="wide")
-
-
-# Sidebar navigation — this is now the only entry point
-page = st.sidebar.selectbox("Select Page", ['Data Dictionary',"Code Dashboard","Python Function Dashboard",'Process Dashboard',"SKLearn Model Viewer", "SKLearn Parameter Dashboard", 'Raw Function Extract'])
-
-if page == "SKLearn Parameter Dashboard":
-    StreamlitBaseDashboard(
-        google_drive_csv='https://docs.google.com/spreadsheets/d/e/2PACX-1vSnzcSYTXm2jl9GXvrNaH3b3TPbNufGJwRTMeJ8Ckhse_r9CWGjlXWlUfyGTwcnoXqT7ZLLyBAk2rKO/pub?gid=175044227&single=true&output=csv',
-        filter_columns=['Model', 'Name'],
-        title='SKLearn Parameter Viewer',
-        column_widths=column_dict1,
-        column_order=column_order1
-    )
-elif page == "SKLearn Model Viewer":
-    StreamlitBaseDashboard(
-        google_drive_csv='https://docs.google.com/spreadsheets/d/e/2PACX-1vToNab_ADzmxRZkg4bJ5wOwLZcrdwNYrxwWBETdGlfGSoUpnyy799EpbYqDqnwyKs2bEyJHUu58SX8Q/pub?gid=1125524518&single=true&output=csv',
-        filter_columns=['Model Name','Dataset Size','Estimator Type'],
-        title='SKLearn Model Viewer',
-        column_widths=column_dict2,
-        column_order=column_order2
-    )
-
-elif page =="Code Dashboard":
-    show_ds_coding_dashboard()
-
-elif page =='Python Function Dashboard':
-    show_function_browser()
-
-elif page =='Data Dictionary':
-    show_keyword_reference_browser()
-
-elif page =='Process Dashboard':
-    show_documented_processes_reference()
-
-elif page == "Raw Function Extract":
-    show_function_catalog_viewer()
+try:
+    if page == "SKLearn Parameter Dashboard":
+        StreamlitBaseDashboard(
+            google_drive_csv='https://docs.google.com/spreadsheets/d/e/2PACX-1vSnzcSYTXm2jl9GXvrNaH3b3TPbNufGJwRTMeJ8Ckhse_r9CWGjlXWlUfyGTwcnoXqT7ZLLyBAk2rKO/pub?gid=175044227&single=true&output=csv',
+            filter_columns=['Model', 'Name'],
+            title='SKLearn Parameter Viewer',
+            column_widths=column_dict1,
+            column_order=column_order1
+        )
+    elif page == "SKLearn Model Viewer":
+        StreamlitBaseDashboard(
+            google_drive_csv='https://docs.google.com/spreadsheets/d/e/2PACX-1vToNab_ADzmxRZkg4bJ5wOwLZcrdwNYrxwWBETdGlfGSoUpnyy799EpbYqDqnwyKs2bEyJHUu58SX8Q/pub?gid=1125524518&single=true&output=csv',
+            filter_columns=['Model Name', 'Dataset Size', 'Estimator Type'],
+            title='SKLearn Model Viewer',
+            column_widths=column_dict2,
+            column_order=column_order2
+        )
+    elif page == "Code Dashboard":
+        show_ds_coding_dashboard()
+    elif page == 'Python Function Dashboard':
+        show_function_browser()
+    elif page == 'Data Dictionary':
+        show_keyword_reference_browser()
+    elif page == 'Process Dashboard':
+        show_documented_processes_reference()
+    elif page == "Raw Function Extract":
+        show_function_catalog_viewer()
+except Exception as e:
+    st.exception(e)  # surface full traceback in-app

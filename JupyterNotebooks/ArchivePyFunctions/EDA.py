@@ -1,4 +1,4 @@
-## File Description: This File is for Functions related to completing EDA. Including Setting up standard processes. Individual Image or DF manipulation which might be utilized in this function, but exist for broader purposes should be stored in more generic categories.
+##File Description: This File is for Functions related to completing EDA. Including Setting up standard processes. Individual Image or DF manipulation which might be utilized in this function, but exist for broader purposes should be stored in more generic categories.
 
 import sys
 sys.path.append("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions")

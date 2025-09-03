@@ -2,7 +2,7 @@ import pandas as pd
 import numpy as np
 import inspect 
 import re
-from collections import counter
+from collections import Counter
 
 def IterateThroughListuntilText(list_,text):
     """
@@ -280,4 +280,60 @@ def GenericStrClean(df,
                 
     df[new_column_name] = result
     
+    return df
+
+def TextClean(
+    df,
+    column_list,
+    lower_case=False,
+    remove_newlines=False,
+    strip_whitespace=False,
+    normalize_whitespace=False,
+    remove_punctuation=False,
+    only_digits=False,
+    only_letters=False):
+    
+    
+    """
+    Applies selected text cleaning operations to specified DataFrame columns.
+
+    Parameters:
+        df (pd.DataFrame): DataFrame to clean.
+        column_list (list): Columns to clean.
+        
+        Cleaning Options (all default to False):
+            remove_newlines (bool): Remove \r and \n characters.
+            strip_whitespace (bool): Trim leading and trailing whitespace.
+            normalize_whitespace (bool): Collapse multiple spaces/tabs into one space.
+            remove_punctuation (bool): Remove punctuation characters.
+            only_digits (bool): Remove all non-digit characters and convert to numeric.
+            only_letters (bool): Remove all non-letter characters and convert to string.
+
+    Returns:
+        pd.DataFrame: Cleaned DataFrame.
+    """
+    for col in column_list:
+        if col not in df.columns:
+            continue
+
+        series = df[col].astype(str)
+        
+        if lower_case:
+            series = series.str.lower()
+        if remove_newlines:
+            series = series.str.replace(r'[\r\n]+', '', regex=True)
+        if normalize_whitespace:
+            series = series.str.replace(r'\s+', ' ', regex=True)
+        if strip_whitespace:
+            series = series.str.strip()
+        if only_digits:
+            series = series.str.replace(r'[^\d.]', '', regex=True)
+            series = pd.to_numeric(series, errors='coerce')
+        if only_letters:
+            series = series.str.replace(r'[^a-zA-Z]', '', regex=True)
+        if remove_punctuation:
+            series = series.str.translate(str.maketrans('', '', string.punctuation))
+
+        df[col] = series
+
     return df

@@ -1,8 +1,9 @@
 # File Description: 
-from IPython.display import display, HTML
+from IPython.display import display, Markdown, Math
 from SharedFolder import ReadDirectory
 from Connections import ParamterMapping
 import pandas as pd
+import re
 
 def D_Notes_Reader(topic=None):
     '''
@@ -95,10 +96,6 @@ def CreateMarkdownfromProcess(process_name=None,
     except:
         print("Could Not Format Data")
         return df
-
-from IPython.display import display, Markdown, Math
-import pandas as pd
-import re
 
 def DailyTest(questions=20,updates=5):
     

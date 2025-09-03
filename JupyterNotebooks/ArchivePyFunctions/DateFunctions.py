@@ -1,3 +1,5 @@
+# File Description: Functions related to Generation, Manipulation and Calculation of Dates.
+
 import pandas as pd
 import numpy as np
 import datetime
@@ -75,43 +77,6 @@ def CalculateDaysFromtoday(df,
     reference_date = MonthSelector(month_int)
     
     df[new_column_name] = (reference_date-df[column_name])/datetime.timedelta(365.25)
-
-def CreateMonthList(month_int=0,
-                    months=36,
-                    end_date_yesterday=1,
-                    sort_ascending=0,
-                    return_value="month_dt"):
-    
-    '''
-    Function to 
-    
-    
-    Parameters:
-        
-    
-    Return:
-        
-    '''
-    
-    
-    
-    final_months = month_int + months
-    month_list = pd.date_range(end=pd.Timestamp.today(),periods=final_months,freq='M').normalize()
-    #month_list = month_list.union([pd.Timestamp.today().normalize()-datetime.timedelta(days=end_date_yesterday)])
-    
-    if return_value =='month_str':
-        month_list = [x.strftime('%b-%y') for x in month_list]
-    elif return_value =='month':
-        month_list = [x.strftime('%d-%b-%y') for x in month_list]
-    elif return_value =='month_dt':
-        month_list = [x.to_pydatetime() for x in month_list]
-    if sort_ascending==0:
-        month_list = month_list[::-1]
-    
-    return list(month_list[month_int:final_months])
-
-
-
 
 def MonthEndDate(x,og_format):
     
@@ -208,6 +173,54 @@ def FIRST_DAY_OF_MONTH(x,):
     except:
         pass
     return x.date() 
+
+def LAST_DAY_PREVIOUS_MONTH(date_dt=None,
+                            return_value='month_dt'):
+    '''
+    
+    
+    '''
+    if date_dt==None:
+        date_dt = datetime.datetime.now()
+    
+    new_date = date_dt.replace(day=1,hour=0,minute=0,second=0,microsecond=0)-datetime.timedelta(days=1)
+    
+    if return_value=='month_dt':
+        return new_date
+    
+    elif return_value == 'month_str':
+        return new_date.strftime('%d-%b-%y')
+    
+
+
+def CreateMonthList(month_int=0,
+                    months=36,
+                    end_date_yesterday=1,
+                    sort_ascending=0,
+                    return_value="month_dt"):
+
+    final_months = month_int + months
+
+    month_list = pd.date_range(end=pd.Timestamp.today(), periods=final_months, freq='M')
+    month_list = list(month_list)
+    
+    if month_int ==0:
+        month_list.append(pd.Timestamp.today())
+    
+    if return_value == 'month_str':
+        month_list = [x.strftime('%b-%y') for x in month_list]
+    elif return_value == 'month':
+        month_list = [x.strftime('%d-%b-%y') for x in month_list]
+    elif return_value == 'month_dt':
+        month_list = [x.to_pydatetime().replace(hour=0,minute=0,second=0,microsecond=0) for x in month_list]
+    elif return_value == 'date':
+        month_list = [x.to_pydatetime().date() for x in month_list]
+
+    if sort_ascending == 0:
+        month_list.reverse()
+
+    return month_list[month_int:final_months]
+
 
 def MonthSelector(month_int=1,
                   return_value='month_dt',

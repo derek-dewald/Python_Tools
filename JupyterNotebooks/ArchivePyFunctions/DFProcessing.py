@@ -1,36 +1,58 @@
-## File Description: A more generalized Libary, including simple tricks, shortcuts and helpful functions for reviewing, summarizing or understanding. More Information, and less Procedural related. EDA for standardized processes.
+# File Description: File Related to all things Dataframe Manipulation. Functions related to Pandas Dataframes. Does not include Creation of New Data. 
+
 
 from itertools import product,permutations,combinations
 from FeatureEngineering import BracketColumn,CategorizeBinaryChange
 from IPython.display import display, HTML
+from typing import List
 import pandas as pd
 import numpy as np
 import math
 
-def CombineLists(list_,
-                 combo=1,
-                 r=2):
-        
-    '''
-    Function to 
-    
-    
-    Parameters:
-        
-    
-    Return:
-        
-    '''
-    
-    items = sum([1 if isinstance(x,list) else 0 for x in list_])
 
-    if items==0:
-        if combo==1:
-            return list(map(list,combinations(list_,r)))
-        else:
-            return list(map(list,permutations(list_,r)))
+def CombineLists(list_,
+                 add_metric=None,
+                 combo=1,
+                 r=2,
+                 return_value='list_'):
+    '''
+    Function to generate an exhaustive list from multiple lists. 
+    Handles both Cartesian product (list of lists) and flat combinations/permutations.
+
+    If List of Lists, it by-passes Combniation and Permutations by making items equal to 1.
+
+    Parameters:
+        list_ (list): Flat list or list of lists
+        add_metric (any): Optional value to append to each sublist
+        combo (int): 1 = combinations, 0 = permutations
+        r (int): size of each combination/permutation
+        return_value (str): 'list_' or 'df'
+        
+    Returns:
+        list or pd.DataFrame
+    '''
+
+    import copy
     
-    return list(map(list,product(*list_)))
+    list_ = copy.deepcopy(list_)
+
+    if add_metric:
+        list_ = [x + [add_metric] if isinstance(x, list) else [x, add_metric] for x in list_]
+
+    items = sum([1 if isinstance(x, list) else 0 for x in list_])
+
+    if items == 0:
+        if combo == 1:
+            value = list(map(list, combinations(list_, r)))
+        else:
+            value = list(map(list, permutations(list_, r)))
+    else:
+        value = list(map(list, product(*list_)))
+
+    if return_value == 'list_':
+        return value
+    else:
+        return pd.DataFrame(value).drop_duplicates()
 
 def FilterDataframe(df,
                     binary_include={},
@@ -190,78 +212,83 @@ def ColumnStatisticalReview(df,
                             top_x_records=10,
                             exclude_blanks_from_segments=1,
                             exclude_zeroes_from_segments=1):
-    
+
     '''
     Function to Conduct a Simple Statistical Review of a Column, Including Understanding the positional distribution
     of values. 
-    
+
     Args:
         column_name (str): Name of Column
-        
+
         partitions (int): Number of partitions to include (Decile 10)
-        
+
         exclude_blanks_from_segments (int): Binary Flag, whether to exclude Blank Values from Segment determination.
         If blank values are excluded it gives a better representation for the members of the set, however it might 
         provide a misleading representation of the population.
-        
+
         exclude_zeroes_from_segments (int): As above, with respect to 0 values. Is processed after exclude_blanks, as
         such it can include both blanks and true 0 values. 
-        
-        
+
+
     '''
-    
+
     temp_dict = {}
     
-    try:
+    is_numeric = pd.api.types.is_numeric_dtype(df[column_name])
+    
+    if is_numeric:
         temp_dict['SUM'] = df[column_name].sum()
         temp_dict['MEAN'] = df[column_name].mean()
         temp_dict['STD_DEV'] =  df[column_name].std()
         temp_dict['MEDIAN'] = df[column_name].median()
         temp_dict['MAX'] = df[column_name].max()
         temp_dict['MIN'] = df[column_name].min()
-    
-    except:
-        pass
-
+        
     temp_dict['TOTAL_RECORDS'] = len(df)
     temp_dict['UNIQUE_RECORDS'] = len(df.drop_duplicates(column_name))
-    temp_dict['ZERO_RECORDS'] = len(df[df[column_name]==0])
-    temp_dict['NON_ZERO_RECORDS'] = len(df[df[column_name]!=0])
     temp_dict['NA_RECORDS'] = len(df[df[column_name].isna()])
     temp_dict['NULL_RECORDS'] = len(df[df[column_name].isnull()])
-                             
+    
+    if is_numeric:
+        temp_dict['ZERO_RECORDS'] = len(df[df[column_name]==0])
+        temp_dict['NON_ZERO_RECORDS'] = len(df[df[column_name]!=0])    
+
     temp_df = pd.DataFrame(temp_dict.values(),index=temp_dict.keys(),columns=[column_name])
     
-    # Add top X records Based on Frequency
-    if top_x_records>0:
-        top_instances = pd.DataFrame(df[column_name].value_counts().head(top_x_records)).reset_index()
-        top_instances[column_name] = top_instances.apply(lambda row: f"Value: {row[column_name]}, Frequency: {row['count']}", axis=1)
-        top_instances['index'] = [f"Top {x+1}" for x in range(len(top_instances[column_name]))]
-        top_instances = top_instances.drop('count',axis=1).set_index('index')
-
-        temp_df = pd.concat([temp_df,top_instances])
+    if temp_dict['TOTAL_RECORDS']==len(df[df[column_name].isnull()]):
+        return temp_df
     
     try:
-        temp_dict['SUM']
-        segment_df = ColumnPartitioner(df=df,
-                                       column_name=column_name,
-                                       partitions=partitions,
-                                       exclude_blanks=exclude_blanks_from_segments,
-                                       exclude_zeros=exclude_zeroes_from_segments,
-                                       return_value='')
-        
-        seg_val_df = ColumnPartitioner(df=df,
+
+        # Add top X records Based on Frequency
+        if top_x_records>0:
+            top_instances = pd.DataFrame(df[column_name].value_counts(dropna=False).head(top_x_records)).reset_index().rename(columns={column_name:'count','index':column_name})
+            if len(top_instances)>0:
+                top_instances[column_name] = top_instances.apply(lambda row: f"Value: {row[column_name]}, Frequency: {row['count']}", axis=1)
+                top_instances['index'] = [f"Top {x+1}" for x in range(len(top_instances[column_name]))]
+                top_instances = top_instances.drop('count',axis=1).set_index('index')
+                temp_df = pd.concat([temp_df,top_instances])
+
+        if (partitions>0)&(pd.api.types.is_numeric_dtype(df[column_name]))&(temp_dict['UNIQUE_RECORDS']>1):
+            segment_df = ColumnPartitioner(df=df,
                                            column_name=column_name,
                                            partitions=partitions,
                                            exclude_blanks=exclude_blanks_from_segments,
                                            exclude_zeros=exclude_zeroes_from_segments,
-                                           return_value='agg_value').rename(columns={'VALUE':column_name})
-            
-        return pd.concat([temp_df,segment_df.T,seg_val_df])
-
-    
+                                           return_value='')
+            seg_val_df = ColumnPartitioner(df=df,
+                                               column_name=column_name,
+                                               partitions=partitions,
+                                               exclude_blanks=exclude_blanks_from_segments,
+                                               exclude_zeros=exclude_zeroes_from_segments,
+                                               return_value='agg_value').rename(columns={'VALUE':column_name})
+            return pd.concat([temp_df,segment_df.T,seg_val_df])
     except:
-        return temp_df
+        pass
+            
+    return temp_df
+
+
     
 def CountBlanksZeroes(df):
     '''
@@ -543,56 +570,6 @@ def DataFrameColumnObservations(df,
     
     else:
         return final_df
-    
-def CreatePivotTableFromTimeSeries(df,
-                                   index,
-                                   columns,
-                                   values,
-                                   aggfunc='sum',
-                                   skipna=True):
-    
-    '''
-    Function to Summaryize a Time Series Dataframe into a Pivot. Creating a number of critical Metrics.
-    
-    
-    
-    '''
-    
-    # 1. Pivot
-    df1 = df.pivot_table(index=index, columns=columns, values=values, aggfunc=aggfunc)
-
-    # 2. Capture original month columns IMMEDIATELY after pivot
-    month_cols = df1.columns.tolist()
- 
-    # 3. Add rolling window stats
-    if len(month_cols) >= 3:
-        df1['AVG_3M'] = df1[month_cols[-3:]].mean(axis=1, skipna=skipna)
-        df1['CHG_3M'] = df1[month_cols[-1]]-df1[month_cols[-3]]
-    
-    if len(month_cols) >= 6:
-        df1['AVG_6M'] = df1[month_cols[-6:]].mean(axis=1, skipna=skipna)
-        df1['CHG_6M'] = df1[month_cols[-1]]-df1[month_cols[-6]]
-        
-    if len(month_cols) >= 12:
-        df1['AVG_12M'] = df1[month_cols[-12:]].mean(axis=1, skipna=skipna)
-        df1['CHG_12M'] = df1[month_cols[-1]]-df1[month_cols[-12]]
-        
-    df1['CHG_MOM'] = df1[month_cols[-1]]-df1[month_cols[-12]]
-    df1['CHG_DF']  = df1[month_cols[-1]]-df1[month_cols[0]]
-
-    # 4. Now calculate global stats **only using the original month columns**
-    stats = pd.DataFrame({
-        'MEAN': df1[month_cols].mean(axis=1, skipna=skipna),
-        'STD': df1[month_cols].std(axis=1, skipna=skipna),
-        'MAX': df1[month_cols].max(axis=1, skipna=skipna),
-        'MIN': df1[month_cols].min(axis=1, skipna=skipna),
-        'COUNT': df1[month_cols].count(axis=1)
-    })
-
-    # 5. Merge the stats
-    df1 = pd.concat([df1, stats], axis=1)
-    
-    return df1.fillna(0)
 
 def MissingCartesianProducts(list1_,
                              list2_,
@@ -749,3 +726,47 @@ def ConvertListstoDF(dict_lists):
     '''
 
     return pd.DataFrame(dict_lists)
+
+
+def SummarizedDataSetforBITool(df, dimensions, metrics):
+    """
+    Builds a DataFrame with all combinations of ALL-level rollups 
+    across the specified dimensions and metrics.
+
+    Parameters:
+        df (pd.DataFrame): Input DataFrame.
+        dimensions (list of str): Dimension column names.
+        metrics (list of str): Metric column names to aggregate.
+
+    Returns:
+        pd.DataFrame: Aggregated DataFrame with 'ALL' rollups.
+    """
+    result_frames = []
+    
+    available_metrics = [x for x in metrics if x in df.columns]
+
+    for r in range(len(dimensions) + 1):
+        for dims in itertools.combinations(dimensions, r):
+            group_cols = list(dims)
+            
+            # Aggregate metrics with or without groupby
+            if group_cols:
+                agg_df = df.groupby(group_cols, dropna=False)[available_metrics].sum().reset_index()
+            else:
+                # Grand total (ALL for all dims)
+                sums = df[available_metrics].sum().to_frame().T
+                agg_df = sums
+                for col in dimensions:
+                    agg_df[col] = 'ALL'
+
+            # Fill missing dimension columns with 'ALL'
+            for col in dimensions:
+                if col not in group_cols:
+                    agg_df[col] = 'ALL'
+
+            # Ensure consistent column order
+            agg_df = agg_df[dimensions + available_metrics]
+            result_frames.append(agg_df)
+
+    final_df = pd.concat(result_frames, ignore_index=True)
+    return final_df

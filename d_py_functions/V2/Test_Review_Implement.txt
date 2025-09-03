@@ -1,0 +1,725 @@
+def one_sample_statistical_test(values, popmean=0, alpha=0.05):
+    """
+    Performs a one-sample t-test on a list of numeric values.
+    
+    Args:
+        values (list or array): The numeric data to test
+        popmean (float): The population mean to test against (default is 0)
+        alpha (float): Significance level (default is 0.05)
+        
+    Returns:
+        dict: {
+            'mean': float,
+            'test': 'one-sample t-test',
+            't_statistic': float,
+            'p_value': float,
+            'significant': bool
+        }
+    """
+    values = np.array(values)
+    t_stat, p_value = stats.ttest_1samp(values, popmean, nan_policy='omit')
+    
+    return {
+        'mean': np.nanmean(values),
+        'test': 'one-sample t-test',
+        't_statistic': t_stat,
+        'p_value': p_value,
+        'significant': p_value < alpha
+    }
+
+def FilterDictionary(df,CombinationDictionaries,column_names):
+
+    dict_list = list(CombinationDictionaries.values())
+    keys = list(dict_list[0].keys())
+    print(keys)
+
+    final_df = pd.DataFrame()
+
+    if len(keys)==1:
+        col = keys[0]
+
+        for list_ in dict_list:
+            print(list_)
+            temp_df = df[(df[col]==list_[col])]
+            for column in column_names:
+                temp = ColumnStatisticalReview(temp_df,column).T.reset_index().rename(columns={'index':'CALCULATED_COLUMN'})
+                temp[col] = list_[col]
+                final_df = pd.concat([final_df,temp])
+        
+        
+        return final_df
+
+    elif len(keys)==2:
+        col  = keys[0]
+        col1 = keys[1]
+
+        for list_ in dict_list:
+            print(list_)
+            temp_df = df[(df[col]==list_[col])&(df[col1]==list_[col1])]
+            for column in column_names:
+                temp = ColumnStatisticalReview(temp_df,column).T.reset_index().rename(columns={'index':column})
+                temp[col] = list_[col]
+                temp[col1] = list_[col1]
+                return temp
+    elif len(keys)==3:
+        
+        col  = keys[0]
+        col1 = keys[1]
+        col2 = keys[2]
+
+        for list_ in dict_list:
+            print(list_)
+            temp_df = df[(df[col]==list_[col])&(df[col1]==list_[col1])&(df[col2]==list_[col2])]
+
+            
+            return ColumnStatisticalReview(temp_df,'DEPOSIT')
+
+
+def GenerateColumnCombinations(df, column_names):
+    """
+    Generate all combinations of unique values across specified columns,
+    and return them as a dictionary of dictionaries.
+
+    Example return:
+    {
+        0: {'CITY': 'Toronto', 'BRANCHNAME': 'Branch A'},
+        1: {'CITY': 'Vancouver', 'BRANCHNAME': 'Branch B'},
+        ...
+    }
+    """
+    # List of lists of unique values
+    value_lists = [df[col].dropna().unique().tolist() for col in column_names]
+    
+    # Cartesian product of all value combinations
+    combos = list(product(*value_lists))
+    
+    # Build dictionary of dictionaries
+    combo_dict = {
+        idx: dict(zip(column_names, values))
+        for idx, values in enumerate(combos)
+    }
+
+    return combo_dict
+
+
+def DFElementCompare(df,
+                     df1,
+                     primary_key_list,
+                     additional_filter='LEGACY_',
+                     column_distinction='_',
+                     bracketing=[-10000,-1000,-1,0,1,1000,10000]):
+    '''
+    
+    account_df = pd.DataFrame()
+    groupby_df =  pd.DataFrame()
+    summary_df = pd.DataFrame()
+    partition_df = pd.DataFrame()
+    
+    for column in df.columns:
+        if column in primary_key_list:
+            pass
+        else:
+            try:
+                temp_dict = RecordElementCompare(df,
+                                                 df1,
+                                                 column,
+                                                 primary_key_list=primary_key_list,
+                                                 bracketing=bracketing)
+
+                account_df = pd.concat([account_df,temp_dict['account_df']])
+                summary_df = pd.concat([summary_df,temp_dict['summary_df']])
+                groupby_df = pd.concat([groupby_df,temp_dict['groupby_df']])
+                partition_df = pd.concat([partition_df,temp_dict['partition_df']])
+
+            except:
+                print(f'Could Not Compute Column:{column}')
+    
+    
+    return account_df,summary_df,groupby_df,partition_df
+    
+    '''
+    
+    df = df.copy()
+    df1 = df1.copy()
+    
+    # Rename Columns in Table 1 for consistency
+    df1 = df1.rename(columns={x:f"{x}{column_distinction}" for x in df1.columns if x not in primary_key_list})
+    
+    # Merge Table 1 into Table 0
+    temp_df= df.merge(df1,on=primary_key_list,how='outer',indicator=True)
+    
+    # Generate 2 Data Sets. 1) Which is common Records, 2) Which is Non Common Records.
+    missing = temp_df[temp_df['_merge']!='both']
+    common = temp_df[temp_df['_merge']=='both']
+    
+    value_dict = {
+        'Total Records':len(temp_df),
+        'Merged Both': len(temp_df[temp_df['_merge']=='both']),
+        'Merged Left Only':len(temp_df[temp_df['_merge']=='left_only']),
+        'Merged Right Only':len(temp_df[temp_df['_merge']=='right_only'])}
+    
+    # Only Need to Test Common Records Can do a Simple Dataframe Analysis on Non Common Records.
+    
+    #Iterate Through All Columns in Common to create Final Values.
+    
+    account_df = pd.DataFrame()
+    groupby_df =  pd.DataFrame()
+    summary_df = pd.DataFrame()
+    partition_df = pd.DataFrame()
+
+
+    for column_name in df.columns:
+        column_name1 = f"{column_name}{column_distinction}"
+        try:
+            temp_dict = RecordElementCompare(df=common[['ACCTNBR',additional_filter,column_name,column_name1]],
+                                             column_name=column_name,
+                                             additional_filter=additional_filter)
+    
+            account_df = pd.concat([account_df,temp_dict['account_df']])
+            summary_df = pd.concat([summary_df,temp_dict['summary_df']])
+            groupby_df = pd.concat([groupby_df,temp_dict['groupby_df']])
+            partition_df = pd.concat([partition_df,temp_dict['partition_df']])
+        
+        except:
+            print(f'Could Not Compute: {column_name}') 
+
+    return account_df,summary_df,groupby_df,partition_df
+
+
+def RecordElementCompare(df,
+                         column_name,
+                         additional_filter=None,
+                         column_distinction='_',
+                         bracketing=[-10000,-1000,-1,0,1,1000,10000]):
+    '''
+    Function which takes a dataframe with a minimum of 3 Values:
+    1) Column Name 
+    2) Column Name & Column Distinction 
+    3) Some Key for Mapping (Key should be passed direct in dataframe, it is not part of function, used for identification after
+    
+    Parameters:
+    
+    
+    Values:
+    
+    
+    Example Usage:
+        
+        df= df[[START_BAL, START_BAL_, ACCTNBR]],
+        column_name='START_BAL'
+
+    '''
+
+    column_name1 = f"{column_name}{column_distinction}"    
+    
+    # Change Names of Individual Columns to Something Generic so datasets can be Concatenated.
+    temp_df = df.rename(columns={column_name:'DF',f"{column_name}{column_distinction}":'DF1'}).copy()
+    
+    output_dict = {}
+    
+    temp_df['COLUMN_NAME'] = column_name
+    
+    BinaryComplexEquivlancey(temp_df,'DF','DF1','VALUES_EQUAL')
+    
+    #temp_df['VALUES_EQUAL'] = np.where(temp_df['DF'].fillna(0)==temp_df['DF1'],1,0)
+    temp_df['VALUES_NOT_EQUAL'] = np.where(temp_df['VALUES_EQUAL']==0,1,0)
+    temp_df['NULL_RECORD'] = np.where((temp_df['DF'].isnull())|(temp_df['DF1'].isnull()),1,0)
+    
+    try:
+        temp_df['DIFFERENCE'] = temp_df['DF'].fillna(0)-temp_df['DF1'].fillna(0)
+    except:        
+        temp_df['DIFFERENCE'] = 0
+        
+    try:
+        BracketColumn(temp_df,'DIFFERENCE','DIFF_SEGMENT',bracketing)
+    except:
+        temp_df['DIFF_SEGMENT'] = 'Could Not Calculate'
+    
+    if additional_filter:
+        part_df = pd.DataFrame()
+        
+        for value in temp_df[additional_filter].unique():
+            temp_part_df = temp_df[temp_df[additional_filter]==value]
+            
+            try:
+                d = ColumnPartitioner(temp_part_df,'DIFFERENCE').rename(index={"DIFFERENCE":column_name}).reset_index().rename(columns={'index':'COLUMN_NAME'})
+                d[additional_filter]= value
+                part_df = pd.concat([part_df,d])
+            except:
+                pass
+    else:
+        try:
+            part_df= ColumnPartitioner(temp_df,'DIFFERENCE').rename(index={"DIFFERENCE":column_name})
+        except:
+            part_df= pd.DataFrame()
+
+    output_dict['partition_df'] = part_df
+    
+    temp_df1 = temp_df.copy()
+    temp_df1['RECORD_COUNT']=1
+    
+    if additional_filter:
+        output_dict['groupby_df'] = temp_df1[[additional_filter,'COLUMN_NAME','DF','DF1','RECORD_COUNT','VALUES_EQUAL','VALUES_NOT_EQUAL','NULL_RECORD']].groupby([additional_filter,'COLUMN_NAME','DF','DF1'],dropna=False).sum().sort_values('VALUES_EQUAL',ascending=False).head(20).reset_index()
+        
+    else:
+        output_dict['groupby_df'] = temp_df1[['COLUMN_NAME','DF','DF1','RECORD_COUNT','VALUES_EQUAL','VALUES_NOT_EQUAL','NULL_RECORD']].groupby(['COLUMN_NAME','DF','DF1'],dropna=False).sum().sort_values('VALUES_EQUAL',ascending=False).head(20).reset_index()
+    
+    if additional_filter:
+        summary_df = pd.DataFrame()
+        for value in temp_df[additional_filter].unique():
+            temp = temp_df[temp_df[additional_filter]==value]
+            value_dict = {
+                'Total Combined Records':len(temp),
+                'Values Equal':temp['VALUES_EQUAL'].sum(),
+                'Values Not Equal':len(temp[temp['VALUES_EQUAL']==0]),
+                'Percent Values Equal': (temp['VALUES_EQUAL'].sum()/len(temp))*100,
+                'Null Records':temp['NULL_RECORD'].sum()}
+            
+            try:
+                value_dict['Total Difference']=temp['DIFFERENCE'].sum()
+            except:
+                value_dict['Total Difference']=0
+                
+            sum_df = pd.DataFrame(value_dict.values(),index=value_dict.keys(),columns=[column_name]).T.reset_index().rename(columns={'index':"COLUMN_NAME"})
+            sum_df[additional_filter] = value
+            summary_df = pd.concat([summary_df,sum_df])
+    else:
+        value_dict = {
+            'Total Combined Records':len(temp_df),
+            'Values Equal':temp_df['VALUES_EQUAL'].sum(),
+            'Values Not Equal':len(temp_df[temp_df['VALUES_EQUAL']==0]),
+            'Percent Values Equal': (temp_df['VALUES_EQUAL'].sum()/len(temp_df))*100,
+            'Null Records':temp_df['NULL_RECORD'].sum()}
+        
+        try:
+            value_dict['Total Difference']=temp['DIFFERENCE'].sum()
+        except:
+            value_dict['Total Difference']=0
+            
+        summary_df = pd.DataFrame(value_dict.values(),index=value_dict.keys(),columns=[column_name]).T.reset_index().rename(columns={'index':"COLUMN_NAME"})
+        
+    output_dict['summary_df'] = summary_df
+    output_dict['account_df'] = temp_df
+    
+    return output_dict
+
+
+def ListCompare(list1,list2):
+    
+    '''
+    
+    '''
+    
+    prop_dict = {}
+    
+    list1_ =  set(list1)
+    list2_ = set(list2)
+    
+    
+    prop_dict['missing_list1'] = [x for x in list(list2_) if x not in list1]
+    prop_dict['missing_list2']  = [x for x in list(list1_) if x not in list2]
+    
+    prop_dict['same'] = [x for x in list(list1_) if x in list2_]
+    
+    print(f"Total Records in List 1: {len(list1_)}")
+    print(f"Total Columns in List 2: {len(list2_)}")
+    print(f"Total Columns in both Data Frames: {len(prop_dict['same'])}\n")
+    print(f"Shared Columns: {prop_dict['same']}\n")
+    
+    missing1 = prop_dict['missing_list1']
+    missing2  = prop_dict['missing_list2']
+    
+    print(f"Total Columns in DF Not in DF1 : {len(missing1)}")
+    print(f"Columns Unique to DF : {prop_dict['missing_list1']}\n")
+    
+    print(f"Total Columns in DF1 Not in DF : {len(missing2)}")
+    print(f"Columns Unique to DF1 : {prop_dict['missing_list2']}")
+    
+    return missing1,missing2
+
+def BracketColumn(df,
+                  column_name,
+                  new_column_name,
+                  bins=[0,10,20,30,40,50,60,70,80,90,100],
+                  formating="",
+                  assign_cat=0,
+                  last_bin_lowest_value=1,
+                  print_=0):
+    
+    '''
+    Function Created to analyze the contents of a Column in a Dataframe and return a summarized view of the distribution.
+    Function differs from ColumnPartioner, in that it does not look for uniformity, a higher level summary.
+    
+    Parameters:
+        df {dataframe}
+        
+        column_name (str): Column Name of DF column to review
+        
+        new_column_name (str): Name of Column to be created in Dataframe as result of Function
+        
+        bins [list]: Number of Bins to include in Segmentation. Need atleast 2, no upper bound limit.
+        
+        formating (str): Value which can be appended for str output in return value text. $ Only Viable in current iteration 
+        
+        assign_cat (int): Binary Flag which allows user to save the column in Categorical Order to ease filtering.
+        this does impact how groupby works and size of data, so proceed with caution.
+    
+        last_bin_lowst_value (int): Binary Flag, allows user to either Place a Floor on bottom limit based on Bin Value, or 
+        search everything below bottom limit. EI, if you have 0 for deposit it would not include balances below 0 in the count if 1.
+    
+    Returns:
+        Dataframe with New Column
+    
+    '''
+    
+    df[column_name] = df[column_name].fillna(0)
+    
+    condition_list = []
+    value_list = []
+    
+    for count,value in enumerate(bins):
+        if count == 0:
+            if last_bin_lowest_value==1:
+                condition_list.append(df[column_name]==value)
+                value_list.append(f"{count+1})Equal to {formating}{value:,}")
+            else:
+                condition_list.append(df[column_name]<value)
+                value_list.append(f"{count+1})Less than {formating}{value:,}")
+        
+        elif count < len(bins)-1:
+            condition_list.append(df[column_name]<=value)
+            value_list.append(f"{count+1})Between {formating}{bins[count-1]:,} and {formating}{bins[count]:,}")
+        
+        else:
+            condition_list.append(df[column_name]<=value)
+            value_list.append(f"{count+1})Between {formating}{bins[count-1]:,} and {formating}{bins[count]:,}")
+            
+            condition_list.append(df[column_name]>value)
+            value_list.append(f"{count+1})Greater than {formating}{value:,}")
+            
+        df[new_column_name]=np.select(condition_list,value_list,'Problem')
+        
+        if assign_cat ==1:
+            df[new_column_name] = pd.Categorical(df[new_column_name], categories=value_list)
+    
+    if print_==1:
+        print(df[new_column_name].value_counts())
+
+
+def DFColumnCompare(df,df1):
+    
+    '''
+    
+    '''
+    
+    prop_dict = {}
+    
+    cols_df =  set(df.columns.values)
+    cols_df1 = set(df1.columns.values)
+    
+    
+    prop_dict['cols_missing_df'] = [x for x in list(cols_df) if x not in cols_df1]
+    prop_dict['cols_missing_df1']  = [x for x in list(cols_df1) if x not in cols_df]
+    
+    prop_dict['cols_same'] = [x for x in list(cols_df) if x in cols_df1]
+    
+    print(f"Total Columns in DF: {len(df.columns.values)}")
+    print(f"Total Columns in DF1: {len(df1.columns.values)}")
+    print(f"Total Columns in both Data Frames: {len(prop_dict['cols_same'])}\n")
+    print(f"Shared Columns: {prop_dict['cols_same']}\n")
+    
+    print(f"Total Columns in DF Not in DF1 : {len(prop_dict['cols_missing_df'])}")
+    print(f"Columns Unique to DF : {prop_dict['cols_missing_df']}\n")
+    
+    print(f"Total Columns in DF1 Not in DF : {len(prop_dict['cols_missing_df1'])}")
+    print(f"Columns Unique to DF1 : {prop_dict['cols_missing_df1']}")
+
+def DFStatisticalReview(df,file_name=None,print_=0,time_check=20):
+    
+    '''
+    Application of Column Statistical Review on an entire DataFrame.
+    
+    
+    '''
+    
+    final_df = pd.DataFrame()
+    
+    for column in df.columns:
+        start_time = timeit.default_timer()
+        temp_df = ColumnStatisticalReview(df,column)
+        elapsed_time = timeit.default_timer() - start_time
+        final_df = pd.concat([final_df,temp_df],axis=1)
+        
+        if elapsed_time>time_check:
+            print(f'Elapsed time to process {column}:{timeit.default_timer() - start_time:,.2f}')
+            resume_ = input(f'Would you like to continue? 1 Column is taking more than {time_check} Seconds. (Yes/Y)')
+            if (resume_.lower()!='yes')|(resume_.lower()!='y'):
+                time_check += 5
+                return final_df
+        
+        if print_==1:
+            print(f'Elapsed time to process {column}:{timeit.default_timer() - start_time:,.2f}')
+            
+    if file_name:
+        final_df.to_csv(f"{file_name}.csv")
+        
+    return final_df
+
+
+import time
+import winsound
+
+def countdown_timer(seconds):
+    time.sleep(seconds)
+    winsound.Beep(1000, 1000)  # Beep for 1 sec
+    print("Time's up!")
+
+countdown_timer(5)
+
+import time
+import os
+import platform
+
+def beep():
+    # Works for Windows
+    if platform.system() == 'Windows':
+        import winsound
+        winsound.Beep(1000, 500)  # frequency, duration (ms)
+    else:
+        # Works for Mac/Linux
+        print('\a')
+
+def countdown_timer(seconds):
+    print(f"Countdown started for {seconds} seconds.")
+    while seconds:
+        mins, secs = divmod(seconds, 60)
+        print(f"{mins:02d}:{secs:02d}", end='\r')
+        time.sleep(1)
+        seconds -= 1
+
+    beep()
+    print("⏰ Time's up! Press Enter to acknowledge.")
+    input()
+
+countdown_timer(5)
+
+
+def generate_create_table_sql(df, table_name, schema, db='ANALYTICS'):
+    """
+    Function to create a SQL Statement to Create a New Table.
+    Function Utilizes a review of the DataFrame to recommend Column Names, Formating and appropriate Column Sizing.
+    
+    Function is NOT BEYOND REPROACH, requires some manual review and should not be automated.
+    
+
+    Parameters:
+    df(df): Any DataFrame
+    table_name(str): desired name for the SQL table
+    schema(str): Target Schema Name
+    db(str): Database Name (function designed for Analytics, but can be applied to any MS SQL)
+
+    Returns:
+    - str: SQL CREATE TABLE statement
+
+    BIT: 0/1
+    TINY_INT:0 - 255
+    SMALL_INT - -32,750 - 32,750
+    INT -2.1B - 2.1B
+    BIG INT -9 e18 - 9 e18
+    """
+
+    type_mapping = {
+        "int64": "BIGINT",
+        "int32": "INT",
+        "float64": "DECIMAL(16,2)",
+        "float32": "DECIMAL(16,2)",
+        "bool": "VARCHAR(5)",
+        "datetime64[ns]": "DATE",
+        "object": "VARCHAR"
+    }
+
+    max_len = max(len(col) for col in df.columns)
+
+    column_defs = []
+    for col in df.columns:
+        dtype = str(df[col].dtype)
+
+        if col == "MEMBERNBR":
+            sql_type = 'BIGINT'
+        elif col == "ACCTNBR":
+            sql_type = 'BIGINT'
+        elif col.lower().find('date')!=-1:
+            sql_type = 'DATE'
+        elif col.lower().find('flag')!=-1:
+            if df[col].max()>1:
+                sql_type = 'SMALLINT'
+            else:
+                sql_type = 'BIT'
+        
+        elif dtype == 'object':
+            max_str_len = df[col].astype(str).map(len).max()
+            varchar_len = get_varchar_bucket(min(max_str_len + 10, 255))
+            sql_type = f"VARCHAR({varchar_len})"
+        else:
+            sql_type = type_mapping.get(dtype, "VARCHAR(100)")  # fallback for unexpected types
+
+        # Use [col] instead of 'col' for SQL Server compatibility
+        column_defs.append(f"    [{col}] {sql_type}")
+
+    column_sql = ",\n".join(column_defs)
+    full_table_name = f"[{db}].[{schema}].[{table_name}]"
+    create_stmt = (
+        f"CREATE TABLE {full_table_name} (\n"
+        f"{column_sql}\n);\n"
+    )
+
+    print(create_stmt)
+    
+
+def ViewDF(df,global_=1):
+    '''
+    Function to Assist in the Viewing of a Dataframe in a User Friendly Manner, showing all rows, columns and Numbers.
+
+    Parameters:
+        df (dataframe)
+        global (int): Binary Flag, if 1 it applies the preferences to the Workbook, if 0 it displays the single dataframe, not exporting the perferences to the workbook
+    
+    
+    '''
+
+    if global_ ==1:
+        pd.set_option('display.max_colwidth',None)
+        pd.set_option('display.max_columns',None,)
+        pd.set_option('display.expand_frame_repr',False)
+        pd.set_option('display.float_format','{:.2f}'.format)
+    else:
+        with pd.option_context(
+            'display.max_colwidth',None,
+            'display.max_columns',None,
+            'display.float_format', '{:.2f}'.format,
+            'display.expand_frame_repr',False):
+            display(df)
+
+
+from itertools import product,permutations,combinations
+from FeatureEngineering import BracketColumn,CategorizeBinaryChange
+from IPython.display import display, HTML
+import pandas as pd
+import numpy as np
+import math
+
+
+def CombineLists(list_,
+                 add_metric=None,
+                 combo=1,
+                 r=2,
+                 return_value='list_'):
+    '''
+    Function to generate an exhaustive list from multiple lists. 
+    Handles both Cartesian product (list of lists) and flat combinations/permutations.
+
+    If List of Lists, it by-passes Combniation and Permutations by making items equal to 1.
+
+    Parameters:
+        list_ (list): Flat list or list of lists
+        add_metric (any): Optional value to append to each sublist
+        combo (int): 1 = combinations, 0 = permutations
+        r (int): size of each combination/permutation
+        return_value (str): 'list_' or 'df'
+        
+    Returns:
+        list or pd.DataFrame
+    '''
+
+    import copy
+    
+    list_ = copy.deepcopy(list_)
+
+    if add_metric:
+        list_ = [x + [add_metric] if isinstance(x, list) else [x, add_metric] for x in list_]
+
+    items = sum([1 if isinstance(x, list) else 0 for x in list_])
+
+    if items == 0:
+        if combo == 1:
+            value = list(map(list, combinations(list_, r)))
+        else:
+            value = list(map(list, permutations(list_, r)))
+    else:
+        value = list(map(list, product(*list_)))
+
+    if return_value == 'list_':
+        return value
+    else:
+        return pd.DataFrame(value).drop_duplicates()
+
+import pandas as pd
+import numpy as np
+from itertools import combinations
+
+
+
+
+  def ReviewEntireDataframe(df,file_name=None,print_=0):
+    
+    final_df = pd.DataFrame()
+    
+    for column in df.columns:
+        start_time = timeit.default_timer()
+        temp_df = ColumnStatisticalReview(df,column)
+        if print_==1:
+            print(f'Elapsed time to process {column}:{timeit.default_timer() - start_time:,.2f}')
+        final_df = pd.concat([final_df,temp_df],axis=1)
+    if file_name:
+        final_df.to_csv(f"{file_name}.csv")
+        
+    return final_df
+
+def DFCreation_ValueCountColumn(df,
+                                column_name_list):
+    '''
+
+    '''
+    return pd.DataFrame(df[column_name_list].value_counts().reset_index()).rename(columns={0:'COUNT'})
+
+
+def CreateBlankRecord(list1_,
+                      list2_,
+                      columns,
+                      merge_df=None,
+                      remove_values=['0',"",'N/A']):
+    '''
+    Function which Looks at the Combination of Two Lists and explores all possible Combinations. 
+    Developed for the purpose of understanding how many combinations exist and generating a list of Values which do not
+    exist, this list can be valueable for pending to previously Aggregagted Datasets to insure all possible records have
+    representation
+    
+    Parameters
+        list1_ (list)
+        list2_ (list)
+        columns (Columns to be included, should represent the expected Column Name of list1_ and list2_)
+        merge_df (Dataframe): To be used to Validate the number of missing records, if not included, then 
+        returns only combination.
+    
+    Returns
+    
+    
+    '''
+
+    list1_ = [x for x in list1_ if x not in remove_values]
+    list2_ = [x for x in list2_ if x not in remove_values]
+    
+    required_records = CombineLists([list1_,list2_])
+    df = pd.DataFrame(required_records,columns=['METRIC_NAME','BRANCHNAME'])
+    
+    if len(merge_df)==0:
+        return df
+    
+    else:
+        df = df.merge(merge_df[columns].drop_duplicates(),on=columns,how='left',indicator=True)
+        print(f"Distribution of Records and Missing Records:\n{df['_merge'].value_counts()}")
+        df = df[df['_merge']=='left_only'].drop('_merge',axis=1)
+        return df
+
+
+
