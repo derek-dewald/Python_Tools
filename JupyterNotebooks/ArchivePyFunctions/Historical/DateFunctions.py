@@ -1,3 +1,5 @@
+# File Description: Functions related to Generation, Manipulation and Calculation of Dates.
+
 import pandas as pd
 import numpy as np
 import datetime
@@ -76,62 +78,6 @@ def CalculateDaysFromtoday(df,
     
     df[new_column_name] = (reference_date-df[column_name])/datetime.timedelta(365.25)
 
-
-def MonthSelector(month_int=1,
-                  return_value='month_dt',
-                  end_date_yesterday=1):
-    
-        
-    '''
-    Function to 
-    
-    
-    Parameters:
-        
-    
-    Return:
-        
-    '''
-    
-    return CreateMonthList(month_int=month_int,months=1,return_value=return_value,end_date_yesterday=end_date_yesterday)[0]
-
-def CreateMonthList(month_int=0,
-                    months=36,
-                    end_date_yesterday=1,
-                    sort_ascending=0,
-                    return_value="month_dt"):
-    
-    '''
-    Function to 
-    
-    
-    Parameters:
-        
-    
-    Return:
-        
-    '''
-    
-    
-    
-    final_months = month_int + months
-    month_list = pd.date_range(end=pd.Timestamp.today(),periods=final_months,freq='M').normalize()
-    month_list = month_list.union([pd.Timestamp.today().normalize()-datetime.timedelta(days=end_date_yesterday)])
-    
-    if return_value =='month_str':
-        month_list = [x.strftime('%b-%y') for x in month_list]
-    elif return_value =='month':
-        month_list = [x.strftime('%d-%b-%y') for x in month_list]
-    elif return_value =='month_dt':
-        month_list = [x.to_pydatetime() for x in month_list]
-    if sort_ascending==0:
-        month_list = month_list[::-1]
-    
-    return list(month_list[month_int:final_months])
-
-
-
-
 def MonthEndDate(x,og_format):
     
         
@@ -205,3 +151,101 @@ def ManualConvertDate(df,
     temp_df = pd.DataFrame(new_list,columns=[new_format]).merge(pd.DataFrame(og_list,columns=[og_format]),left_index=True,right_index=True,how='left').rename(columns={new:new_column_name})
     
     return df.merge(temp_df,on=column_name,how='left')
+
+
+def generate_day_list(start_date=datetime.datetime(2025,1,1),end_date= None):
+    if end_date is None:
+        end_date = datetime.datetime.now() - datetime.timedelta(days=1)
+    
+    # Generate the list of dates
+    date_list = [start_date + datetime.timedelta(days=i) for i in range((end_date - start_date).days + 1)]
+    
+    return date_list
+
+def print_current_time():
+    print(f"Current Time: {datetime.datetime.now().strftime('%H:%M:%S')}")
+
+
+
+def FIRST_DAY_OF_MONTH(x,):
+    try:
+        x = pd.to_datetime(x,errors='coerce').replace(day=1)
+    except:
+        pass
+    return x.date() 
+
+def LAST_DAY_PREVIOUS_MONTH(date_dt=None,
+                            return_value='month_dt'):
+    '''
+    
+    
+    '''
+    if date_dt==None:
+        date_dt = datetime.datetime.now()
+    
+    new_date = date_dt.replace(day=1,hour=0,minute=0,second=0,microsecond=0)-datetime.timedelta(days=1)
+    
+    if return_value=='month_dt':
+        return new_date
+    
+    elif return_value == 'month_str':
+        return new_date.strftime('%d-%b-%y')
+    
+
+
+def CreateMonthList(month_int=0,
+                    months=36,
+                    end_date_yesterday=1,
+                    sort_ascending=0,
+                    return_value="month_dt"):
+
+    final_months = month_int + months
+
+    month_list = pd.date_range(end=pd.Timestamp.today(), periods=final_months, freq='M')
+    month_list = list(month_list)
+    
+    if month_int ==0:
+        month_list.append(pd.Timestamp.today())
+    
+    if return_value == 'month_str':
+        month_list = [x.strftime('%b-%y') for x in month_list]
+    elif return_value == 'month':
+        month_list = [x.strftime('%d-%b-%y') for x in month_list]
+    elif return_value == 'month_dt':
+        month_list = [x.to_pydatetime().replace(hour=0,minute=0,second=0,microsecond=0) for x in month_list]
+    elif return_value == 'date':
+        month_list = [x.to_pydatetime().date() for x in month_list]
+
+    if sort_ascending == 0:
+        month_list.reverse()
+
+    return month_list[month_int:final_months]
+
+
+def MonthSelector(month_int=1,
+                  return_value='month_dt',
+                  end_date_yesterday=1):
+    
+        
+    '''
+    Function to return the Date based on Binary Int. 1 Represents month end last month, 0 Today (can change to yesterday with default binary flag)
+    
+    
+    Parameters:
+        month_int (int): Representative of the desired month 0 (today), 1 (last month end), 2 (2 Months, If in FebX it would be 31DecX)
+        end_date_yesterday (int): OPtional function to overwrite today to be yesterday when 0 for SQL db queries.
+    
+    Return:
+        
+    '''
+    
+    if (month_int==0) & (end_date_yesterday==1):
+        value_ = (datetime.datetime.now()-datetime.timedelta(days=1)).replace(hour=0,minute=0,second=0,microsecond=0)
+        if return_value=='month_dt':
+            return value_
+        elif return_value =='month_str':
+            return value_.strftime('%b-%y')
+        elif return_value =='month':
+            return value_.strftime('%d-%b-%y')
+    else:
+        return CreateMonthList(month_int=month_int,months=1,return_value=return_value)[0]

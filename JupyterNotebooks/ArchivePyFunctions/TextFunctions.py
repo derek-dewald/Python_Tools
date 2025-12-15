@@ -1,8 +1,10 @@
+from collections import Counter
 import pandas as pd
 import numpy as np
+import textwrap
 import inspect 
+import ast
 import re
-from collections import Counter
 
 def IterateThroughListuntilText(list_,text):
     """
@@ -337,3 +339,176 @@ def TextClean(
         df[col] = series
 
     return df
+
+def ReadPythonFiles(location='/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/',file_list=None):
+    
+    '''
+    Function which reads a Folder, iterating through all files saved, looking for .py files utilizing athe Extract Function Details AST 
+ 
+ 
+     Parameters:
+         location (str): Folder
+         
+    Returns:
+        Dataframe of Functions with description.
+
+    Date Created: 
+    Date Last Modified: August 25, 2025
+
+    '''    
+    py_file_dict = {}
+
+    if not file_list:
+        file_list = [x for x in ReadDirectory(location) if x.find('.py')!=-1 and x.find('__')==-1]
+    
+    for file_name in file_list:
+        with open(f"{location}{file_name}", "r", encoding="utf-8") as file:
+            data = file.read()
+            py_file_dict.update(PythonStringParser_AST(data,file_name))
+            
+    return pd.DataFrame(py_file_dict).T
+
+
+def PythonStringParser_AST(file_content,file_name):
+    
+    '''
+    Extracts structured function details from a Python script using AST.
+    
+    Parameters:
+        file_content (str): The raw string content of a Python script.
+
+    Returns:
+        dict: A dictionary with function names as keys and metadata (description, args, return, code).
+
+    Date Created:
+    Date Last Modified: August 25, 2025
+
+    '''
+    
+    tree = ast.parse(file_content)  # Parse the script into an AST
+    function_data = {}
+
+    for node in tree.body:
+        if isinstance(node, ast.FunctionDef):  # Identify function definitions
+            function_name = node.name
+            docstring = ast.get_docstring(node) or "No description available"
+
+            # Extract arguments from function signature
+            args = [arg.arg for arg in node.args.args]
+
+            # Extract return type annotation if present
+            return_type = ast.unparse(node.returns) if node.returns else "None"
+
+            # Extract function code using AST
+            function_code = ast.get_source_segment(file_content, node).strip()
+
+            # Process the docstring to separate description, args, and return
+            description_text = []
+            args_text = []
+            return_text = "None"
+
+            if docstring:
+                doc_lines = docstring.split("\n")
+                found_args = False
+
+                for line in doc_lines:
+                    stripped = line.strip()
+
+                    if stripped.lower().startswith(("args:", "parameters:")):  # Start of args
+                        found_args = True
+                        continue
+                    elif stripped.lower().startswith("returns:"):  # Start of return
+                        return_text = stripped.replace("Returns:", "").strip()
+                        found_args = False
+                        continue
+
+                    if not found_args:
+                        description_text.append(stripped)
+                    else:
+                        args_text.append(stripped)
+                        
+            function_data[function_name] = {
+                "Description": "\n".join(description_text).strip(),
+                "Arguments": args_text if args_text else args,
+                "Return": return_text,
+                "Code":function_code,
+                'File':file_name
+            }
+            
+    return function_data
+
+
+def CompareFunction(func1,func2,additional_records=20):
+    
+    '''
+    Function takes 2 Python Function, uses a thrid function FunctiontoStr to convert them into a List of Values and then iterates through the list
+    to compare Item by Item Equality. If there is a different it will return the next N variables to help compare where the error is and lead to 
+    reconcilation.
+    
+    Parameters:
+        func1 (Function)
+        func2 (Function)
+        additional_records (int)
+    
+    Returns:
+        List with Difference or confirmation via Print output that items reconcile.
+
+    '''
+    
+    list1 = FunctionToSTR(func1)
+    list2 = FunctionToSTR(func2)
+    
+    length = max(len(list1),len(list2))
+    
+    for record in range(0,length):
+        # Functions should not have the same name. Pass first
+        if record==1:
+            pass
+        elif list1[record]!=list2[record]:
+            print(f'Mismatch Identified at Record Number: {record}')
+            print(list1[record:record+additional_records])
+            print(list2[record:record+additional_records])
+            
+            break
+
+    print('Reconcilation Complete')
+
+
+
+def FunctionToSTR(func, *, normalize=False, strip_docstring=False):
+    """
+    Function which Converts the Documentation of a Python Function into a List, breaking on White Space. For purposes of development of 
+    CompareFunction, which looks for differences.
+
+    Parameters:
+        normalize (bool): If True, re-generate code via AST (stable formatting, Python 3.9+).
+        strip_docstring (bool): If True, remove the function's docstring before returning.
+
+    Returns:
+        list 
+
+    Date Created: August 17, 2025
+    Date Last Modified:
+    
+    """
+    try:
+        src = inspect.getsource(func)
+        src = textwrap.dedent(src)
+    except (OSError, TypeError):  # no source (e.g., builtins, C-extensions, REPL edge cases)
+        name = getattr(func, "__name__", repr(func))
+        return f"<no source available for {name!r}>"
+
+    if strip_docstring or normalize:
+        try:
+            mod = ast.parse(src)
+            fn = next(n for n in mod.body if isinstance(n, (ast.FunctionDef, ast.AsyncFunctionDef)))
+            if strip_docstring and fn.body and isinstance(fn.body[0], ast.Expr) and isinstance(getattr(fn.body[0], "value", None), ast.Constant) and isinstance(fn.body[0].value.value, str):
+                fn.body = fn.body[1:]  # drop leading docstring
+            if normalize:
+                # Return just the function definition re-emitted from the AST
+                return ast.unparse(fn)
+        except Exception:
+            # If AST handling fails, just return the dedented source we already have
+            pass
+
+    return src.split()

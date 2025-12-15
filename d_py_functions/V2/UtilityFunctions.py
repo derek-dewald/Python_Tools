@@ -1,10 +1,9 @@
 from IPython.display import display
 import inspect
 import pandas as pd
-import numpy as np
-import math
+import random
 
-def ViewDF(df,global_=1):
+def ViewDF(df=None,update_decimal=1):
     '''
     Function to Assist in the Viewing of a Dataframe in a User Friendly Manner, showing all rows, columns and Numbers.
 
@@ -14,124 +13,66 @@ def ViewDF(df,global_=1):
     
     
     '''
+    if update_decimal:
+        pd.options.display.float_format = '{:,.2f}'.format
 
-    if global_ ==1:
+    if df:
+      with pd.option_context(
+            'display.max_colwidth',None,
+            'display.max_columns',None,
+            'display.expand_frame_repr',False):
+            display(df)
+    else:
         pd.set_option('display.max_colwidth',None)
         pd.set_option('display.max_columns',None,)
         pd.set_option('display.expand_frame_repr',False)
-        pd.set_option('display.float_format','{:.2f}'.format)
-    else:
-        with pd.option_context(
-            'display.max_colwidth',None,
-            'display.max_columns',None,
-            'display.float_format', '{:.2f}'.format,
-            'display.expand_frame_repr',False):
-            display(df)
 
 
 def InspectFunction(function_name):
     print(inspect.getsource(function_name))
 
-def TextClean(
-    df,
-    column_list,
-    lower_case=False,
-    remove_newlines=False,
-    strip_whitespace=False,
-    normalize_whitespace=False,
-    remove_punctuation=False,
-    only_digits=False,
-    only_letters=False):
+def password_generator(minimum=8,maximum=10):
     
+    '''
+    Purpose: Create a Randomly Generated Password of a predetermined number of CHaracters. 
     
-    """
-    Applies selected text cleaning operations to specified DataFrame columns.
+    Input: 
+    
+    Minimum: Number of Minimum Characters. 
+    Maximum: Number of Maximum Characters.
+    
+    Default:
+    Minimum: 8 Characters
+    Maximum: 10 Characters.
+    
+    Notes:
+    First Character is always a Letter which is captilized.
+    The last 1-3 letters are special Characters, randomly assinged. 
+    
+    '''
 
-    Parameters:
-        df (pd.DataFrame): DataFrame to clean.
-        column_list (list): Columns to clean.
+    letter = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i', 'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v', 'w', 'x', 'y', 'z']
+    char = ['!','@','#','$','%','&','*',')',"("]
+    num = ['1','2','3','4','5','6','7','8','9','0']
+    
+    # select a random number between 8 and 12
+    total_char  = random.randint(minimum,maximum)
+    #print(total_char)
+
+    # Select a random Number of Special Characters, always at the End for simplicity
+    special_char = random.randint(1,3)
         
-        Cleaning Options (all default to False):
-            remove_newlines (bool): Remove \r and \n characters.
-            strip_whitespace (bool): Trim leading and trailing whitespace.
-            normalize_whitespace (bool): Collapse multiple spaces/tabs into one space.
-            remove_punctuation (bool): Remove punctuation characters.
-            only_digits (bool): Remove all non-digit characters and convert to numeric.
-            only_letters (bool): Remove all non-letter characters and convert to string.
-
-    Returns:
-        pd.DataFrame: Cleaned DataFrame.
-    """
-    for col in column_list:
-        if col not in df.columns:
-            continue
-
-        series = df[col].astype(str)
-        
-        if lower_case:
-            series = series.str.lower()
-        if remove_newlines:
-            series = series.str.replace(r'[\r\n]+', '', regex=True)
-        if normalize_whitespace:
-            series = series.str.replace(r'\s+', ' ', regex=True)
-        if strip_whitespace:
-            series = series.str.strip()
-        if only_digits:
-            series = series.str.replace(r'[^\d.]', '', regex=True)
-            series = pd.to_numeric(series, errors='coerce')
-        if only_letters:
-            series = series.str.replace(r'[^a-zA-Z]', '', regex=True)
-        if remove_punctuation:
-            series = series.str.translate(str.maketrans('', '', string.punctuation))
-
-        df[col] = series
-
-    return df
-
-def calculate_remaining_payments(loan_amount, annual_interest_rate, payment_amount, payments_per_year):
-    """
-    Calculate the number of remaining loan payments.
-
-    Parameters:
-    - loan_amount: float, the remaining principal
-    - annual_interest_rate: float, annual interest rate as a decimal (e.g., 0.06 for 6%)
-    - payment_amount: float, payment made each period
-    - payments_per_year: int, number of payments per year (e.g., 12 for monthly)
-
-    Returns:
-    - int, number of remaining payments
-    """
-    try:
-        rate_per_period = annual_interest_rate / payments_per_year
-        if payment_amount <= rate_per_period * loan_amount:
-            #raise ValueError("Payment amount too low to cover interest. Loan will never be repaid.")
-            return 0
-    except:
-        return 0
+    alpha_num = total_char - special_char 
     
-    try:
-        numerator = math.log(payment_amount / (payment_amount - rate_per_period * loan_amount))
-        denominator = math.log(1 + rate_per_period)
-        return math.ceil(numerator / denominator)/(payments_per_year/12)
-    except:
-        return 0
+    # ALways start with a Capital
+    password = random.choice(letter).upper()
+    
+    for i in range(0,alpha_num-1):
+        temp = random.choice([letter,num])
+        password += random.choice(temp)
+    
+    for i in range(0,special_char):
+        password += random.choice(char)
 
-
-def ViewEntireRecord(df,index_=0):
-    with pd.option_context('display.max_columns',None,
-                          'display.max_rows',None,
-                          'display.width',None):
-        display(df.iloc[index_])
-
-
-def PauseProcess(time,time_check,text):
-    if time>time_check:
-        print(f'Elapsed time to process {text}:{time:,.2f}')
-        resume_ = input(f'Would you like to continue? 1 Column is taking more than {time_check} Seconds. (Yes/Y)')
-        if (resume_.lower()!='yes')|(resume_.lower()!='y'):
-            time_check += 5
-    return time_check
-
-
-
-
+    #print(len(password))
+    return password

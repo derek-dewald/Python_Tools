@@ -1,12 +1,16 @@
-import os
-import shutil
+# File Description: File related to Foldes and Files on Local Computer.
 
+from concurrent.futures import ThreadPoolExecutor
+import pandas as pd
+import shutil
+import ast
+import os
 
 def DuplicateFileorFolder(source_path, destination_path):
     """
     Function to copy a file or folder to another location while handling errors.
 
-    Args:
+    Parameters:
         source_path (str): Path to the file or folder to copy.
         destination_path (str): Destination path where the file or folder should be stored.
     
@@ -63,14 +67,16 @@ def DuplicateFileorFolder(source_path, destination_path):
     print(f"Finished copying '{source_path}' to '{destination_path}'.")
 
 
-def ReadDirectory(folder="",
-                  file_type="",
-                  create_df=0):
+def ReadDirectory(location=None,
+                  file_type=None,
+                  match_str=None,
+                  create_df=0,
+                  number_of_CPUs=1):
                   
     """
     Function which reads reads a directory and returns a list of files included within
 
-    Args:
+    Parameters:
     folder (str): The path to the directory. Defaults to the current working directory if not provided.
     file_type (str): The file extension or type to filter by (e.g., '.ipynb'). If empty, returns all files.
 
@@ -79,24 +85,220 @@ def ReadDirectory(folder="",
     """
     
     # If no folder is provided, use the current working directory
-    if not folder:
-        file_list = os.listdir(os.getcwd())
-    else:
-        file_list = os.listdir(folder)
+    if location ==None:
+        location = os.getcwd() +"\\"
     
+    file_list = os.listdir(location)
+        
     # If no file type is provided, return all files in the directory
-    if file_type:
+    if file_type !=None:
         file_list = [x for x in file_list if file_type in x]
     
+    if match_str !=None:
+        file_list = [x for x in file_list if x.find(match_str)!=-1]
+        
     if create_df ==0:                  
         # Return files that match the specified file type
         return file_list
     else:
-        final_df = pd.DataFrame()
-        for file in file_list:
+        if number_of_CPUs==1:
+            final_df = pd.DataFrame()
+            for file in file_list:
+                if file_type=='csv':
+                    final_df = pd.concat([final_df,pd.read_csv(f"{location}{file}")])
+                elif file_type == 'xlsx':
+                    final_df = pd.concat([final_df,pd.read_excel(f"{location}{file}")])
+            return final_df
+        
+        else:
             if file_type=='csv':
-                final_df = pd.concat([final_df,pd.read_csv(file)])
-            elif file_type == 'xlsx':
-                final_df = pd.concat([final_df,pd.read_excel(file)])
-        return final_df
+                def read_file(file):
+                    return pd.read_csv(file)
+            else:
+                def read_file(file):
+                    return pd.read_excel(file)
+            
+            file_list = [f"{location}{x}" for x in file_list]
+            
+            with ThreadPoolExecutor(max_workers=number_of_CPUs) as executor:
+                dfs = list(executor.map(read_file,file_list))
+            
+            return pd.concat(dfs,ignore_index=True)  
+        
 
+
+def crawl_directory_with_progress(root_dir, progress_step=5,print_=1):
+    """
+    Recursively crawl through a directory, track progress every `progress_step` percent.
+    
+    Parameters:
+        root_dir (str): Root directory to start from.
+        progress_step (int): Percent steps at which to report progress (e.g. 5 for 5%).
+
+    Returns:
+        pd.DataFrame: DataFrame with file path, name, and type.
+    """
+    start_time = time.time()
+    file_records = []
+
+    # Step 1: Count total directories to visit (quick)
+    total_dirs = sum(1 for _ in os.walk(root_dir))
+    
+    print(total_dirs)
+    
+    if total_dirs == 0:
+        print("No directories found.")
+        return pd.DataFrame()
+
+    # Progress tracking
+    next_progress_mark = progress_step
+    visited_dirs = 0
+
+    for dirpath, dirnames, filenames in os.walk(root_dir):
+        visited_dirs += 1
+
+        for file in filenames:
+            file_path = os.path.join(dirpath, file)
+            file_name = os.path.basename(file)
+            file_ext = os.path.splitext(file)[1].lower().lstrip('.')  # remove dot
+            
+            file_records.append({
+                'file_path': file_path,
+                'file_name': file_name,
+                'file_type': file_ext
+            })
+
+        # Print progress every 5%
+        if print_==1:
+            percent_complete = (visited_dirs / total_dirs) * 100
+            if percent_complete >= next_progress_mark:
+                elapsed = time.time() - start_time
+                estimated_total = elapsed / (percent_complete / 100)
+                remaining = estimated_total - elapsed
+
+                print(f"[{percent_complete:.1f}%] Done - "
+                      f"Elapsed: {elapsed:.1f}s - "
+                      f"ETA: {remaining:.1f}s remaining "
+                      f"(Total est: {estimated_total:.1f}s)")
+
+                next_progress_mark += progress_step
+
+    total_time = time.time() - start_time
+    if print_==1:
+        print(f"✅ Done. Total time: {total_time:.2f} seconds. Files found: {len(file_records)}")
+    return pd.DataFrame(file_records)
+
+
+def MakeFolder(folder,
+               path_):
+    
+    location = f"{path_}{folder}\\"
+    
+    if os.path.exists(f"{location}"):
+        print(f"{location} exits")
+    else:
+        os.makedirs(f"{location}")
+        print('New Folder Created')
+
+def ExtractPythonFunctionDetail(file_path, keywords=None):
+    """
+    Extracts function details from a .py file using AST parsing.
+    
+    Parameters:
+        file_path (str): Path to the Python file.
+        keywords (list): List of keywords to look for in docstrings (default: [parameters:, returns:, date created:, date last modified:]).
+        
+    Returns:
+        pd.DataFrame: DataFrame with function details.
+
+    Date Created: August 17, 2025.
+    Date Last Modified: 
+    """
+    if keywords is None:
+        keywords = ["parameters:", "returns:", "date created:", "date last modified:"]
+
+    # Normalize keywords (all lowercase, ensure ":" at end)
+    keywords = [k.lower() if k.endswith(":") else k.lower() + ":" for k in keywords]
+
+    with open(file_path, "r", encoding="utf-8") as f:
+        file_content = f.read()
+
+    tree = ast.parse(file_content)
+    function_data = []
+
+    for node in tree.body:
+        if isinstance(node, ast.FunctionDef):
+            function_name = node.name
+            docstring = ast.get_docstring(node) or "No description available"
+            function_code = ast.get_source_segment(file_content, node).strip()
+
+            # Parse docstring content
+            doc_lines = docstring.split("\n")
+            description_text = []
+            sections = {k[:-1].capitalize(): [] for k in keywords}  # e.g. "Returns" -> []
+
+            current_section = None
+            for line in doc_lines:
+                stripped = line.strip()
+                low = stripped.lower()
+                # Detect new section
+                if any(low.startswith(k) for k in keywords):
+                    for k in keywords:
+                        if low.startswith(k):
+                            current_section = k[:-1].capitalize()
+                            # ✅ Remove only the keyword prefix
+                            content = stripped[len(k):].strip()
+                            sections[current_section].append(content)
+                            break
+                elif stripped:  # inside a section or description
+                    if current_section:
+                        sections[current_section].append(stripped)
+                    else:
+                        description_text.append(stripped)
+
+            # Build record
+            function_data.append({
+                "Function Name": function_name,
+                "Description": " ".join(description_text).strip(),
+                **{sec: " ".join(val).strip() for sec, val in sections.items()},
+                "Code": function_code
+            })
+
+    return pd.DataFrame(function_data)
+
+
+def ExtractPythonFiles(folder=None,export_file=None):
+    
+    '''
+    Function to Read a Specifically Determine folder, to look for all of the .py files in it and read them, 
+    using the function ExtractPythonFunctionDetail.
+
+    Parameters:
+        folder (str): Folder location of a series of .py files to be Read. Default Location, '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/'
+        export_file (str): Name of Excel File to Be export if included, by default it will not exclude a file.
+
+    Returns:
+        pd.DataFrame() with Listing of All functions read, in format, Function Name, Description, Parameters, Returns, Date Created, Date Last Modified, Code
+
+    Date Created: August 17, 20225
+    Date Last Modified: 
+
+    '''
+
+    if not folder:
+        folder = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/'
+
+    files = ReadDirectory(folder)
+    files = [x for x in files if (x.find('.py')!=-1)&(x.find('__')==-1)]
+
+    final_df = pd.DataFrame()
+
+    for file in files:
+        temp_df = ExtractPythonFunctionDetail(f"{folder}{file}")
+        temp_df['File'] = file
+        final_df = pd.concat([final_df,temp_df]).reset_index(drop=True)
+
+    if export_file:
+        final_df.to_excel(f"{export_file}.xlsx",index=False)
+
+    return final_df
