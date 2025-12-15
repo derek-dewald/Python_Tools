@@ -25,7 +25,7 @@ def notes_df_to_outline_html(
     sub_classification:TBD
     usage:
         from connections import d_google_sheet_to_csv
-        df = d_google_sheet_to_csv('Notes')
+        df = import_d_google_sheet('Notes')
         notes_df_to_outline_html(df)
 
     """

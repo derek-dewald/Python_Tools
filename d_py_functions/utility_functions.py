@@ -3,8 +3,7 @@ import inspect
 import pandas as pd
 import random
 
-
-def InspectFunction(function_name):
+def inspect_function(function_name):
     '''
     Function which Reads the Document String of a Python Function
 
@@ -26,7 +25,7 @@ def InspectFunction(function_name):
     print(inspect.getsource(function_name))
 
 
-def ViewDF(df=None,update_decimal=2):
+def view_df(df=None,update_decimal=2):
     '''
     Function which helps to set default Visualization View in Pandads. Can be applied to a dataframe specifically or the current Session
 

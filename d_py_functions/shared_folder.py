@@ -9,14 +9,13 @@ import re
 import sys
 sys.path.append("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions")
 
-from dict_processing import convert_dict_to_parameters,dict_to_dataframe
-from list_processing import convert_list_to_parameters,list_to_dataframe
-from string_processing import convert_str_to_parameters
+from dict_processing import dict_to_dataframe
+from list_processing import list_to_dataframe
 import data_d_dicts, data_d_lists,data_d_strings
-from data_d_lists import FunctionFields
+from data_d_lists import function_fields
+from input_functions_ignore import input1,input2,input3
 
-
-def ReadDirectory(location=None,
+def read_directory(location=None,
                   file_type=None,
                   match_str=None):
                   
@@ -57,7 +56,7 @@ def ReadDirectory(location=None,
     
     return file_list
 
-def TextFileImport(file_name,encoding="utf-8"):
+def text_file_import(file_name,encoding="utf-8"):
 
     
     '''
@@ -85,7 +84,7 @@ def TextFileImport(file_name,encoding="utf-8"):
     
     return data
 
-def ParseDDotPYFile(file_text):
+def parse_dot_py_file(file_text):
     """
     Function which reads a Python file (as text) and provides a summary of
     functions and their components, using a structured docstring format.
@@ -107,7 +106,7 @@ def ParseDDotPYFile(file_text):
 
     # Case-insensitive mapping: lowercased key -> canonical column name
     # e.g. "usage" -> "usage", "date_created" -> "date_created"
-    metadata_map = {key.lower(): key for key in FunctionFields}
+    metadata_map = {key.lower(): key for key in function_fields}
 
     tree = ast.parse(file_text)
 
@@ -131,7 +130,7 @@ def ParseDDotPYFile(file_text):
             "Returns": None,
         }
         # Initialize all known metadata fields to None
-        for col in FunctionFields:
+        for col in function_fields:
             meta_record[col] = None
 
         # ---------- DF2 per-function records ----------
@@ -255,7 +254,7 @@ def ParseDDotPYFile(file_text):
     return function_list, function_parameters
 
 
-def ParseDDotPYFolder(location=None):
+def parse_dot_py_folder(location=None):
     '''
     
     Function which Allows for the Quick Review of All Python Functions in a Particular Directory, using the functions 
@@ -272,7 +271,7 @@ def ParseDDotPYFolder(location=None):
     classification:TBD
     sub_classification:TBD
     usage:
-        function_list, function_parameters = ParseDDotPYFolder()
+        function_list, function_parameters = parse_dot_py_folder()
     
     
     '''
@@ -286,14 +285,14 @@ def ParseDDotPYFolder(location=None):
     if not location:
         folder = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions'
 
-    func_list = ReadDirectory(folder,file_type='.py')
+    func_list = read_directory(folder,file_type='.py')
     func_list = [x for x in func_list if (x.find('init')==-1) | (x not in ['d_lists','d_strings','d_dictionaries'])]
 
     for file_name in func_list:
         filename = f"{folder}/{file_name}"
-        file_ = TextFileImport(filename)
+        file_ = text_file_import(filename)
 
-        temp_a,temp_b = ParseDDotPYFile(file_)
+        temp_a,temp_b = parse_dot_py_file(file_)
         temp_a['Folder'] = file_name
         temp_b['Folder'] = file_name
 
@@ -302,9 +301,9 @@ def ParseDDotPYFolder(location=None):
 
 
     temp_param = pd.concat([
-        convert_str_to_parameters(data_d_strings),
-        convert_dict_to_parameters(data_d_dicts),
-        convert_list_to_parameters(data_d_lists)
+        input3(data_d_strings),
+        input1(data_d_dicts),
+        input2(data_d_lists)
     ])
 
     function_parameters = pd.concat([
