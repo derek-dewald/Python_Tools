@@ -1,6 +1,15 @@
 import streamlit as st
 import requests
 
+# Need to Add Function Repo and Parent into File
+import os, sys
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.abspath(os.path.join(BASE_DIR, "..", ".."))
+sys.path.insert(0, REPO_ROOT)
+
+from d_py_functions.data_d_lists import function_fields
+st.write(function_fields)
+
 
 # This Function is manually produced here as by Default Git Doesnt know where to Look, and this helps it. Also Saved in connections.
 
@@ -56,6 +65,4 @@ st.set_page_config(page_title="GitHub .py Browser", layout="wide")
 st.title("GitHub Folder: .py File List")
 #st.write(git_files)
 
-import os
-st.write(os.getcwd())
 

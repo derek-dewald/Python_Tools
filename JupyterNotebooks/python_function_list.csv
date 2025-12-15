@@ -1,0 +1,44 @@
+Function,Purpose,Parameters,Returns,date_created,date_last_modified,classification,sub_classification,usage,Folder
+inspect_function,Function which Reads the Document String of a Python Function,['function_name'],Object Type,15-Dec-25,15-Dec-25,TBD,TBD,"from utility_functions import InspectFunction
+InspectFunction(InspectFunction)",utility_functions.py
+view_df,Function which helps to set default Visualization View in Pandads. Can be applied to a dataframe specifically or the current Session,"['df', 'update_decimal']",Object Type,15-Dec-25,15-Dec-25,TBD,TBD,ViewDf(df),utility_functions.py
+password_generator,Function to Create a Randomly Generated Password.,"['minimum', 'maximum']",Object Type,15-Dec-25,15-Dec-25,TBD,TBD,password_generator(),utility_functions.py
+dict_to_dataframe,Function to Simplify the creation of a Dictionary into a Dataframe into a single Command.,"['dict_', 'key_name', 'value_name']",Dataframe,4-Dec-25,4-Dec-25,TBD,TBD,temp_df = dict_to_dataframe(dict),dict_processing.py
+df_to_dict,"Function to Simply Convert A DF into a Dictionary.
+Takes 2 Arguments, and converts them into a DF of the format {key:value}","['df', 'key', 'value']",df,12-Dec-25,12-Dec-25,TBD,TBD,"from data_d_strings import google_mapping_sheet_csv
+df = pd.read_csv(google_mapping_sheet_csv)
+df_to_dict(df,'Definition','CSV')",dict_processing.py
+read_directory,Function which reads reads a directory and returns a list of files included within,"['location', 'file_type', 'match_str']",Dataframe containing a listing of selected files.,3-Dec-25,3-Dec-25,TBD,TBD,"d_py_function =  '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/'
+ReadDirectory(d_py_function)",shared_folder.py
+text_file_import,Function Used to Import .txt or .py File into Python.,"['file_name', 'encoding']",Str,3-Dec-25,3-Dec-25,TBD,TBD,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/DFProcessing.py'
+file = TextFileImport(location)",shared_folder.py
+parse_dot_py_file,"Function which reads a Python file (as text) and provides a summary of
+functions and their components, using a structured docstring format.",['file_text'],function_list (DataFrame): One row per function with metadata. function_parameters (DataFrame): One row per parameter per function.,4-Dec-25,4-Dec-25,TBD,TBD,"function_list, function_parameters = ParseDDotPYFile(file_text)",shared_folder.py
+parse_dot_py_folder,"Function which Allows for the Quick Review of All Python Functions in a Particular Directory, using the functions
+Read Directory and ParseDDotPYFile",['location'],DataFrame,4-Dec-25,4-Dec-25,TBD,TBD,"function_list, function_parameters = parse_dot_py_folder()",shared_folder.py
+create_py_table_dict,"Function which Generates a Dataframe representing a Function Dictionary, sourcing the Functions from a Shared Folder Location, and
+using the definitions sourced from a Python Dictionary",['base_location'],DataFrame,4-Dec-25,4-Dec-25,TBD,TBD,python_function_dict_df = create_py_table_dict(),shared_folder.py
+list_to_dataframe,Function to Simplify the creation of a Dictionary into a Dataframe into a single Command.,"['list_', 'column_name_list']",Object Type,4-Dec-25,4-Dec-25,TBD,TBD,temp_df = list_to_dataframe(dict),list_processing.py
+import_d_google_sheet,"Function Which Extracts a DataFrame from D's Google Sheets, using the Map as provided in Google Mapping Sheet",['definition'],Dataframe (Dict is value is not try condition fails).,12-Dec-25,12-Dec-25,TBD,TBD,Example Function Call,connections.py
+read_git_folder,"Program to Extract .py files from a Git Directory.
+Parameters borrowed from Git Mapping Structure, https://github.com/owner/repo/tree/branch/folder","['owner', 'repo', 'branch', 'folder']",dictionary,15-Dec-25,15-Dec-25,TBD,TBD,py_files_in_git_folder = read_git_folder(),connections.py
+read_git_file,Read the contents of a single public GitHub file.,['git_url'],List,15-Dec-25,15-Dec-25,TBD,TBD,read_git_file('https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/d_py_functions/Connections.py'),connections.py
+input1,"Originally Named convert_dict_to_parameters
+Convert a .py file containing Dict into a Dataframe which can is used to populate Function Parameters",['module'],Dataframe,4-Dec-25,4-Dec-25,TBD,TBD,"import d_dictionaries
+temp = convertlisttoparameters(d_dictionaries)",input_functions_ignore.py
+input2,"originally named convert_list_to_parameters
+Convert a .py file containing Lists into a Dataframe which can is used to populate Function Parameters",['module'],Dataframe,4-Dec-25,4-Dec-25,TBD,TBD,"import d_lists
+temp = convertlisttoparameters(d_lists)",input_functions_ignore.py
+input3,"originally named convert_str_to_parameters
+Convert a .py file containing Strings into a Dataframe which can is used to populate Function Parameters",['module'],Dataframe,4-Dec-25,4-Dec-25,TBD,TBD,,input_functions_ignore.py
+ConvertListtoSQLText,"Function to convert a python list into SQL code, of various formatinng.
+If return_value is CTE, then Python List will be turning into a SQL statement, with Column Name of COLUMN_NAME, and then a SQL query to merge various
+tables from whatever the statement is.","['list_', 'return_value', 'column_name', 'sql_query']",,,,,,,sql_.py
+generate_create_table_sql,"Function to create a SQL Statement to Create a New Table.
+Function Utilizes a review of the DataFrame to recommend Column Names, Formating and appropriate Column Sizing.
+Function is NOT BEYOND REPROACH, requires some manual review and should not be automated.","['df', 'table_name', 'schema', 'db']",- str: SQL CREATE TABLE statement,,,,,,sql_.py
+TableRecordCountByDate,Generate a SQL Server query to count records by day for each table and pivot them.,"['table_dict', 'end_date', 'total_days']",str: A full SQL query string.,,,,,,sql_.py
+notes_df_to_outline_html,"Function to Take a Dataframe and convert it into A Structured Indented Point form Format.
+Used for Clear Visualization of Notes.","['df', 'column_order']",str,12-Dec-25,12-Dec-25,TBD,TBD,"from connections import d_google_sheet_to_csv
+df = import_d_google_sheet('Notes')
+notes_df_to_outline_html(df)",df_processing.py
