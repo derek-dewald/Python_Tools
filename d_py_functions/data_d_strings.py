@@ -20,5 +20,22 @@ template_doc_string = f'''
         Example Function Call
 '''
 
+def template_doc_string_print(text_=template_doc_string):
+    '''
 
-google_mapping_sheet_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwDznLz-GKgWFT1uN0XZYm3bsos899I9MS-pSvEoDC-Cjqo9CWeEuSdjitxjqzF3O39LmjJB0_Fg-B/pub?output=csv'
+    Function to Return the Printed Value of the Doc String template_doc_string. Easier to Copy and Paste in this format opposed ot raw text.
+
+    Parameters:
+        text(str): String Value to be Printed, defaulted to template_doc_string
+        
+    Returns:
+        string
+
+    date_created:17-Dec-25
+    date_last_modified: 17-Dec-25
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        template_doc_string_print()
+'''
+    print(text_)

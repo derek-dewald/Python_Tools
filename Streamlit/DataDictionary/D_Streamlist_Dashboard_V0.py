@@ -2,6 +2,13 @@ import streamlit as st
 import pandas as pd
 from st_aggrid import AgGrid, GridOptionsBuilder
 
+import os, sys
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+REPO_ROOT = os.path.abspath(os.path.join(BASE_DIR, "..", ".."))
+sys.path.insert(0, REPO_ROOT)
+
+from d_py_functions.df_processing import notes_df_to_outline_html
+
 # ✅ Must be first Streamlit command
 st.set_page_config(page_title="Python Function Catalog", layout="wide")
 
@@ -24,8 +31,6 @@ st.markdown(
 # -----------------------
 
 
-
-
 @st.cache_data(show_spinner=False)
 def load_data():
     # Link to Function Listing, Manually Updated.
@@ -40,6 +45,11 @@ def load_data():
         "derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_parameters.csv"
     )
 
+    folder_toc_url= (
+        "https://raw.githubusercontent.com/"
+        "derek-dewald/Python_Tools/main/Streamlit/DataDictionary/folder_listing.csv"
+    )
+
     google_note_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv'
     google_definition_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv'
     
@@ -49,6 +59,7 @@ def load_data():
     data_dict['google_definition_df'] = pd.read_csv(google_definition_csv)
     data_dict['function_list_df'] = pd.read_csv(function_list_url)
     data_dict['parameter_list_df'] = pd.read_csv(parameter_list_url)
+    data_dict['folder_toc_df'] = pd.read_csv(folder_toc_url)
 
     # ✅ Folder first, then Function
     data_dict['function_list_df1']  = data_dict['function_list_df'][["Folder", "Function", "Purpose"]].copy()
@@ -66,7 +77,7 @@ data_dict = load_data()
 # Navigation
 # -----------------------
 st.sidebar.title("Navigation")
-page = st.sidebar.selectbox("Select Page", ["Function List", "Function Parameters",'D Notes','D Definitions'])
+page = st.sidebar.selectbox("Select Page", ["Function List", "Function Parameters",'D Notes','D Definitions','Folder Table of Content',"D Notes Outline"])
 
 # -------------------------
 # Function List
@@ -259,3 +270,53 @@ elif page == "D Definitions":
     st.title("D Definitions")
     df_base = data_dict['google_definition_df'].copy()
     st.write(df_base)
+
+elif page == "Folder Table of Content":
+    st.title("Folder Table of Content")
+    df_base = data_dict['folder_toc_df'].copy()
+    df_base.drop('Type',inplace=True,axis=1)
+    st.write(df_base)
+
+# -----------------------------------
+# D Notes Outline
+# -----------------------------------
+elif page == "D Notes Outline":
+    st.title("D Notes Outline")
+    df_base = data_dict["google_notes_df"].copy()
+
+    # progressive slicers
+    c1_word = "Category"
+    c2_word = "Categorization"
+    c3_word = "Word"
+
+    # outline column order (keep your slicer keys first, then the rest)
+    preferred_order = [c1_word, c2_word, c3_word]
+    column_order = preferred_order + [c for c in df_base.columns if c not in preferred_order]
+
+    c1, c2, c3 = st.columns([1, 1, 1])
+
+    with c1:
+        opts1 = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
+        sel1 = st.selectbox(c1_word, opts1, index=0)
+
+    df1 = df_base if sel1 == "(All)" else df_base[df_base[c1_word] == sel1]
+
+    with c2:
+        opts2 = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
+        sel2 = st.selectbox(c2_word, opts2, index=0)
+
+    df2 = df1 if sel2 == "(All)" else df1[df1[c2_word] == sel2]
+
+    with c3:
+        opts3 = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
+        sel3 = st.selectbox(c3_word, opts3, index=0)
+
+    df_view = df2 if sel3 == "(All)" else df2[df2[c3_word] == sel3]
+
+    st.caption(f"Rows: {len(df_view)}")
+
+    html = notes_df_to_outline_html(df_view, column_order=column_order)
+    
+    import streamlit.components.v1 as components
+    html = notes_df_to_outline_html(df_view, column_order=column_order)
+    components.html(html, height=800, scrolling=True)
