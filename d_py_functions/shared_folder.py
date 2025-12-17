@@ -37,7 +37,7 @@ def read_directory(location=None,
     sub_classification: TBD
     usage: 
         d_py_function =  '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/'
-        ReadDirectory(d_py_function)
+        read_directory(d_py_function)
 
     """
     
@@ -314,7 +314,8 @@ def parse_dot_py_folder(location=None):
     return function_list,function_parameters
 
 
-def create_py_table_dict(base_location= '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/'):
+def create_py_table_dict(base_location= '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/',
+                         export_location='/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/DataDictionary/folder_listing.csv'):
     
     '''
     Function which Generates a Dataframe representing a Function Dictionary, sourcing the Functions from a Shared Folder Location, and
@@ -339,8 +340,15 @@ def create_py_table_dict(base_location= '/Users/derekdewald/Documents/Python/Git
     temp_ = dict_to_dataframe( function_table_dictionary,key_name='Function Name',value_name='Definition')
     temp_['Type'] = 'Definition'
 
-    py_functions = list_to_dataframe([x for x in ReadDirectory(base_location,file_type='.py') if (x.find('init')==-1)],column_name_list=['File Name'])
+    py_functions = list_to_dataframe([x for x in read_directory(base_location,file_type='.py') if (x.find('init')==-1)],column_name_list=['File Name'])
     py_functions['Source'] = 'PY File'
     py_functions['Function Name'] = py_functions['File Name'].apply(lambda x:x.replace('.py',''))
 
-    return py_functions.merge(temp_,on='Function Name',how='outer')
+    final_df = py_functions.merge(temp_,on='Function Name',how='outer')
+
+
+    if export_location:
+        print(f'folder_listing Saved to {export_location}')
+        final_df.to_csv(export_location,index=False)
+
+    return final_df
