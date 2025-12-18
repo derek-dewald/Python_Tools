@@ -10,6 +10,10 @@ Machine Learning,Optimization,Approach,Curse of Dimensionality
 Machine Learning,Optimization,Important to Remember,"Must remember what the Model is actually trying to solve and the approach that it is taking. As an example, when Regularization is imporant, when it is not."
 Machine Learning,Optimization,Important to Remember,"Models will cheat and can solve problems which appear to be optimal, but they might not be solving what you expect or require, they might be finding patterns in the data which you do not see."
 Machine Learning,Optimization,Important to Remember,"An Example of this would a classification model with Wolves and Dogs,  many wolf photos happened to be taken in snowy environments, while dog photos were often taken indoors or on grass. The model learned to detect snow, not animals."
+Machine Learning,Optimization,Important to Remember,"Need a reference to test performance of the model. If dataset is imbalanced, have simple guess. If temperature, guess trailing average, etc, find something simple, often very difficutl to beat, and juice might not be worth the squeeze."
+Machine Learning,Optimization,Important to Remember,"ML can't look naively for a simple common sense solution. Unless feature engineered or hard coded, model will always just plug forward. "
+Machine Learning,Optimization,Important to Remember,"Any data set can be optimized, even when there is NO relation. It will generalize."
+Machine Learning,Optimization,Lesson Learnt,
 Machine Learning,Optimization,Algorithm,Adadelta
 Machine Learning,Optimization,Algorithm,Adagrad
 Machine Learning,Optimization,Algorithm,Adam
@@ -19,30 +23,230 @@ Machine Learning,Optimization,Algorithm,Huber Loss
 Machine Learning,Optimization,Algorithm,Momentum
 Machine Learning,Optimization,Algorithm,Nadam
 Machine Learning,Optimization,Algorithm,RMSprop
-Machine Learning,Evaluation,Cross Validation,Splitting Data into K Folds.
-Machine Learning,Evaluation,Stratified Cross Validation,"Splitting Data into statistically represented folds. If you can assume data is IID, then generally would not be required or benefitical, however it might be determined necessary and thus can be considered."
-Machine Learning,Evaluation,Confusion Matrix,
-Machine Learning,Evaluation,Accuracy,"Generally not a preferred metric, Especially as it relates to Balance Datasets, where picking the underrepresented class is always a challenge."
-Machine Learning,Evaluation,Decision Scores,Scores from the Actual Decision Boundary. Provides Opportunity to Adjust position of Precsion/ Recall Trade Off.
-Machine Learning,Evaluation,predict_proba,Specifcally for Decision Trees
-Machine Learning,Concepts,Key Terms,"#### Need to Automate this #####
-Baggin, Kernel Trick, Momentum, Gradient Propogation, Batch Normalization, Residual Connections, Overfit, Underfit, Bias, Variance, Bias Variance Trade. Off, Depthwise Seperable Connections, Loss Function, Polynominal Regression, Elastic Net, Early Stopping, "
-Machine Learning,Models,Models,"Also used as a regularization, sometimes only as regularization. Only added during Training. Model Weights Close to 0.L2"
-Machine Learning,Models,Linear Regression,"Closed Form Solution. Python Linear Regression utilizies Pseudoinverse, which is computationally less expensive. However, it is Big O 2² to 2³, which means doubling features increases computations complexity 4 times."
-Machine Learning,Models,Convolutional Neural Network,
-Machine Learning,Models,Large Language Models,
-Machine Learning,Models,Recurrent Neural Network,
-Machine Learning,Models,Transformers,
+Machine Learning,Feature Selection,Goal,
+Machine Learning,Feature Selection,Approach,
+Machine Learning,Feature Selection,Important to Remember,"Avoid ambigious features. Is a Banana ripe, who says so?"
+Machine Learning,Feature Selection,Important to Remember,"Careful when something is truly random generated, Atmospheric Change, Earthquakes, Stocks. Very difficult, if not impossible to predict."
+Machine Learning,Feature Selection,Important to Remember,"MNIST performance when tilting Images, of adding noise."
+Machine Learning,Feature Selection,Lesson Learnt,
+Machine Learning,Feature Selection,Algorithm,
+Machine Learning,Feature Selection,Function,
+Machine Learning,Training,Goal,
+Machine Learning,Training,Approach,
+Machine Learning,Training,Important to Remember,
+Machine Learning,Training,Lesson Learnt,
+Machine Learning,Training,Algorithm,
+Machine Learning,Training,Function,
+Machine Learning,Validation,Validation,"Process which evaluates a trained machine-learning model on data that was not used during training to assess how well it generalizes to unseen data. It is used to tune model choices and hyperparameters, detect overfitting or underfitting, and guide model selection before final testing or deployment."
+Machine Learning,Validation,Goal,
+Machine Learning,Validation,Approach,
+Machine Learning,Validation,Important to Remember,"Need a reference to test performance of the model. If dataset is imbalanced, have simple guess. If temperature, guess trailing average, etc, find something simple, often very difficutl to beat, and juice might not be worth the squeeze."
+Machine Learning,Validation,Lesson Learnt,
+Machine Learning,Validation,Algorithm,
+Machine Learning,Validation,Function,Accuracy
+Machine Learning,Tuning,Goal,
+Machine Learning,Tuning,Approach,
+Machine Learning,Tuning,Important to Remember,
+Machine Learning,Tuning,Lesson Learnt,
+Machine Learning,Tuning,Algorithm,
+Machine Learning,Model,Function,
+Machine Learning,Model,Algorithm,ARDRegression
+Machine Learning,Model,Algorithm,AdaBoostClassifier
+Machine Learning,Model,Algorithm,AdaBoostRegressor
+Machine Learning,Model,Algorithm,AffinityPropagation
+Machine Learning,Model,Algorithm,AgglomerativeClustering
+Machine Learning,Model,Algorithm,BaggingClassifier
+Machine Learning,Model,Algorithm,BaggingRegressor
+Machine Learning,Model,Algorithm,BayesianGaussianMixture
+Machine Learning,Model,Algorithm,BayesianRidge
+Machine Learning,Model,Algorithm,BernoulliNB
+Machine Learning,Model,Algorithm,BernoulliRBM
+Machine Learning,Model,Algorithm,Binarizer
+Machine Learning,Model,Algorithm,Birch
+Machine Learning,Model,Algorithm,BisectingKMeans
+Machine Learning,Model,Algorithm,CCA
+Machine Learning,Model,Algorithm,CalibratedClassifierCV
+Machine Learning,Model,Algorithm,CategoricalNB
+Machine Learning,Model,Algorithm,ClassifierChain
+Machine Learning,Model,Algorithm,ComplementNB
+Machine Learning,Model,Algorithm,CountVectorizer
+Machine Learning,Model,Algorithm,DBSCAN
+Machine Learning,Model,Algorithm,DecisionTreeClassifier
+Machine Learning,Model,Algorithm,DecisionTreeRegressor
+Machine Learning,Model,Algorithm,DictVectorizer
+Machine Learning,Model,Algorithm,DictionaryLearning
+Machine Learning,Model,Algorithm,DummyClassifier
+Machine Learning,Model,Algorithm,DummyRegressor
+Machine Learning,Model,Algorithm,ElasticNet
+Machine Learning,Model,Algorithm,ElasticNetCV
+Machine Learning,Model,Algorithm,EllipticEnvelope
+Machine Learning,Model,Algorithm,EmpiricalCovariance
+Machine Learning,Model,Algorithm,ExtraTreeClassifier
+Machine Learning,Model,Algorithm,ExtraTreeRegressor
+Machine Learning,Model,Algorithm,ExtraTreesClassifier
+Machine Learning,Model,Algorithm,ExtraTreesRegressor
+Machine Learning,Model,Algorithm,FactorAnalysis
+Machine Learning,Model,Algorithm,FastICA
+Machine Learning,Model,Algorithm,FeatureAgglomeration
+Machine Learning,Model,Algorithm,FeatureHasher
+Machine Learning,Model,Algorithm,FeatureUnion
+Machine Learning,Model,Algorithm,FixedThresholdClassifier
+Machine Learning,Model,Algorithm,FrozenEstimator
+Machine Learning,Model,Algorithm,GammaRegressor
+Machine Learning,Model,Algorithm,GaussianMixture
+Machine Learning,Model,Algorithm,GaussianNB
+Machine Learning,Model,Algorithm,GaussianProcessClassifier
+Machine Learning,Model,Algorithm,GaussianProcessRegressor
+Machine Learning,Model,Algorithm,GaussianRandomProjection
+Machine Learning,Model,Algorithm,GenericUnivariateSelect
+Machine Learning,Model,Algorithm,GradientBoostingClassifier
+Machine Learning,Model,Algorithm,GradientBoostingRegressor
+Machine Learning,Model,Algorithm,GraphicalLasso
+Machine Learning,Model,Algorithm,GraphicalLassoCV
+Machine Learning,Model,Algorithm,GridSearchCV
+Machine Learning,Model,Algorithm,HDBSCAN
+Machine Learning,Model,Algorithm,HashingVectorizer
+Machine Learning,Model,Algorithm,HistGradientBoostingClassifier
+Machine Learning,Model,Algorithm,HistGradientBoostingRegressor
+Machine Learning,Model,Algorithm,HuberRegressor
+Machine Learning,Model,Algorithm,IncrementalPCA
+Machine Learning,Model,Algorithm,IsolationForest
+Machine Learning,Model,Algorithm,Isomap
+Machine Learning,Model,Algorithm,IsotonicRegression
+Machine Learning,Model,Algorithm,KBinsDiscretizer
+Machine Learning,Model,Algorithm,KMeans
+Machine Learning,Model,Algorithm,KNNImputer
+Machine Learning,Model,Algorithm,KNeighborsClassifier
+Machine Learning,Model,Algorithm,KNeighborsRegressor
+Machine Learning,Model,Algorithm,KernelCenterer
+Machine Learning,Model,Algorithm,KernelDensity
+Machine Learning,Model,Algorithm,KernelPCA
+Machine Learning,Model,Algorithm,KernelRidge
+Machine Learning,Model,Algorithm,LabelBinarizer
+Machine Learning,Model,Algorithm,LabelPropagation
+Machine Learning,Model,Algorithm,LabelSpreading
+Machine Learning,Model,Algorithm,Lars
+Machine Learning,Model,Algorithm,LarsCV
+Machine Learning,Model,Algorithm,Lasso
+Machine Learning,Model,Algorithm,LassoCV
+Machine Learning,Model,Algorithm,LassoLars
+Machine Learning,Model,Algorithm,LassoLarsCV
+Machine Learning,Model,Algorithm,LassoLarsIC
+Machine Learning,Model,Algorithm,LatentDirichletAllocation
+Machine Learning,Model,Algorithm,LedoitWolf
+Machine Learning,Model,Algorithm,LinearDiscriminantAnalysis
+Machine Learning,Model,Algorithm,LinearRegression
+Machine Learning,Model,Algorithm,LinearSVC
+Machine Learning,Model,Algorithm,LinearSVR
+Machine Learning,Model,Algorithm,LocalOutlierFactor
+Machine Learning,Model,Algorithm,LocallyLinearEmbedding
+Machine Learning,Model,Algorithm,LogisticRegression
+Machine Learning,Model,Algorithm,LogisticRegressionCV
+Machine Learning,Model,Algorithm,MDS
+Machine Learning,Model,Algorithm,MLPClassifier
+Machine Learning,Model,Algorithm,MLPRegressor
+Machine Learning,Model,Algorithm,MeanShift
+Machine Learning,Model,Algorithm,MinCovDet
+Machine Learning,Model,Algorithm,MiniBatchDictionaryLearning
+Machine Learning,Model,Algorithm,MiniBatchKMeans
+Machine Learning,Model,Algorithm,MiniBatchNMF
+Machine Learning,Model,Algorithm,MiniBatchSparsePCA
+Machine Learning,Model,Algorithm,MissingIndicator
+Machine Learning,Model,Algorithm,MultiLabelBinarizer
+Machine Learning,Model,Algorithm,MultiOutputClassifier
+Machine Learning,Model,Algorithm,MultiOutputRegressor
+Machine Learning,Model,Algorithm,MultiTaskElasticNet
+Machine Learning,Model,Algorithm,MultiTaskElasticNetCV
+Machine Learning,Model,Algorithm,MultiTaskLasso
+Machine Learning,Model,Algorithm,MultiTaskLassoCV
+Machine Learning,Model,Algorithm,MultinomialNB
+Machine Learning,Model,Algorithm,NMF
+Machine Learning,Model,Algorithm,NearestCentroid
+Machine Learning,Model,Algorithm,NearestNeighbors
+Machine Learning,Model,Algorithm,NeighborhoodComponentsAnalysis
+Machine Learning,Model,Algorithm,Normalizer
+Machine Learning,Model,Algorithm,NuSVC
+Machine Learning,Model,Algorithm,NuSVR
+Machine Learning,Model,Algorithm,Nystroem
+Machine Learning,Model,Algorithm,OAS
+Machine Learning,Model,Algorithm,OPTICS
+Machine Learning,Model,Algorithm,OneClassSVM
+Machine Learning,Model,Algorithm,OneVsOneClassifier
+Machine Learning,Model,Algorithm,OneVsRestClassifier
+Machine Learning,Model,Algorithm,OrthogonalMatchingPursuit
+Machine Learning,Model,Algorithm,OrthogonalMatchingPursuitCV
+Machine Learning,Model,Algorithm,OutputCodeClassifier
+Machine Learning,Model,Algorithm,PCA
+Machine Learning,Model,Algorithm,PLSCanonical
+Machine Learning,Model,Algorithm,PLSRegression
+Machine Learning,Model,Algorithm,PLSSVD
+Machine Learning,Model,Algorithm,PassiveAggressiveClassifier
+Machine Learning,Model,Algorithm,PassiveAggressiveRegressor
+Machine Learning,Model,Algorithm,PatchExtractor
+Machine Learning,Model,Algorithm,Perceptron
+Machine Learning,Model,Algorithm,Pipeline
+Machine Learning,Model,Algorithm,PoissonRegressor
+Machine Learning,Model,Algorithm,PolynomialCountSketch
+Machine Learning,Model,Algorithm,PolynomialFeatures
+Machine Learning,Model,Algorithm,QuadraticDiscriminantAnalysis
+Machine Learning,Model,Algorithm,QuantileRegressor
+Machine Learning,Model,Algorithm,RANSACRegressor
+Machine Learning,Model,Algorithm,RFE
+Machine Learning,Model,Algorithm,RFECV
+Machine Learning,Model,Algorithm,RadiusNeighborsClassifier
+Machine Learning,Model,Algorithm,RadiusNeighborsRegressor
+Machine Learning,Model,Algorithm,RandomForestClassifier
+Machine Learning,Model,Algorithm,RandomForestRegressor
+Machine Learning,Model,Algorithm,RandomTreesEmbedding
+Machine Learning,Model,Algorithm,RandomizedSearchCV
+Machine Learning,Model,Algorithm,RegressorChain
+Machine Learning,Model,Algorithm,Ridge
+Machine Learning,Model,Algorithm,RidgeCV
+Machine Learning,Model,Algorithm,RidgeClassifier
+Machine Learning,Model,Algorithm,RidgeClassifierCV
+Machine Learning,Model,Algorithm,SGDClassifier
+Machine Learning,Model,Algorithm,SGDOneClassSVM
+Machine Learning,Model,Algorithm,SGDRegressor
+Machine Learning,Model,Algorithm,SVC
+Machine Learning,Model,Algorithm,SVR
+Machine Learning,Model,Algorithm,SelectFdr
+Machine Learning,Model,Algorithm,SelectFpr
+Machine Learning,Model,Algorithm,SelectFromModel
+Machine Learning,Model,Algorithm,SelectFwe
+Machine Learning,Model,Algorithm,SelectKBest
+Machine Learning,Model,Algorithm,SelectPercentile
+Machine Learning,Model,Algorithm,SelfTrainingClassifier
+Machine Learning,Model,Algorithm,SequentialFeatureSelector
+Machine Learning,Model,Algorithm,ShrunkCovariance
+Machine Learning,Model,Algorithm,SimpleImputer
+Machine Learning,Model,Algorithm,SparseCoder
+Machine Learning,Model,Algorithm,SparsePCA
+Machine Learning,Model,Algorithm,SparseRandomProjection
+Machine Learning,Model,Algorithm,SpectralBiclustering
+Machine Learning,Model,Algorithm,SpectralClustering
+Machine Learning,Model,Algorithm,SpectralCoclustering
+Machine Learning,Model,Algorithm,SpectralEmbedding
+Machine Learning,Model,Algorithm,StackingClassifier
+Machine Learning,Model,Algorithm,StackingRegressor
+Machine Learning,Model,Algorithm,TSNE
+Machine Learning,Model,Algorithm,TfidfVectorizer
+Machine Learning,Model,Algorithm,TheilSenRegressor
+Machine Learning,Model,Algorithm,TruncatedSVD
+Machine Learning,Model,Algorithm,TunedThresholdClassifierCV
+Machine Learning,Model,Algorithm,TweedieRegressor
+Machine Learning,Model,Algorithm,VarianceThreshold
+Machine Learning,Model,Algorithm,VotingClassifier
+Machine Learning,Model,Algorithm,VotingRegressor
+Machine Learning,Model,Algorithm,Generalaized Liner Model
+Machine Learning,Model,Algorithm,Quantile Random Forest
+Machine Learning,Model,Algorithm,Agentic AI
+Machine Learning,Model,Algorithm,Word2Vec
+Machine Learning,Model,Algorithm,Convolutional Neural Network
+Machine Learning,Model,Algorithm,Recurrent Neural Network
 Machine Learning,Deep Learning, ,Helps to Automate Feature Engineering
 Machine Learning,Deep Learning,Evolution,"Historical Issue of gradient propogration where signal would fade through the layers was solved through, better activation functions, optimization schemes and weight initializing."
 Machine Learning,Deep Learning,Framework,"Core building block is the layer, a filter which creates a representation, can chain simple layers into a complex one. "
 Machine Learning,Deep Learning,Model,"Model starts with determining the number of layers, type of connections, and activation functions. Once model is defined, to comile need to determine, Optimizer, Loss Function and Metric."
-Machine Learning,Lesson Learnt,Always Have a Simple Baseline,"Need a reference to test performance of the model. If dataset is imbalanced, have simple guess. If temperature, guess trailing average, etc, find something simple, often very difficutl to beat, and juice might not be worth the squeeze."
-Machine Learning,Downside,Simplicity Not Assumed,"ML can't look naively for a simple common sense solution. Unless feature engineered or hard coded, model will always just plug forward. "
-Machine Learning,Feature Selection,Avoid Ambigious Features,Is a Banana Ripe? Who Says So.
-Machine Learning,Feature Selection,Careful if Genuinely Random,Atmospheric Change
-Machine Learning,Feature Selection,Data Quality Input,"MNIST performance when tilting Images, of adding noise."
-Machine Learning,Feature Selection,Relevance,"Any data set can be optimized, even when there is NO relation. It will generalize."
 Machine Learning,Tool,PyTorch,Favored in research and academia because of its eager execution (you can run and debug step by step like normal Python)
 Machine Learning,Tool,PyTorch,"Pythonic, intuitive, and integrates seamlessly with libraries like NumPy"
 Machine Learning,Tool,PyTorch,"Great for experimentation, quick prototyping, and custom model development."

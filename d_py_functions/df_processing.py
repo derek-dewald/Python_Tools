@@ -1,5 +1,8 @@
 import pandas as pd
 import numpy as np
+import html
+import textwrap
+
 #from IPython.display import display, HTML
 
 def notes_df_to_outline_html(
@@ -32,7 +35,6 @@ def notes_df_to_outline_html(
         Added display parameter to support Streamlit Adoption.
 
     """
-
     if column_order is None:
         column_order = df.columns.tolist()
 
@@ -49,13 +51,9 @@ def notes_df_to_outline_html(
 
     last = [""] * len(column_order)
 
-    # ---- HTML + CSS wrapper ----
-
-    html = """
+    html_ = """
     <style>
-    .notes-container {
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial;
-    }
+    .notes-container { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial; }
     .notes-item { line-height: 1.45; margin: 2px 0; }
 
     .notes-l0 { font-size: 18px; font-weight: 600; margin-left: 0px; }
@@ -67,6 +65,7 @@ def notes_df_to_outline_html(
 
     <div class="notes-container">
     """
+
     for _, row in df1.iterrows():
         vals = [clean(row[c]) for c in column_order]
         if all(v == "" for v in vals):
@@ -86,32 +85,28 @@ def notes_df_to_outline_html(
                     change_level = i
                     break
 
-        # Reset deeper levels when higher level changes
-        if change_level is not None:
-            for j in range(change_level, len(last)):
-                last[j] = ""
+        # Still nothing? (paranoia guard)
+        if change_level is None:
+            continue
 
-        # Render new values
+        # Reset deeper levels when higher level changes (deeper only)
+        for j in range(change_level + 1, len(last)):
+            last[j] = ""
+
+        # Render new values from change_level downward
         for i in range(change_level, len(vals)):
             v = vals[i]
             if not v:
                 continue
             if v != last[i]:
                 level = min(i, 4)  # cap style depth
-                bullet = "• " if i > 0 else ""
-                html += (
-                    f'<div class="notes-item notes-l{level}">'
-                    f'{bullet}{v}'
-                    f'</div>\n'
-                )
+                safe_v = html.escape(v) # Escape Function, not String.
+                html_ += f'<div class="notes-item notes-l{level}">{safe_v}</div>\n'
                 last[i] = v
 
-    html += "</div>"
-
-    import textwrap
-    html = textwrap.dedent(html).lstrip()
-    return html
-
+    html_ += "</div>"
+    html_ = textwrap.dedent(html_).lstrip()
+    return html_
 
 
 def final_dataset_for_markdown(notes=None,
@@ -160,7 +155,7 @@ def final_dataset_for_markdown(notes=None,
     temp_df3 =  notes[['Category','Categorization','Word']].drop_duplicates(['Categorization','Word'])
 
     # Generate Information From Note
-    list_ = definitions[definitions['Category']=='Optimization'].drop('Notes',axis=1).rename(columns={'Word':'Notes','Categorization':'Word','Category':'Categorization'})[['Categorization','Word','Notes']]
+    list_ = definitions.drop('Notes',axis=1).rename(columns={'Word':'Notes','Categorization':'Word','Category':'Categorization'})[['Categorization','Word','Notes']]
 
     # Merge Into Notes.
     temp_df3 =  temp_df3.merge(list_,on=['Categorization','Word'],how='inner')
@@ -185,4 +180,5 @@ def final_dataset_for_markdown(notes=None,
     final_df = final_df[~((final_df['count']>1)&(final_df['Notes'].isnull()))].copy()
 
     return final_df.drop('count',axis=1)
+
 

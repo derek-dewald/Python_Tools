@@ -50,6 +50,11 @@ def load_data():
         "derek-dewald/Python_Tools/main/Streamlit/DataDictionary/folder_listing.csv"
     )
 
+    d_learning_notes_url= (
+        "https://raw.githubusercontent.com/"
+        "derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_learning_notes.csv"
+    )
+
     google_note_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv'
     google_definition_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv'
     
@@ -60,6 +65,7 @@ def load_data():
     data_dict['function_list_df'] = pd.read_csv(function_list_url)
     data_dict['parameter_list_df'] = pd.read_csv(parameter_list_url)
     data_dict['folder_toc_df'] = pd.read_csv(folder_toc_url)
+    data_dict['d_learning_notes'] = pd.read_csv(d_learning_notes_url)
 
     # ✅ Folder first, then Function
     data_dict['function_list_df1']  = data_dict['function_list_df'][["Folder", "Function", "Purpose"]].copy()
@@ -282,7 +288,7 @@ elif page == "Folder Table of Content":
 # -----------------------------------
 elif page == "D Notes Outline":
     st.title("D Notes Outline")
-    df_base = data_dict["google_notes_df"].copy()
+    df_base = data_dict["d_learning_notes"].copy()
 
     # progressive slicers
     c1_word = "Category"
@@ -299,24 +305,22 @@ elif page == "D Notes Outline":
         opts1 = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
         sel1 = st.selectbox(c1_word, opts1, index=0)
 
-    df1 = df_base if sel1 == "(All)" else df_base[df_base[c1_word] == sel1]
+    df1 = df_base if sel1 == "(All)" else df_base[df_base[c1_word] == sel1].drop(c1_word,axis=1)
 
     with c2:
         opts2 = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
         sel2 = st.selectbox(c2_word, opts2, index=0)
 
-    df2 = df1 if sel2 == "(All)" else df1[df1[c2_word] == sel2]
+    df2 = df1 if sel2 == "(All)" else df1[df1[c2_word] == sel2].drop(c2_word,axis=1)
 
     with c3:
         opts3 = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
         sel3 = st.selectbox(c3_word, opts3, index=0)
 
-    df_view = df2 if sel3 == "(All)" else df2[df2[c3_word] == sel3]
+    df_view = df2 if sel3 == "(All)" else df2[df2[c3_word] == sel3].drop(c3_word,axis=1)
 
     st.caption(f"Rows: {len(df_view)}")
-
-    html = notes_df_to_outline_html(df_view, column_order=column_order)
     
     import streamlit.components.v1 as components
-    html = notes_df_to_outline_html(df_view, column_order=column_order)
+    html = notes_df_to_outline_html(df_view)
     components.html(html, height=800, scrolling=True)
