@@ -50,11 +50,12 @@ Machine Learning,Tuning,Important to Remember,
 Machine Learning,Tuning,Lesson Learnt,
 Machine Learning,Tuning,Algorithm,
 Machine Learning,Model,Function,
+Machine Learning,Model,Algorithm,Linear Regression
+Machine Learning,Model,Algorithm,AgglomerativeClustering
 Machine Learning,Model,Algorithm,ARDRegression
 Machine Learning,Model,Algorithm,AdaBoostClassifier
 Machine Learning,Model,Algorithm,AdaBoostRegressor
 Machine Learning,Model,Algorithm,AffinityPropagation
-Machine Learning,Model,Algorithm,AgglomerativeClustering
 Machine Learning,Model,Algorithm,BaggingClassifier
 Machine Learning,Model,Algorithm,BaggingRegressor
 Machine Learning,Model,Algorithm,BayesianGaussianMixture
@@ -77,7 +78,6 @@ Machine Learning,Model,Algorithm,DictVectorizer
 Machine Learning,Model,Algorithm,DictionaryLearning
 Machine Learning,Model,Algorithm,DummyClassifier
 Machine Learning,Model,Algorithm,DummyRegressor
-Machine Learning,Model,Algorithm,ElasticNet
 Machine Learning,Model,Algorithm,ElasticNetCV
 Machine Learning,Model,Algorithm,EllipticEnvelope
 Machine Learning,Model,Algorithm,EmpiricalCovariance
@@ -127,7 +127,6 @@ Machine Learning,Model,Algorithm,LabelPropagation
 Machine Learning,Model,Algorithm,LabelSpreading
 Machine Learning,Model,Algorithm,Lars
 Machine Learning,Model,Algorithm,LarsCV
-Machine Learning,Model,Algorithm,Lasso
 Machine Learning,Model,Algorithm,LassoCV
 Machine Learning,Model,Algorithm,LassoLars
 Machine Learning,Model,Algorithm,LassoLarsCV
@@ -135,7 +134,6 @@ Machine Learning,Model,Algorithm,LassoLarsIC
 Machine Learning,Model,Algorithm,LatentDirichletAllocation
 Machine Learning,Model,Algorithm,LedoitWolf
 Machine Learning,Model,Algorithm,LinearDiscriminantAnalysis
-Machine Learning,Model,Algorithm,LinearRegression
 Machine Learning,Model,Algorithm,LinearSVC
 Machine Learning,Model,Algorithm,LinearSVR
 Machine Learning,Model,Algorithm,LocalOutlierFactor
@@ -200,7 +198,6 @@ Machine Learning,Model,Algorithm,RandomForestRegressor
 Machine Learning,Model,Algorithm,RandomTreesEmbedding
 Machine Learning,Model,Algorithm,RandomizedSearchCV
 Machine Learning,Model,Algorithm,RegressorChain
-Machine Learning,Model,Algorithm,Ridge
 Machine Learning,Model,Algorithm,RidgeCV
 Machine Learning,Model,Algorithm,RidgeClassifier
 Machine Learning,Model,Algorithm,RidgeClassifierCV

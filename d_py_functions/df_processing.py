@@ -108,7 +108,6 @@ def notes_df_to_outline_html(
     html_ = textwrap.dedent(html_).lstrip()
     return html_
 
-
 def final_dataset_for_markdown(notes=None,
                                definitions=None):
     '''
@@ -154,9 +153,11 @@ def final_dataset_for_markdown(notes=None,
     # Merge In Listed Parameters 
     temp_df3 =  notes[['Category','Categorization','Word']].drop_duplicates(['Categorization','Word'])
 
-    # Generate Information From Note
-    list_ = definitions.drop('Notes',axis=1).rename(columns={'Word':'Notes','Categorization':'Word','Category':'Categorization'})[['Categorization','Word','Notes']]
-
+    # Generate Information From Definition. Must remove Note column from current dataframe to accept for purposes of merging.
+    list_ = definitions.drop('Notes',axis=1).rename(columns={'Word':'Notes','Categorization':'Word','Category':'Categorization'})[['Categorization','Word','Notes','Definition']]
+    list_["Notes"] = list_["Notes"].astype(str) + ": " + list_["Definition"].astype(str)
+    list_.drop('Definition',axis=1,inplace=True)
+    
     # Merge Into Notes.
     temp_df3 =  temp_df3.merge(list_,on=['Categorization','Word'],how='inner')
     
@@ -180,5 +181,4 @@ def final_dataset_for_markdown(notes=None,
     final_df = final_df[~((final_df['count']>1)&(final_df['Notes'].isnull()))].copy()
 
     return final_df.drop('count',axis=1)
-
 
