@@ -1,21 +1,32 @@
 Category,Categorization,Word,Notes
 Machine Learning,Definition,Machine Learning,"Using a process to enable computers to iteratively learn from the data and improve analysis, outcomes or understanding. Intersection of statistics, artificial intelligence and computer science. Machine's don't learn, they find optimal mathematical formulas based on the data it is presented. There is an assumption that this data set is both representative of other data sets,  and possess similiar statistical distributions', You can argue this is not learning, because slight variances can result in materially different responses and output, Term synonymous with machines doing tasks without explicitly being programmed. Building a statistical model, based on a dataset"
+Machine Learning,Distinct Types of ML,Distinct Types of ML,Not Defined
 Machine Learning,Distinct Types of ML,Supervised Learning,"Supervised learning trains a model using labeled data, where the correct answer is known in advance. The model learns a mapping from inputs to outputs by minimizing the difference between its predictions and the true labels. Common examples include classification and regression problems."
 Machine Learning,Distinct Types of ML,Unsupervised Learning,"Unsupervised learning works with unlabeled data and aims to discover hidden patterns or structure. The model groups, compresses, or summarizes the data without being told what the correct outcome is. Typical use cases include clustering, dimensionality reduction, and anomaly detection."
 Machine Learning,Distinct Types of ML,Semisupervised Learning,Semi-supervised learning combines a small amount of labeled data with a large amount of unlabeled data to improve learning performance. The model leverages the structure in the unlabeled data to generalize better than supervised learning alone. This approach is useful when labeling data is expensive or time-consuming.
 Machine Learning,Distinct Types of ML,Reinforcement Learning,"Reinforcement learning trains an agent to make decisions by interacting with an environment and receiving rewards or penalties. The agent learns a policy that maximizes cumulative reward over time through trial and error. It is commonly used in robotics, game playing, and control systems."
 Machine Learning,Distinct Types of ML,Deep Learning,"Deep learning is a subset of machine learning that uses multi-layer neural networks to automatically learn hierarchical representations from data, reducing the need for manual feature engineering. By stacking simple processing units called layers—each acting as a filter that transforms inputs into higher-level representations—deep learning models can capture complex patterns through composition. Early challenges such as vanishing gradients, where learning signals faded through many layers, were largely addressed through improved activation functions, optimization methods, and weight initialization strategies. In practice, building a deep learning model involves defining the network architecture (number of layers, connections, and activations) and then specifying how it learns by choosing an optimizer, loss function, and evaluation metrics during compilation."
-Machine Learning,Data Preperation,Goal,
-Machine Learning,Data Preperation,Approach,
-Machine Learning,Data Preperation,Important to Remeber,
-Machine Learning,Data Preperation,Lesson Learnt,
-Machine Learning,Data Preperation,Algorithm,
-Machine Learning,Data Preperation,Function,
-Machine Learning,Model,Goal,
-Machine Learning,Model,Approach,
-Machine Learning,Model,Important to Remeber,
-Machine Learning,Model,Lesson Learnt,
-Machine Learning,Model,Algorithm,"Linear Regression: Models the relationship between an independent variable ( X ) and a dependent variable ( Y ) using a linear function. Model strengths include : Simple, interpretable, computationally efficient, works well for linearly separable data. Weaknesses, Assumes linear relationships, sensitive to outliers. Cost function for Linear Regression is usually Mean Squared Error. While it does not have to be, it is convenient for a number of reasons. 1) Rarely Overfits, which Polynomial equations frequently do. 2) It always has a derivative, which makes it convenient for using closed forms solutions (saving computation complexity). Historically was applied via Closed Form Solution, which can be difficult to calculate, computationally expensive. Can Approximate Using Gradient Decent. Closed Form Solution. Python Linear Regression utilizies Pseudoinverse, which is computationally less expensive. However, it is Big O 2² to 2³, which means doubling features increases computations complexity 4 times."
+Machine Learning,Data Preperation,Data Preperation,Not Defined
+Machine Learning,Data Preperation,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Data Preperation,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Data Preperation,Important to Remeber,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Data Preperation,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Data Preperation,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Data Preperation,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Model,Model,Not Defined
+Machine Learning,Model,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Model,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Model,Important to Remeber,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Model,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Model,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Model,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Model,Algorithm,"Linear Regression: Models the relationship between an independent variable ( X ) and a dependent variable ( Y ) using a linear function. Model strengths include : Simple, interpretable, computationally efficient, works well for linearly separable data. Weaknesses, Assumes linear relationships, sensitive to outliers. 
+
+Cost function for Linear Regression is usually Mean Squared Error. While it does not have to be, it is convenient for a number of reasons. 
+1) Rarely Overfits, which Polynomial equations frequently do. 
+2) It always has a derivative, which makes it convenient for using closed forms solutions (saving computation complexity). Historically was applied via Closed Form Solution, which can be difficult to calculate, computationally expensive. 
+
+Can Approximate Using Gradient Decent. Closed Form Solution. Python Linear Regression utilizies Pseudoinverse, which is computationally less expensive. However, it is Big O 2² to 2³, which means doubling features increases computations complexity 4 times."
 Machine Learning,Model,Algorithm,"Logistic Regression: Predicts probabilities using the sigmoid function for binary classification problems.
 Model Strengths include; Simple, interpretable, performs well for linearly separable data. Model Weaknesses: Struggles with non-linear relationships, assumes linear relationship between features and log-odds."
 Machine Learning,Model,Algorithm,"AgglomerativeClustering: Agglomerative Clustering is a type of hierarchical clustering that uses a bottom-up approach. Each data point starts in its own cluster, and pairs of clusters are merged step by step based on similarity until all points are in one cluster (or a stopping criterion is met). Strengths: Doesn’t require you to specify the number of clusters up front (if using a dendrogram). Can capture nested cluster structure. Weaknesses; Computationally expensive for large datasets (O(n²)).Once merged, clusters can't be split."
@@ -45,7 +56,7 @@ Higher variance: The noisier updates may lead to less stable convergence, requir
 Slower convergence: Since updates are less precise, SGD may take longer to reach the optimal solution.
 Conclusion
 SGD, Mini-Batch Gradient Descent, and Batch Gradient Descent each offer different trade-offs in terms of speed, stability, and computational efficiency. In practice, Mini-Batch Gradient Descent is the most commonly used approach for deep learning, as it provides a balance between computational efficiency and convergence stability."
-Machine Learning,Model,Algorithm,"Support Vector Machines: Finda the optimal hyperplane that best separates data points of different classes in a feature space. The hyperplane is chosen to maximize the margin, which is the distance between the hyperplane and the nearest data points from each class, known as support vectors. By default, generally a Linear Line, however can utilize Kernels to change, such that datasets where decision boundary is not linearly seperable can become so in higher dimensions.
+Machine Learning,Model,Algorithm,"Support Vector Machines: Finds the optimal hyperplane that best separates data points of different classes in a feature space. The hyperplane is chosen to maximize the margin, which is the distance between the hyperplane and the nearest data points from each class, known as support vectors. By default, generally a Linear Line, however can utilize Kernels to change, such that datasets where decision boundary is not linearly seperable can become so in higher dimensions.
 
 ModelStrengths: Effective in high-dimensional spaces, works well with clear margins of separation. Model Weaknesses:Computationally expensive, struggles with large datasets."
 Machine Learning,Model,Algorithm,"Support Vector Regression: SVR tries to fit a function within a margin of tolerance (epsilon) around the true data points — instead of minimizing the error between predicted and actual values like in ordinary least squares regression. Margin of Tolerance (ε): Instead of minimizing all errors, SVR ignores errors as long as they're within this ""epsilon-tube"" around the true values.Support Vectors: Only data points outside the epsilon margin contribute to the model (i.e., they influence the regression line).Kernel Trick: Like SVM, SVR can use kernels (e.g., linear, RBF) to model nonlinear relationships."
@@ -241,38 +252,43 @@ Machine Learning,Model,Algorithm,"Word2Vec: Word2Vec is a neural-network–based
 Machine Learning,Model,Algorithm,Convolutional Neural Network: 
 Machine Learning,Model,Algorithm,Recurrent Neural Network: 
 Machine Learning,Model,Function,AdditiveChi2Sampler: 
-Machine Learning,Feature Engineering,Goal,
-Machine Learning,Feature Engineering,Approach,
-Machine Learning,Feature Engineering,Important to Remeber,
-Machine Learning,Feature Engineering,Lesson Learnt,
-Machine Learning,Feature Engineering,Algorithm,
-Machine Learning,Feature Engineering,Function,
-Machine Learning,Feature Selection,Goal,
-Machine Learning,Feature Selection,Approach,
+Machine Learning,Feature Engineering,Feature Engineering,Not Defined
+Machine Learning,Feature Engineering,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Feature Engineering,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Feature Engineering,Important to Remeber,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Feature Engineering,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Feature Engineering,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Feature Engineering,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Feature Selection,Feature Selection,Not Defined
+Machine Learning,Feature Selection,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Feature Selection,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
 Machine Learning,Feature Selection,Important to Remember,"Avoid ambigious features. Is a Banana ripe, who says so?"
 Machine Learning,Feature Selection,Important to Remember,"Careful when something is truly random generated, Atmospheric Change, Earthquakes, Stocks. Very difficult, if not impossible to predict."
 Machine Learning,Feature Selection,Important to Remember,"MNIST performance when tilting Images, of adding noise."
-Machine Learning,Feature Selection,Lesson Learnt,
-Machine Learning,Feature Selection,Algorithm,
-Machine Learning,Feature Selection,Function,
-Machine Learning,Activation Function,Goal,
-Machine Learning,Activation Function,Approach,
-Machine Learning,Activation Function,Important to Remeber,
-Machine Learning,Activation Function,Lesson Learnt,
-Machine Learning,Activation Function,Algorithm,
-Machine Learning,Activation Function,Function,
-Machine Learning,Loss Function,Goal,
-Machine Learning,Loss Function,Approach,
-Machine Learning,Loss Function,Important to Remeber,
-Machine Learning,Loss Function,Lesson Learnt,
-Machine Learning,Loss Function,Algorithm,
-Machine Learning,Loss Function,Function,
-Machine Learning,Evaluation,Goal,
-Machine Learning,Evaluation,Approach,
-Machine Learning,Evaluation,Important to Remeber,
-Machine Learning,Evaluation,Lesson Learnt,
-Machine Learning,Evaluation,Algorithm,
-Machine Learning,Evaluation,Function,
+Machine Learning,Feature Selection,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Feature Selection,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Feature Selection,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Activation Function,Activation Function,"Used during learning and prediction in a neural network. It supports decision-making by deciding whether information should pass forward and how strong it should be. If it wasn’t utilized, the network could only learn very simple straight-line patterns and wouldn’t be able to model real-world complexity."
+Machine Learning,Activation Function,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Activation Function,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Activation Function,Important to Remeber,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Activation Function,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Activation Function,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Activation Function,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Loss Function,Loss Function,Not Defined
+Machine Learning,Loss Function,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Loss Function,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Loss Function,Important to Remeber,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Loss Function,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Loss Function,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Loss Function,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Evaluation,Evaluation,Not Defined
+Machine Learning,Evaluation,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Evaluation,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Evaluation,Important to Remeber,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Evaluation,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Evaluation,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Evaluation,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
 Machine Learning,Optimization,Optimization,"Optimization is the process of finding the best possible solution to a problem by systematically adjusting inputs or decisions to maximize or minimize a defined objective, subject to given constraints. In machine learning and analytics, optimization involves selecting model parameters that minimize error or maximize performance according to a chosen loss function. Importantly, what is considered “best” depends entirely on how the objective and constraints are defined."
 Machine Learning,Optimization,Goal,"What are you attempting to maximize, Training Performance, or ability to Generalize.  Strive to avoid overfitting, maximize ability to Generalize."
 Machine Learning,Optimization,Approach,Curse of Dimensionality
@@ -282,7 +298,8 @@ Machine Learning,Optimization,Important to Remember,"An Example of this would a 
 Machine Learning,Optimization,Important to Remember,"Need a reference to test performance of the model. If dataset is imbalanced, have simple guess. If temperature, guess trailing average, etc, find something simple, often very difficutl to beat, and juice might not be worth the squeeze."
 Machine Learning,Optimization,Important to Remember,"ML can't look naively for a simple common sense solution. Unless feature engineered or hard coded, model will always just plug forward. "
 Machine Learning,Optimization,Important to Remember,"Any data set can be optimized, even when there is NO relation. It will generalize."
-Machine Learning,Optimization,Lesson Learnt,
+Machine Learning,Optimization,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Optimization,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
 Machine Learning,Optimization,Algorithm,Adadelta: Adaptive learning rate for nonstationary objectives.
 Machine Learning,Optimization,Algorithm,"Adagrad: Variation of Gradient Descent, which adapts the learning rate for each parameter by scaling it inversely proportional to the sum of past squared gradients. 
 "
@@ -293,24 +310,34 @@ Machine Learning,Optimization,Algorithm,Huber Loss: Loss function used in regres
 Machine Learning,Optimization,Algorithm,"Momentum: Variation of Gradient Descent, which accelerates learning by accumulating a moving average of past gradients."
 Machine Learning,Optimization,Algorithm,Nadam: Adam optimizer with Nesterov momentum for better convergence.
 Machine Learning,Optimization,Algorithm,"RMSprop: Variation of Gradient Descent, which adapts the learning rate by dividing by an exponentially weighted moving average of past squared gradients. Adapts learning rates based on recent gradient magnitudes. Good for RNNs."
-Machine Learning,Training,Goal,
-Machine Learning,Training,Approach,
-Machine Learning,Training,Important to Remember,
-Machine Learning,Training,Lesson Learnt,
-Machine Learning,Training,Algorithm,
-Machine Learning,Training,Function,
+Machine Learning,Training,Training,Not Defined
+Machine Learning,Training,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Training,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Training,Important to Remember,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Training,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Training,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Training,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
 Machine Learning,Validation,Validation,"Process which evaluates a trained machine-learning model on data that was not used during training to assess how well it generalizes to unseen data. It is used to tune model choices and hyperparameters, detect overfitting or underfitting, and guide model selection before final testing or deployment."
-Machine Learning,Validation,Goal,
-Machine Learning,Validation,Approach,
+Machine Learning,Validation,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Validation,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
 Machine Learning,Validation,Important to Remember,"Need a reference to test performance of the model. If dataset is imbalanced, have simple guess. If temperature, guess trailing average, etc, find something simple, often very difficutl to beat, and juice might not be worth the squeeze."
-Machine Learning,Validation,Lesson Learnt,
-Machine Learning,Validation,Algorithm,
+Machine Learning,Validation,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Validation,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
 Machine Learning,Validation,Function,"Bias, Fairness, and Ethics"
 Machine Learning,Validation,Function,Accuracy: Number of correctly classified examples divided by the total number of classified examples.
-Machine Learning,Tuning,Goal,
-Machine Learning,Tuning,Approach,
-Machine Learning,Tuning,Important to Remember,
-Machine Learning,Tuning,Lesson Learnt,
-Machine Learning,Tuning,Algorithm,
-Machine Learning,"Bias, Fairness and Ethics",,
-Machine Learning,Model Interpretability / Explainability,,
+Machine Learning,Tuning,Tuning,Not Defined
+Machine Learning,Tuning,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Tuning,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Tuning,Important to Remember,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Tuning,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Tuning,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,"Bias, Fairness and Ethics","Bias, Fairness and Ethics",Not Defined
+Machine Learning,"Bias, Fairness and Ethics",,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Model Interpretability / Explainability,Model Interpretability / Explainability,Not Defined
+Machine Learning,Model Interpretability / Explainability,,"Not Defined. Add Record Matching Category, Categorization, Word"
+Visualizations,Definition,Visualizations,Not Defined
+Visualizations,Visualizations,Visualizations,Not Defined
+Visualizations,Visualizations,How people Interpret,"Christ at Emmaus - Feelings can trump expertise. We find ways to dismiss evidence we don’t like, when it supports our preconceptions we are less likely to look for flaws."
+Visualizations,Visualizations,What Am I looking at.,The bigger display with a wider array of jams attracted more customers but very few of them actually bought jam. The display that offered fewer choices inspired more sales.[1] The counterintuitive result went viral—it hit a sweet spot. People respond better to fewer choices!
+Visualizations,Visualizations,,"Has the performance of the algorithm been assessed rigorously—for example, by running a randomized trial to see if people make better decisions with or without algorithmic advice? Have independent experts been given a chance to evaluate the algorithm? What have they concluded? We should not simply trust that algorithms are doing a better job than humans, nor should we assume that if the algorithms are flawed, the humans would be flawless."
+Visualizations,Visualizations,,When someone tells a joke poorly it is more likely than not that they have forgotten to convey an important piece of information in the set up that makes the punch line funny. So it seems the joke is in the set up and not the punch line.
