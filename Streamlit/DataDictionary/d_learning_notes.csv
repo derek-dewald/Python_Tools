@@ -1,4 +1,4 @@
-Category,Categorization,Word,Notes
+Category,Categorization,Word,Definition
 Machine Learning,Definition,Machine Learning,"Using a process to enable computers to iteratively learn from the data and improve analysis, outcomes or understanding. Intersection of statistics, artificial intelligence and computer science. Machine's don't learn, they find optimal mathematical formulas based on the data it is presented. There is an assumption that this data set is both representative of other data sets,  and possess similiar statistical distributions', You can argue this is not learning, because slight variances can result in materially different responses and output, Term synonymous with machines doing tasks without explicitly being programmed. Building a statistical model, based on a dataset"
 Machine Learning,Definition,Area Under the Curve,"AUC (Area Under the Curve) measures a model’s ability to distinguish between classes by summarizing the performance of the ROC (Receiver Operating Characteristic) curve. It represents the probability that the model ranks a randomly chosen positive example higher than a randomly chosen negative one. AUC ranges from 0.5 (no better than chance) to 1.0 (perfect separation), with higher values indicating better classification performance.
 AUC is primarily a binary classification metric, so when using against a multivariate challenge must determine how to score, OVR, OVO. One Vs Rest, One vs One. Using MNist as an example, OVR evaluates 10 0 vs (1,2,3,4,5,6,7,8,9), 1 vs () ... etc, Where OVO measures 45 0 Vs 1, 0 vs 2, etc.."
@@ -13,71 +13,13 @@ In general, as we increase the number of tunable parameters in a model, it becom
 Machine Learning,Definition,Cross Validation,"Model evaluation technique used to assess how well a model generalizes to unseen data by repeatedly splitting the dataset into training and validation subsets. The model is trained on one portion of the data and evaluated on another, and the results are aggregated to provide a more reliable estimate of performance than a single train–test split. This approach helps detect overfitting and supports more robust model selection"
 Machine Learning,Definition,Curse of Dimensionality,"As dimensionality grows, data points become increasingly sparse, distances lose meaning, and models require exponentially more data to learn reliable patterns. This makes learning, generalization, and computation more difficult, often degrading model performance rather than improving it. In high-dimensional spaces, the optimization landscape also becomes far more complex, with many local minima and saddle points, making it harder to identify or converge toward a meaningful global minimum."
 Machine Learning,Definition,Deep Learning,"Deep learning is a subset of machine learning that uses multi-layer neural networks to automatically learn hierarchical representations from data, reducing the need for manual feature engineering. By stacking simple processing units called layers—each acting as a filter that transforms inputs into higher-level representations—deep learning models can capture complex patterns through composition. Early challenges such as vanishing gradients, where learning signals faded through many layers, were largely addressed through improved activation functions, optimization methods, and weight initialization strategies. In practice, building a deep learning model involves defining the network architecture (number of layers, connections, and activations) and then specifying how it learns by choosing an optimizer, loss function, and evaluation metrics during compilation."
-Machine Learning,Definition,Machine Learning,"Using a process to enable computers to iteratively learn from the data and improve analysis, outcomes or understanding. Intersection of statistics, artificial intelligence and computer science. Machine's don't learn, they find optimal mathematical formulas based on the data it is presented. There is an assumption that this data set is both representative of other data sets,  and possess similiar statistical distributions', You can argue this is not learning, because slight variances can result in materially different responses and output, Term synonymous with machines doing tasks without explicitly being programmed. Building a statistical model, based on a dataset"
 Machine Learning,Definition,Optimization,"Optimization is the process of finding the best possible solution to a problem by systematically adjusting inputs or decisions to maximize or minimize a defined objective, subject to given constraints. In machine learning and analytics, optimization involves selecting model parameters that minimize error or maximize performance according to a chosen loss function. Importantly, what is considered “best” depends entirely on how the objective and constraints are defined."
 Machine Learning,Definition,Reinforcement Learning,"Reinforcement learning trains an agent to make decisions by interacting with an environment and receiving rewards or penalties. The agent learns a policy that maximizes cumulative reward over time through trial and error. It is commonly used in robotics, game playing, and control systems."
 Machine Learning,Definition,Semisupervised Learning,Semi-supervised learning combines a small amount of labeled data with a large amount of unlabeled data to improve learning performance. The model leverages the structure in the unlabeled data to generalize better than supervised learning alone. This approach is useful when labeling data is expensive or time-consuming.
 Machine Learning,Definition,Supervised Learning,"Supervised learning trains a model using labeled data, where the correct answer is known in advance. The model learns a mapping from inputs to outputs by minimizing the difference between its predictions and the true labels. Common examples include classification and regression problems."
 Machine Learning,Definition,Unsupervised Learning,"Unsupervised learning works with unlabeled data and aims to discover hidden patterns or structure. The model groups, compresses, or summarizes the data without being told what the correct outcome is. Typical use cases include clustering, dimensionality reduction, and anomaly detection."
-Machine Learning,Definition,Validation,"Process which evaluates a trained machine-learning model on data that was not used during training to assess how well it generalizes to unseen data. It is used to tune model choices and hyperparameters, detect overfitting or underfitting, and guide model selection before final testing or deployment."
 Machine Learning,Definition,Variance,"Variance refers to errors caused by models that are too sensitive to small fluctuations in the training data, often resulting in overfitting. High-variance models are overly flexible, capturing noise as if it were meaningful patterns. A model with many degrees of freedom (such as a high-degree polynomial model) is likely to have high variance and thus overfit the training data. As an example, if you created a model of How Predicting Housing Prices in 1 Neighbourhood would work and applied it to different neighbourhoods, if your model was simple, it wouldn’t work well anywhere and thus would be Wrong, but consistently-ish wrong. If your model was Good, it would work similarly well every well. If you model was overfit, it would work really well in 1 place, not so well elsewhere.
 "
-Machine Learning,Problem Definition,Problem Definition,Not Defined
-Machine Learning,Problem Definition,Goal,Need this to Pull from Somewhere Else. 
-Machine Learning,Problem Definition,Approach,Not Defined
-Machine Learning,Problem Definition,Important to Remeber,Not Defined
-Machine Learning,Problem Definition,Lesson Learnt,Not Defined
-Machine Learning,Problem Definition,Algorithm,Not Defined
-Machine Learning,Problem Definition,Function,Not Defined
-Machine Learning,Problem Definition,Procedure,Not Defined
-Machine Learning,Problem Definition,TBD,Not Defined
-Machine Learning,Data Collection,Data Collection,Not Defined
-Machine Learning,Data Collection,Goal,Need this to Pull from Somewhere Else. 
-Machine Learning,Data Collection,Approach,Not Defined
-Machine Learning,Data Collection,Important to Remeber,Not Defined
-Machine Learning,Data Collection,Lesson Learnt,Not Defined
-Machine Learning,Data Collection,Algorithm,Not Defined
-Machine Learning,Data Collection,Function,Not Defined
-Machine Learning,Data Collection,Procedure,Not Defined
-Machine Learning,Data Collection,TBD,Not Defined
-Machine Learning,Data Preperation,Data Preperation,Not Defined
-Machine Learning,Data Preperation,Goal,Not Defined
-Machine Learning,Data Preperation,Approach,Not Defined
-Machine Learning,Data Preperation,Important to Remeber,Not Defined
-Machine Learning,Data Preperation,Lesson Learnt,Not Defined
-Machine Learning,Data Preperation,Algorithm,Not Defined
-Machine Learning,Data Preperation,Function,Not Defined
-Machine Learning,Data Preperation,Procedure,Not Defined
-Machine Learning,Data Preperation,TBD,Not Defined
-Machine Learning,Feature Engineering,Feature Engineering,Not Defined
-Machine Learning,Feature Engineering,Goal,Not Defined
-Machine Learning,Feature Engineering,Approach,Not Defined
-Machine Learning,Feature Engineering,Important to Remeber,Not Defined
-Machine Learning,Feature Engineering,Lesson Learnt,Not Defined
-Machine Learning,Feature Engineering,Algorithm,Not Defined
-Machine Learning,Feature Engineering,Function,Not Defined
-Machine Learning,Feature Engineering,Procedure,Not Defined
-Machine Learning,Feature Engineering,TBD,Not Defined
-Machine Learning,Feature Selection,Feature Selection,Not Defined
-Machine Learning,Feature Selection,Goal,Not Defined
-Machine Learning,Feature Selection,Approach,Not Defined
-Machine Learning,Feature Selection,Important to Remember,"Avoid ambigious features. Is a Banana ripe, who says so?"
-Machine Learning,Feature Selection,Important to Remember,"Careful when something is truly random generated, Atmospheric Change, Earthquakes, Stocks. Very difficult, if not impossible to predict."
-Machine Learning,Feature Selection,Important to Remember,"MNIST performance when tilting Images, of adding noise."
-Machine Learning,Feature Selection,Lesson Learnt,Not Defined
-Machine Learning,Feature Selection,Algorithm,Not Defined
-Machine Learning,Feature Selection,Function,Not Defined
-Machine Learning,Feature Selection,Procedure,Not Defined
-Machine Learning,Feature Selection,TBD,Not Defined
-Machine Learning,Model,Model,Not Defined
-Machine Learning,Model,Goal,Not Defined
-Machine Learning,Model,Approach,Not Defined
-Machine Learning,Model,Important to Remeber,Not Defined
-Machine Learning,Model,Lesson Learnt,Not Defined
-Machine Learning,Model,Algorithm,Not Defined
-Machine Learning,Model,Function,Not Defined
-Machine Learning,Model,Procedure,Not Defined
-Machine Learning,Model,TBD,Not Defined
 Machine Learning,Model,Algorithm,"Ada: Boosting technique that combines multiple weak learners (usually decision stumps) into a strong learner. ModelStrengths: Handles weak learners well, reduces overfitting. Model Weaknesses: Sensitive to noisy data, requires careful tuning of learning rate."
 Machine Learning,Model,Algorithm,AdaBoostClassifier: 
 Machine Learning,Model,Algorithm,AdaBoostRegressor: 
@@ -323,83 +265,12 @@ Machine Learning,Model,Procedure,StandardScaler:
 Machine Learning,Model,Procedure,TargetEncoder: 
 Machine Learning,Model,Procedure,TfidfTransformer: 
 Machine Learning,Model,Procedure,TransformedTargetRegressor: 
-Machine Learning,Training,Training,Not Defined
-Machine Learning,Training,Definition,"Activation Function: A mathematical function applied to a neuron’s weighted input that introduces non-linearity into a neural network. This non-linearity enables the model to learn complex, non-linear relationships in the data. Activation functions are applied within layers during the forward pass of a neural network, transforming intermediate representations before passing them to the next layer. Activation choice affects gradient flow, training stability, and convergence speed. Poor choices can cause vanishing or exploding gradients, limiting the depth or effectiveness of the network"
-Machine Learning,Training,Definition,"Loss Function: A loss function is a mathematical function that measures how far a model’s predictions are from the true target values, producing a single scalar value that represents prediction error and defines the objective to be minimized during training. The loss function is evaluated during training after the forward pass and is the starting point for backpropagation. Its gradients drive parameter updates via the optimizer. Different loss functions encode different assumptions about error, robustness, and business objectives. Choosing an inappropriate loss can lead to models that optimize the wrong behavior, even if training converges successfully."
-Machine Learning,Training,Definition,"Optimizer: Optimization algorithm that updates a model’s parameters using gradients of the loss function in order to minimize training error. It defines how gradient information is transformed into parameter updates. The optimizer operates during training, after gradients are computed via backpropagation, and is not used during inference. Different optimizers trade off convergence speed, stability, and generalization. Hyperparameters such as learning rate and momentum are"
-Machine Learning,Training,Goal,Not Defined
-Machine Learning,Training,Approach,Not Defined
-Machine Learning,Training,Important to Remember,Not Defined
-Machine Learning,Training,Lesson Learnt,Not Defined
-Machine Learning,Training,Algorithm,Not Defined
-Machine Learning,Training,Function,Not Defined
-Machine Learning,Training,Procedure,Not Defined
-Machine Learning,Training,TBD,Not Defined
-Machine Learning,Hyperparameter Tuning,Hyperparameter Tuning,Not Defined
-Machine Learning,Hyperparameter Tuning,Goal,Not Defined
-Machine Learning,Hyperparameter Tuning,Approach,Not Defined
-Machine Learning,Hyperparameter Tuning,Important to Remember,Not Defined
-Machine Learning,Hyperparameter Tuning,Lesson Learnt,Not Defined
-Machine Learning,Hyperparameter Tuning,Algorithm,Not Defined
-Machine Learning,Hyperparameter Tuning,Function,Not Defined
-Machine Learning,Hyperparameter Tuning,Procedure,Not Defined
-Machine Learning,Hyperparameter Tuning,TBD,Not Defined
-Machine Learning,Validation,Validation,"Process which evaluates a trained machine-learning model on data that was not used during training to assess how well it generalizes to unseen data. It is used to tune model choices and hyperparameters, detect overfitting or underfitting, and guide model selection before final testing or deployment."
-Machine Learning,Validation,Goal,Not Defined
-Machine Learning,Validation,Approach,Not Defined
-Machine Learning,Validation,Important to Remember,"Need a reference to test performance of the model. If dataset is imbalanced, have simple guess. If temperature, guess trailing average, etc, find something simple, often very difficutl to beat, and juice might not be worth the squeeze."
-Machine Learning,Validation,Lesson Learnt,Not Defined
-Machine Learning,Validation,Algorithm,Not Defined
-Machine Learning,Validation,Function,Not Defined
-Machine Learning,Validation,Procedure,Not Defined
-Machine Learning,Validation,TBD,Not Defined
 Machine Learning,Validation,Function,Accuracy: Number of correctly classified examples divided by the total number of classified examples.
 Machine Learning,Validation,Procedure,"Confusion Matrix: Table used to evaluate the performance of a classification model by comparing predicted labels to actual labels. It summarizes the counts of true positives, true negatives, false positives, and false negatives, providing a detailed view of where the model makes correct and incorrect predictions. This breakdown supports the calculation of metrics such as accuracy, precision, recall, and F1 score."
 Machine Learning,Validation,Procedure,"K Fold Cross Validation: Application of Cross Validation. Method for increasing ability to generlize results by segregating Training Data into K folds, such that the model never predicts on data it has seen. As an example, if Folds = 10 and x=100, each of the iterations would hold out 10 examples (such that all examples were held out in a iteration) and when the data was held out the model would predict. To reiterate, it helps with generalization, it does not increase performance, does not average and does not boost. It does materially increase training time. Primarily useful when data limitation exist, you're early on in development and want to prevent leakage or get cursory results. Also can provide a truer indication of performance based Metrics."
 Machine Learning,Validation,Procedure,"Startified Cross Validation: Increasing the Principle of Cross Validation and ensuring that the data is split into statistically represented folds, which when data is not IID could be considered valuable to ensure that inference is accurate and representative."
-Machine Learning,Evaluation,Evaluation,Not Defined
-Machine Learning,Evaluation,Goal,Not Defined
-Machine Learning,Evaluation,Approach,Not Defined
-Machine Learning,Evaluation,Important to Remeber,Not Defined
-Machine Learning,Evaluation,Lesson Learnt,Not Defined
-Machine Learning,Evaluation,Algorithm,Not Defined
-Machine Learning,Evaluation,Function,Not Defined
-Machine Learning,,,Not Defined
-Machine Learning,,Procedure,Not Defined
-Machine Learning,,TBD,Not Defined
-Machine Learning,,Procedure,Not Defined
-Machine Learning,,TBD,Not Defined
-Machine Learning,"Bias, Fairness and Ethics","Bias, Fairness and Ethics",Not Defined
-Machine Learning,"Bias, Fairness and Ethics",Goal,Not Defined
-Machine Learning,"Bias, Fairness and Ethics",Approach,Not Defined
-Machine Learning,"Bias, Fairness and Ethics",Important to Remeber,Not Defined
-Machine Learning,"Bias, Fairness and Ethics",Lesson Learnt,Not Defined
-Machine Learning,"Bias, Fairness and Ethics",Algorithm,Not Defined
-Machine Learning,"Bias, Fairness and Ethics",Function,Not Defined
-Machine Learning,Model Summarization/ Model Interpretability,Model Summarization/ Model Interpretability,Not Defined
-Machine Learning,Model Summarization/ Model Interpretability,Goal,Not Defined
-Machine Learning,Model Summarization/ Model Interpretability,Approach,Not Defined
-Machine Learning,Model Summarization/ Model Interpretability,Important to Remeber,Not Defined
-Machine Learning,Model Summarization/ Model Interpretability,Lesson Learnt,Not Defined
-Machine Learning,Model Summarization/ Model Interpretability,Algorithm,Not Defined
-Machine Learning,Model Summarization/ Model Interpretability,Function,Not Defined
-Machine Learning,Model Summarization/ Model Interpretability,Procedure,Not Defined
-Machine Learning,Model Summarization/ Model Interpretability,TBD,Not Defined
-Machine Learning,Deployment,Deployment,Not Defined
-Machine Learning,Deployment,Goal,Not Defined
-Machine Learning,Deployment,Approach,Not Defined
-Machine Learning,Deployment,Important to Remeber,Not Defined
-Machine Learning,Deployment,Lesson Learnt,Not Defined
-Machine Learning,Deployment,Algorithm,Not Defined
-Machine Learning,Deployment,Function,Not Defined
-Machine Learning,Deployment,Procedure,Not Defined
-Machine Learning,Deployment,TBD,Not Defined
-Machine Learning,Monitoring,Monitoring,Not Defined
-Machine Learning,Monitoring,Goal,Not Defined
-Machine Learning,Monitoring,Approach,Not Defined
-Machine Learning,Monitoring,Important to Remeber,Not Defined
-Machine Learning,Monitoring,Lesson Learnt,Not Defined
-Machine Learning,Monitoring,Algorithm,Not Defined
-Machine Learning,Monitoring,Function,Not Defined
-Machine Learning,Monitoring,Procedure,Not Defined
-Machine Learning,Monitoring,TBD,Not Defined
+Mathematics,Definition,Mathematics,Not Defined
+Mathematics,Definition,Algorithm,"An algorithm is a procedure that unfolds over time and depends on: previous states, iteration history and accumulated information."
+Mathematics,Definition,Constraint,"A constraint is something that restricts or penalizes the solution space. It does not: directly compute outputs, directly update parameters.  Instead, it: limits what solutions are allowed nudges learning toward simplicity or stability"
+Mathematics,Definition,Function,"A function is a direct mathematical mapping: given an input, it deterministically produces an output. There is: no memory, no iteration, no learning history."
+Mathematics,Definition,Best Linear Unbiased Estimator,Some Definition
