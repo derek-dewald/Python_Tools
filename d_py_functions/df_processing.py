@@ -123,6 +123,9 @@ def final_dataset_for_markdown(notes=None,
             As a Model of Notes, I will not include the Categorization Definition, as it is redudant, the entire purpose is that everything
             should have a definition, this is the method to add it. Need to ensure Notes Process follows this.
     Step 2. Add Definitions Matching Category and Categorization. Add Category Level Definitions (ex. Machine Learning/ Activation Function)
+            Add Definitions Matching Categorization and Word Definition. 
+            (Ex Notes. Category: Machine Learning, Categorization: Training, need to add Definitions Category:Training, Categorization:Definition)
+        
     Step 3. Add Definitions Matching Category and Word. Add Record Level Observations (ex. Machine Learning/ Supervised Learning)
     Step 4. Add Effective Parameter Listing, where I can Expand Upon Ideas where Lists or Options are important, without overly explicitly idenfying.
             Match notes.Categorization= definitions.category and notes.word=definitions.categorizaztion
@@ -175,25 +178,48 @@ def final_dataset_for_markdown(notes=None,
     temp_df['Word'] = temp_df['Category']
 
     # Merging to include Definition of Category as a Word
-    temp_df1 = temp_df.merge(merge_def.rename(columns={'Definition':"Notes"}),on=['Word','Category'],how='left')   
-    temp_df1['Notes'] = temp_df1['Notes'].fillna('Not Defined')
+    temp_df1a = temp_df.merge(merge_def.rename(columns={'Definition':"Notes"}),on=['Word','Category'],how='left')   
+    temp_df1a['Notes'] = temp_df1a['Notes'].fillna('Not Defined')
 
     # Step 1B Need to Add Combindation of Category and Categorization = Definition from D Notes.
-    temp_df1a =  temp_df.drop('Word',axis=1).merge(definitions[['Category','Categorization','Word','Definition']].rename(columns={'Definition':"Notes"}),on=['Category','Categorization'],how='left')
+    temp_df1b =  temp_df.drop('Word',axis=1).merge(definitions[['Category','Categorization','Word','Definition']].rename(columns={'Definition':"Notes"}),on=['Category','Categorization'],how='left')
     
     # Drop Instances Where there are no definitions
-    temp_df1a = temp_df1a[temp_df1a['Word'].notnull()].copy()
+    temp_df1b = temp_df1b[temp_df1b['Word'].notnull()].copy()
 
     # Add the Step 1 and Step 1A
-    temp_df1 = pd.concat([temp_df1,temp_df1a])
+    temp_df1 = pd.concat([temp_df1a,temp_df1b])
     temp_df1['RANK'] = 0 
 
     # Step 2
     # Add Definitions to all Unique Combinations of Category and Categorization on Notes Sheet
     temp_df2 = notes.drop_duplicates(['Category','Categorization']).drop(['Word','Notes'],axis=1).copy()
-    temp_df2 = temp_df2.merge(definitions[['Word','Definition','Category']].rename(columns={'Word':'Categorization','Definition':"Notes"}),on=['Category','Categorization'],how='left')
-    temp_df2['Notes'] = temp_df2['Notes'].fillna('Not Defined')
-    temp_df2['Word'] = temp_df2['Categorization'].copy()
+    temp_df2 = temp_df2.reset_index(drop=True).reset_index()
+    temp_df2.rename(columns={'index':'RANK'},inplace=True)
+
+
+    # Merge in Definition for Matching Category and Categorization
+    temp_df2a = temp_df2.merge(definitions[['Word','Definition','Category']].rename(columns={'Word':'Categorization','Definition':"Notes"}),on=['Category','Categorization'],how='left')
+    temp_df2a['Notes'] = temp_df2a['Notes'].fillna('Not Defined')
+    temp_df2a['Word'] = temp_df2a['Categorization'].copy()
+    temp_df2a['RANK1'] = 0
+    
+    # Create a Modified Note DF for merge on Categorization/ Word = Definition
+    mod_notes2 = definitions[['Category','Categorization','Word','Definition']].rename(columns={'Definition':'Notes_','Word':'Notes','Categorization':'Word','Category':"Categorization"})
+    mod_notes2['Notes'] = mod_notes2['Notes'] + ": " + mod_notes2['Notes_']
+    mod_notes2.drop('Notes_',axis=1,inplace=True)
+    
+
+    # Merge in Definition for Matching Categorization and Definition
+    # Remember the Format of Notes does not Explicitly include the Word Definition for Categorizations
+    # Only Return Values where there is a valid Note.
+    
+    temp_df2['Word'] = "Definition"
+    temp_df2b = temp_df2.merge(mod_notes2,on=['Categorization','Word'],how='left')
+    temp_df2b = temp_df2b[temp_df2b['Notes'].notnull()]
+    temp_df2b['RANK1'] = 1
+
+    temp_df2 = pd.concat([temp_df2a,temp_df2b]).sort_values(['RANK','RANK1']).drop('RANK1',axis=1)
     temp_df2['RANK'] = 0 
 
     # Step 3
@@ -236,5 +262,10 @@ def final_dataset_for_markdown(notes=None,
 
     if export_location:
         final_df.to_csv(f"{export_location}d_learning_notes.csv",index=False)
+    
+    #Testing Dictionary
+    ###########
+    #return {'Step_1a':temp_df1a,'Step_1b':temp_df1b,'Step_1':temp_df1,'Step_2':temp_df2,'Step_3':temp_df3,'Step_4':temp_df4}
+    ###########
     
     return final_df

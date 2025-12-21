@@ -1,6 +1,5 @@
 Category,Categorization,Word,Notes
 Machine Learning,Definition,Machine Learning,"Using a process to enable computers to iteratively learn from the data and improve analysis, outcomes or understanding. Intersection of statistics, artificial intelligence and computer science. Machine's don't learn, they find optimal mathematical formulas based on the data it is presented. There is an assumption that this data set is both representative of other data sets,  and possess similiar statistical distributions', You can argue this is not learning, because slight variances can result in materially different responses and output, Term synonymous with machines doing tasks without explicitly being programmed. Building a statistical model, based on a dataset"
-Machine Learning,Definition,Activation Function,"Used during learning and prediction in a neural network. It supports decision-making by deciding whether information should pass forward and how strong it should be. If it wasn’t utilized, the network could only learn very simple straight-line patterns and wouldn’t be able to model real-world complexity."
 Machine Learning,Definition,Area Under the Curve,"AUC (Area Under the Curve) measures a model’s ability to distinguish between classes by summarizing the performance of the ROC (Receiver Operating Characteristic) curve. It represents the probability that the model ranks a randomly chosen positive example higher than a randomly chosen negative one. AUC ranges from 0.5 (no better than chance) to 1.0 (perfect separation), with higher values indicating better classification performance.
 AUC is primarily a binary classification metric, so when using against a multivariate challenge must determine how to score, OVR, OVO. One Vs Rest, One vs One. Using MNist as an example, OVR evaluates 10 0 vs (1,2,3,4,5,6,7,8,9), 1 vs () ... etc, Where OVO measures 45 0 Vs 1, 0 vs 2, etc.."
 Machine Learning,Definition,Autoregressive,"Autoregressive models generate outputs one step at a time, where each prediction depends on the previously generated outputs. This sequential dependency allows the model to capture context and coherence, making it powerful for tasks like language modeling and time-series forecasting. However, because predictions are made step by step, autoregressive methods can be slower at inference compared to parallel approaches."
@@ -21,7 +20,26 @@ Machine Learning,Definition,Semisupervised Learning,Semi-supervised learning com
 Machine Learning,Definition,Supervised Learning,"Supervised learning trains a model using labeled data, where the correct answer is known in advance. The model learns a mapping from inputs to outputs by minimizing the difference between its predictions and the true labels. Common examples include classification and regression problems."
 Machine Learning,Definition,Unsupervised Learning,"Unsupervised learning works with unlabeled data and aims to discover hidden patterns or structure. The model groups, compresses, or summarizes the data without being told what the correct outcome is. Typical use cases include clustering, dimensionality reduction, and anomaly detection."
 Machine Learning,Definition,Validation,"Process which evaluates a trained machine-learning model on data that was not used during training to assess how well it generalizes to unseen data. It is used to tune model choices and hyperparameters, detect overfitting or underfitting, and guide model selection before final testing or deployment."
-Machine Learning,Definition,Variance,"Variance refers to errors caused by models that are too sensitive to small fluctuations in the training data, often resulting in overfitting. High-variance model is overly flexible, capturing noise as if it were meaningful patterns."
+Machine Learning,Definition,Variance,"Variance refers to errors caused by models that are too sensitive to small fluctuations in the training data, often resulting in overfitting. High-variance models are overly flexible, capturing noise as if it were meaningful patterns. A model with many degrees of freedom (such as a high-degree polynomial model) is likely to have high variance and thus overfit the training data. As an example, if you created a model of How Predicting Housing Prices in 1 Neighbourhood would work and applied it to different neighbourhoods, if your model was simple, it wouldn’t work well anywhere and thus would be Wrong, but consistently-ish wrong. If your model was Good, it would work similarly well every well. If you model was overfit, it would work really well in 1 place, not so well elsewhere.
+"
+Machine Learning,Problem Definition,Problem Definition,Not Defined
+Machine Learning,Problem Definition,Goal,Need this to Pull from Somewhere Else. 
+Machine Learning,Problem Definition,Approach,Not Defined
+Machine Learning,Problem Definition,Important to Remeber,Not Defined
+Machine Learning,Problem Definition,Lesson Learnt,Not Defined
+Machine Learning,Problem Definition,Algorithm,Not Defined
+Machine Learning,Problem Definition,Function,Not Defined
+Machine Learning,Problem Definition,Procedure,Not Defined
+Machine Learning,Problem Definition,TBD,Not Defined
+Machine Learning,Data Collection,Data Collection,Not Defined
+Machine Learning,Data Collection,Goal,Need this to Pull from Somewhere Else. 
+Machine Learning,Data Collection,Approach,Not Defined
+Machine Learning,Data Collection,Important to Remeber,Not Defined
+Machine Learning,Data Collection,Lesson Learnt,Not Defined
+Machine Learning,Data Collection,Algorithm,Not Defined
+Machine Learning,Data Collection,Function,Not Defined
+Machine Learning,Data Collection,Procedure,Not Defined
+Machine Learning,Data Collection,TBD,Not Defined
 Machine Learning,Data Preperation,Data Preperation,Not Defined
 Machine Learning,Data Preperation,Goal,Not Defined
 Machine Learning,Data Preperation,Approach,Not Defined
@@ -29,6 +47,28 @@ Machine Learning,Data Preperation,Important to Remeber,Not Defined
 Machine Learning,Data Preperation,Lesson Learnt,Not Defined
 Machine Learning,Data Preperation,Algorithm,Not Defined
 Machine Learning,Data Preperation,Function,Not Defined
+Machine Learning,Data Preperation,Procedure,Not Defined
+Machine Learning,Data Preperation,TBD,Not Defined
+Machine Learning,Feature Engineering,Feature Engineering,Not Defined
+Machine Learning,Feature Engineering,Goal,Not Defined
+Machine Learning,Feature Engineering,Approach,Not Defined
+Machine Learning,Feature Engineering,Important to Remeber,Not Defined
+Machine Learning,Feature Engineering,Lesson Learnt,Not Defined
+Machine Learning,Feature Engineering,Algorithm,Not Defined
+Machine Learning,Feature Engineering,Function,Not Defined
+Machine Learning,Feature Engineering,Procedure,Not Defined
+Machine Learning,Feature Engineering,TBD,Not Defined
+Machine Learning,Feature Selection,Feature Selection,Not Defined
+Machine Learning,Feature Selection,Goal,Not Defined
+Machine Learning,Feature Selection,Approach,Not Defined
+Machine Learning,Feature Selection,Important to Remember,"Avoid ambigious features. Is a Banana ripe, who says so?"
+Machine Learning,Feature Selection,Important to Remember,"Careful when something is truly random generated, Atmospheric Change, Earthquakes, Stocks. Very difficult, if not impossible to predict."
+Machine Learning,Feature Selection,Important to Remember,"MNIST performance when tilting Images, of adding noise."
+Machine Learning,Feature Selection,Lesson Learnt,Not Defined
+Machine Learning,Feature Selection,Algorithm,Not Defined
+Machine Learning,Feature Selection,Function,Not Defined
+Machine Learning,Feature Selection,Procedure,Not Defined
+Machine Learning,Feature Selection,TBD,Not Defined
 Machine Learning,Model,Model,Not Defined
 Machine Learning,Model,Goal,Not Defined
 Machine Learning,Model,Approach,Not Defined
@@ -36,6 +76,8 @@ Machine Learning,Model,Important to Remeber,Not Defined
 Machine Learning,Model,Lesson Learnt,Not Defined
 Machine Learning,Model,Algorithm,Not Defined
 Machine Learning,Model,Function,Not Defined
+Machine Learning,Model,Procedure,Not Defined
+Machine Learning,Model,TBD,Not Defined
 Machine Learning,Model,Algorithm,"Ada: Boosting technique that combines multiple weak learners (usually decision stumps) into a strong learner. ModelStrengths: Handles weak learners well, reduces overfitting. Model Weaknesses: Sensitive to noisy data, requires careful tuning of learning rate."
 Machine Learning,Model,Algorithm,AdaBoostClassifier: 
 Machine Learning,Model,Algorithm,AdaBoostRegressor: 
@@ -92,6 +134,22 @@ Machine Learning,Model,Algorithm,GaussianProcessRegressor:
 Machine Learning,Model,Algorithm,GaussianRandomProjection: 
 Machine Learning,Model,Algorithm,Generalaized Liner Model: 
 Machine Learning,Model,Algorithm,GenericUnivariateSelect: 
+Machine Learning,Model,Algorithm,"Gradient Descent: Widely used optimization algorithm in machine learning, particularly for training models like neural networks. Its primary goal is to minimize a loss function, which measures the error between the model's predictions and the actual outcomes, by iteratively adjusting the model’s parameters.
+
+Traditional Gradient Descent vs. Stochastic Gradient Descent
+In Batch Gradient Descent, the algorithm computes the gradient of the loss function with respect to the model’s parameters using the entire dataset before updating the parameters. While this approach provides a precise update direction, it is computationally expensive and slow for large datasets since it requires processing all data points in each iteration.
+
+Stochastic Gradient Descent (SGD) addresses this issue by approximating the gradient. Instead of computing gradients over the full dataset, SGD updates the model’s parameters using just a single data point at each step. This significantly reduces computational cost per iteration, making the algorithm much faster. However, since updates are based on a single random sample, they introduce high variance (noise), causing fluctuations that may prevent smooth convergence.
+Mini-Batch Gradient Descent: To balance efficiency and stability, a common alternative is Mini-Batch Gradient Descent. Instead of using the full dataset (Batch Gradient Descent) or a single data point (SGD), Mini-Batch Gradient Descent computes updates using a small batch of randomly selected data points (e.g., 32, 64, or 128 samples per batch). This approach: Reduces noise compared to SGD while still being computationally efficient. 
+Leverages vectorized operations for faster computation using modern hardware (e.g., GPUs).
+Smooths out updates while still allowing some stochasticity to escape local minima.
+Benefits & Trade-offs of SGD
+Faster updates: Each iteration is computationally cheaper than full-batch gradient descent.
+Better exploration: The randomness in updates helps escape local minima.
+Higher variance: The noisier updates may lead to less stable convergence, requiring techniques like learning rate decay or momentum to improve performance.
+Slower convergence: Since updates are less precise, SGD may take longer to reach the optimal solution.
+Conclusion
+SGD, Mini-Batch Gradient Descent, and Batch Gradient Descent each offer different trade-offs in terms of speed, stability, and computational efficiency. In practice, Mini-Batch Gradient Descent is the most commonly used approach for deep learning, as it provides a balance between computational efficiency and convergence stability."
 Machine Learning,Model,Algorithm,GradientBoostingClassifier: 
 Machine Learning,Model,Algorithm,GradientBoostingRegressor: 
 Machine Learning,Model,Algorithm,GraphicalLasso: 
@@ -128,13 +186,11 @@ Machine Learning,Model,Algorithm,LassoLarsCV:
 Machine Learning,Model,Algorithm,LassoLarsIC: 
 Machine Learning,Model,Algorithm,LatentDirichletAllocation: 
 Machine Learning,Model,Algorithm,LedoitWolf: 
-Machine Learning,Model,Algorithm,"Linear Regression: Models the relationship between an independent variable ( X ) and a dependent variable ( Y ) using a linear function. Model strengths include : Simple, interpretable, computationally efficient, works well for linearly separable data. Weaknesses, Assumes linear relationships, sensitive to outliers. 
+Machine Learning,Model,Algorithm,"Linear Regression: Models the relationship between an independent variable ( X ) and a dependent variable ( Y ) using a linear function. Model strengths include : Simple, interpretable, computationally efficient, works well for linearly separable data. Weaknesses, Assumes linear relationships, sensitive to outliers. Can calculate using two different approaches, Closed Form or Gradient Decent. Closed Form Solution was the original approach, can be calculated using advanced Calculus, which is easy for simple instances with a low number of independent variables, however Gradient Decent increasingly utilized as easy to implement via numeric calculation,  Python Linear Regression utilizies Pseudoinverse, which is computationally less expensive. However, it is Big O 2² to 2³, which means doubling features increases computations complexity 4 times.
 
 Cost function for Linear Regression is usually Mean Squared Error. While it does not have to be, it is convenient for a number of reasons. 
 1) Rarely Overfits, which Polynomial equations frequently do. 
-2) It always has a derivative, which makes it convenient for using closed forms solutions (saving computation complexity). Historically was applied via Closed Form Solution, which can be difficult to calculate, computationally expensive. 
-
-Can Approximate Using Gradient Decent. Closed Form Solution. Python Linear Regression utilizies Pseudoinverse, which is computationally less expensive. However, it is Big O 2² to 2³, which means doubling features increases computations complexity 4 times."
+2) It always has a derivative, which makes it convenient for using closed forms solutions (saving computation complexity). Historically was applied via Closed Form Solution, which can be difficult to calculate, computationally expensive. "
 Machine Learning,Model,Algorithm,LinearDiscriminantAnalysis: 
 Machine Learning,Model,Algorithm,LinearSVC: 
 Machine Learning,Model,Algorithm,LinearSVR: 
@@ -230,26 +286,6 @@ Machine Learning,Model,Algorithm,SpectralCoclustering:
 Machine Learning,Model,Algorithm,SpectralEmbedding: 
 Machine Learning,Model,Algorithm,StackingClassifier: 
 Machine Learning,Model,Algorithm,StackingRegressor: 
-Machine Learning,Model,Algorithm,"Stochastic Gradient Descent: Stochastic Gradient Descent (SGD) is a widely used optimization algorithm in machine learning, particularly for training models like neural networks. Its primary goal is to minimize a loss function, which measures the error between the model's predictions and the actual outcomes, by iteratively adjusting the model’s parameters.
-
-Traditional Gradient Descent vs. Stochastic Gradient Descent
-In Batch Gradient Descent, the algorithm computes the gradient of the loss function with respect to the model’s parameters using the entire dataset before updating the parameters. While this approach provides a precise update direction, it is computationally expensive and slow for large datasets since it requires processing all data points in each iteration.
-
-Stochastic Gradient Descent (SGD) addresses this issue by approximating the gradient. Instead of computing gradients over the full dataset, SGD updates the model’s parameters using just a single data point at each step. This significantly reduces computational cost per iteration, making the algorithm much faster. However, since updates are based on a single random sample, they introduce high variance (noise), causing fluctuations that may prevent smooth convergence.
-
-Mini-Batch Gradient Descent: A Compromise
-To balance efficiency and stability, a common alternative is Mini-Batch Gradient Descent. Instead of using the full dataset (Batch Gradient Descent) or a single data point (SGD), Mini-Batch Gradient Descent computes updates using a small batch of randomly selected data points (e.g., 32, 64, or 128 samples per batch). This approach:
-
-Reduces noise compared to SGD while still being computationally efficient.
-Leverages vectorized operations for faster computation using modern hardware (e.g., GPUs).
-Smooths out updates while still allowing some stochasticity to escape local minima.
-Benefits & Trade-offs of SGD
-Faster updates: Each iteration is computationally cheaper than full-batch gradient descent.
-Better exploration: The randomness in updates helps escape local minima.
-Higher variance: The noisier updates may lead to less stable convergence, requiring techniques like learning rate decay or momentum to improve performance.
-Slower convergence: Since updates are less precise, SGD may take longer to reach the optimal solution.
-Conclusion
-SGD, Mini-Batch Gradient Descent, and Batch Gradient Descent each offer different trade-offs in terms of speed, stability, and computational efficiency. In practice, Mini-Batch Gradient Descent is the most commonly used approach for deep learning, as it provides a balance between computational efficiency and convergence stability."
 Machine Learning,Model,Algorithm,"Support Vector Machines: Finds the optimal hyperplane that best separates data points of different classes in a feature space. The hyperplane is chosen to maximize the margin, which is the distance between the hyperplane and the nearest data points from each class, known as support vectors. By default, generally a Linear Line, however can utilize Kernels to change, such that datasets where decision boundary is not linearly seperable can become so in higher dimensions.
 
 ModelStrengths: Effective in high-dimensional spaces, works well with clear margins of separation. Model Weaknesses:Computationally expensive, struggles with large datasets."
@@ -268,36 +304,59 @@ Machine Learning,Model,Algorithm,VotingRegressor:
 Machine Learning,Model,Algorithm,"Word2Vec: Word2Vec is a neural-network–based method that learns dense vector embeddings for words, capturing semantic and syntactic relationships. Unlike Bag of Words, which only counts word occurrences and ignores meaning, Word2Vec represents words in a continuous vector space where similarity between vectors reflects semantic closeness"
 Machine Learning,Model,Algorithm,XGBoost: 
 Machine Learning,Model,Function,AdditiveChi2Sampler: 
-Machine Learning,Feature Engineering,Feature Engineering,Not Defined
-Machine Learning,Feature Engineering,Goal,Not Defined
-Machine Learning,Feature Engineering,Approach,Not Defined
-Machine Learning,Feature Engineering,Important to Remeber,Not Defined
-Machine Learning,Feature Engineering,Lesson Learnt,Not Defined
-Machine Learning,Feature Engineering,Algorithm,Not Defined
-Machine Learning,Feature Engineering,Function,Not Defined
-Machine Learning,Feature Selection,Feature Selection,Not Defined
-Machine Learning,Feature Selection,Goal,Not Defined
-Machine Learning,Feature Selection,Approach,Not Defined
-Machine Learning,Feature Selection,Important to Remember,"Avoid ambigious features. Is a Banana ripe, who says so?"
-Machine Learning,Feature Selection,Important to Remember,"Careful when something is truly random generated, Atmospheric Change, Earthquakes, Stocks. Very difficult, if not impossible to predict."
-Machine Learning,Feature Selection,Important to Remember,"MNIST performance when tilting Images, of adding noise."
-Machine Learning,Feature Selection,Lesson Learnt,Not Defined
-Machine Learning,Feature Selection,Algorithm,Not Defined
-Machine Learning,Feature Selection,Function,Not Defined
-Machine Learning,Activation Function,Activation Function,"Used during learning and prediction in a neural network. It supports decision-making by deciding whether information should pass forward and how strong it should be. If it wasn’t utilized, the network could only learn very simple straight-line patterns and wouldn’t be able to model real-world complexity."
-Machine Learning,Activation Function,Goal,Not Defined
-Machine Learning,Activation Function,Approach,Not Defined
-Machine Learning,Activation Function,Important to Remeber,Not Defined
-Machine Learning,Activation Function,Lesson Learnt,Not Defined
-Machine Learning,Activation Function,Algorithm,Not Defined
-Machine Learning,Activation Function,Function,Not Defined
-Machine Learning,Loss Function,Loss Function,Not Defined
-Machine Learning,Loss Function,Goal,Not Defined
-Machine Learning,Loss Function,Approach,Not Defined
-Machine Learning,Loss Function,Important to Remeber,Not Defined
-Machine Learning,Loss Function,Lesson Learnt,Not Defined
-Machine Learning,Loss Function,Algorithm,Not Defined
-Machine Learning,Loss Function,Function,Not Defined
+Machine Learning,Model,Procedure,ColumnTransformer: 
+Machine Learning,Model,Procedure,FunctionTransformer: 
+Machine Learning,Model,Procedure,KNeighborsTransformer: 
+Machine Learning,Model,Procedure,LabelEncoder: 
+Machine Learning,Model,Procedure,MaxAbsScaler: 
+Machine Learning,Model,Procedure,MinMaxScaler: 
+Machine Learning,Model,Procedure,OneHotEncoder: 
+Machine Learning,Model,Procedure,OrdinalEncoder: 
+Machine Learning,Model,Procedure,PowerTransformer: 
+Machine Learning,Model,Procedure,QuantileTransformer: 
+Machine Learning,Model,Procedure,RadiusNeighborsTransformer: 
+Machine Learning,Model,Procedure,RBFSampler: 
+Machine Learning,Model,Procedure,RobustScaler: 
+Machine Learning,Model,Procedure,SkewedChi2Sampler: 
+Machine Learning,Model,Procedure,SplineTransformer: 
+Machine Learning,Model,Procedure,StandardScaler: 
+Machine Learning,Model,Procedure,TargetEncoder: 
+Machine Learning,Model,Procedure,TfidfTransformer: 
+Machine Learning,Model,Procedure,TransformedTargetRegressor: 
+Machine Learning,Training,Training,Not Defined
+Machine Learning,Training,Definition,"Activation Function: A mathematical function applied to a neuron’s weighted input that introduces non-linearity into a neural network. This non-linearity enables the model to learn complex, non-linear relationships in the data. Activation functions are applied within layers during the forward pass of a neural network, transforming intermediate representations before passing them to the next layer. Activation choice affects gradient flow, training stability, and convergence speed. Poor choices can cause vanishing or exploding gradients, limiting the depth or effectiveness of the network"
+Machine Learning,Training,Definition,"Loss Function: A loss function is a mathematical function that measures how far a model’s predictions are from the true target values, producing a single scalar value that represents prediction error and defines the objective to be minimized during training. The loss function is evaluated during training after the forward pass and is the starting point for backpropagation. Its gradients drive parameter updates via the optimizer. Different loss functions encode different assumptions about error, robustness, and business objectives. Choosing an inappropriate loss can lead to models that optimize the wrong behavior, even if training converges successfully."
+Machine Learning,Training,Definition,"Optimizer: Optimization algorithm that updates a model’s parameters using gradients of the loss function in order to minimize training error. It defines how gradient information is transformed into parameter updates. The optimizer operates during training, after gradients are computed via backpropagation, and is not used during inference. Different optimizers trade off convergence speed, stability, and generalization. Hyperparameters such as learning rate and momentum are"
+Machine Learning,Training,Goal,Not Defined
+Machine Learning,Training,Approach,Not Defined
+Machine Learning,Training,Important to Remember,Not Defined
+Machine Learning,Training,Lesson Learnt,Not Defined
+Machine Learning,Training,Algorithm,Not Defined
+Machine Learning,Training,Function,Not Defined
+Machine Learning,Training,Procedure,Not Defined
+Machine Learning,Training,TBD,Not Defined
+Machine Learning,Hyperparameter Tuning,Hyperparameter Tuning,Not Defined
+Machine Learning,Hyperparameter Tuning,Goal,Not Defined
+Machine Learning,Hyperparameter Tuning,Approach,Not Defined
+Machine Learning,Hyperparameter Tuning,Important to Remember,Not Defined
+Machine Learning,Hyperparameter Tuning,Lesson Learnt,Not Defined
+Machine Learning,Hyperparameter Tuning,Algorithm,Not Defined
+Machine Learning,Hyperparameter Tuning,Function,Not Defined
+Machine Learning,Hyperparameter Tuning,Procedure,Not Defined
+Machine Learning,Hyperparameter Tuning,TBD,Not Defined
+Machine Learning,Validation,Validation,"Process which evaluates a trained machine-learning model on data that was not used during training to assess how well it generalizes to unseen data. It is used to tune model choices and hyperparameters, detect overfitting or underfitting, and guide model selection before final testing or deployment."
+Machine Learning,Validation,Goal,Not Defined
+Machine Learning,Validation,Approach,Not Defined
+Machine Learning,Validation,Important to Remember,"Need a reference to test performance of the model. If dataset is imbalanced, have simple guess. If temperature, guess trailing average, etc, find something simple, often very difficutl to beat, and juice might not be worth the squeeze."
+Machine Learning,Validation,Lesson Learnt,Not Defined
+Machine Learning,Validation,Algorithm,Not Defined
+Machine Learning,Validation,Function,Not Defined
+Machine Learning,Validation,Procedure,Not Defined
+Machine Learning,Validation,TBD,Not Defined
+Machine Learning,Validation,Function,Accuracy: Number of correctly classified examples divided by the total number of classified examples.
+Machine Learning,Validation,Procedure,"Confusion Matrix: Table used to evaluate the performance of a classification model by comparing predicted labels to actual labels. It summarizes the counts of true positives, true negatives, false positives, and false negatives, providing a detailed view of where the model makes correct and incorrect predictions. This breakdown supports the calculation of metrics such as accuracy, precision, recall, and F1 score."
+Machine Learning,Validation,Procedure,"K Fold Cross Validation: Application of Cross Validation. Method for increasing ability to generlize results by segregating Training Data into K folds, such that the model never predicts on data it has seen. As an example, if Folds = 10 and x=100, each of the iterations would hold out 10 examples (such that all examples were held out in a iteration) and when the data was held out the model would predict. To reiterate, it helps with generalization, it does not increase performance, does not average and does not boost. It does materially increase training time. Primarily useful when data limitation exist, you're early on in development and want to prevent leakage or get cursory results. Also can provide a truer indication of performance based Metrics."
+Machine Learning,Validation,Procedure,"Startified Cross Validation: Increasing the Principle of Cross Validation and ensuring that the data is split into statistically represented folds, which when data is not IID could be considered valuable to ensure that inference is accurate and representative."
 Machine Learning,Evaluation,Evaluation,Not Defined
 Machine Learning,Evaluation,Goal,Not Defined
 Machine Learning,Evaluation,Approach,Not Defined
@@ -305,49 +364,42 @@ Machine Learning,Evaluation,Important to Remeber,Not Defined
 Machine Learning,Evaluation,Lesson Learnt,Not Defined
 Machine Learning,Evaluation,Algorithm,Not Defined
 Machine Learning,Evaluation,Function,Not Defined
-Machine Learning,Optimization,Optimization,"Optimization is the process of finding the best possible solution to a problem by systematically adjusting inputs or decisions to maximize or minimize a defined objective, subject to given constraints. In machine learning and analytics, optimization involves selecting model parameters that minimize error or maximize performance according to a chosen loss function. Importantly, what is considered “best” depends entirely on how the objective and constraints are defined."
-Machine Learning,Optimization,Goal,"What are you attempting to maximize, Training Performance, or ability to Generalize.  Strive to avoid overfitting, maximize ability to Generalize."
-Machine Learning,Optimization,Approach,Curse of Dimensionality
-Machine Learning,Optimization,Important to Remember,"Must remember what the Model is actually trying to solve and the approach that it is taking. As an example, when Regularization is imporant, when it is not."
-Machine Learning,Optimization,Important to Remember,"Models will cheat and can solve problems which appear to be optimal, but they might not be solving what you expect or require, they might be finding patterns in the data which you do not see."
-Machine Learning,Optimization,Important to Remember,"An Example of this would a classification model with Wolves and Dogs,  many wolf photos happened to be taken in snowy environments, while dog photos were often taken indoors or on grass. The model learned to detect snow, not animals."
-Machine Learning,Optimization,Important to Remember,"Need a reference to test performance of the model. If dataset is imbalanced, have simple guess. If temperature, guess trailing average, etc, find something simple, often very difficutl to beat, and juice might not be worth the squeeze."
-Machine Learning,Optimization,Important to Remember,"ML can't look naively for a simple common sense solution. Unless feature engineered or hard coded, model will always just plug forward. "
-Machine Learning,Optimization,Important to Remember,"Any data set can be optimized, even when there is NO relation. It will generalize."
-Machine Learning,Optimization,Lesson Learnt,Not Defined
-Machine Learning,Optimization,Algorithm,Not Defined
-Machine Learning,Optimization,Algorithm,Adadelta: Adaptive learning rate for nonstationary objectives.
-Machine Learning,Optimization,Algorithm,"Adagrad: Variation of Gradient Descent, which adapts the learning rate for each parameter by scaling it inversely proportional to the sum of past squared gradients. 
-"
-Machine Learning,Optimization,Algorithm,"Adam: Variation of Gradient Descent, which combines both momentum and RMSprop, maintaining an exponentially decaying average of past gradients and squared gradients."
-Machine Learning,Optimization,Algorithm,"AdamW: Variant of Adam with weight decay, prevents overfitting."
-Machine Learning,Optimization,Algorithm,"Hinge Loss: Loss function used primarily for binary classification, especially in Support Vector Machines (SVMs). It's designed to maximize the margin between classes — that is, push predictions to be confidently correct. It penalizes predictions that are: On the wrong side of the decision boundary Or correct but not confidently correct (i.e., too close to the margin)"
-Machine Learning,Optimization,Algorithm,Huber Loss: Loss function used in regression problems that is robust to outliers — it's essentially a blend between Mean Squared Error (MSE) and Mean Absolute Error (MAE). Regression with noisy or outlier-prone data Situations where you want the stability of MSE but the robustness of MAE
-Machine Learning,Optimization,Algorithm,"Momentum: Variation of Gradient Descent, which accelerates learning by accumulating a moving average of past gradients."
-Machine Learning,Optimization,Algorithm,Nadam: Adam optimizer with Nesterov momentum for better convergence.
-Machine Learning,Optimization,Algorithm,"RMSprop: Variation of Gradient Descent, which adapts the learning rate by dividing by an exponentially weighted moving average of past squared gradients. Adapts learning rates based on recent gradient magnitudes. Good for RNNs."
-Machine Learning,Training,Training,Not Defined
-Machine Learning,Training,Goal,Not Defined
-Machine Learning,Training,Approach,Not Defined
-Machine Learning,Training,Important to Remember,Not Defined
-Machine Learning,Training,Lesson Learnt,Not Defined
-Machine Learning,Training,Algorithm,Not Defined
-Machine Learning,Training,Function,Not Defined
-Machine Learning,Validation,Validation,"Process which evaluates a trained machine-learning model on data that was not used during training to assess how well it generalizes to unseen data. It is used to tune model choices and hyperparameters, detect overfitting or underfitting, and guide model selection before final testing or deployment."
-Machine Learning,Validation,Goal,Not Defined
-Machine Learning,Validation,Approach,Not Defined
-Machine Learning,Validation,Important to Remember,"Need a reference to test performance of the model. If dataset is imbalanced, have simple guess. If temperature, guess trailing average, etc, find something simple, often very difficutl to beat, and juice might not be worth the squeeze."
-Machine Learning,Validation,Lesson Learnt,Not Defined
-Machine Learning,Validation,Algorithm,Not Defined
-Machine Learning,Validation,Function,"Bias, Fairness, and Ethics"
-Machine Learning,Validation,Function,Accuracy: Number of correctly classified examples divided by the total number of classified examples.
-Machine Learning,Tuning,Tuning,Not Defined
-Machine Learning,Tuning,Goal,Not Defined
-Machine Learning,Tuning,Approach,Not Defined
-Machine Learning,Tuning,Important to Remember,Not Defined
-Machine Learning,Tuning,Lesson Learnt,Not Defined
-Machine Learning,Tuning,Algorithm,Not Defined
+Machine Learning,,,Not Defined
+Machine Learning,,Procedure,Not Defined
+Machine Learning,,TBD,Not Defined
+Machine Learning,,Procedure,Not Defined
+Machine Learning,,TBD,Not Defined
 Machine Learning,"Bias, Fairness and Ethics","Bias, Fairness and Ethics",Not Defined
-Machine Learning,"Bias, Fairness and Ethics",,Not Defined
-Machine Learning,Model Interpretability / Explainability,Model Interpretability / Explainability,Not Defined
-Machine Learning,Model Interpretability / Explainability,,Not Defined
+Machine Learning,"Bias, Fairness and Ethics",Goal,Not Defined
+Machine Learning,"Bias, Fairness and Ethics",Approach,Not Defined
+Machine Learning,"Bias, Fairness and Ethics",Important to Remeber,Not Defined
+Machine Learning,"Bias, Fairness and Ethics",Lesson Learnt,Not Defined
+Machine Learning,"Bias, Fairness and Ethics",Algorithm,Not Defined
+Machine Learning,"Bias, Fairness and Ethics",Function,Not Defined
+Machine Learning,Model Summarization/ Model Interpretability,Model Summarization/ Model Interpretability,Not Defined
+Machine Learning,Model Summarization/ Model Interpretability,Goal,Not Defined
+Machine Learning,Model Summarization/ Model Interpretability,Approach,Not Defined
+Machine Learning,Model Summarization/ Model Interpretability,Important to Remeber,Not Defined
+Machine Learning,Model Summarization/ Model Interpretability,Lesson Learnt,Not Defined
+Machine Learning,Model Summarization/ Model Interpretability,Algorithm,Not Defined
+Machine Learning,Model Summarization/ Model Interpretability,Function,Not Defined
+Machine Learning,Model Summarization/ Model Interpretability,Procedure,Not Defined
+Machine Learning,Model Summarization/ Model Interpretability,TBD,Not Defined
+Machine Learning,Deployment,Deployment,Not Defined
+Machine Learning,Deployment,Goal,Not Defined
+Machine Learning,Deployment,Approach,Not Defined
+Machine Learning,Deployment,Important to Remeber,Not Defined
+Machine Learning,Deployment,Lesson Learnt,Not Defined
+Machine Learning,Deployment,Algorithm,Not Defined
+Machine Learning,Deployment,Function,Not Defined
+Machine Learning,Deployment,Procedure,Not Defined
+Machine Learning,Deployment,TBD,Not Defined
+Machine Learning,Monitoring,Monitoring,Not Defined
+Machine Learning,Monitoring,Goal,Not Defined
+Machine Learning,Monitoring,Approach,Not Defined
+Machine Learning,Monitoring,Important to Remeber,Not Defined
+Machine Learning,Monitoring,Lesson Learnt,Not Defined
+Machine Learning,Monitoring,Algorithm,Not Defined
+Machine Learning,Monitoring,Function,Not Defined
+Machine Learning,Monitoring,Procedure,Not Defined
+Machine Learning,Monitoring,TBD,Not Defined
