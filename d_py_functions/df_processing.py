@@ -119,7 +119,9 @@ def final_dataset_for_markdown(notes=None,
     How this function Works:
     It takes the two sheets and attemps to Consolidate them together to make Final Dataset, generated as d_learning_notes.csv.
 
-    Step 1. Add a new Row Record, which is the Definition for Category. 
+    Step 1. Add a new Row Record, which is the Definition for Category and record where Definition is the Category and Definition.
+            As a Model of Notes, I will not include the Categorization Definition, as it is redudant, the entire purpose is that everything
+            should have a definition, this is the method to add it. Need to ensure Notes Process follows this.
     Step 2. Add Definitions Matching Category and Categorization. Add Category Level Definitions (ex. Machine Learning/ Activation Function)
     Step 3. Add Definitions Matching Category and Word. Add Record Level Observations (ex. Machine Learning/ Supervised Learning)
     Step 4. Add Effective Parameter Listing, where I can Expand Upon Ideas where Lists or Options are important, without overly explicitly idenfying.
@@ -171,30 +173,38 @@ def final_dataset_for_markdown(notes=None,
     temp_df = notes.drop_duplicates("Category")[['Category']]
     temp_df['Categorization'] = 'Definition'
     temp_df['Word'] = temp_df['Category']
-    temp_df = temp_df.merge(merge_def.rename(columns={'Definition':"Notes"}),on=['Word','Category'],how='left')   
-    temp_df['Notes'] = temp_df['Notes'].fillna('Not Defined')
-    #temp_df['Notes'] = 'Not Defined, Add a New Note. Category:' + temp_df['Word'] + ', Categorization : Definition, ' + temp_df['Word']
-    # Rank Utilized to provide Definitions with Highest Value when Categorizing, otherwise Sort a Issue when Merging
-    temp_df['RANK'] = 0 
+
+    # Merging to include Definition of Category as a Word
+    temp_df1 = temp_df.merge(merge_def.rename(columns={'Definition':"Notes"}),on=['Word','Category'],how='left')   
+    temp_df1['Notes'] = temp_df1['Notes'].fillna('Not Defined')
+
+    # Step 1B Need to Add Combindation of Category and Categorization = Definition from D Notes.
+    temp_df1a =  temp_df.drop('Word',axis=1).merge(definitions[['Category','Categorization','Word','Definition']].rename(columns={'Definition':"Notes"}),on=['Category','Categorization'],how='left')
+    
+    # Drop Instances Where there are no definitions
+    temp_df1a = temp_df1a[temp_df1a['Word'].notnull()].copy()
+
+    # Add the Step 1 and Step 1A
+    temp_df1 = pd.concat([temp_df1,temp_df1a])
+    temp_df1['RANK'] = 0 
 
     # Step 2
     # Add Definitions to all Unique Combinations of Category and Categorization on Notes Sheet
-    temp_df1 = notes.drop_duplicates(['Category','Categorization']).drop(['Word','Notes'],axis=1).copy()
-    temp_df1 = temp_df1.merge(definitions[['Word','Definition','Category']].rename(columns={'Word':'Categorization','Definition':"Notes"}),on=['Category','Categorization'],how='left')
-    #temp_df1 = temp_df1[temp_df1['Notes'].notnull()].copy()
-    temp_df1['Notes'] = temp_df1['Notes'].fillna('Not Defined')
-    temp_df1['Word'] = temp_df1['Categorization'].copy()
-    temp_df1['RANK'] = 0 
+    temp_df2 = notes.drop_duplicates(['Category','Categorization']).drop(['Word','Notes'],axis=1).copy()
+    temp_df2 = temp_df2.merge(definitions[['Word','Definition','Category']].rename(columns={'Word':'Categorization','Definition':"Notes"}),on=['Category','Categorization'],how='left')
+    temp_df2['Notes'] = temp_df2['Notes'].fillna('Not Defined')
+    temp_df2['Word'] = temp_df2['Categorization'].copy()
+    temp_df2['RANK'] = 0 
 
     # Step 3
     # Add Definitions for all Combination of Word and Category
-    temp_df2 = notes.merge(merge_def,on=['Word','Category'],how='left')
-    temp_df2['Definition'] = temp_df2['Definition'].fillna('Not Defined. Add Record Matching Category, Categorization, Word')
-    temp_df2['RANK'] = 1
+    temp_df3 = notes.merge(merge_def,on=['Word','Category'],how='left')
+    temp_df3['Definition'] = temp_df3['Definition'].fillna('Not Defined')
+    temp_df3['RANK'] = 1
 
     # Step 4
     # Merge In Listed Parameters 
-    temp_df3 =  notes[['Category','Categorization','Word']].drop_duplicates(['Categorization','Word'])
+    temp_df4 =  notes[['Category','Categorization','Word']].drop_duplicates(['Categorization','Word'])
 
     # Generate Information From Definition. Must remove Note column from current dataframe to accept for purposes of merging.
     list_ = definitions.drop('Notes',axis=1).rename(columns={'Word':'Notes','Categorization':'Word','Category':'Categorization'})[['Categorization','Word','Notes','Definition']]
@@ -202,10 +212,10 @@ def final_dataset_for_markdown(notes=None,
     list_.drop('Definition',axis=1,inplace=True)
     
     # Merge Into Notes.
-    temp_df3 =  temp_df3.merge(list_,on=['Categorization','Word'],how='inner')
-    
+    temp_df4 =  temp_df4.merge(list_,on=['Categorization','Word'],how='inner')
+
     # Create Final DataFrame
-    final_df = pd.concat([temp_df,temp_df1,temp_df2,temp_df3])
+    final_df = pd.concat([temp_df1,temp_df2,temp_df3,temp_df4])
 
     # Base Column is Notes, Definitions Merged in to Help Articulate and combine, thus if Notes Available, it will take precendent
     final_df['Notes'] = np.where(final_df['Notes']=="",final_df['Definition'],final_df['Notes'])

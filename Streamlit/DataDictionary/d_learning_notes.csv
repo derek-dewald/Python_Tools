@@ -1,25 +1,133 @@
 Category,Categorization,Word,Notes
 Machine Learning,Definition,Machine Learning,"Using a process to enable computers to iteratively learn from the data and improve analysis, outcomes or understanding. Intersection of statistics, artificial intelligence and computer science. Machine's don't learn, they find optimal mathematical formulas based on the data it is presented. There is an assumption that this data set is both representative of other data sets,  and possess similiar statistical distributions', You can argue this is not learning, because slight variances can result in materially different responses and output, Term synonymous with machines doing tasks without explicitly being programmed. Building a statistical model, based on a dataset"
-Machine Learning,Distinct Types of ML,Distinct Types of ML,Not Defined
-Machine Learning,Distinct Types of ML,Supervised Learning,"Supervised learning trains a model using labeled data, where the correct answer is known in advance. The model learns a mapping from inputs to outputs by minimizing the difference between its predictions and the true labels. Common examples include classification and regression problems."
-Machine Learning,Distinct Types of ML,Unsupervised Learning,"Unsupervised learning works with unlabeled data and aims to discover hidden patterns or structure. The model groups, compresses, or summarizes the data without being told what the correct outcome is. Typical use cases include clustering, dimensionality reduction, and anomaly detection."
-Machine Learning,Distinct Types of ML,Semisupervised Learning,Semi-supervised learning combines a small amount of labeled data with a large amount of unlabeled data to improve learning performance. The model leverages the structure in the unlabeled data to generalize better than supervised learning alone. This approach is useful when labeling data is expensive or time-consuming.
-Machine Learning,Distinct Types of ML,Reinforcement Learning,"Reinforcement learning trains an agent to make decisions by interacting with an environment and receiving rewards or penalties. The agent learns a policy that maximizes cumulative reward over time through trial and error. It is commonly used in robotics, game playing, and control systems."
-Machine Learning,Distinct Types of ML,Deep Learning,"Deep learning is a subset of machine learning that uses multi-layer neural networks to automatically learn hierarchical representations from data, reducing the need for manual feature engineering. By stacking simple processing units called layers—each acting as a filter that transforms inputs into higher-level representations—deep learning models can capture complex patterns through composition. Early challenges such as vanishing gradients, where learning signals faded through many layers, were largely addressed through improved activation functions, optimization methods, and weight initialization strategies. In practice, building a deep learning model involves defining the network architecture (number of layers, connections, and activations) and then specifying how it learns by choosing an optimizer, loss function, and evaluation metrics during compilation."
+Machine Learning,Definition,Activation Function,"Used during learning and prediction in a neural network. It supports decision-making by deciding whether information should pass forward and how strong it should be. If it wasn’t utilized, the network could only learn very simple straight-line patterns and wouldn’t be able to model real-world complexity."
+Machine Learning,Definition,Area Under the Curve,"AUC (Area Under the Curve) measures a model’s ability to distinguish between classes by summarizing the performance of the ROC (Receiver Operating Characteristic) curve. It represents the probability that the model ranks a randomly chosen positive example higher than a randomly chosen negative one. AUC ranges from 0.5 (no better than chance) to 1.0 (perfect separation), with higher values indicating better classification performance.
+AUC is primarily a binary classification metric, so when using against a multivariate challenge must determine how to score, OVR, OVO. One Vs Rest, One vs One. Using MNist as an example, OVR evaluates 10 0 vs (1,2,3,4,5,6,7,8,9), 1 vs () ... etc, Where OVO measures 45 0 Vs 1, 0 vs 2, etc.."
+Machine Learning,Definition,Autoregressive,"Autoregressive models generate outputs one step at a time, where each prediction depends on the previously generated outputs. This sequential dependency allows the model to capture context and coherence, making it powerful for tasks like language modeling and time-series forecasting. However, because predictions are made step by step, autoregressive methods can be slower at inference compared to parallel approaches."
+Machine Learning,Definition,Bias,"Bias refers to the systematic error in a model that causes it to consistently deviate from the true value or correct predictions. It occurs when an algorithm makes incorrect assumptions or omissions about the data, leading to errors.
+High Bias (Underfitting): The model is too simple and cannot capture patterns. 
+Low Bias, High Variance (Overfitting). The model memorizes the data but does not generalize."
+Machine Learning,Definition,Bias - Variance Trade Off,"The bias-variance trade-off is a key concept in machine learning that highlights the balance between two sources of error: bias and variance, tuning the relationship between a model's complexity, the accuracy of its predictions, and how well it can make predictions on previously unseen data that were not used to train the model The challenge is to find a model that strikes the right balance between bias and variance, as reducing one typically increases the other. The ultimate goal is to minimize the total error, which is the sum of bias error, variance error, and irreducible noise inherent in the data. Achieving this balance ensures the model generalizes well to new, unseen data, avoiding both underfitting and overfitting. More Data vs More Data Science - Bias vs Variance 
+It can often be explained by the Trade-Off (Bias - Data Scientist, Variance - Data), where to invest.
+
+In general, as we increase the number of tunable parameters in a model, it becomes more flexible, and can better fit a training data set. It is said to have lower error, or bias. However, for more flexible models, there will tend to be greater variance to the model fit each time we take a set of samples to create a new training data set. It is said that there is greater variance in the model's estimated parameters.High-variance learning methods may be able to represent their training set well but are at risk of overfitting to noisy or unrepresentative training data. In contrast, algorithms with high bias typically produce simpler models that may fail to capture important regularities (i.e. underfit) in the data."
+Machine Learning,Definition,Cross Validation,"Model evaluation technique used to assess how well a model generalizes to unseen data by repeatedly splitting the dataset into training and validation subsets. The model is trained on one portion of the data and evaluated on another, and the results are aggregated to provide a more reliable estimate of performance than a single train–test split. This approach helps detect overfitting and supports more robust model selection"
+Machine Learning,Definition,Curse of Dimensionality,"As dimensionality grows, data points become increasingly sparse, distances lose meaning, and models require exponentially more data to learn reliable patterns. This makes learning, generalization, and computation more difficult, often degrading model performance rather than improving it. In high-dimensional spaces, the optimization landscape also becomes far more complex, with many local minima and saddle points, making it harder to identify or converge toward a meaningful global minimum."
+Machine Learning,Definition,Deep Learning,"Deep learning is a subset of machine learning that uses multi-layer neural networks to automatically learn hierarchical representations from data, reducing the need for manual feature engineering. By stacking simple processing units called layers—each acting as a filter that transforms inputs into higher-level representations—deep learning models can capture complex patterns through composition. Early challenges such as vanishing gradients, where learning signals faded through many layers, were largely addressed through improved activation functions, optimization methods, and weight initialization strategies. In practice, building a deep learning model involves defining the network architecture (number of layers, connections, and activations) and then specifying how it learns by choosing an optimizer, loss function, and evaluation metrics during compilation."
+Machine Learning,Definition,Machine Learning,"Using a process to enable computers to iteratively learn from the data and improve analysis, outcomes or understanding. Intersection of statistics, artificial intelligence and computer science. Machine's don't learn, they find optimal mathematical formulas based on the data it is presented. There is an assumption that this data set is both representative of other data sets,  and possess similiar statistical distributions', You can argue this is not learning, because slight variances can result in materially different responses and output, Term synonymous with machines doing tasks without explicitly being programmed. Building a statistical model, based on a dataset"
+Machine Learning,Definition,Optimization,"Optimization is the process of finding the best possible solution to a problem by systematically adjusting inputs or decisions to maximize or minimize a defined objective, subject to given constraints. In machine learning and analytics, optimization involves selecting model parameters that minimize error or maximize performance according to a chosen loss function. Importantly, what is considered “best” depends entirely on how the objective and constraints are defined."
+Machine Learning,Definition,Reinforcement Learning,"Reinforcement learning trains an agent to make decisions by interacting with an environment and receiving rewards or penalties. The agent learns a policy that maximizes cumulative reward over time through trial and error. It is commonly used in robotics, game playing, and control systems."
+Machine Learning,Definition,Semisupervised Learning,Semi-supervised learning combines a small amount of labeled data with a large amount of unlabeled data to improve learning performance. The model leverages the structure in the unlabeled data to generalize better than supervised learning alone. This approach is useful when labeling data is expensive or time-consuming.
+Machine Learning,Definition,Supervised Learning,"Supervised learning trains a model using labeled data, where the correct answer is known in advance. The model learns a mapping from inputs to outputs by minimizing the difference between its predictions and the true labels. Common examples include classification and regression problems."
+Machine Learning,Definition,Unsupervised Learning,"Unsupervised learning works with unlabeled data and aims to discover hidden patterns or structure. The model groups, compresses, or summarizes the data without being told what the correct outcome is. Typical use cases include clustering, dimensionality reduction, and anomaly detection."
+Machine Learning,Definition,Validation,"Process which evaluates a trained machine-learning model on data that was not used during training to assess how well it generalizes to unseen data. It is used to tune model choices and hyperparameters, detect overfitting or underfitting, and guide model selection before final testing or deployment."
+Machine Learning,Definition,Variance,"Variance refers to errors caused by models that are too sensitive to small fluctuations in the training data, often resulting in overfitting. High-variance model is overly flexible, capturing noise as if it were meaningful patterns."
 Machine Learning,Data Preperation,Data Preperation,Not Defined
-Machine Learning,Data Preperation,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Data Preperation,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Data Preperation,Important to Remeber,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Data Preperation,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Data Preperation,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Data Preperation,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Data Preperation,Goal,Not Defined
+Machine Learning,Data Preperation,Approach,Not Defined
+Machine Learning,Data Preperation,Important to Remeber,Not Defined
+Machine Learning,Data Preperation,Lesson Learnt,Not Defined
+Machine Learning,Data Preperation,Algorithm,Not Defined
+Machine Learning,Data Preperation,Function,Not Defined
 Machine Learning,Model,Model,Not Defined
-Machine Learning,Model,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Model,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Model,Important to Remeber,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Model,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Model,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Model,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Model,Goal,Not Defined
+Machine Learning,Model,Approach,Not Defined
+Machine Learning,Model,Important to Remeber,Not Defined
+Machine Learning,Model,Lesson Learnt,Not Defined
+Machine Learning,Model,Algorithm,Not Defined
+Machine Learning,Model,Function,Not Defined
+Machine Learning,Model,Algorithm,"Ada: Boosting technique that combines multiple weak learners (usually decision stumps) into a strong learner. ModelStrengths: Handles weak learners well, reduces overfitting. Model Weaknesses: Sensitive to noisy data, requires careful tuning of learning rate."
+Machine Learning,Model,Algorithm,AdaBoostClassifier: 
+Machine Learning,Model,Algorithm,AdaBoostRegressor: 
+Machine Learning,Model,Algorithm,AffinityPropagation: 
+Machine Learning,Model,Algorithm,"Agentic AI: Perform a Specific Task, Autonomously while learning its environment."
+Machine Learning,Model,Algorithm,"AgglomerativeClustering: Agglomerative Clustering is a type of hierarchical clustering that uses a bottom-up approach. Each data point starts in its own cluster, and pairs of clusters are merged step by step based on similarity until all points are in one cluster (or a stopping criterion is met). Strengths: Doesn’t require you to specify the number of clusters up front (if using a dendrogram). Can capture nested cluster structure. Weaknesses; Computationally expensive for large datasets (O(n²)).Once merged, clusters can't be split."
+Machine Learning,Model,Algorithm,ARDRegression: 
+Machine Learning,Model,Algorithm,BaggingClassifier: 
+Machine Learning,Model,Algorithm,BaggingRegressor: 
+Machine Learning,Model,Algorithm,BayesianGaussianMixture: 
+Machine Learning,Model,Algorithm,BayesianRidge: 
+Machine Learning,Model,Algorithm,BernoulliNB: 
+Machine Learning,Model,Algorithm,BernoulliRBM: 
+Machine Learning,Model,Algorithm,"Bidirectional Encoder Representations from Transformers (BERT):  It’s a deep learning model for NLP developed by Google in 2018 that understands the context of words in a sentence by looking in both directions — left and right. This is a major upgrade over older models that only read text left-to-right or right-to-left. BERT is like someone reading a sentence and filling in blanks based on the full context.GPT is like someone writing a sentence one word at a time, based only on what they’ve written so far."
+Machine Learning,Model,Algorithm,Binarizer: 
+Machine Learning,Model,Algorithm,Birch: 
+Machine Learning,Model,Algorithm,BisectingKMeans: 
+Machine Learning,Model,Algorithm,CalibratedClassifierCV: 
+Machine Learning,Model,Algorithm,CategoricalNB: 
+Machine Learning,Model,Algorithm,CCA: 
+Machine Learning,Model,Algorithm,ClassifierChain: 
+Machine Learning,Model,Algorithm,ComplementNB: 
+Machine Learning,Model,Algorithm,Convolutional Neural Network: 
+Machine Learning,Model,Algorithm,CountVectorizer: 
+Machine Learning,Model,Algorithm,DBSCAN: 
+Machine Learning,Model,Algorithm,"Decision Trees: An ensemble of decision trees using bagging to reduce overfitting and improve accuracy. ModelStrengths: Reduces overfitting, robust to noise, handles high-dimensional data well. Model Weaknesses': ""Computationally expensive, less interpretable than a single tree.
+
+Algorithm which splits data into branches based on feature values to make decisions or predicitions. Each internal node represents a feature, each branch represens a a decision rule and each leaf node represents an outcome. Decision Trees are popular because they are simple to interpret, require litte data preprocessing and can handle both classificaiton and regression. Their strengths include handling both numerical and catoegorical data, providiing clear visual representations of decisions. They are prone to overfitting and sensitive to noisy data. They work well in scenarios where interpretabiltiy is important, but struggle with high dimensional data when complex relationships exist. "
+Machine Learning,Model,Algorithm,DecisionTreeClassifier: 
+Machine Learning,Model,Algorithm,DecisionTreeRegressor: 
+Machine Learning,Model,Algorithm,DictionaryLearning: 
+Machine Learning,Model,Algorithm,DictVectorizer: 
+Machine Learning,Model,Algorithm,DummyClassifier: 
+Machine Learning,Model,Algorithm,DummyRegressor: 
+Machine Learning,Model,Algorithm,ElasticNetCV: 
+Machine Learning,Model,Algorithm,EllipticEnvelope: 
+Machine Learning,Model,Algorithm,EmpiricalCovariance: 
+Machine Learning,Model,Algorithm,ExtraTreeClassifier: 
+Machine Learning,Model,Algorithm,ExtraTreeRegressor: 
+Machine Learning,Model,Algorithm,ExtraTreesClassifier: 
+Machine Learning,Model,Algorithm,ExtraTreesRegressor: 
+Machine Learning,Model,Algorithm,FactorAnalysis: 
+Machine Learning,Model,Algorithm,FastICA: 
+Machine Learning,Model,Algorithm,FeatureAgglomeration: 
+Machine Learning,Model,Algorithm,FeatureHasher: 
+Machine Learning,Model,Algorithm,FeatureUnion: 
+Machine Learning,Model,Algorithm,FixedThresholdClassifier: 
+Machine Learning,Model,Algorithm,FrozenEstimator: 
+Machine Learning,Model,Algorithm,GammaRegressor: 
+Machine Learning,Model,Algorithm,GaussianMixture: 
+Machine Learning,Model,Algorithm,GaussianNB: 
+Machine Learning,Model,Algorithm,GaussianProcessClassifier: 
+Machine Learning,Model,Algorithm,GaussianProcessRegressor: 
+Machine Learning,Model,Algorithm,GaussianRandomProjection: 
+Machine Learning,Model,Algorithm,Generalaized Liner Model: 
+Machine Learning,Model,Algorithm,GenericUnivariateSelect: 
+Machine Learning,Model,Algorithm,GradientBoostingClassifier: 
+Machine Learning,Model,Algorithm,GradientBoostingRegressor: 
+Machine Learning,Model,Algorithm,GraphicalLasso: 
+Machine Learning,Model,Algorithm,GraphicalLassoCV: 
+Machine Learning,Model,Algorithm,GridSearchCV: 
+Machine Learning,Model,Algorithm,HashingVectorizer: 
+Machine Learning,Model,Algorithm,HDBSCAN: 
+Machine Learning,Model,Algorithm,HistGradientBoostingClassifier: 
+Machine Learning,Model,Algorithm,HistGradientBoostingRegressor: 
+Machine Learning,Model,Algorithm,HuberRegressor: 
+Machine Learning,Model,Algorithm,IncrementalPCA: 
+Machine Learning,Model,Algorithm,IsolationForest: 
+Machine Learning,Model,Algorithm,Isomap: 
+Machine Learning,Model,Algorithm,IsotonicRegression: 
+Machine Learning,Model,Algorithm,KBinsDiscretizer: 
+Machine Learning,Model,Algorithm,KernelCenterer: 
+Machine Learning,Model,Algorithm,KernelDensity: 
+Machine Learning,Model,Algorithm,KernelPCA: 
+Machine Learning,Model,Algorithm,KernelRidge: 
+Machine Learning,Model,Algorithm,KMeans: 
+Machine Learning,Model,Algorithm,KNeighborsClassifier: 
+Machine Learning,Model,Algorithm,KNeighborsRegressor: 
+Machine Learning,Model,Algorithm,"KNN: A model that classifies points based on their proximity to neighbors.. ModelStrengths: Simple to implement, works well with small datasets. Model Weaknesses: Computationally expensive with large datasets, sensitive to irrelevant features."
+Machine Learning,Model,Algorithm,KNNImputer: 
+Machine Learning,Model,Algorithm,LabelBinarizer: 
+Machine Learning,Model,Algorithm,LabelPropagation: 
+Machine Learning,Model,Algorithm,LabelSpreading: 
+Machine Learning,Model,Algorithm,Large Language Model (LLM): Understanding and Generating Human Like Text
+Machine Learning,Model,Algorithm,Lars: 
+Machine Learning,Model,Algorithm,LarsCV: 
+Machine Learning,Model,Algorithm,LassoCV: 
+Machine Learning,Model,Algorithm,LassoLars: 
+Machine Learning,Model,Algorithm,LassoLarsCV: 
+Machine Learning,Model,Algorithm,LassoLarsIC: 
+Machine Learning,Model,Algorithm,LatentDirichletAllocation: 
+Machine Learning,Model,Algorithm,LedoitWolf: 
 Machine Learning,Model,Algorithm,"Linear Regression: Models the relationship between an independent variable ( X ) and a dependent variable ( Y ) using a linear function. Model strengths include : Simple, interpretable, computationally efficient, works well for linearly separable data. Weaknesses, Assumes linear relationships, sensitive to outliers. 
 
 Cost function for Linear Regression is usually Mean Squared Error. While it does not have to be, it is convenient for a number of reasons. 
@@ -27,15 +135,101 @@ Cost function for Linear Regression is usually Mean Squared Error. While it does
 2) It always has a derivative, which makes it convenient for using closed forms solutions (saving computation complexity). Historically was applied via Closed Form Solution, which can be difficult to calculate, computationally expensive. 
 
 Can Approximate Using Gradient Decent. Closed Form Solution. Python Linear Regression utilizies Pseudoinverse, which is computationally less expensive. However, it is Big O 2² to 2³, which means doubling features increases computations complexity 4 times."
+Machine Learning,Model,Algorithm,LinearDiscriminantAnalysis: 
+Machine Learning,Model,Algorithm,LinearSVC: 
+Machine Learning,Model,Algorithm,LinearSVR: 
+Machine Learning,Model,Algorithm,LocallyLinearEmbedding: 
+Machine Learning,Model,Algorithm,LocalOutlierFactor: 
 Machine Learning,Model,Algorithm,"Logistic Regression: Predicts probabilities using the sigmoid function for binary classification problems.
 Model Strengths include; Simple, interpretable, performs well for linearly separable data. Model Weaknesses: Struggles with non-linear relationships, assumes linear relationship between features and log-odds."
-Machine Learning,Model,Algorithm,"AgglomerativeClustering: Agglomerative Clustering is a type of hierarchical clustering that uses a bottom-up approach. Each data point starts in its own cluster, and pairs of clusters are merged step by step based on similarity until all points are in one cluster (or a stopping criterion is met). Strengths: Doesn’t require you to specify the number of clusters up front (if using a dendrogram). Can capture nested cluster structure. Weaknesses; Computationally expensive for large datasets (O(n²)).Once merged, clusters can't be split."
-Machine Learning,Model,Algorithm,"Bidirectional Encoder Representations from Transformers (BERT):  It’s a deep learning model for NLP developed by Google in 2018 that understands the context of words in a sentence by looking in both directions — left and right. This is a major upgrade over older models that only read text left-to-right or right-to-left. BERT is like someone reading a sentence and filling in blanks based on the full context.GPT is like someone writing a sentence one word at a time, based only on what they’ve written so far."
-Machine Learning,Model,Algorithm,"Decision Trees: An ensemble of decision trees using bagging to reduce overfitting and improve accuracy. ModelStrengths: Reduces overfitting, robust to noise, handles high-dimensional data well. Model Weaknesses': ""Computationally expensive, less interpretable than a single tree.
-
-Algorithm which splits data into branches based on feature values to make decisions or predicitions. Each internal node represents a feature, each branch represens a a decision rule and each leaf node represents an outcome. Decision Trees are popular because they are simple to interpret, require litte data preprocessing and can handle both classificaiton and regression. Their strengths include handling both numerical and catoegorical data, providiing clear visual representations of decisions. They are prone to overfitting and sensitive to noisy data. They work well in scenarios where interpretabiltiy is important, but struggle with high dimensional data when complex relationships exist. "
-Machine Learning,Model,Algorithm,Large Language Model (LLM): Understanding and Generating Human Like Text
+Machine Learning,Model,Algorithm,LogisticRegression: 
+Machine Learning,Model,Algorithm,LogisticRegressionCV: 
+Machine Learning,Model,Algorithm,MDS: 
+Machine Learning,Model,Algorithm,MeanShift: 
+Machine Learning,Model,Algorithm,MinCovDet: 
+Machine Learning,Model,Algorithm,MiniBatchDictionaryLearning: 
+Machine Learning,Model,Algorithm,MiniBatchKMeans: 
+Machine Learning,Model,Algorithm,MiniBatchNMF: 
+Machine Learning,Model,Algorithm,MiniBatchSparsePCA: 
+Machine Learning,Model,Algorithm,MissingIndicator: 
+Machine Learning,Model,Algorithm,MLPClassifier: 
+Machine Learning,Model,Algorithm,MLPRegressor: 
+Machine Learning,Model,Algorithm,MultiLabelBinarizer: 
+Machine Learning,Model,Algorithm,MultinomialNB: 
+Machine Learning,Model,Algorithm,MultiOutputClassifier: 
+Machine Learning,Model,Algorithm,MultiOutputRegressor: 
+Machine Learning,Model,Algorithm,MultiTaskElasticNet: 
+Machine Learning,Model,Algorithm,MultiTaskElasticNetCV: 
+Machine Learning,Model,Algorithm,MultiTaskLasso: 
+Machine Learning,Model,Algorithm,MultiTaskLassoCV: 
+Machine Learning,Model,Algorithm,NearestCentroid: 
+Machine Learning,Model,Algorithm,NearestNeighbors: 
+Machine Learning,Model,Algorithm,NeighborhoodComponentsAnalysis: 
 Machine Learning,Model,Algorithm,Neural Network: 
+Machine Learning,Model,Algorithm,NMF: 
+Machine Learning,Model,Algorithm,Normalizer: 
+Machine Learning,Model,Algorithm,NuSVC: 
+Machine Learning,Model,Algorithm,NuSVR: 
+Machine Learning,Model,Algorithm,Nystroem: 
+Machine Learning,Model,Algorithm,OAS: 
+Machine Learning,Model,Algorithm,OneClassSVM: 
+Machine Learning,Model,Algorithm,OneVsOneClassifier: 
+Machine Learning,Model,Algorithm,OneVsRestClassifier: 
+Machine Learning,Model,Algorithm,OPTICS: 
+Machine Learning,Model,Algorithm,OrthogonalMatchingPursuit: 
+Machine Learning,Model,Algorithm,OrthogonalMatchingPursuitCV: 
+Machine Learning,Model,Algorithm,OutputCodeClassifier: 
+Machine Learning,Model,Algorithm,PassiveAggressiveClassifier: 
+Machine Learning,Model,Algorithm,PassiveAggressiveRegressor: 
+Machine Learning,Model,Algorithm,PatchExtractor: 
+Machine Learning,Model,Algorithm,PCA: 
+Machine Learning,Model,Algorithm,Perceptron: 
+Machine Learning,Model,Algorithm,Pipeline: 
+Machine Learning,Model,Algorithm,PLSCanonical: 
+Machine Learning,Model,Algorithm,PLSRegression: 
+Machine Learning,Model,Algorithm,PLSSVD: 
+Machine Learning,Model,Algorithm,PoissonRegressor: 
+Machine Learning,Model,Algorithm,PolynomialCountSketch: 
+Machine Learning,Model,Algorithm,PolynomialFeatures: 
+Machine Learning,Model,Algorithm,QuadraticDiscriminantAnalysis: 
+Machine Learning,Model,Algorithm,Quantile Random Forest: 
+Machine Learning,Model,Algorithm,QuantileRegressor: 
+Machine Learning,Model,Algorithm,RadiusNeighborsClassifier: 
+Machine Learning,Model,Algorithm,RadiusNeighborsRegressor: 
+Machine Learning,Model,Algorithm,RandomForestClassifier: 
+Machine Learning,Model,Algorithm,RandomForestRegressor: 
+Machine Learning,Model,Algorithm,RandomizedSearchCV: 
+Machine Learning,Model,Algorithm,RandomTreesEmbedding: 
+Machine Learning,Model,Algorithm,RANSACRegressor: 
+Machine Learning,Model,Algorithm,Recurrent Neural Network: 
+Machine Learning,Model,Algorithm,RegressorChain: 
+Machine Learning,Model,Algorithm,RFE: 
+Machine Learning,Model,Algorithm,RFECV: 
+Machine Learning,Model,Algorithm,RidgeClassifier: 
+Machine Learning,Model,Algorithm,RidgeClassifierCV: 
+Machine Learning,Model,Algorithm,RidgeCV: 
+Machine Learning,Model,Algorithm,SelectFdr: 
+Machine Learning,Model,Algorithm,SelectFpr: 
+Machine Learning,Model,Algorithm,SelectFromModel: 
+Machine Learning,Model,Algorithm,SelectFwe: 
+Machine Learning,Model,Algorithm,SelectKBest: 
+Machine Learning,Model,Algorithm,SelectPercentile: 
+Machine Learning,Model,Algorithm,SelfTrainingClassifier: 
+Machine Learning,Model,Algorithm,SequentialFeatureSelector: 
+Machine Learning,Model,Algorithm,SGDClassifier: Handle Large Dataset well because it treats each individual point distinctly.
+Machine Learning,Model,Algorithm,SGDOneClassSVM: 
+Machine Learning,Model,Algorithm,SGDRegressor: 
+Machine Learning,Model,Algorithm,ShrunkCovariance: 
+Machine Learning,Model,Algorithm,SimpleImputer: 
+Machine Learning,Model,Algorithm,SparseCoder: 
+Machine Learning,Model,Algorithm,SparsePCA: 
+Machine Learning,Model,Algorithm,SparseRandomProjection: 
+Machine Learning,Model,Algorithm,SpectralBiclustering: 
+Machine Learning,Model,Algorithm,SpectralClustering: 
+Machine Learning,Model,Algorithm,SpectralCoclustering: 
+Machine Learning,Model,Algorithm,SpectralEmbedding: 
+Machine Learning,Model,Algorithm,StackingClassifier: 
+Machine Learning,Model,Algorithm,StackingRegressor: 
 Machine Learning,Model,Algorithm,"Stochastic Gradient Descent: Stochastic Gradient Descent (SGD) is a widely used optimization algorithm in machine learning, particularly for training models like neural networks. Its primary goal is to minimize a loss function, which measures the error between the model's predictions and the actual outcomes, by iteratively adjusting the model’s parameters.
 
 Traditional Gradient Descent vs. Stochastic Gradient Descent
@@ -60,235 +254,57 @@ Machine Learning,Model,Algorithm,"Support Vector Machines: Finds the optimal hyp
 
 ModelStrengths: Effective in high-dimensional spaces, works well with clear margins of separation. Model Weaknesses:Computationally expensive, struggles with large datasets."
 Machine Learning,Model,Algorithm,"Support Vector Regression: SVR tries to fit a function within a margin of tolerance (epsilon) around the true data points — instead of minimizing the error between predicted and actual values like in ordinary least squares regression. Margin of Tolerance (ε): Instead of minimizing all errors, SVR ignores errors as long as they're within this ""epsilon-tube"" around the true values.Support Vectors: Only data points outside the epsilon margin contribute to the model (i.e., they influence the regression line).Kernel Trick: Like SVM, SVR can use kernels (e.g., linear, RBF) to model nonlinear relationships."
-Machine Learning,Model,Algorithm,XGBoost: 
-Machine Learning,Model,Algorithm,"KNN: A model that classifies points based on their proximity to neighbors.. ModelStrengths: Simple to implement, works well with small datasets. Model Weaknesses: Computationally expensive with large datasets, sensitive to irrelevant features."
-Machine Learning,Model,Algorithm,"Ada: Boosting technique that combines multiple weak learners (usually decision stumps) into a strong learner. ModelStrengths: Handles weak learners well, reduces overfitting. Model Weaknesses: Sensitive to noisy data, requires careful tuning of learning rate."
-Machine Learning,Model,Algorithm,ARDRegression: 
-Machine Learning,Model,Algorithm,AdaBoostClassifier: 
-Machine Learning,Model,Algorithm,AdaBoostRegressor: 
-Machine Learning,Model,Algorithm,AffinityPropagation: 
-Machine Learning,Model,Algorithm,BaggingClassifier: 
-Machine Learning,Model,Algorithm,BaggingRegressor: 
-Machine Learning,Model,Algorithm,BayesianGaussianMixture: 
-Machine Learning,Model,Algorithm,BayesianRidge: 
-Machine Learning,Model,Algorithm,BernoulliNB: 
-Machine Learning,Model,Algorithm,BernoulliRBM: 
-Machine Learning,Model,Algorithm,Binarizer: 
-Machine Learning,Model,Algorithm,Birch: 
-Machine Learning,Model,Algorithm,BisectingKMeans: 
-Machine Learning,Model,Algorithm,CCA: 
-Machine Learning,Model,Algorithm,CalibratedClassifierCV: 
-Machine Learning,Model,Algorithm,CategoricalNB: 
-Machine Learning,Model,Algorithm,ClassifierChain: 
-Machine Learning,Model,Algorithm,ComplementNB: 
-Machine Learning,Model,Algorithm,CountVectorizer: 
-Machine Learning,Model,Algorithm,DBSCAN: 
-Machine Learning,Model,Algorithm,DecisionTreeClassifier: 
-Machine Learning,Model,Algorithm,DecisionTreeRegressor: 
-Machine Learning,Model,Algorithm,DictVectorizer: 
-Machine Learning,Model,Algorithm,DictionaryLearning: 
-Machine Learning,Model,Algorithm,DummyClassifier: 
-Machine Learning,Model,Algorithm,DummyRegressor: 
-Machine Learning,Model,Algorithm,ElasticNetCV: 
-Machine Learning,Model,Algorithm,EllipticEnvelope: 
-Machine Learning,Model,Algorithm,EmpiricalCovariance: 
-Machine Learning,Model,Algorithm,ExtraTreeClassifier: 
-Machine Learning,Model,Algorithm,ExtraTreeRegressor: 
-Machine Learning,Model,Algorithm,ExtraTreesClassifier: 
-Machine Learning,Model,Algorithm,ExtraTreesRegressor: 
-Machine Learning,Model,Algorithm,FactorAnalysis: 
-Machine Learning,Model,Algorithm,FastICA: 
-Machine Learning,Model,Algorithm,FeatureAgglomeration: 
-Machine Learning,Model,Algorithm,FeatureHasher: 
-Machine Learning,Model,Algorithm,FeatureUnion: 
-Machine Learning,Model,Algorithm,FixedThresholdClassifier: 
-Machine Learning,Model,Algorithm,FrozenEstimator: 
-Machine Learning,Model,Algorithm,GammaRegressor: 
-Machine Learning,Model,Algorithm,GaussianMixture: 
-Machine Learning,Model,Algorithm,GaussianNB: 
-Machine Learning,Model,Algorithm,GaussianProcessClassifier: 
-Machine Learning,Model,Algorithm,GaussianProcessRegressor: 
-Machine Learning,Model,Algorithm,GaussianRandomProjection: 
-Machine Learning,Model,Algorithm,GenericUnivariateSelect: 
-Machine Learning,Model,Algorithm,GradientBoostingClassifier: 
-Machine Learning,Model,Algorithm,GradientBoostingRegressor: 
-Machine Learning,Model,Algorithm,GraphicalLasso: 
-Machine Learning,Model,Algorithm,GraphicalLassoCV: 
-Machine Learning,Model,Algorithm,GridSearchCV: 
-Machine Learning,Model,Algorithm,HDBSCAN: 
-Machine Learning,Model,Algorithm,HashingVectorizer: 
-Machine Learning,Model,Algorithm,HistGradientBoostingClassifier: 
-Machine Learning,Model,Algorithm,HistGradientBoostingRegressor: 
-Machine Learning,Model,Algorithm,HuberRegressor: 
-Machine Learning,Model,Algorithm,IncrementalPCA: 
-Machine Learning,Model,Algorithm,IsolationForest: 
-Machine Learning,Model,Algorithm,Isomap: 
-Machine Learning,Model,Algorithm,IsotonicRegression: 
-Machine Learning,Model,Algorithm,KBinsDiscretizer: 
-Machine Learning,Model,Algorithm,KMeans: 
-Machine Learning,Model,Algorithm,KNNImputer: 
-Machine Learning,Model,Algorithm,KNeighborsClassifier: 
-Machine Learning,Model,Algorithm,KNeighborsRegressor: 
-Machine Learning,Model,Algorithm,KernelCenterer: 
-Machine Learning,Model,Algorithm,KernelDensity: 
-Machine Learning,Model,Algorithm,KernelPCA: 
-Machine Learning,Model,Algorithm,KernelRidge: 
-Machine Learning,Model,Algorithm,LabelBinarizer: 
-Machine Learning,Model,Algorithm,LabelPropagation: 
-Machine Learning,Model,Algorithm,LabelSpreading: 
-Machine Learning,Model,Algorithm,Lars: 
-Machine Learning,Model,Algorithm,LarsCV: 
-Machine Learning,Model,Algorithm,LassoCV: 
-Machine Learning,Model,Algorithm,LassoLars: 
-Machine Learning,Model,Algorithm,LassoLarsCV: 
-Machine Learning,Model,Algorithm,LassoLarsIC: 
-Machine Learning,Model,Algorithm,LatentDirichletAllocation: 
-Machine Learning,Model,Algorithm,LedoitWolf: 
-Machine Learning,Model,Algorithm,LinearDiscriminantAnalysis: 
-Machine Learning,Model,Algorithm,LinearSVC: 
-Machine Learning,Model,Algorithm,LinearSVR: 
-Machine Learning,Model,Algorithm,LocalOutlierFactor: 
-Machine Learning,Model,Algorithm,LocallyLinearEmbedding: 
-Machine Learning,Model,Algorithm,LogisticRegression: 
-Machine Learning,Model,Algorithm,LogisticRegressionCV: 
-Machine Learning,Model,Algorithm,MDS: 
-Machine Learning,Model,Algorithm,MLPClassifier: 
-Machine Learning,Model,Algorithm,MLPRegressor: 
-Machine Learning,Model,Algorithm,MeanShift: 
-Machine Learning,Model,Algorithm,MinCovDet: 
-Machine Learning,Model,Algorithm,MiniBatchDictionaryLearning: 
-Machine Learning,Model,Algorithm,MiniBatchKMeans: 
-Machine Learning,Model,Algorithm,MiniBatchNMF: 
-Machine Learning,Model,Algorithm,MiniBatchSparsePCA: 
-Machine Learning,Model,Algorithm,MissingIndicator: 
-Machine Learning,Model,Algorithm,MultiLabelBinarizer: 
-Machine Learning,Model,Algorithm,MultiOutputClassifier: 
-Machine Learning,Model,Algorithm,MultiOutputRegressor: 
-Machine Learning,Model,Algorithm,MultiTaskElasticNet: 
-Machine Learning,Model,Algorithm,MultiTaskElasticNetCV: 
-Machine Learning,Model,Algorithm,MultiTaskLasso: 
-Machine Learning,Model,Algorithm,MultiTaskLassoCV: 
-Machine Learning,Model,Algorithm,MultinomialNB: 
-Machine Learning,Model,Algorithm,NMF: 
-Machine Learning,Model,Algorithm,NearestCentroid: 
-Machine Learning,Model,Algorithm,NearestNeighbors: 
-Machine Learning,Model,Algorithm,NeighborhoodComponentsAnalysis: 
-Machine Learning,Model,Algorithm,Normalizer: 
-Machine Learning,Model,Algorithm,NuSVC: 
-Machine Learning,Model,Algorithm,NuSVR: 
-Machine Learning,Model,Algorithm,Nystroem: 
-Machine Learning,Model,Algorithm,OAS: 
-Machine Learning,Model,Algorithm,OPTICS: 
-Machine Learning,Model,Algorithm,OneClassSVM: 
-Machine Learning,Model,Algorithm,OneVsOneClassifier: 
-Machine Learning,Model,Algorithm,OneVsRestClassifier: 
-Machine Learning,Model,Algorithm,OrthogonalMatchingPursuit: 
-Machine Learning,Model,Algorithm,OrthogonalMatchingPursuitCV: 
-Machine Learning,Model,Algorithm,OutputCodeClassifier: 
-Machine Learning,Model,Algorithm,PCA: 
-Machine Learning,Model,Algorithm,PLSCanonical: 
-Machine Learning,Model,Algorithm,PLSRegression: 
-Machine Learning,Model,Algorithm,PLSSVD: 
-Machine Learning,Model,Algorithm,PassiveAggressiveClassifier: 
-Machine Learning,Model,Algorithm,PassiveAggressiveRegressor: 
-Machine Learning,Model,Algorithm,PatchExtractor: 
-Machine Learning,Model,Algorithm,Perceptron: 
-Machine Learning,Model,Algorithm,Pipeline: 
-Machine Learning,Model,Algorithm,PoissonRegressor: 
-Machine Learning,Model,Algorithm,PolynomialCountSketch: 
-Machine Learning,Model,Algorithm,PolynomialFeatures: 
-Machine Learning,Model,Algorithm,QuadraticDiscriminantAnalysis: 
-Machine Learning,Model,Algorithm,QuantileRegressor: 
-Machine Learning,Model,Algorithm,RANSACRegressor: 
-Machine Learning,Model,Algorithm,RFE: 
-Machine Learning,Model,Algorithm,RFECV: 
-Machine Learning,Model,Algorithm,RadiusNeighborsClassifier: 
-Machine Learning,Model,Algorithm,RadiusNeighborsRegressor: 
-Machine Learning,Model,Algorithm,RandomForestClassifier: 
-Machine Learning,Model,Algorithm,RandomForestRegressor: 
-Machine Learning,Model,Algorithm,RandomTreesEmbedding: 
-Machine Learning,Model,Algorithm,RandomizedSearchCV: 
-Machine Learning,Model,Algorithm,RegressorChain: 
-Machine Learning,Model,Algorithm,RidgeCV: 
-Machine Learning,Model,Algorithm,RidgeClassifier: 
-Machine Learning,Model,Algorithm,RidgeClassifierCV: 
-Machine Learning,Model,Algorithm,SGDClassifier: Handle Large Dataset well because it treats each individual point distinctly.
-Machine Learning,Model,Algorithm,SGDOneClassSVM: 
-Machine Learning,Model,Algorithm,SGDRegressor: 
 Machine Learning,Model,Algorithm,SVC: 
 Machine Learning,Model,Algorithm,SVR: 
-Machine Learning,Model,Algorithm,SelectFdr: 
-Machine Learning,Model,Algorithm,SelectFpr: 
-Machine Learning,Model,Algorithm,SelectFromModel: 
-Machine Learning,Model,Algorithm,SelectFwe: 
-Machine Learning,Model,Algorithm,SelectKBest: 
-Machine Learning,Model,Algorithm,SelectPercentile: 
-Machine Learning,Model,Algorithm,SelfTrainingClassifier: 
-Machine Learning,Model,Algorithm,SequentialFeatureSelector: 
-Machine Learning,Model,Algorithm,ShrunkCovariance: 
-Machine Learning,Model,Algorithm,SimpleImputer: 
-Machine Learning,Model,Algorithm,SparseCoder: 
-Machine Learning,Model,Algorithm,SparsePCA: 
-Machine Learning,Model,Algorithm,SparseRandomProjection: 
-Machine Learning,Model,Algorithm,SpectralBiclustering: 
-Machine Learning,Model,Algorithm,SpectralClustering: 
-Machine Learning,Model,Algorithm,SpectralCoclustering: 
-Machine Learning,Model,Algorithm,SpectralEmbedding: 
-Machine Learning,Model,Algorithm,StackingClassifier: 
-Machine Learning,Model,Algorithm,StackingRegressor: 
-Machine Learning,Model,Algorithm,TSNE: 
 Machine Learning,Model,Algorithm,TfidfVectorizer: 
 Machine Learning,Model,Algorithm,TheilSenRegressor: 
 Machine Learning,Model,Algorithm,TruncatedSVD: 
+Machine Learning,Model,Algorithm,TSNE: 
 Machine Learning,Model,Algorithm,TunedThresholdClassifierCV: 
 Machine Learning,Model,Algorithm,TweedieRegressor: 
 Machine Learning,Model,Algorithm,VarianceThreshold: 
 Machine Learning,Model,Algorithm,VotingClassifier: 
 Machine Learning,Model,Algorithm,VotingRegressor: 
-Machine Learning,Model,Algorithm,Generalaized Liner Model: 
-Machine Learning,Model,Algorithm,Quantile Random Forest: 
-Machine Learning,Model,Algorithm,"Agentic AI: Perform a Specific Task, Autonomously while learning its environment."
 Machine Learning,Model,Algorithm,"Word2Vec: Word2Vec is a neural-network–based method that learns dense vector embeddings for words, capturing semantic and syntactic relationships. Unlike Bag of Words, which only counts word occurrences and ignores meaning, Word2Vec represents words in a continuous vector space where similarity between vectors reflects semantic closeness"
-Machine Learning,Model,Algorithm,Convolutional Neural Network: 
-Machine Learning,Model,Algorithm,Recurrent Neural Network: 
+Machine Learning,Model,Algorithm,XGBoost: 
 Machine Learning,Model,Function,AdditiveChi2Sampler: 
 Machine Learning,Feature Engineering,Feature Engineering,Not Defined
-Machine Learning,Feature Engineering,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Feature Engineering,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Feature Engineering,Important to Remeber,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Feature Engineering,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Feature Engineering,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Feature Engineering,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Feature Engineering,Goal,Not Defined
+Machine Learning,Feature Engineering,Approach,Not Defined
+Machine Learning,Feature Engineering,Important to Remeber,Not Defined
+Machine Learning,Feature Engineering,Lesson Learnt,Not Defined
+Machine Learning,Feature Engineering,Algorithm,Not Defined
+Machine Learning,Feature Engineering,Function,Not Defined
 Machine Learning,Feature Selection,Feature Selection,Not Defined
-Machine Learning,Feature Selection,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Feature Selection,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Feature Selection,Goal,Not Defined
+Machine Learning,Feature Selection,Approach,Not Defined
 Machine Learning,Feature Selection,Important to Remember,"Avoid ambigious features. Is a Banana ripe, who says so?"
 Machine Learning,Feature Selection,Important to Remember,"Careful when something is truly random generated, Atmospheric Change, Earthquakes, Stocks. Very difficult, if not impossible to predict."
 Machine Learning,Feature Selection,Important to Remember,"MNIST performance when tilting Images, of adding noise."
-Machine Learning,Feature Selection,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Feature Selection,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Feature Selection,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Feature Selection,Lesson Learnt,Not Defined
+Machine Learning,Feature Selection,Algorithm,Not Defined
+Machine Learning,Feature Selection,Function,Not Defined
 Machine Learning,Activation Function,Activation Function,"Used during learning and prediction in a neural network. It supports decision-making by deciding whether information should pass forward and how strong it should be. If it wasn’t utilized, the network could only learn very simple straight-line patterns and wouldn’t be able to model real-world complexity."
-Machine Learning,Activation Function,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Activation Function,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Activation Function,Important to Remeber,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Activation Function,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Activation Function,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Activation Function,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Activation Function,Goal,Not Defined
+Machine Learning,Activation Function,Approach,Not Defined
+Machine Learning,Activation Function,Important to Remeber,Not Defined
+Machine Learning,Activation Function,Lesson Learnt,Not Defined
+Machine Learning,Activation Function,Algorithm,Not Defined
+Machine Learning,Activation Function,Function,Not Defined
 Machine Learning,Loss Function,Loss Function,Not Defined
-Machine Learning,Loss Function,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Loss Function,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Loss Function,Important to Remeber,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Loss Function,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Loss Function,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Loss Function,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Loss Function,Goal,Not Defined
+Machine Learning,Loss Function,Approach,Not Defined
+Machine Learning,Loss Function,Important to Remeber,Not Defined
+Machine Learning,Loss Function,Lesson Learnt,Not Defined
+Machine Learning,Loss Function,Algorithm,Not Defined
+Machine Learning,Loss Function,Function,Not Defined
 Machine Learning,Evaluation,Evaluation,Not Defined
-Machine Learning,Evaluation,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Evaluation,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Evaluation,Important to Remeber,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Evaluation,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Evaluation,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Evaluation,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Evaluation,Goal,Not Defined
+Machine Learning,Evaluation,Approach,Not Defined
+Machine Learning,Evaluation,Important to Remeber,Not Defined
+Machine Learning,Evaluation,Lesson Learnt,Not Defined
+Machine Learning,Evaluation,Algorithm,Not Defined
+Machine Learning,Evaluation,Function,Not Defined
 Machine Learning,Optimization,Optimization,"Optimization is the process of finding the best possible solution to a problem by systematically adjusting inputs or decisions to maximize or minimize a defined objective, subject to given constraints. In machine learning and analytics, optimization involves selecting model parameters that minimize error or maximize performance according to a chosen loss function. Importantly, what is considered “best” depends entirely on how the objective and constraints are defined."
 Machine Learning,Optimization,Goal,"What are you attempting to maximize, Training Performance, or ability to Generalize.  Strive to avoid overfitting, maximize ability to Generalize."
 Machine Learning,Optimization,Approach,Curse of Dimensionality
@@ -298,8 +314,8 @@ Machine Learning,Optimization,Important to Remember,"An Example of this would a 
 Machine Learning,Optimization,Important to Remember,"Need a reference to test performance of the model. If dataset is imbalanced, have simple guess. If temperature, guess trailing average, etc, find something simple, often very difficutl to beat, and juice might not be worth the squeeze."
 Machine Learning,Optimization,Important to Remember,"ML can't look naively for a simple common sense solution. Unless feature engineered or hard coded, model will always just plug forward. "
 Machine Learning,Optimization,Important to Remember,"Any data set can be optimized, even when there is NO relation. It will generalize."
-Machine Learning,Optimization,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Optimization,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Optimization,Lesson Learnt,Not Defined
+Machine Learning,Optimization,Algorithm,Not Defined
 Machine Learning,Optimization,Algorithm,Adadelta: Adaptive learning rate for nonstationary objectives.
 Machine Learning,Optimization,Algorithm,"Adagrad: Variation of Gradient Descent, which adapts the learning rate for each parameter by scaling it inversely proportional to the sum of past squared gradients. 
 "
@@ -311,33 +327,27 @@ Machine Learning,Optimization,Algorithm,"Momentum: Variation of Gradient Descent
 Machine Learning,Optimization,Algorithm,Nadam: Adam optimizer with Nesterov momentum for better convergence.
 Machine Learning,Optimization,Algorithm,"RMSprop: Variation of Gradient Descent, which adapts the learning rate by dividing by an exponentially weighted moving average of past squared gradients. Adapts learning rates based on recent gradient magnitudes. Good for RNNs."
 Machine Learning,Training,Training,Not Defined
-Machine Learning,Training,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Training,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Training,Important to Remember,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Training,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Training,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Training,Function,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Training,Goal,Not Defined
+Machine Learning,Training,Approach,Not Defined
+Machine Learning,Training,Important to Remember,Not Defined
+Machine Learning,Training,Lesson Learnt,Not Defined
+Machine Learning,Training,Algorithm,Not Defined
+Machine Learning,Training,Function,Not Defined
 Machine Learning,Validation,Validation,"Process which evaluates a trained machine-learning model on data that was not used during training to assess how well it generalizes to unseen data. It is used to tune model choices and hyperparameters, detect overfitting or underfitting, and guide model selection before final testing or deployment."
-Machine Learning,Validation,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Validation,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Validation,Goal,Not Defined
+Machine Learning,Validation,Approach,Not Defined
 Machine Learning,Validation,Important to Remember,"Need a reference to test performance of the model. If dataset is imbalanced, have simple guess. If temperature, guess trailing average, etc, find something simple, often very difficutl to beat, and juice might not be worth the squeeze."
-Machine Learning,Validation,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Validation,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Validation,Lesson Learnt,Not Defined
+Machine Learning,Validation,Algorithm,Not Defined
 Machine Learning,Validation,Function,"Bias, Fairness, and Ethics"
 Machine Learning,Validation,Function,Accuracy: Number of correctly classified examples divided by the total number of classified examples.
 Machine Learning,Tuning,Tuning,Not Defined
-Machine Learning,Tuning,Goal,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Tuning,Approach,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Tuning,Important to Remember,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Tuning,Lesson Learnt,"Not Defined. Add Record Matching Category, Categorization, Word"
-Machine Learning,Tuning,Algorithm,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,Tuning,Goal,Not Defined
+Machine Learning,Tuning,Approach,Not Defined
+Machine Learning,Tuning,Important to Remember,Not Defined
+Machine Learning,Tuning,Lesson Learnt,Not Defined
+Machine Learning,Tuning,Algorithm,Not Defined
 Machine Learning,"Bias, Fairness and Ethics","Bias, Fairness and Ethics",Not Defined
-Machine Learning,"Bias, Fairness and Ethics",,"Not Defined. Add Record Matching Category, Categorization, Word"
+Machine Learning,"Bias, Fairness and Ethics",,Not Defined
 Machine Learning,Model Interpretability / Explainability,Model Interpretability / Explainability,Not Defined
-Machine Learning,Model Interpretability / Explainability,,"Not Defined. Add Record Matching Category, Categorization, Word"
-Visualizations,Definition,Visualizations,Not Defined
-Visualizations,Visualizations,Visualizations,Not Defined
-Visualizations,Visualizations,How people Interpret,"Christ at Emmaus - Feelings can trump expertise. We find ways to dismiss evidence we don’t like, when it supports our preconceptions we are less likely to look for flaws."
-Visualizations,Visualizations,What Am I looking at.,The bigger display with a wider array of jams attracted more customers but very few of them actually bought jam. The display that offered fewer choices inspired more sales.[1] The counterintuitive result went viral—it hit a sweet spot. People respond better to fewer choices!
-Visualizations,Visualizations,,"Has the performance of the algorithm been assessed rigorously—for example, by running a randomized trial to see if people make better decisions with or without algorithmic advice? Have independent experts been given a chance to evaluate the algorithm? What have they concluded? We should not simply trust that algorithms are doing a better job than humans, nor should we assume that if the algorithms are flawed, the humans would be flawless."
-Visualizations,Visualizations,,When someone tells a joke poorly it is more likely than not that they have forgotten to convey an important piece of information in the set up that makes the punch line funny. So it seems the joke is in the set up and not the punch line.
+Machine Learning,Model Interpretability / Explainability,,Not Defined
