@@ -75,8 +75,253 @@ Machine Learning,Model,Regularization,Automatically Included because it has a Re
 Machine Learning,Model,Important to Remeber,,0.0,6.0,44.0
 Machine Learning,Model,Lesson Learnt,,0.0,6.0,45.0
 Machine Learning,Model,Algorithm,,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,"Ada: Boosting technique that combines multiple weak learners (usually decision stumps) into a strong learner. ModelStrengths: Handles weak learners well, reduces overfitting. Model Weaknesses: Sensitive to noisy data, requires careful tuning of learning rate.",0.0,6.0,46.0
+Machine Learning,Model,Algorithm,AdaBoostClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,AdaBoostRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,AffinityPropagation: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,"Agentic AI: Perform a Specific Task, Autonomously while learning its environment.",0.0,6.0,46.0
+Machine Learning,Model,Algorithm,"AgglomerativeClustering: Agglomerative Clustering is a type of hierarchical clustering that uses a bottom-up approach. Each data point starts in its own cluster, and pairs of clusters are merged step by step based on similarity until all points are in one cluster (or a stopping criterion is met). Strengths: Doesn’t require you to specify the number of clusters up front (if using a dendrogram). Can capture nested cluster structure. Weaknesses; Computationally expensive for large datasets (O(n²)).Once merged, clusters can't be split.",0.0,6.0,46.0
+Machine Learning,Model,Algorithm,ARDRegression: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,BaggingClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,BaggingRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,BayesianGaussianMixture: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,BayesianRidge: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,BernoulliNB: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,BernoulliRBM: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,"Bidirectional Encoder Representations from Transformers (BERT):  It’s a deep learning model for NLP developed by Google in 2018 that understands the context of words in a sentence by looking in both directions — left and right. This is a major upgrade over older models that only read text left-to-right or right-to-left. BERT is like someone reading a sentence and filling in blanks based on the full context.GPT is like someone writing a sentence one word at a time, based only on what they’ve written so far.",0.0,6.0,46.0
+Machine Learning,Model,Algorithm,Binarizer: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,Birch: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,BisectingKMeans: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,CalibratedClassifierCV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,CategoricalNB: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,CCA: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,ClassifierChain: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,ComplementNB: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,Convolutional Neural Network: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,CountVectorizer: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,DBSCAN: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,"Decision Trees: An ensemble of decision trees using bagging to reduce overfitting and improve accuracy. ModelStrengths: Reduces overfitting, robust to noise, handles high-dimensional data well. Model Weaknesses': ""Computationally expensive, less interpretable than a single tree.
+
+Algorithm which splits data into branches based on feature values to make decisions or predicitions. Each internal node represents a feature, each branch represens a a decision rule and each leaf node represents an outcome. Decision Trees are popular because they are simple to interpret, require litte data preprocessing and can handle both classificaiton and regression. Their strengths include handling both numerical and catoegorical data, providiing clear visual representations of decisions. They are prone to overfitting and sensitive to noisy data. They work well in scenarios where interpretabiltiy is important, but struggle with high dimensional data when complex relationships exist. ",0.0,6.0,46.0
+Machine Learning,Model,Algorithm,DecisionTreeClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,DecisionTreeRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,DictionaryLearning: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,DictVectorizer: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,DummyClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,DummyRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,ElasticNetCV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,EllipticEnvelope: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,EmpiricalCovariance: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,ExtraTreeClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,ExtraTreeRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,ExtraTreesClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,ExtraTreesRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,FactorAnalysis: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,FastICA: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,FeatureAgglomeration: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,FeatureHasher: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,FeatureUnion: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,FixedThresholdClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,FrozenEstimator: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,GammaRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,GaussianMixture: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,GaussianNB: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,GaussianProcessClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,GaussianProcessRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,GaussianRandomProjection: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,Generalaized Liner Model: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,GenericUnivariateSelect: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,"Gradient Descent: Widely used optimization algorithm in machine learning, particularly for training models like neural networks. Its primary goal is to minimize a loss function, which measures the error between the model's predictions and the actual outcomes, by iteratively adjusting the model’s parameters.
+
+Traditional Gradient Descent vs. Stochastic Gradient Descent
+In Batch Gradient Descent, the algorithm computes the gradient of the loss function with respect to the model’s parameters using the entire dataset before updating the parameters. While this approach provides a precise update direction, it is computationally expensive and slow for large datasets since it requires processing all data points in each iteration.
+
+Stochastic Gradient Descent (SGD) addresses this issue by approximating the gradient. Instead of computing gradients over the full dataset, SGD updates the model’s parameters using just a single data point at each step. This significantly reduces computational cost per iteration, making the algorithm much faster. However, since updates are based on a single random sample, they introduce high variance (noise), causing fluctuations that may prevent smooth convergence.
+Mini-Batch Gradient Descent: To balance efficiency and stability, a common alternative is Mini-Batch Gradient Descent. Instead of using the full dataset (Batch Gradient Descent) or a single data point (SGD), Mini-Batch Gradient Descent computes updates using a small batch of randomly selected data points (e.g., 32, 64, or 128 samples per batch). This approach: Reduces noise compared to SGD while still being computationally efficient. 
+Leverages vectorized operations for faster computation using modern hardware (e.g., GPUs).
+Smooths out updates while still allowing some stochasticity to escape local minima.
+Benefits & Trade-offs of SGD
+Faster updates: Each iteration is computationally cheaper than full-batch gradient descent.
+Better exploration: The randomness in updates helps escape local minima.
+Higher variance: The noisier updates may lead to less stable convergence, requiring techniques like learning rate decay or momentum to improve performance.
+Slower convergence: Since updates are less precise, SGD may take longer to reach the optimal solution.
+Conclusion
+SGD, Mini-Batch Gradient Descent, and Batch Gradient Descent each offer different trade-offs in terms of speed, stability, and computational efficiency. In practice, Mini-Batch Gradient Descent is the most commonly used approach for deep learning, as it provides a balance between computational efficiency and convergence stability.",0.0,6.0,46.0
+Machine Learning,Model,Algorithm,GradientBoostingClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,GradientBoostingRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,GraphicalLasso: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,GraphicalLassoCV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,GridSearchCV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,HashingVectorizer: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,HDBSCAN: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,HistGradientBoostingClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,HistGradientBoostingRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,HuberRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,IncrementalPCA: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,IsolationForest: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,Isomap: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,IsotonicRegression: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,KBinsDiscretizer: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,KernelCenterer: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,KernelDensity: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,KernelPCA: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,KernelRidge: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,KMeans: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,KNeighborsClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,KNeighborsRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,"KNN: A model that classifies points based on their proximity to neighbors.. ModelStrengths: Simple to implement, works well with small datasets. Model Weaknesses: Computationally expensive with large datasets, sensitive to irrelevant features.",0.0,6.0,46.0
+Machine Learning,Model,Algorithm,KNNImputer: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LabelBinarizer: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LabelPropagation: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LabelSpreading: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,Large Language Model (LLM): Understanding and Generating Human Like Text,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,Lars: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LarsCV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LassoCV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LassoLars: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LassoLarsCV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LassoLarsIC: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LatentDirichletAllocation: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LedoitWolf: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,"Linear Regression: Models the relationship between an independent variable ( X ) and a dependent variable ( Y ) using a linear function. Model strengths include : Simple, interpretable, computationally efficient, works well for linearly separable data. Weaknesses, Assumes linear relationships, sensitive to outliers. Can calculate using two different approaches, Closed Form or Gradient Decent. Closed Form Solution was the original approach, can be calculated using advanced Calculus, which is easy for simple instances with a low number of independent variables, however Gradient Decent increasingly utilized as easy to implement via numeric calculation,  Python Linear Regression utilizies Pseudoinverse, which is computationally less expensive. However, it is Big O 2² to 2³, which means doubling features increases computations complexity 4 times.
+
+Cost function for Linear Regression is usually Mean Squared Error. While it does not have to be, it is convenient for a number of reasons. 
+1) Rarely Overfits, which Polynomial equations frequently do. 
+2) It always has a derivative, which makes it convenient for using closed forms solutions (saving computation complexity). Historically was applied via Closed Form Solution, which can be difficult to calculate, computationally expensive. ",0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LinearDiscriminantAnalysis: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LinearSVC: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LinearSVR: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LocallyLinearEmbedding: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LocalOutlierFactor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,"Logistic Regression: Predicts probabilities using the sigmoid function for binary classification problems.
+Model Strengths include; Simple, interpretable, performs well for linearly separable data. Model Weaknesses: Struggles with non-linear relationships, assumes linear relationship between features and log-odds.",0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LogisticRegression: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,LogisticRegressionCV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MDS: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MeanShift: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MinCovDet: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MiniBatchDictionaryLearning: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MiniBatchKMeans: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MiniBatchNMF: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MiniBatchSparsePCA: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MissingIndicator: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MLPClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MLPRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MultiLabelBinarizer: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MultinomialNB: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MultiOutputClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MultiOutputRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MultiTaskElasticNet: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MultiTaskElasticNetCV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MultiTaskLasso: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,MultiTaskLassoCV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,NearestCentroid: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,NearestNeighbors: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,NeighborhoodComponentsAnalysis: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,Neural Network: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,NMF: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,Normalizer: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,NuSVC: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,NuSVR: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,Nystroem: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,OAS: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,OneClassSVM: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,OneVsOneClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,OneVsRestClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,OPTICS: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,OrthogonalMatchingPursuit: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,OrthogonalMatchingPursuitCV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,OutputCodeClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,PassiveAggressiveClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,PassiveAggressiveRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,PatchExtractor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,PCA: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,Perceptron: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,Pipeline: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,PLSCanonical: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,PLSRegression: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,PLSSVD: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,PoissonRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,PolynomialCountSketch: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,PolynomialFeatures: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,QuadraticDiscriminantAnalysis: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,Quantile Random Forest: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,QuantileRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,RadiusNeighborsClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,RadiusNeighborsRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,RandomForestClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,RandomForestRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,RandomizedSearchCV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,RandomTreesEmbedding: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,RANSACRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,Recurrent Neural Network: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,RegressorChain: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,RFE: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,RFECV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,RidgeClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,RidgeClassifierCV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,RidgeCV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SelectFdr: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SelectFpr: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SelectFromModel: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SelectFwe: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SelectKBest: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SelectPercentile: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SelfTrainingClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SequentialFeatureSelector: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SGDClassifier: Handle Large Dataset well because it treats each individual point distinctly.,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SGDOneClassSVM: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SGDRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,ShrunkCovariance: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SimpleImputer: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SparseCoder: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SparsePCA: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SparseRandomProjection: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SpectralBiclustering: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SpectralClustering: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SpectralCoclustering: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SpectralEmbedding: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,StackingClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,StackingRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,"Support Vector Machines: Finds the optimal hyperplane that best separates data points of different classes in a feature space. The hyperplane is chosen to maximize the margin, which is the distance between the hyperplane and the nearest data points from each class, known as support vectors. By default, generally a Linear Line, however can utilize Kernels to change, such that datasets where decision boundary is not linearly seperable can become so in higher dimensions.
+
+ModelStrengths: Effective in high-dimensional spaces, works well with clear margins of separation. Model Weaknesses:Computationally expensive, struggles with large datasets.",0.0,6.0,46.0
+Machine Learning,Model,Algorithm,"Support Vector Regression: SVR tries to fit a function within a margin of tolerance (epsilon) around the true data points — instead of minimizing the error between predicted and actual values like in ordinary least squares regression. Margin of Tolerance (ε): Instead of minimizing all errors, SVR ignores errors as long as they're within this ""epsilon-tube"" around the true values.Support Vectors: Only data points outside the epsilon margin contribute to the model (i.e., they influence the regression line).Kernel Trick: Like SVM, SVR can use kernels (e.g., linear, RBF) to model nonlinear relationships.",0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SVC: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,SVR: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,TfidfVectorizer: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,TheilSenRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,TruncatedSVD: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,TSNE: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,TunedThresholdClassifierCV: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,TweedieRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,VarianceThreshold: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,VotingClassifier: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,VotingRegressor: ,0.0,6.0,46.0
+Machine Learning,Model,Algorithm,"Word2Vec: Word2Vec is a neural-network–based method that learns dense vector embeddings for words, capturing semantic and syntactic relationships. Unlike Bag of Words, which only counts word occurrences and ignores meaning, Word2Vec represents words in a continuous vector space where similarity between vectors reflects semantic closeness",0.0,6.0,46.0
+Machine Learning,Model,Algorithm,XGBoost: ,0.0,6.0,46.0
 Machine Learning,Model,Function,,0.0,6.0,47.0
+Machine Learning,Model,Function,AdditiveChi2Sampler: ,0.0,6.0,47.0
 Machine Learning,Model,Procedure,,0.0,6.0,48.0
+Machine Learning,Model,Procedure,ColumnTransformer: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,FunctionTransformer: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,KNeighborsTransformer: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,LabelEncoder: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,MaxAbsScaler: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,MinMaxScaler: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,OneHotEncoder: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,OrdinalEncoder: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,PowerTransformer: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,QuantileTransformer: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,RadiusNeighborsTransformer: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,RBFSampler: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,RobustScaler: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,SkewedChi2Sampler: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,SplineTransformer: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,StandardScaler: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,TargetEncoder: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,TfidfTransformer: ,0.0,6.0,48.0
+Machine Learning,Model,Procedure,TransformedTargetRegressor: ,0.0,6.0,48.0
 Machine Learning,Model,Constraint,,0.0,6.0,49.0
 Machine Learning,Training,Definition,"Training: Training is the process of fitting the model to data by optimizing its parameters to minimize a loss function. During training, the model learns patterns by iteratively adjusting weights based on observed errors. This step may involve batching, optimization algorithms, and regularization techniques. Proper training ensures the model captures meaningful signal without overfitting.",0.0,7.0,0.0
 Machine Learning,Training,Goal,,0.0,7.0,50.0
@@ -85,8 +330,18 @@ Machine Learning,Training,Important to Remember,,0.0,7.0,52.0
 Machine Learning,Training,Lesson Learnt,,0.0,7.0,53.0
 Machine Learning,Training,Algorithm,,0.0,7.0,54.0
 Machine Learning,Training,Function,,0.0,7.0,55.0
+Machine Learning,Training,Function,"Hinge Loss: Loss function used primarily for binary classification, especially in Support Vector Machines (SVMs). It's designed to maximize the margin between classes — that is, push predictions to be confidently correct. It penalizes predictions that are: On the wrong side of the decision boundary Or correct but not confidently correct (i.e., too close to the margin)",0.0,7.0,55.0
+Machine Learning,Training,Function,Huber Loss: Loss function used in regression problems that is robust to outliers — it's essentially a blend between Mean Squared Error (MSE) and Mean Absolute Error (MAE). Regression with noisy or outlier-prone data Situations where you want the stability of MSE but the robustness of MAE,0.0,7.0,55.0
 Machine Learning,Training,Procedure,,0.0,7.0,56.0
 Machine Learning,Training,TBD,,0.0,7.0,57.0
+Machine Learning,Training,Optimizer,Adadelta: Adaptive learning rate for nonstationary objectives.,0.0,7.0,
+Machine Learning,Training,Optimizer,"Adagrad: Variation of Gradient Descent, which adapts the learning rate for each parameter by scaling it inversely proportional to the sum of past squared gradients. 
+",0.0,7.0,
+Machine Learning,Training,Optimizer,"Adam: Variation of Gradient Descent, which combines both momentum and RMSprop, maintaining an exponentially decaying average of past gradients and squared gradients.",0.0,7.0,
+Machine Learning,Training,Optimizer,"AdamW: Variant of Adam with weight decay, prevents overfitting.",0.0,7.0,
+Machine Learning,Training,Optimizer,"Momentum: Variation of Gradient Descent, which accelerates learning by accumulating a moving average of past gradients.",0.0,7.0,
+Machine Learning,Training,Optimizer,Nadam: Adam optimizer with Nesterov momentum for better convergence.,0.0,7.0,
+Machine Learning,Training,Optimizer,"RMSprop: Variation of Gradient Descent, which adapts the learning rate by dividing by an exponentially weighted moving average of past squared gradients. Adapts learning rates based on recent gradient magnitudes. Good for RNNs.",0.0,7.0,
 Machine Learning,Hyperparameter Tuning,Definition,"Hyperparameter Tuning: Hyperparameter tuning involves selecting optimal configuration values that control model behavior but are not learned directly from data. Examples include learning rate, tree depth, number of layers, or regularization strength. Techniques such as grid search, random search, or Bayesian optimization are commonly used. This step can materially improve performance and stability without changing the underlying model.",0.0,8.0,0.0
 Machine Learning,Hyperparameter Tuning,Goal,,0.0,8.0,58.0
 Machine Learning,Hyperparameter Tuning,Approach,,0.0,8.0,59.0
@@ -103,7 +358,11 @@ Machine Learning,Validation,Important to Remember,"Need a reference to test perf
 Machine Learning,Validation,Lesson Learnt,,0.0,9.0,69.0
 Machine Learning,Validation,Algorithm,,0.0,9.0,70.0
 Machine Learning,Validation,Function,,0.0,9.0,71.0
+Machine Learning,Validation,Function,Accuracy: Number of correctly classified examples divided by the total number of classified examples.,0.0,9.0,71.0
 Machine Learning,Validation,Procedure,,0.0,9.0,72.0
+Machine Learning,Validation,Procedure,"Confusion Matrix: Table used to evaluate the performance of a classification model by comparing predicted labels to actual labels. It summarizes the counts of true positives, true negatives, false positives, and false negatives, providing a detailed view of where the model makes correct and incorrect predictions. This breakdown supports the calculation of metrics such as accuracy, precision, recall, and F1 score.",0.0,9.0,72.0
+Machine Learning,Validation,Procedure,"K Fold Cross Validation: Application of Cross Validation. Method for increasing ability to generlize results by segregating Training Data into K folds, such that the model never predicts on data it has seen. As an example, if Folds = 10 and x=100, each of the iterations would hold out 10 examples (such that all examples were held out in a iteration) and when the data was held out the model would predict. To reiterate, it helps with generalization, it does not increase performance, does not average and does not boost. It does materially increase training time. Primarily useful when data limitation exist, you're early on in development and want to prevent leakage or get cursory results. Also can provide a truer indication of performance based Metrics.",0.0,9.0,72.0
+Machine Learning,Validation,Procedure,"Startified Cross Validation: Increasing the Principle of Cross Validation and ensuring that the data is split into statistically represented folds, which when data is not IID could be considered valuable to ensure that inference is accurate and representative.",0.0,9.0,72.0
 Machine Learning,Validation,TBD,,0.0,9.0,73.0
 Machine Learning,Evaluation,Definition,"Evaluation: Evaluation measures how well the final model performs against defined success metrics on a truly unseen test dataset. Metrics depend on the problem type (e.g., accuracy, AUC, RMSE, precision-recall). This step provides an objective assessment of whether the model meets business or research requirements. Evaluation results often determine whether a model is production-ready.",0.0,10.0,0.0
 Machine Learning,Evaluation,Goal,,0.0,10.0,74.0
@@ -149,11 +408,19 @@ Machine Learning,Monitoring,Algorithm,,0.0,14.0,110.0
 Machine Learning,Monitoring,Function,,0.0,14.0,111.0
 Machine Learning,Monitoring,Procedure,,0.0,14.0,112.0
 Machine Learning,Monitoring,TBD,,0.0,14.0,113.0
+Machine Learning,Regularization,Constraint,ElasticNet: Approach which combines L1 and L2 Regularization.,0.0,,
+Machine Learning,Regularization,Constraint,"Lasso: Technique used to prevent overfitting by adding penalty term to loss function. Adds the absolute values of the coefficients as a penalty term. This leads to sparse models, as some coefficients become exactly zero",0.0,,
+Machine Learning,Regularization,Constraint,"Ridge: Technique used to prevent overfitting by adding penalty term to loss function. Adds the squared values of the coefficients as a penalty term. This incrases the cost of larger parameters, encouraging the model to distribute parameters waiting This shrinks the coefficients but does not eliminate them.",0.0,,
 Mathematics,Definition,Algorithm,"An algorithm is a procedure that unfolds over time and depends on: previous states, iteration history and accumulated information.",1.0,0.0,
 Mathematics,Definition,Constraint,"A constraint is something that restricts or penalizes the solution space. It does not: directly compute outputs, directly update parameters.  Instead, it: limits what solutions are allowed nudges learning toward simplicity or stability",1.0,0.0,
 Mathematics,Definition,Function,"A function is a direct mathematical mapping: given an input, it deterministically produces an output. There is: no memory, no iteration, no learning history.",1.0,0.0,
 Mathematics,Best Linear Unbiased Estimator,Definition,Best Linear Unbiased Estimator: Some Definition,1.0,15.0,0.0
 Mathematics,Best Linear Unbiased Estimator,Requirements,,1.0,15.0,114.0
+Mathematics,Best Linear Unbiased Estimator,Requirements,Homoscedasticity: Variance of the residuals should be constant.,1.0,15.0,114.0
+Mathematics,Best Linear Unbiased Estimator,Requirements,Independence: Observations should be independent of each other. No Correlation between errors of residuals. Errors are autocorrelated with self. Durbin Watson,1.0,15.0,114.0
+Mathematics,Best Linear Unbiased Estimator,Requirements,Linearity: Relationship between Independent and Dependent should be Linear. With finite variance,1.0,15.0,114.0
+Mathematics,Best Linear Unbiased Estimator,Requirements,No Perfect Collinearity: No perfect linear relationship between residuals,1.0,15.0,114.0
+Mathematics,Best Linear Unbiased Estimator,Requirements,Normality of Residuals: Residuals should be normally distributed.,1.0,15.0,114.0
 Model,Definition,Regularization,"Technique used to prevent overfitting by adding a penalty term to the loss function. It discourages the model from fitting too closely to the training data, ensuring better generalization to unseen data. Traditionnaly results in bias, at benefit of materially lowering Variance.
 Regularization is a Constraint.",,0.0,
 Tool,Definition,Pytorch,"PyTorch is an open-source deep learning framework primarily used for research, experimentation, and custom model development. It features eager execution and dynamic computation graphs, which allow models to run and be debugged step by step like standard Python code. PyTorch is highly Pythonic and integrates naturally with the scientific Python ecosystem, making it well suited for rapid prototyping and novel model architectures. A common limitation is that additional engineering effort may be required when moving experimental models into large-scale production environments.",,0.0,
