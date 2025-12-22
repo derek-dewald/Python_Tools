@@ -384,4 +384,8 @@ Mathematics,Definition,Algorithm,"An algorithm is a procedure that unfolds over 
 Mathematics,Definition,Constraint,"A constraint is something that restricts or penalizes the solution space. It does not: directly compute outputs, directly update parameters.  Instead, it: limits what solutions are allowed nudges learning toward simplicity or stability"
 Mathematics,Definition,Function,"A function is a direct mathematical mapping: given an input, it deterministically produces an output. There is: no memory, no iteration, no learning history."
 Mathematics,Definition,Best Linear Unbiased Estimator,Some Definition
-Mathematics,Requirements,Best Linear Unbiased Estimator,
+Mathematics,Best Linear Unbiased Estimator,Requirements,Linearity: Relationship between Independent and Dependent should be Linear. With finite variance
+Mathematics,Best Linear Unbiased Estimator,Requirements,Independence.: Observations should be independent of each other. No Correlation between errors of residuals. Errors are autocorrelated with self. Durbin Watson
+Mathematics,Best Linear Unbiased Estimator,Requirements,Homoscedasticity: Variance of the residuals should be constant.
+Mathematics,Best Linear Unbiased Estimator,Requirements,Normality of Residuals: Residuals should be normally distributed.
+Mathematics,Best Linear Unbiased Estimator,Requirements,No Perfect Collinearity: No perfect linear relationship between residuals
