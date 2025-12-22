@@ -1,16 +1,131 @@
 Category,Categorization,Word,Definition,ZATION_RANK,Rank1,Rank2,Rank3
 Machine Learning,Problem Definition,Definition,"Problem Definition: Problem definition clearly states the business or research question the model is intended to solve and translates it into a machine-learning task (e.g., classification, regression, ranking). It includes defining the target variable, success metrics, constraints (latency, interpretability, cost), and assumptions. This step aligns stakeholders on what success looks likebefore any data or modeling begins. A poorly defined problem almost always leads to building the “right model for the wrong problem.”",0.0,0.0,1.0,
+Machine Learning,Problem Definition,Goal,Need this to Pull from Somewhere Else. ,,0.0,1.0,1.0
+Machine Learning,Problem Definition,Approach,,,0.0,1.0,2.0
+Machine Learning,Problem Definition,Important to Remeber,,,0.0,1.0,3.0
+Machine Learning,Problem Definition,Lesson Learnt,,,0.0,1.0,4.0
+Machine Learning,Problem Definition,Algorithm,,,0.0,1.0,5.0
+Machine Learning,Problem Definition,Function,,,0.0,1.0,6.0
+Machine Learning,Problem Definition,Procedure,,,0.0,1.0,7.0
+Machine Learning,Problem Definition,TBD,,,0.0,1.0,8.0
 Machine Learning,Data Collection,Definition,"Data Collection: Data collection involves identifying, sourcing, and acquiring the datasets required to solve the defined problem. This may include internal databases, APIs, logs, third-party data, or manually collected data. Key considerations include data availability, coverage, granularity, freshness, and legal or privacy constraints. The quality and relevance of collected data fundamentally limit the ceiling of model performance.",0.0,0.0,2.0,
+Machine Learning,Data Collection,Goal,Need this to Pull from Somewhere Else. ,,0.0,2.0,9.0
+Machine Learning,Data Collection,Approach,,,0.0,2.0,10.0
+Machine Learning,Data Collection,Important to Remeber,,,0.0,2.0,11.0
+Machine Learning,Data Collection,Lesson Learnt,,,0.0,2.0,12.0
+Machine Learning,Data Collection,Algorithm,,,0.0,2.0,13.0
+Machine Learning,Data Collection,Function,,,0.0,2.0,14.0
+Machine Learning,Data Collection,Procedure,,,0.0,2.0,15.0
+Machine Learning,Data Collection,TBD,,,0.0,2.0,16.0
+Machine Learning,Data Preperation,Goal,,,0.0,3.0,17.0
+Machine Learning,Data Preperation,Approach,,,0.0,3.0,18.0
+Machine Learning,Data Preperation,Important to Remeber,,,0.0,3.0,19.0
+Machine Learning,Data Preperation,Lesson Learnt,,,0.0,3.0,20.0
+Machine Learning,Data Preperation,Algorithm,,,0.0,3.0,21.0
+Machine Learning,Data Preperation,Function,,,0.0,3.0,22.0
+Machine Learning,Data Preperation,Procedure,,,0.0,3.0,23.0
+Machine Learning,Data Preperation,TBD,,,0.0,3.0,24.0
 Machine Learning,Feature Engineering,Definition,"Feature Engineering: Feature engineering is the process of creating new input variables that better represent the underlying patterns in the data. It may include transformations (log, scaling), aggregations, interactions, temporal features, or domain-specific encodings. Effective feature engineering can significantly improve model performance even with simple algorithms. It embeds domain knowledge into the model and often provides more value than algorithmic complexity.",0.0,0.0,4.0,
+Machine Learning,Feature Engineering,Goal,,,0.0,4.0,25.0
+Machine Learning,Feature Engineering,Approach,,,0.0,4.0,26.0
+Machine Learning,Feature Engineering,Important to Remeber,,,0.0,4.0,27.0
+Machine Learning,Feature Engineering,Lesson Learnt,,,0.0,4.0,28.0
+Machine Learning,Feature Engineering,Algorithm,,,0.0,4.0,29.0
+Machine Learning,Feature Engineering,Function,,,0.0,4.0,30.0
+Machine Learning,Feature Engineering,Procedure,,,0.0,4.0,31.0
+Machine Learning,Feature Engineering,TBD,,,0.0,4.0,32.0
 Machine Learning,Feature Selection,Definition,"Feature Selection: Feature selection involves choosing a subset of relevant features to include in the model. This can be done using statistical tests, model-based importance scores, correlation analysis, or regularization techniques. The goal is to reduce noise, improve generalization, and simplify the model. Fewer, more informative features often lead to better performance and easier interpretability.",0.0,0.0,5.0,
+Machine Learning,Feature Selection,Goal,,,0.0,5.0,33.0
+Machine Learning,Feature Selection,Approach,,,0.0,5.0,34.0
+Machine Learning,Feature Selection,Important to Remember,"Avoid ambigious features. Is a Banana ripe, who says so?",,0.0,5.0,35.0
+Machine Learning,Feature Selection,Important to Remember,"Careful when something is truly random generated, Atmospheric Change, Earthquakes, Stocks. Very difficult, if not impossible to predict.",,0.0,5.0,35.0
+Machine Learning,Feature Selection,Important to Remember,"MNIST performance when tilting Images, of adding noise.",,0.0,5.0,35.0
+Machine Learning,Feature Selection,Lesson Learnt,,,0.0,5.0,36.0
+Machine Learning,Feature Selection,Algorithm,,,0.0,5.0,37.0
+Machine Learning,Feature Selection,Function,,,0.0,5.0,38.0
+Machine Learning,Feature Selection,Procedure,,,0.0,5.0,39.0
+Machine Learning,Feature Selection,TBD,,,0.0,5.0,40.0
 Machine Learning,Model,Definition,"Model: The model is the mathematical or algorithmic structure used to map input features to predictions. This includes selecting the model family (e.g., linear models, tree-based models, neural networks) and defining its architecture. Model choice balances predictive power, interpretability, computational cost, and deployment constraints. The model defines howlearning occurs but does not yet involve learning itself.",0.0,0.0,6.0,
+Machine Learning,Model,Goal,,,0.0,6.0,41.0
+Machine Learning,Model,Approach,,,0.0,6.0,42.0
+Machine Learning,Model,Regularization,Automatically Included because it has a Record - Category Model. Categorization Definition.,,0.0,6.0,43.0
+Machine Learning,Model,Important to Remeber,,,0.0,6.0,44.0
+Machine Learning,Model,Lesson Learnt,,,0.0,6.0,45.0
+Machine Learning,Model,Algorithm,,,0.0,6.0,46.0
+Machine Learning,Model,Function,,,0.0,6.0,47.0
+Machine Learning,Model,Procedure,,,0.0,6.0,48.0
+Machine Learning,Model,Constraint,,,0.0,6.0,49.0
 Machine Learning,Training,Definition,"Training: Training is the process of fitting the model to data by optimizing its parameters to minimize a loss function. During training, the model learns patterns by iteratively adjusting weights based on observed errors. This step may involve batching, optimization algorithms, and regularization techniques. Proper training ensures the model captures meaningful signal without overfitting.",0.0,0.0,7.0,
+Machine Learning,Training,Goal,,,0.0,7.0,50.0
+Machine Learning,Training,Approach,,,0.0,7.0,51.0
+Machine Learning,Training,Important to Remember,,,0.0,7.0,52.0
+Machine Learning,Training,Lesson Learnt,,,0.0,7.0,53.0
+Machine Learning,Training,Algorithm,,,0.0,7.0,54.0
+Machine Learning,Training,Function,,,0.0,7.0,55.0
+Machine Learning,Training,Procedure,,,0.0,7.0,56.0
+Machine Learning,Training,TBD,,,0.0,7.0,57.0
 Machine Learning,Hyperparameter Tuning,Definition,"Hyperparameter Tuning: Hyperparameter tuning involves selecting optimal configuration values that control model behavior but are not learned directly from data. Examples include learning rate, tree depth, number of layers, or regularization strength. Techniques such as grid search, random search, or Bayesian optimization are commonly used. This step can materially improve performance and stability without changing the underlying model.",0.0,0.0,8.0,
+Machine Learning,Hyperparameter Tuning,Goal,,,0.0,8.0,58.0
+Machine Learning,Hyperparameter Tuning,Approach,,,0.0,8.0,59.0
+Machine Learning,Hyperparameter Tuning,Important to Remember,,,0.0,8.0,60.0
+Machine Learning,Hyperparameter Tuning,Lesson Learnt,,,0.0,8.0,61.0
+Machine Learning,Hyperparameter Tuning,Algorithm,,,0.0,8.0,62.0
+Machine Learning,Hyperparameter Tuning,Function,,,0.0,8.0,63.0
+Machine Learning,Hyperparameter Tuning,Procedure,,,0.0,8.0,64.0
+Machine Learning,Hyperparameter Tuning,TBD,,,0.0,8.0,65.0
 Machine Learning,Validation,Definition,"Validation: Process which evaluates a trained machine-learning model on data that was not used during training to assess how well it generalizes to unseen data. It is used to tune model choices and hyperparameters, detect overfitting or underfitting, and guide model selection before final testing or deployment. Validation acts as a feedback loop before final evaluation or deployment decisions are made.",0.0,0.0,9.0,
+Machine Learning,Validation,Goal,,,0.0,9.0,66.0
+Machine Learning,Validation,Approach,,,0.0,9.0,67.0
+Machine Learning,Validation,Important to Remember,"Need a reference to test performance of the model. If dataset is imbalanced, have simple guess. If temperature, guess trailing average, etc, find something simple, often very difficutl to beat, and juice might not be worth the squeeze.",,0.0,9.0,68.0
+Machine Learning,Validation,Lesson Learnt,,,0.0,9.0,69.0
+Machine Learning,Validation,Algorithm,,,0.0,9.0,70.0
+Machine Learning,Validation,Function,,,0.0,9.0,71.0
+Machine Learning,Validation,Procedure,,,0.0,9.0,72.0
+Machine Learning,Validation,TBD,,,0.0,9.0,73.0
 Machine Learning,Evaluation,Definition,"Evaluation: Evaluation measures how well the final model performs against defined success metrics on a truly unseen test dataset. Metrics depend on the problem type (e.g., accuracy, AUC, RMSE, precision-recall). This step provides an objective assessment of whether the model meets business or research requirements. Evaluation results often determine whether a model is production-ready.",0.0,0.0,10.0,
+Machine Learning,Evaluation,Goal,,,0.0,10.0,74.0
+Machine Learning,Evaluation,Approach,,,0.0,10.0,75.0
+Machine Learning,Evaluation,Important to Remeber,,,0.0,10.0,76.0
+Machine Learning,Evaluation,Lesson Learnt,,,0.0,10.0,77.0
+Machine Learning,Evaluation,Algorithm,,,0.0,10.0,78.0
+Machine Learning,Evaluation,Function,,,0.0,10.0,79.0
+Machine Learning,Evaluation,Procedure,,,0.0,10.0,80.0
+Machine Learning,Evaluation,TBD,,,0.0,10.0,81.0
 Machine Learning,"Bias, Fairness and Ethics",Definition,"Bias, Fairness and Ethics: This step examines whether the model produces systematically unfair or harmful outcomes across different groups. It includes analyzing data representation, outcome disparities, and unintended correlations. Ethical considerations may involve transparency, consent, explainability, and regulatory compliance. Addressing bias and fairness is essential for responsible, trustworthy, and legally compliant ML systems.",0.0,0.0,11.0,
+Machine Learning,"Bias, Fairness and Ethics",Goal,,,0.0,11.0,82.0
+Machine Learning,"Bias, Fairness and Ethics",Approach,,,0.0,11.0,83.0
+Machine Learning,"Bias, Fairness and Ethics",Important to Remeber,,,0.0,11.0,84.0
+Machine Learning,"Bias, Fairness and Ethics",Lesson Learnt,,,0.0,11.0,85.0
+Machine Learning,"Bias, Fairness and Ethics",Algorithm,,,0.0,11.0,86.0
+Machine Learning,"Bias, Fairness and Ethics",Function,,,0.0,11.0,87.0
+Machine Learning,"Bias, Fairness and Ethics",Procedure,,,0.0,11.0,88.0
+Machine Learning,"Bias, Fairness and Ethics",TBD,,,0.0,11.0,89.0
+Machine Learning,Model Summarization/ Model Interpretability,Goal,,,0.0,12.0,90.0
+Machine Learning,Model Summarization/ Model Interpretability,Approach,,,0.0,12.0,91.0
+Machine Learning,Model Summarization/ Model Interpretability,Important to Remeber,,,0.0,12.0,92.0
+Machine Learning,Model Summarization/ Model Interpretability,Lesson Learnt,,,0.0,12.0,93.0
+Machine Learning,Model Summarization/ Model Interpretability,Algorithm,,,0.0,12.0,94.0
+Machine Learning,Model Summarization/ Model Interpretability,Function,,,0.0,12.0,95.0
+Machine Learning,Model Summarization/ Model Interpretability,Procedure,,,0.0,12.0,96.0
+Machine Learning,Model Summarization/ Model Interpretability,TBD,,,0.0,12.0,97.0
 Machine Learning,Deployment,Definition,"Deployment: Deployment is the process of integrating the trained model into a production environment where it can generate real-world predictions. This may involve APIs, batch pipelines, streaming systems, or embedded applications. Considerations include scalability, latency, reliability, and versioning. Deployment turns a model from an experiment into a usable product.",0.0,0.0,13.0,
+Machine Learning,Deployment,Goal,,,0.0,13.0,98.0
+Machine Learning,Deployment,Approach,,,0.0,13.0,99.0
+Machine Learning,Deployment,Important to Remeber,,,0.0,13.0,100.0
+Machine Learning,Deployment,Lesson Learnt,,,0.0,13.0,101.0
+Machine Learning,Deployment,Algorithm,,,0.0,13.0,102.0
+Machine Learning,Deployment,Function,,,0.0,13.0,103.0
+Machine Learning,Deployment,Procedure,,,0.0,13.0,104.0
+Machine Learning,Deployment,TBD,,,0.0,13.0,105.0
 Machine Learning,Monitoring,Definition,"Monitoring: Monitoring tracks model performance and behavior over time after deployment. It includes detecting data drift, concept drift, performance degradation, and operational issues. Alerts and retraining triggers are often established at this stage. Monitoring is essential because real-world data changes, and models degrade if left unattended.",0.0,0.0,14.0,
+Machine Learning,Monitoring,Goal,,,0.0,14.0,106.0
+Machine Learning,Monitoring,Approach,,,0.0,14.0,107.0
+Machine Learning,Monitoring,Important to Remeber,,,0.0,14.0,108.0
+Machine Learning,Monitoring,Lesson Learnt,,,0.0,14.0,109.0
+Machine Learning,Monitoring,Algorithm,,,0.0,14.0,110.0
+Machine Learning,Monitoring,Function,,,0.0,14.0,111.0
+Machine Learning,Monitoring,Procedure,,,0.0,14.0,112.0
+Machine Learning,Monitoring,TBD,,,0.0,14.0,113.0
 Machine Learning,Definition,Data Preparation,"Data preparation focuses on cleaning and structuring raw data into a usable format for modeling. This includes handling missing values, correcting errors, standardizing formats, encoding categorical variables, and aligning labels with features. It also often involves train/validation/test splitting to prevent data leakage. This step is critical because most models assume clean, well-structured inputs and are highly sensitive to data issues.",0.0,0.0,,
 Machine Learning,Definition,Area Under the Curve,"AUC (Area Under the Curve) measures a model’s ability to distinguish between classes by summarizing the performance of the ROC (Receiver Operating Characteristic) curve. It represents the probability that the model ranks a randomly chosen positive example higher than a randomly chosen negative one. AUC ranges from 0.5 (no better than chance) to 1.0 (perfect separation), with higher values indicating better classification performance.
 AUC is primarily a binary classification metric, so when using against a multivariate challenge must determine how to score, OVR, OVO. One Vs Rest, One vs One. Using MNist as an example, OVR evaluates 10 0 vs (1,2,3,4,5,6,7,8,9), 1 vs () ... etc, Where OVO measures 45 0 Vs 1, 0 vs 2, etc..",0.0,0.0,,
@@ -35,6 +150,7 @@ Machine Learning,Definition,Variance,"Variance refers to errors caused by models
 ",0.0,0.0,,
 Machine Learning,Definition,Model Summarization / Model Interpretability,"Model summarization and interpretability aim to explain how the model makes decisions. This may include feature importance, partial dependence plots, SHAP values, or rule extraction. Interpretability builds trust with stakeholders and supports debugging, governance, and compliance. It is especially critical in high-stakes or regulated domains.",0.0,0.0,,
 Mathematics,Best Linear Unbiased Estimator,Definition,Best Linear Unbiased Estimator: Some Definition,0.0,1.0,15.0,
+Mathematics,Best Linear Unbiased Estimator,Requirements,,,1.0,15.0,114.0
 Mathematics,Definition,Algorithm,"An algorithm is a procedure that unfolds over time and depends on: previous states, iteration history and accumulated information.",0.0,1.0,,
 Mathematics,Definition,Constraint,"A constraint is something that restricts or penalizes the solution space. It does not: directly compute outputs, directly update parameters.  Instead, it: limits what solutions are allowed nudges learning toward simplicity or stability",0.0,1.0,,
 Mathematics,Definition,Function,"A function is a direct mathematical mapping: given an input, it deterministically produces an output. There is: no memory, no iteration, no learning history.",0.0,1.0,,
@@ -45,119 +161,3 @@ Tool,Definition,Tensor Flow,"TensorFlow is an open-source machine learning frame
 Training,Definition,Activation Function,"A mathematical function applied to a neuron’s weighted input that introduces non-linearity into a neural network. This non-linearity enables the model to learn complex, non-linear relationships in the data. Activation functions are applied within layers during the forward pass of a neural network, transforming intermediate representations before passing them to the next layer. Activation choice affects gradient flow, training stability, and convergence speed. Poor choices can cause vanishing or exploding gradients, limiting the depth or effectiveness of the network",0.0,,,
 Training,Definition,Loss Function,"A loss function is a mathematical function that measures how far a model’s predictions are from the true target values, producing a single scalar value that represents prediction error and defines the objective to be minimized during training. The loss function is evaluated during training after the forward pass and is the starting point for backpropagation. Its gradients drive parameter updates via the optimizer. Different loss functions encode different assumptions about error, robustness, and business objectives. Choosing an inappropriate loss can lead to models that optimize the wrong behavior, even if training converges successfully.",0.0,,,
 Training,Definition,Optimizer,"Optimization algorithm that updates a model’s parameters using gradients of the loss function in order to minimize training error. It defines how gradient information is transformed into parameter updates. The optimizer operates during training, after gradients are computed via backpropagation, and is not used during inference. Different optimizers trade off convergence speed, stability, and generalization. Hyperparameters such as learning rate and momentum are",0.0,,,
-Machine Learning,Problem Definition,Goal,Need this to Pull from Somewhere Else. ,,0.0,1.0,1.0
-Machine Learning,Problem Definition,Approach,,,0.0,1.0,2.0
-Machine Learning,Problem Definition,Important to Remeber,,,0.0,1.0,3.0
-Machine Learning,Problem Definition,Lesson Learnt,,,0.0,1.0,4.0
-Machine Learning,Problem Definition,Algorithm,,,0.0,1.0,5.0
-Machine Learning,Problem Definition,Function,,,0.0,1.0,6.0
-Machine Learning,Problem Definition,Procedure,,,0.0,1.0,7.0
-Machine Learning,Problem Definition,TBD,,,0.0,1.0,8.0
-Machine Learning,Data Collection,Goal,Need this to Pull from Somewhere Else. ,,0.0,2.0,9.0
-Machine Learning,Data Collection,Approach,,,0.0,2.0,10.0
-Machine Learning,Data Collection,Important to Remeber,,,0.0,2.0,11.0
-Machine Learning,Data Collection,Lesson Learnt,,,0.0,2.0,12.0
-Machine Learning,Data Collection,Algorithm,,,0.0,2.0,13.0
-Machine Learning,Data Collection,Function,,,0.0,2.0,14.0
-Machine Learning,Data Collection,Procedure,,,0.0,2.0,15.0
-Machine Learning,Data Collection,TBD,,,0.0,2.0,16.0
-Machine Learning,Data Preperation,Goal,,,0.0,3.0,17.0
-Machine Learning,Data Preperation,Approach,,,0.0,3.0,18.0
-Machine Learning,Data Preperation,Important to Remeber,,,0.0,3.0,19.0
-Machine Learning,Data Preperation,Lesson Learnt,,,0.0,3.0,20.0
-Machine Learning,Data Preperation,Algorithm,,,0.0,3.0,21.0
-Machine Learning,Data Preperation,Function,,,0.0,3.0,22.0
-Machine Learning,Data Preperation,Procedure,,,0.0,3.0,23.0
-Machine Learning,Data Preperation,TBD,,,0.0,3.0,24.0
-Machine Learning,Feature Engineering,Goal,,,0.0,4.0,25.0
-Machine Learning,Feature Engineering,Approach,,,0.0,4.0,26.0
-Machine Learning,Feature Engineering,Important to Remeber,,,0.0,4.0,27.0
-Machine Learning,Feature Engineering,Lesson Learnt,,,0.0,4.0,28.0
-Machine Learning,Feature Engineering,Algorithm,,,0.0,4.0,29.0
-Machine Learning,Feature Engineering,Function,,,0.0,4.0,30.0
-Machine Learning,Feature Engineering,Procedure,,,0.0,4.0,31.0
-Machine Learning,Feature Engineering,TBD,,,0.0,4.0,32.0
-Machine Learning,Feature Selection,Goal,,,0.0,5.0,33.0
-Machine Learning,Feature Selection,Approach,,,0.0,5.0,34.0
-Machine Learning,Feature Selection,Important to Remember,"Avoid ambigious features. Is a Banana ripe, who says so?",,0.0,5.0,35.0
-Machine Learning,Feature Selection,Important to Remember,"Careful when something is truly random generated, Atmospheric Change, Earthquakes, Stocks. Very difficult, if not impossible to predict.",,0.0,5.0,35.0
-Machine Learning,Feature Selection,Important to Remember,"MNIST performance when tilting Images, of adding noise.",,0.0,5.0,35.0
-Machine Learning,Feature Selection,Lesson Learnt,,,0.0,5.0,36.0
-Machine Learning,Feature Selection,Algorithm,,,0.0,5.0,37.0
-Machine Learning,Feature Selection,Function,,,0.0,5.0,38.0
-Machine Learning,Feature Selection,Procedure,,,0.0,5.0,39.0
-Machine Learning,Feature Selection,TBD,,,0.0,5.0,40.0
-Machine Learning,Model,Goal,,,0.0,6.0,41.0
-Machine Learning,Model,Approach,,,0.0,6.0,42.0
-Machine Learning,Model,Regularization,Automatically Included because it has a Record - Category Model. Categorization Definition.,,0.0,6.0,43.0
-Machine Learning,Model,Important to Remeber,,,0.0,6.0,44.0
-Machine Learning,Model,Lesson Learnt,,,0.0,6.0,45.0
-Machine Learning,Model,Algorithm,,,0.0,6.0,46.0
-Machine Learning,Model,Function,,,0.0,6.0,47.0
-Machine Learning,Model,Procedure,,,0.0,6.0,48.0
-Machine Learning,Model,Constraint,,,0.0,6.0,49.0
-Machine Learning,Training,Goal,,,0.0,7.0,50.0
-Machine Learning,Training,Approach,,,0.0,7.0,51.0
-Machine Learning,Training,Important to Remember,,,0.0,7.0,52.0
-Machine Learning,Training,Lesson Learnt,,,0.0,7.0,53.0
-Machine Learning,Training,Algorithm,,,0.0,7.0,54.0
-Machine Learning,Training,Function,,,0.0,7.0,55.0
-Machine Learning,Training,Procedure,,,0.0,7.0,56.0
-Machine Learning,Training,TBD,,,0.0,7.0,57.0
-Machine Learning,Hyperparameter Tuning,Goal,,,0.0,8.0,58.0
-Machine Learning,Hyperparameter Tuning,Approach,,,0.0,8.0,59.0
-Machine Learning,Hyperparameter Tuning,Important to Remember,,,0.0,8.0,60.0
-Machine Learning,Hyperparameter Tuning,Lesson Learnt,,,0.0,8.0,61.0
-Machine Learning,Hyperparameter Tuning,Algorithm,,,0.0,8.0,62.0
-Machine Learning,Hyperparameter Tuning,Function,,,0.0,8.0,63.0
-Machine Learning,Hyperparameter Tuning,Procedure,,,0.0,8.0,64.0
-Machine Learning,Hyperparameter Tuning,TBD,,,0.0,8.0,65.0
-Machine Learning,Validation,Goal,,,0.0,9.0,66.0
-Machine Learning,Validation,Approach,,,0.0,9.0,67.0
-Machine Learning,Validation,Important to Remember,"Need a reference to test performance of the model. If dataset is imbalanced, have simple guess. If temperature, guess trailing average, etc, find something simple, often very difficutl to beat, and juice might not be worth the squeeze.",,0.0,9.0,68.0
-Machine Learning,Validation,Lesson Learnt,,,0.0,9.0,69.0
-Machine Learning,Validation,Algorithm,,,0.0,9.0,70.0
-Machine Learning,Validation,Function,,,0.0,9.0,71.0
-Machine Learning,Validation,Procedure,,,0.0,9.0,72.0
-Machine Learning,Validation,TBD,,,0.0,9.0,73.0
-Machine Learning,Evaluation,Goal,,,0.0,10.0,74.0
-Machine Learning,Evaluation,Approach,,,0.0,10.0,75.0
-Machine Learning,Evaluation,Important to Remeber,,,0.0,10.0,76.0
-Machine Learning,Evaluation,Lesson Learnt,,,0.0,10.0,77.0
-Machine Learning,Evaluation,Algorithm,,,0.0,10.0,78.0
-Machine Learning,Evaluation,Function,,,0.0,10.0,79.0
-Machine Learning,Evaluation,Procedure,,,0.0,10.0,80.0
-Machine Learning,Evaluation,TBD,,,0.0,10.0,81.0
-Machine Learning,"Bias, Fairness and Ethics",Goal,,,0.0,11.0,82.0
-Machine Learning,"Bias, Fairness and Ethics",Approach,,,0.0,11.0,83.0
-Machine Learning,"Bias, Fairness and Ethics",Important to Remeber,,,0.0,11.0,84.0
-Machine Learning,"Bias, Fairness and Ethics",Lesson Learnt,,,0.0,11.0,85.0
-Machine Learning,"Bias, Fairness and Ethics",Algorithm,,,0.0,11.0,86.0
-Machine Learning,"Bias, Fairness and Ethics",Function,,,0.0,11.0,87.0
-Machine Learning,"Bias, Fairness and Ethics",Procedure,,,0.0,11.0,88.0
-Machine Learning,"Bias, Fairness and Ethics",TBD,,,0.0,11.0,89.0
-Machine Learning,Model Summarization/ Model Interpretability,Goal,,,0.0,12.0,90.0
-Machine Learning,Model Summarization/ Model Interpretability,Approach,,,0.0,12.0,91.0
-Machine Learning,Model Summarization/ Model Interpretability,Important to Remeber,,,0.0,12.0,92.0
-Machine Learning,Model Summarization/ Model Interpretability,Lesson Learnt,,,0.0,12.0,93.0
-Machine Learning,Model Summarization/ Model Interpretability,Algorithm,,,0.0,12.0,94.0
-Machine Learning,Model Summarization/ Model Interpretability,Function,,,0.0,12.0,95.0
-Machine Learning,Model Summarization/ Model Interpretability,Procedure,,,0.0,12.0,96.0
-Machine Learning,Model Summarization/ Model Interpretability,TBD,,,0.0,12.0,97.0
-Machine Learning,Deployment,Goal,,,0.0,13.0,98.0
-Machine Learning,Deployment,Approach,,,0.0,13.0,99.0
-Machine Learning,Deployment,Important to Remeber,,,0.0,13.0,100.0
-Machine Learning,Deployment,Lesson Learnt,,,0.0,13.0,101.0
-Machine Learning,Deployment,Algorithm,,,0.0,13.0,102.0
-Machine Learning,Deployment,Function,,,0.0,13.0,103.0
-Machine Learning,Deployment,Procedure,,,0.0,13.0,104.0
-Machine Learning,Deployment,TBD,,,0.0,13.0,105.0
-Machine Learning,Monitoring,Goal,,,0.0,14.0,106.0
-Machine Learning,Monitoring,Approach,,,0.0,14.0,107.0
-Machine Learning,Monitoring,Important to Remeber,,,0.0,14.0,108.0
-Machine Learning,Monitoring,Lesson Learnt,,,0.0,14.0,109.0
-Machine Learning,Monitoring,Algorithm,,,0.0,14.0,110.0
-Machine Learning,Monitoring,Function,,,0.0,14.0,111.0
-Machine Learning,Monitoring,Procedure,,,0.0,14.0,112.0
-Machine Learning,Monitoring,TBD,,,0.0,14.0,113.0
-Mathematics,Best Linear Unbiased Estimator,Requirements,,,1.0,15.0,114.0
