@@ -122,6 +122,7 @@ def final_dataset_for_markdown(notes=None,
     Step 1. Add a new Row Record, which is the Definition for Category and record where Definition is the Category and Definition.
             As a Model of Notes, I will not include the Categorization Definition, as it is redudant, the entire purpose is that everything
             should have a definition, this is the method to add it. Need to ensure Notes Process follows this.
+
     Step 2. Add Definitions Matching Category and Categorization. Add Category Level Definitions (ex. Machine Learning/ Activation Function)
             Add Definitions Matching Categorization and Word Definition. 
             (Ex Notes. Category: Machine Learning, Categorization: Training, need to add Definitions Category:Training, Categorization:Definition)

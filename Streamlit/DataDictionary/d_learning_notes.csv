@@ -20,6 +20,7 @@ Machine Learning,Definition,Supervised Learning,"Supervised learning trains a mo
 Machine Learning,Definition,Unsupervised Learning,"Unsupervised learning works with unlabeled data and aims to discover hidden patterns or structure. The model groups, compresses, or summarizes the data without being told what the correct outcome is. Typical use cases include clustering, dimensionality reduction, and anomaly detection."
 Machine Learning,Definition,Variance,"Variance refers to errors caused by models that are too sensitive to small fluctuations in the training data, often resulting in overfitting. High-variance models are overly flexible, capturing noise as if it were meaningful patterns. A model with many degrees of freedom (such as a high-degree polynomial model) is likely to have high variance and thus overfit the training data. As an example, if you created a model of How Predicting Housing Prices in 1 Neighbourhood would work and applied it to different neighbourhoods, if your model was simple, it wouldn’t work well anywhere and thus would be Wrong, but consistently-ish wrong. If your model was Good, it would work similarly well every well. If you model was overfit, it would work really well in 1 place, not so well elsewhere.
 "
+Machine Learning,Problem Definition,Definition,Not Defined
 Machine Learning,Problem Definition,Goal,Need this to Pull from Somewhere Else. 
 Machine Learning,Problem Definition,Approach,
 Machine Learning,Problem Definition,Important to Remeber,
@@ -28,6 +29,7 @@ Machine Learning,Problem Definition,Algorithm,
 Machine Learning,Problem Definition,Function,
 Machine Learning,Problem Definition,Procedure,
 Machine Learning,Problem Definition,TBD,
+Machine Learning,Data Collection,Definition,Not Defined
 Machine Learning,Data Collection,Goal,Need this to Pull from Somewhere Else. 
 Machine Learning,Data Collection,Approach,
 Machine Learning,Data Collection,Important to Remeber,
@@ -36,6 +38,7 @@ Machine Learning,Data Collection,Algorithm,
 Machine Learning,Data Collection,Function,
 Machine Learning,Data Collection,Procedure,
 Machine Learning,Data Collection,TBD,
+Machine Learning,Data Preperation,Definition,Not Defined
 Machine Learning,Data Preperation,Goal,
 Machine Learning,Data Preperation,Approach,
 Machine Learning,Data Preperation,Important to Remeber,
@@ -44,6 +47,7 @@ Machine Learning,Data Preperation,Algorithm,
 Machine Learning,Data Preperation,Function,
 Machine Learning,Data Preperation,Procedure,
 Machine Learning,Data Preperation,TBD,
+Machine Learning,Feature Engineering,Definition,Not Defined
 Machine Learning,Feature Engineering,Goal,
 Machine Learning,Feature Engineering,Approach,
 Machine Learning,Feature Engineering,Important to Remeber,
@@ -52,6 +56,7 @@ Machine Learning,Feature Engineering,Algorithm,
 Machine Learning,Feature Engineering,Function,
 Machine Learning,Feature Engineering,Procedure,
 Machine Learning,Feature Engineering,TBD,
+Machine Learning,Feature Selection,Definition,Not Defined
 Machine Learning,Feature Selection,Goal,
 Machine Learning,Feature Selection,Approach,
 Machine Learning,Feature Selection,Important to Remember,"Avoid ambigious features. Is a Banana ripe, who says so?"
@@ -62,6 +67,7 @@ Machine Learning,Feature Selection,Algorithm,
 Machine Learning,Feature Selection,Function,
 Machine Learning,Feature Selection,Procedure,
 Machine Learning,Feature Selection,TBD,
+Machine Learning,Model,Definition,Not Defined
 Machine Learning,Model,Goal,
 Machine Learning,Model,Approach,
 Machine Learning,Model,Regularization,Automatically Included because it has a Record - Category Model. Categorization Definition.
@@ -313,6 +319,7 @@ Machine Learning,Model,Procedure,TargetEncoder:
 Machine Learning,Model,Procedure,TfidfTransformer: 
 Machine Learning,Model,Procedure,TransformedTargetRegressor: 
 Machine Learning,Model,Constraint,
+Machine Learning,Training,Definition,Not Defined
 Machine Learning,Training,Goal,
 Machine Learning,Training,Approach,
 Machine Learning,Training,Important to Remember,
@@ -321,6 +328,7 @@ Machine Learning,Training,Algorithm,
 Machine Learning,Training,Function,
 Machine Learning,Training,Procedure,
 Machine Learning,Training,TBD,
+Machine Learning,Hyperparameter Tuning,Definition,Not Defined
 Machine Learning,Hyperparameter Tuning,Goal,
 Machine Learning,Hyperparameter Tuning,Approach,
 Machine Learning,Hyperparameter Tuning,Important to Remember,
@@ -329,6 +337,7 @@ Machine Learning,Hyperparameter Tuning,Algorithm,
 Machine Learning,Hyperparameter Tuning,Function,
 Machine Learning,Hyperparameter Tuning,Procedure,
 Machine Learning,Hyperparameter Tuning,TBD,
+Machine Learning,Validation,Definition,"Process which evaluates a trained machine-learning model on data that was not used during training to assess how well it generalizes to unseen data. It is used to tune model choices and hyperparameters, detect overfitting or underfitting, and guide model selection before final testing or deployment."
 Machine Learning,Validation,Goal,
 Machine Learning,Validation,Approach,
 Machine Learning,Validation,Important to Remember,"Need a reference to test performance of the model. If dataset is imbalanced, have simple guess. If temperature, guess trailing average, etc, find something simple, often very difficutl to beat, and juice might not be worth the squeeze."
@@ -339,6 +348,7 @@ Machine Learning,Validation,Procedure,"Confusion Matrix: Table used to evaluate 
 Machine Learning,Validation,Procedure,"K Fold Cross Validation: Application of Cross Validation. Method for increasing ability to generlize results by segregating Training Data into K folds, such that the model never predicts on data it has seen. As an example, if Folds = 10 and x=100, each of the iterations would hold out 10 examples (such that all examples were held out in a iteration) and when the data was held out the model would predict. To reiterate, it helps with generalization, it does not increase performance, does not average and does not boost. It does materially increase training time. Primarily useful when data limitation exist, you're early on in development and want to prevent leakage or get cursory results. Also can provide a truer indication of performance based Metrics."
 Machine Learning,Validation,Procedure,"Startified Cross Validation: Increasing the Principle of Cross Validation and ensuring that the data is split into statistically represented folds, which when data is not IID could be considered valuable to ensure that inference is accurate and representative."
 Machine Learning,Validation,TBD,
+Machine Learning,Evaluation,Definition,Not Defined
 Machine Learning,Evaluation,Goal,
 Machine Learning,Evaluation,Approach,
 Machine Learning,Evaluation,Important to Remeber,
@@ -347,6 +357,7 @@ Machine Learning,Evaluation,Algorithm,
 Machine Learning,Evaluation,Function,
 Machine Learning,Evaluation,Procedure,
 Machine Learning,Evaluation,TBD,
+Machine Learning,"Bias, Fairness and Ethics",Definition,Not Defined
 Machine Learning,"Bias, Fairness and Ethics",Goal,
 Machine Learning,"Bias, Fairness and Ethics",Approach,
 Machine Learning,"Bias, Fairness and Ethics",Important to Remeber,
@@ -355,6 +366,7 @@ Machine Learning,"Bias, Fairness and Ethics",Algorithm,
 Machine Learning,"Bias, Fairness and Ethics",Function,
 Machine Learning,"Bias, Fairness and Ethics",Procedure,
 Machine Learning,"Bias, Fairness and Ethics",TBD,
+Machine Learning,Model Summarization/ Model Interpretability,Definition,Not Defined
 Machine Learning,Model Summarization/ Model Interpretability,Goal,
 Machine Learning,Model Summarization/ Model Interpretability,Approach,
 Machine Learning,Model Summarization/ Model Interpretability,Important to Remeber,
@@ -363,6 +375,7 @@ Machine Learning,Model Summarization/ Model Interpretability,Algorithm,
 Machine Learning,Model Summarization/ Model Interpretability,Function,
 Machine Learning,Model Summarization/ Model Interpretability,Procedure,
 Machine Learning,Model Summarization/ Model Interpretability,TBD,
+Machine Learning,Deployment,Definition,Not Defined
 Machine Learning,Deployment,Goal,
 Machine Learning,Deployment,Approach,
 Machine Learning,Deployment,Important to Remeber,
@@ -371,6 +384,7 @@ Machine Learning,Deployment,Algorithm,
 Machine Learning,Deployment,Function,
 Machine Learning,Deployment,Procedure,
 Machine Learning,Deployment,TBD,
+Machine Learning,Monitoring,Definition,Not Defined
 Machine Learning,Monitoring,Goal,
 Machine Learning,Monitoring,Approach,
 Machine Learning,Monitoring,Important to Remeber,
@@ -384,6 +398,7 @@ Mathematics,Definition,Algorithm,"An algorithm is a procedure that unfolds over 
 Mathematics,Definition,Constraint,"A constraint is something that restricts or penalizes the solution space. It does not: directly compute outputs, directly update parameters.  Instead, it: limits what solutions are allowed nudges learning toward simplicity or stability"
 Mathematics,Definition,Function,"A function is a direct mathematical mapping: given an input, it deterministically produces an output. There is: no memory, no iteration, no learning history."
 Mathematics,Definition,Best Linear Unbiased Estimator,Some Definition
+Mathematics,Best Linear Unbiased Estimator,Definition,Some Definition
 Mathematics,Best Linear Unbiased Estimator,Requirements,Linearity: Relationship between Independent and Dependent should be Linear. With finite variance
 Mathematics,Best Linear Unbiased Estimator,Requirements,Independence.: Observations should be independent of each other. No Correlation between errors of residuals. Errors are autocorrelated with self. Durbin Watson
 Mathematics,Best Linear Unbiased Estimator,Requirements,Homoscedasticity: Variance of the residuals should be constant.

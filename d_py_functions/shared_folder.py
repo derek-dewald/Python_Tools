@@ -254,7 +254,8 @@ def parse_dot_py_file(file_text):
     return function_list, function_parameters
 
 
-def parse_dot_py_folder(location=None):
+def parse_dot_py_folder(location=None,
+                        export_location='/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/DataDictionary/'):
     '''
     
     Function which Allows for the Quick Review of All Python Functions in a Particular Directory, using the functions 
@@ -262,6 +263,7 @@ def parse_dot_py_folder(location=None):
 
     Parameters:
         location (str): Windows or Mac OS Folder Directory (defaults to D's Mac Directory)
+        export_location(str): Location to where CSV file is to be exported. If left Blank, will not export a CSV.
 
     Returns:
         DataFrame
@@ -310,6 +312,12 @@ def parse_dot_py_folder(location=None):
         function_parameters,
         temp_param
     ])
+
+    if export_location:
+        print(f'python_function_list Saved to {export_location}')
+        print(f'python_function_parameters Saved to {export_location}')
+        function_list.to_csv(f'{export_location}python_function_list.csv',index=False)
+        function_parameters.to_csv(f'{export_locaiton}python_function_parameters.csv',index=False)
 
     return function_list,function_parameters
 
