@@ -107,10 +107,9 @@ def notes_df_to_outline_html(
     html_ += "</div>"
     html_ = textwrap.dedent(html_).lstrip()
     return html_
-
 def final_dataset_for_markdown(notes=None,
-                               definitions=None,
-                               export_location='/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/DataDictionary/'):
+                                  definitions=None,
+                                  export_location='/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/DataDictionary/'):
     
     '''
     
@@ -119,19 +118,21 @@ def final_dataset_for_markdown(notes=None,
     How this function Works:
     It takes the two sheets and attemps to Consolidate them together to make Final Dataset, generated as d_learning_notes.csv.
 
-    Step 1: Insert Definition for Values in Column CATEGORY has a definition record in column WORD
-            notes.Category = definitions.Word
-    Step 2: Insert Definition for Values in Column Category where the Corresponding Note
-            notes.Category = definition.Category and definition.Categorization = Definition
-    
-    Step 3: Insert Definitions for Value in Categorization which have definitions in Word Column
-        notes.categorization = definitions.word (Add Definition Categorization and Existing Category)
-   
-    Step 4: Insert Parameter Mapping, where List Type Options Described in Definitions.
-           notes.Categorization = definitions.Category and notes.Word = definitions.Categorization
+    Approach is to Take Notes As the Framework and Distribute All Information into the Notes Sequentially in Specific Order so i can 
+    Understand the structure and how to continue and utilize the Sheet.
 
-    Order Follows what is in Notes. Uses filtering to rank, and places values with Categorization of Definition for each topic at the top.
+    Principles: 
+        - Define all types of Records in Notes and then Move them Out Definiton By Definition
+        - Worry about Order at End.
 
+    Step 1: Insert Records where Categorization = Definition directly into Sheet.
+            With Modification:
+                Where Word is also A Categorization, Update Categorization from Definition to Word, Change Word to Definition, 
+                and Updated Definition to include WORD:
+
+    Step 2: Take Everything else. Should be nothing remaining from Notes Category, so need to update Category, by moving all information 
+            to the Right 1 column and consolidating Definition.
+            
     Parameters:
         notes(df): DataFrame of D Notes as stored in: https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv
         definitions(df): DataFrame of D Definitions as stored in: https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv
@@ -160,55 +161,68 @@ def final_dataset_for_markdown(notes=None,
     except:
         notes = pd.read_csv(links['google_notes_csv'])
 
+    final_df = notes.copy()
+    
     try:
         len(definitions)
     except:
         definitions = pd.read_csv(links['google_definition_csv'])
-    
+
     temp_def = definitions[['Category','Categorization','Word','Definition']].copy()
 
     # Step 1
-    # Create Unique Category DF
-    unique_cat_df = notes.drop_duplicates(['Category'])[['Category']]
+    # Create Definition only df and a Residual Definition DF res_def_df
+    df_cat_is_definition = temp_def[temp_def['Categorization']=='Definition'].copy()
 
-    # Process temp_def such that 
-    step1_df = unique_cat_df.merge(temp_def.drop('Category',axis=1),left_on='Category',right_on='Word',how='left')
-    step1_df['Categorization'] = 'Definition'
-    step1_df['Word'] = step1_df['Category'].copy()
-    step1_df['Definition'] = step1_df['Definition'].fillna('Not Defined')
-
-    # Step 2
-    unique_cat_df['Categorization'] = 'Definition'
-    step2_df = unique_cat_df.merge(temp_def,on=['Category','Categorization'],how='inner')
-
-    # Step 3
-    step_3df = notes.drop_duplicates('Categorization')[['Category','Categorization']].merge(definitions[['Word','Definition']].rename(columns={'Word':'Categorization'}),on='Categorization',how='left')
-    step_3df['Word'] = 'Definition'
-    step_3df['Definition'] = step_3df['Definition'].fillna('Not Defined')
     
-    # Step 4
-    mod_def = definitions[['Category','Categorization','Word','Definition']].copy()
-    mod_def['Definition'] = mod_def['Word'] + ": " + mod_def['Definition']
-    mod_def = mod_def.drop('Word',axis=1).reset_index(drop=True)
-    mod_def = mod_def.rename(columns={'Categorization':'Word','Category':'Categorization'})
     
-    # Merge Notes.Categorization and Notes.Word to Definitions.Category and Definitions.Categorization
-    step_4df = notes.drop_duplicates(['Categorization','Word'])[['Category','Categorization','Word']].merge(mod_def,on=['Categorization','Word'],how='inner')
+    cat_list = notes['Categorization'].unique().tolist()
+    # When Word is also a Categorization, update so it is grouped correctly when sorting
+    df_cat_is_definition['Categorization'] = np.where(df_cat_is_definition['Word'].isin(cat_list),df_cat_is_definition['Word'],df_cat_is_definition['Categorization'])
     
-    # Can DO ORDER AT THE END. USING THE ORIGINAL DATASET and Category MERGE IN
+    mask = df_cat_is_definition["Categorization"] != "Definition"
 
-    final_df = pd.concat([notes,step1_df,step2_df,step_3df,step_4df]).drop_duplicates()
+    df_cat_is_definition.loc[mask, "Definition"] = (
+        df_cat_is_definition.loc[mask, "Word"].astype(str)
+        + ": "
+        + df_cat_is_definition.loc[mask, "Definition"].astype(str)
+    )
 
-    rank_df1 = notes.drop_duplicates('Category')[['Category']].reset_index(drop=True).reset_index().rename(columns={'index':"Rank1"})
-    rank_df2 = notes.drop_duplicates(['Category','Categorization'])[['Category','Categorization']].reset_index(drop=True).reset_index().rename(columns={'index':"Rank2"})
-    rank_df2['Rank2'] = rank_df2['Rank2'] + 1
-    rank_df3 = notes.drop_duplicates(['Category','Categorization','Word']).reset_index(drop=True).reset_index().drop('Definition',axis=1).rename(columns={'index':'Rank3'})
-    rank_df3['Rank3'] = rank_df3['Rank3'] + 1
-    final_df = final_df.merge(rank_df1,on=['Category'],how='left').merge(rank_df2,on=['Category','Categorization'],how='left').merge(rank_df3,on=['Category','Categorization','Word'],how='left').fillna(0).sort_values(['Rank1','Rank2','Rank3']).reset_index(drop=True).drop(['Rank1','Rank2','Rank3'],axis=1)
+    df_cat_is_definition['Word'] = np.where(df_cat_is_definition['Categorization']!='Definition','Definition',df_cat_is_definition['Word'])
+    res_def_df = temp_def[temp_def['Categorization']!='Definition'].copy()
+    
 
-    final_df['COUNT'] = final_df.groupby(['Category','Categorization','Word']).transform('size')
-    final_df = final_df[~((final_df['Definition']=='')&(final_df['COUNT']!=1))].drop('COUNT',axis=1).reset_index(drop=True)
-    # Need to Delete
+    #Step 2
+    
+    def prepare_df_for_insert(df,notes=notes):
+        df = df.copy()
+        df['Definition'] = df['Word'] + ": " + df['Definition']
+        df['Word'] = df["Categorization"].copy()
+        df['Categorization'] = df["Category"].copy()
+        df.drop('Category',axis=1,inplace=True)
+        
+        # Need to Identify Category. Should Primarily be from Categorization, might be from Word in Rare cases ("Regularization")
+        df1 =  df[['Categorization']].drop_duplicates().merge(notes[['Category','Categorization']].drop_duplicates(),on='Categorization',how='left')    
+        return df.merge(df1,on=['Categorization'],how='left')
+
+    res_def_df = prepare_df_for_insert(res_def_df)
+    
+    # Insert 
+    final_df = pd.concat([final_df,df_cat_is_definition,res_def_df])
+
+    ################
+    
+    # Ranking for Sort ORder
+    rank_df1 = notes.drop_duplicates('Category')[['Category']].reset_index(drop=True).reset_index().rename(columns={'index':"CY_RANK"})
+    rank_df2 = notes.drop_duplicates(['Category','Categorization'])[['Category','Categorization']].reset_index(drop=True).reset_index().rename(columns={'index':"CZ_RANK"})
+    rank_df2['CZ_RANK'] = rank_df2['CZ_RANK'] + 1
+    rank_df3 = notes.drop_duplicates(['Category','Categorization','Word']).reset_index(drop=True).reset_index().drop('Definition',axis=1).rename(columns={'index':'WORD_RANK'})
+    rank_df3['WORD_RANK'] = rank_df3['WORD_RANK'] + 1
+
+    final_df = final_df.merge(rank_df1,on=['Category'],how='left').merge(rank_df2,on=['Category','Categorization'],how='left').merge(rank_df3,on=['Category','Categorization','Word'],how='left')
+    final_df['CZ_RANK'] = np.where(final_df['Categorization']=='Definition',0,final_df['CZ_RANK'])
+    final_df['WORD_RANK'] = np.where(final_df['Word']=='Definition',0,final_df['WORD_RANK'])
+    final_df =  final_df.sort_values(['CY_RANK','CZ_RANK','WORD_RANK'])
 
     if export_location:
         final_df.to_csv(f"{export_location}d_learning_notes.csv",index=False)
