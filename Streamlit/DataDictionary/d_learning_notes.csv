@@ -384,4 +384,4 @@ Mathematics,Definition,Algorithm,"An algorithm is a procedure that unfolds over 
 Mathematics,Definition,Constraint,"A constraint is something that restricts or penalizes the solution space. It does not: directly compute outputs, directly update parameters.  Instead, it: limits what solutions are allowed nudges learning toward simplicity or stability"
 Mathematics,Definition,Function,"A function is a direct mathematical mapping: given an input, it deterministically produces an output. There is: no memory, no iteration, no learning history."
 Mathematics,Definition,Best Linear Unbiased Estimator,Some Definition
-Mathematics,Principle,Best Linear Unbiased Estimator,
+Mathematics,Requirements,Best Linear Unbiased Estimator,
