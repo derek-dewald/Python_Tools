@@ -2,6 +2,12 @@ import pandas as pd
 import numpy as np
 import html
 import textwrap
+import random
+
+import sys
+sys.path.append("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions")
+
+from list_processing import random_choice_from_uniform_list,random_uniform_normalized_list
 
 #from IPython.display import display, HTML
 
@@ -107,6 +113,7 @@ def notes_df_to_outline_html(
     html_ += "</div>"
     html_ = textwrap.dedent(html_).lstrip()
     return html_
+
 def final_dataset_for_markdown(notes=None,
                                   definitions=None,
                                   export_location='/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/DataDictionary/'):
@@ -222,9 +229,147 @@ def final_dataset_for_markdown(notes=None,
     final_df = final_df.merge(rank_df1,on=['Category'],how='left').merge(rank_df2,on=['Category','Categorization'],how='left').merge(rank_df3,on=['Category','Categorization','Word'],how='left')
     final_df['CZ_RANK'] = np.where(final_df['Categorization']=='Definition',0,final_df['CZ_RANK'])
     final_df['WORD_RANK'] = np.where(final_df['Word']=='Definition',0,final_df['WORD_RANK'])
-    final_df =  final_df.sort_values(['CY_RANK','CZ_RANK','WORD_RANK'])
+    
+    # Sort Data Frame to Desired Order, then Remove Ranking Values
+    final_df =  final_df.sort_values(['CY_RANK','CZ_RANK','WORD_RANK']).drop(['CY_RANK','CZ_RANK','WORD_RANK'],axis=1)
+
+    # Remove Duplicate Values where Records from Definitions has merged in values and there more than 1 Word Records and one has a Blank Value.
+    final_df['COUNT'] = final_df.groupby(['Category','Categorization','Word']).transform('size')
+    final_df = final_df[~((final_df['COUNT']>1)&(final_df['Definition']==""))]
 
     if export_location:
         final_df.to_csv(f"{export_location}d_learning_notes.csv",index=False)
     
     return final_df
+
+
+def random_uniform_normalized_df(unique_records,
+                                 name='Example',
+                                 skew=1.25,
+                                 **kwargs):
+    '''
+    Create a Dataframe (which is a series of n * 1) of Random Values for purposes of creating a Random Distribution DataFrame.
+    Kwargs can be used to create New Columns. Kwargs should be Lists of distribution Frequencies, to create new random Columns (Not cdf).
+
+    Parameters:
+        unique records(int): Number, representing the number of random columns to be included in the output DF.
+        name(str): Name of Column to Included (values will be numbered).
+        skew(float): If Data is to have a skewed distribution, 1 will be normal uniform (mean=1,std_dev=0).
+        **kwargs: Should be List of values equalling 1, to create a new random value.
+
+    Returns:
+        Object Type
+
+    date_created:29-Dec-25
+    date_last_modified: 29-Dec-25
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        random_uniform_normalized_df(unique_records=40,name='BRANCHNAME',LEGACY=[.5,.15,.3,.05])
+    
+    '''
+    obs_name_list = [f'{name} {x+1}' for x in range(0,unique_records)]
+    dist_perc = random_uniform_normalized_list(unique_records,skew=skew)
+    
+    final_df = pd.DataFrame()
+    
+    for obs in range(0,unique_records):
+        obs_name = obs_name_list[obs]
+        perc_ = dist_perc[obs]
+        temp_df = pd.DataFrame([[obs_name,perc_]],columns=[name,'PERC_'])
+        final_df = pd.concat([final_df,temp_df])
+            
+    for kwarg_name, kwarg_value in kwargs.items():
+        temp_df = random_choice_from_uniform_list(1000,name=kwarg_name,list_distribution=kwarg_value,return_value='df')
+        final_df = final_df.reset_index(drop=True).merge(temp_df,left_index=True,right_index=True,how='left')
+    
+    return final_df
+
+def df_to_dict(df,key,value):
+    
+    '''
+    Function to Simply Convert A DF into a Dictionary.
+    Takes 2 Arguments, and converts them into a DF of the format {key:value}
+
+    Parameters:
+        df (df): Any DataFrame
+        key (str): String representing Column Name for Dictionary Key
+        value(str): String representing Column Name for Value Key
+        
+    Returns:
+        df
+
+    date_created:12-Dec-25
+    date_last_modified: 12-Dec-25
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        from data_d_strings import google_mapping_sheet_csv
+        df = pd.read_csv(google_mapping_sheet_csv)
+        df_to_dict(df,'Definition','CSV')
+
+    '''
+
+    temp_df = df[[key,value]].copy()
+
+    return df[[key,value]].set_index(key).to_dict()[value]
+
+
+def replicate_df_row(df,records=5):
+    
+    '''
+    Function which Replicates a single row DataFrame for the purposes of Multiplying it against a larger row.
+    Function written using tile, which is a C based language, and considerably faster than straight using nunpy vectorized Calculations.
+
+    Parameters:
+        df(dataframe): DataFrame which you wish to extend, should be a Single Row, but techincally it will duplicate any size
+        records(int): Number of times you wish DF to be duplicated, ideally it should be len(other_df) to which you want to multiply
+
+    Returns:
+        df
+
+    date_created:30-Dec-25
+    date_last_modified: 30-Dec-25
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        df = pd.DataFrame([[1,2,3]],columns=['A','B','C'])
+        replicate_row(df)
+    
+    '''
+    
+    row = df.to_numpy()
+    columns = df.columns.tolist()
+
+    # Repeat row N times using NumPy
+    data = np.tile(row, (records, 1))  # shape (N, len(row))
+    return pd.DataFrame(data, columns=columns)
+
+def tranpose_df(df, index, columns=None):
+    '''
+
+    Transposes a non-time-series DataFrame from wide to long format by melting specified columns.
+
+    This is especially useful for flattening columns into a single column to support tools 
+    like Power BI, where long format enables dynamic pivoting and aggregation.
+
+
+    Parameters:
+        df (DataFrame): The input pandas DataFrame.
+        index (list): Columns to retain as identifiers (will remain unchanged).
+        columns (list): Columns to unpivot into key-value pairs.
+
+    Returns:
+        DataFrame: A long-format DataFrame with 'variable' and 'value' columns.
+
+    date_created:1-Jan-24
+    date_last_modified: 30-Dec-25
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        Example Function Call
+
+    '''
+    if not columns:
+        columns = [col for col in df.columns if col not in index]
+    return df.melt(id_vars=index, value_vars=columns)   

@@ -1,5 +1,7 @@
 import streamlit as st
 import pandas as pd
+import numpy as np 
+import plotly.express as px
 from st_aggrid import AgGrid, GridOptionsBuilder
 
 import os, sys
@@ -57,7 +59,9 @@ def load_data():
 
     google_note_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv'
     google_definition_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv'
-    
+    google_word_quote = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=1117793378&single=true&output=csv'
+    google_daily_activities = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=472900611&single=true&output=csv'
+
     data_dict = {}
     
     data_dict['google_notes_df'] = pd.read_csv(google_note_csv)
@@ -66,6 +70,8 @@ def load_data():
     data_dict['parameter_list_df'] = pd.read_csv(parameter_list_url)
     data_dict['folder_toc_df'] = pd.read_csv(folder_toc_url)
     data_dict['d_learning_notes'] = pd.read_csv(d_learning_notes_url)
+    data_dict['d_word_quote'] = pd.read_csv(google_word_quote)
+    data_dict['daily_activities'] = pd.read_csv(google_daily_activities)
 
     # ✅ Folder first, then Function
     data_dict['function_list_df1']  = data_dict['function_list_df'][["Folder", "Function", "Purpose"]].copy()
@@ -83,7 +89,7 @@ data_dict = load_data()
 # Navigation
 # -----------------------
 st.sidebar.title("Navigation")
-page = st.sidebar.selectbox("Select Page", ["Function List", "Function Parameters",'D Notes','D Definitions','Folder Table of Content',"D Notes Outline"])
+page = st.sidebar.selectbox("Select Page", ['Daily Activities','Words and Quotes',"Function List", "Function Parameters",'D Notes','D Definitions','Folder Table of Content',"D Notes Outline"])
 
 # -------------------------
 # Function List
@@ -324,3 +330,236 @@ elif page == "D Notes Outline":
     import streamlit.components.v1 as components
     html = notes_df_to_outline_html(df_view)
     components.html(html, height=800, scrolling=True)
+
+elif page == "Words and Quotes":
+    st.title("Words and Quotes")
+    df_base = data_dict["d_word_quote"].copy()
+    df_base = df_base[(df_base['Text'].notnull())&(df_base['Text']!="")]
+
+    # Ensure all columns exist as strings (your loader already does this)
+    # but Date is nicer as date for sorting/display
+    if "Date" in df_base.columns:
+        df_base["Date_sort"] = pd.to_datetime(df_base["Date"], errors="coerce")
+        df_base = df_base.sort_values("Date_sort", ascending=False).drop(columns=["Date_sort"])
+
+    # Column names
+    c1_word = "Date"
+    c2_word = "Item"
+    c3_word = "Source"
+    c4_word = "Chapter"
+    c5_word = "Verse(s)"
+    search_word = "Text"
+
+    c1, c2, c3, c4, c5, c6 = st.columns([1, 1, 1, 1, 1, 2])
+
+    # 1) Date slicer
+    with c1:
+        opts1 = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if str(x).strip()])
+        sel1 = st.selectbox(c1_word, opts1, index=0)
+
+    df1 = df_base if sel1 == "(All)" else df_base[df_base[c1_word] == sel1]
+
+    # 2) Item slicer (depends on Date)
+    with c2:
+        opts2 = ["(All)"] + sorted([x for x in df1[c2_word].unique() if str(x).strip()])
+        sel2 = st.selectbox(c2_word, opts2, index=0)
+
+    df2 = df1 if sel2 == "(All)" else df1[df1[c2_word] == sel2]
+
+    # 3) Source slicer (depends on Date + Item)
+    with c3:
+        opts3 = ["(All)"] + sorted([x for x in df2[c3_word].unique() if str(x).strip()])
+        sel3 = st.selectbox(c3_word, opts3, index=0)
+
+    df3 = df2 if sel3 == "(All)" else df2[df2[c3_word] == sel3]
+
+    # 4) Chapter slicer (depends on previous)
+    with c4:
+        opts4 = ["(All)"] + sorted([x for x in df3[c4_word].unique() if str(x).strip()])
+        sel4 = st.selectbox(c4_word, opts4, index=0)
+
+    df4 = df3 if sel4 == "(All)" else df3[df3[c4_word] == sel4]
+
+    # 5) Verse slicer
+    with c5:
+        opts5 = ["(All)"] + sorted([x for x in df4[c5_word].unique() if str(x).strip()])
+        sel5 = st.selectbox(c5_word, opts5, index=0)
+
+    df5 = df4 if sel5 == "(All)" else df4[df4[c5_word] == sel5]
+
+    # 6) Text search (optional)
+    with c6:
+        text_search = st.text_input(
+            "Text search",
+            value="",
+            placeholder="Type to search Text..."
+        )
+
+    df_view = df5
+    if text_search.strip():
+        s = text_search.strip().lower()
+        df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
+
+    st.caption(f"Rows: {len(df_view)}")
+
+    # Display: AgGrid for consistency with your other pages
+    gb = GridOptionsBuilder.from_dataframe(df_view)
+    gb.configure_column("Date", width=120)
+    gb.configure_column("Item", width=120)
+    gb.configure_column("Source", width=150)
+    gb.configure_column("Chapter", width=90)
+    gb.configure_column("Verse(s)", width=110)
+    gb.configure_column("Text", flex=1, wrapText=True, autoHeight=True)
+    gb.configure_default_column(resizable=True, sortable=True, filter=True)
+
+    AgGrid(
+        df_view,
+        gridOptions=gb.build(),
+        height=800,
+        fit_columns_on_grid_load=True
+    )
+
+elif page == "Daily Activities":
+    st.title("Daily Activities")
+    df = data_dict["daily_activities"].copy()
+    df = df[df['Bible']!=""]
+    
+
+    if "Date" not in df.columns:
+        st.error("daily_activities_df must include a 'Date' column.")
+    else:
+        # Parse your date format like 28-Dec-25
+        df["Date_dt"] = pd.to_datetime(df["Date"], format="%d-%b-%y", errors="coerce")
+        df = df.dropna(subset=["Date_dt"]).sort_values("Date_dt")
+
+        # Activity columns
+        act_cols = [c for c in df.columns if c not in ["Date", "Date_dt"]]
+
+        # Force numeric 0/1
+        for c in act_cols:
+            df[c] = pd.to_numeric(df[c], errors="coerce").fillna(0).astype(int).clip(0, 1)
+
+        # -------------------------
+        # Controls
+        # -------------------------
+        c1, c2, c3 = st.columns([1, 1, 2])
+
+        with c1:
+            days_back = st.selectbox("Window", [7, 14, 30, 60, 90, 180, 365], index=2)
+
+        with c2:
+            view_mode = st.selectbox("Per-category chart type", ["Bars (0/1)", "Line (0/1)"], index=0)
+
+        with c3:
+            selected = st.multiselect("Categories", act_cols, default=act_cols)
+
+        if not selected:
+            st.warning("Select at least one category.")
+        else:
+            # Filter window
+            max_dt = df["Date_dt"].max()
+            min_dt = max_dt - pd.Timedelta(days=days_back - 1)
+            dfw = df[df["Date_dt"] >= min_dt].copy()
+
+            # -------------------------
+            # Daily totals
+            # -------------------------
+            dfw["Daily_Total"] = dfw[selected].sum(axis=1)
+            dfw["Daily_Pct"] = (dfw["Daily_Total"] / len(selected)) * 100
+
+            k1, k2, k3, k4 = st.columns(4)
+            k1.metric("Latest total", f"{int(dfw['Daily_Total'].iloc[-1])}/{len(selected)}")
+            k2.metric(f"{days_back}-day avg total", f"{dfw['Daily_Total'].mean():.2f}/{len(selected)}")
+            k3.metric("Latest %", f"{dfw['Daily_Pct'].iloc[-1]:.0f}%")
+            k4.metric(f"{days_back}-day avg %", f"{dfw['Daily_Pct'].mean():.0f}%")
+
+            # Daily total chart
+            fig_total = px.line(dfw, x="Date_dt", y="Daily_Total", markers=True, title="Daily Total Completed")
+            st.plotly_chart(fig_total, use_container_width=True)
+
+            # Optional rolling summaries (7D and 30D)
+            dfw["Rolling_7D_Total"] = dfw["Daily_Total"].rolling(7, min_periods=1).sum()
+            dfw["Rolling_30D_Total"] = dfw["Daily_Total"].rolling(30, min_periods=1).sum()
+
+            fig_roll = px.line(
+                dfw,
+                x="Date_dt",
+                y=["Rolling_7D_Total", "Rolling_30D_Total"],
+                markers=False,
+                title="Rolling Totals (7D / 30D)"
+            )
+            st.plotly_chart(fig_roll, use_container_width=True)
+
+            st.divider()
+
+            # -------------------------
+            # One graph per column (your request)
+            # -------------------------
+            st.subheader("Per-category charts")
+
+            # Layout: 2 per row (change to 3 if you prefer)
+            ncols = 2
+            rows = [selected[i:i+ncols] for i in range(0, len(selected), ncols)]
+
+            for row_cats in rows:
+                cols = st.columns(ncols)
+                for i, cat in enumerate(row_cats):
+                    with cols[i]:
+                        dcat = dfw[["Date_dt", cat]].copy()
+
+                        # Add simple rolling completion rate
+                        dcat["Rolling_7D_Rate"] = dcat[cat].rolling(7, min_periods=1).mean() * 100
+
+                        if view_mode.startswith("Bars"):
+                            fig = px.bar(dcat, x="Date_dt", y=cat, title=f"{cat} (0/1)")
+                        else:
+                            fig = px.line(dcat, x="Date_dt", y=cat, markers=True, title=f"{cat} (0/1)")
+
+                        st.plotly_chart(fig, use_container_width=True)
+
+                        fig2 = px.line(dcat, x="Date_dt", y="Rolling_7D_Rate", markers=False, title=f"{cat} – 7D Completion Rate (%)")
+                        st.plotly_chart(fig2, use_container_width=True)
+
+            st.divider()
+
+            # -------------------------
+            # Weekly + Monthly summaries
+            # -------------------------
+            st.subheader("Weekly summary")
+
+            # ISO week buckets
+            dfw["Week_Start"] = dfw["Date_dt"].dt.to_period("W").dt.start_time
+
+            weekly = (
+                dfw.groupby("Week_Start")[selected]
+                .sum()
+                .reset_index()
+            )
+            weekly["Weekly_Total"] = weekly[selected].sum(axis=1)
+            weekly["Weekly_Pct"] = (weekly["Weekly_Total"] / (len(selected) * 7)) * 100
+
+            st.caption("Weekly_Pct assumes a 7-day week in-window; partial weeks will look lower (expected).")
+            fig_w = px.bar(weekly, x="Week_Start", y="Weekly_Total", title="Weekly Total Completed")
+            st.plotly_chart(fig_w, use_container_width=True)
+            st.dataframe(weekly, use_container_width=True)
+
+            st.subheader("Monthly summary")
+
+            dfw["Month_Start"] = dfw["Date_dt"].dt.to_period("M").dt.start_time
+
+            monthly = (
+                dfw.groupby("Month_Start")[selected]
+                .sum()
+                .reset_index()
+            )
+            # monthly days vary; compute denominator based on days present in that month within dfw
+            days_in_month_present = dfw.groupby("Month_Start")["Date_dt"].nunique().reset_index(name="Days_Present")
+            monthly = monthly.merge(days_in_month_present, on="Month_Start", how="left")
+
+            monthly["Monthly_Total"] = monthly[selected].sum(axis=1)
+            monthly["Monthly_Pct"] = (monthly["Monthly_Total"] / (len(selected) * monthly["Days_Present"])) * 100
+
+            fig_m = px.bar(monthly, x="Month_Start", y="Monthly_Total", title="Monthly Total Completed")
+            st.plotly_chart(fig_m, use_container_width=True)
+            st.dataframe(monthly, use_container_width=True)
+

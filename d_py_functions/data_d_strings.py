@@ -39,3 +39,7 @@ def template_doc_string_print(text_=template_doc_string):
         template_doc_string_print()
 '''
     print(text_)
+
+
+def notebook_break():
+    print('#############################################################################################################################################')
