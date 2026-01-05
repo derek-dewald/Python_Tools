@@ -189,7 +189,7 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ 'Words and Quotes','Daily Activities', "Function List", "Function Parameters", 'D Notes', 'D Definitions', 'Folder Table of Content', "D Notes Outline"]
+    [ 'Words and Quotes','Daily Activities', "Function List", "Function Parameters", 'D Notes', 'D Definitions', 'Folder Table of Content', "D Notes Outline",'Project Template']
 )
 
 # -------------------------
@@ -632,3 +632,47 @@ elif page == "Daily Activities":
     fig_m = px.bar(monthly, x="Month_Start", y="Monthly_Total", title="Monthly Total Completed")
     st.plotly_chart(fig_m, use_container_width=True)
     st.dataframe(monthly, use_container_width=True)
+
+# -----------------------------------
+# Daily Activities (UPDATED: correct window filtering via anchor date)
+# -----------------------------------
+elif page == 'Project Template':
+    st.title("Project Template")
+    df = data_dict["d_learning_notes"].copy()
+
+    # update dataframe
+    df = df[df['Word']=='ML Process'].copy()
+    df_view = df.drop(['Category','Word'],axis=1)
+    df_view['Business Owner'] = ""
+    df_view['Analytics Owner'] = ""
+    df_view['Expected Due Date'] = ""
+    
+    gb = GridOptionsBuilder.from_dataframe(df_view)
+    gb.configure_column('Categorization', width=80)
+    gb.configure_column('Business Owner', width=50)
+    gb.configure_column('Analytics Owner', width=50)
+    gb.configure_column('Expected Due Date', width=50)
+    
+    gb.configure_column(
+        'Definition',
+        width=200,
+        wrapText=True,
+        autoHeight=True,  # makes row height expand to fit wrapped text
+        cellStyle={
+            "whiteSpace": "normal",
+            "lineHeight": "1.2",
+        },
+    )
+
+    # Optional: wrap everything (if you want more columns to wrap, add wrapText/autoHeight there too)
+    gb.configure_default_column(resizable=True, sortable=True, filter=True)
+
+    grid_options = gb.build()
+
+    AgGrid(
+        df_view,
+        gridOptions=grid_options,
+        height=800,
+        fit_columns_on_grid_load=True,
+        allow_unsafe_jscode=True,  # needed for some style behaviors in st_aggrid
+    )
