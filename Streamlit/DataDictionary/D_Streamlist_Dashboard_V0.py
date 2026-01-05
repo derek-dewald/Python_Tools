@@ -189,7 +189,7 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    ['Daily Activities', 'Words and Quotes', "Function List", "Function Parameters", 'D Notes', 'D Definitions', 'Folder Table of Content', "D Notes Outline"]
+    [ 'Words and Quotes','Daily Activities', "Function List", "Function Parameters", 'D Notes', 'D Definitions', 'Folder Table of Content', "D Notes Outline"]
 )
 
 # -------------------------
@@ -223,8 +223,8 @@ if page == "Function List":
     st.caption(f"Rows: {len(df_view)}")
 
     gb = GridOptionsBuilder.from_dataframe(df_view)
-    gb.configure_column("Folder", width=180)
-    gb.configure_column("Function", width=220)
+    gb.configure_column("Folder", width=100)
+    gb.configure_column("Function", width=100)
     gb.configure_column("Purpose", flex=1, wrapText=True, autoHeight=True)
     gb.configure_default_column(resizable=True, sortable=True, filter=True)
 
@@ -448,6 +448,7 @@ elif page == "Words and Quotes":
     gb.configure_column("Source", width=150)
     gb.configure_column("Chapter", width=90)
     gb.configure_column("Verse(s)", width=110)
+    gb.configure_column("WP", width=110)
     gb.configure_column("Text", flex=1, wrapText=True, autoHeight=True)
     gb.configure_default_column(resizable=True, sortable=True, filter=True)
 
