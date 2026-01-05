@@ -4,13 +4,111 @@ import numpy as np
 import plotly.express as px
 from st_aggrid import AgGrid, GridOptionsBuilder
 import datetime as dt
+import textwrap
+import html
 
-import os, sys
-BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-REPO_ROOT = os.path.abspath(os.path.join(BASE_DIR, "..", ".."))
-sys.path.insert(0, REPO_ROOT)
+def notes_df_to_outline_html(
+    df: pd.DataFrame,
+    column_order=None):
+    
+    """
 
-from d_py_functions.df_processing import notes_df_to_outline_html
+    Function to Take a Dataframe and convert it into A Structured Indented Point form Format. 
+    Used for Clear Visualization of Notes.
+    
+    Parameters:
+        df(df): Any DataFrame
+        column_order(list): List of Columns to Include, in Order. If not defined, all will be included.
+        print_(bool): Option as to whether you wish to directly Render a print out in the Python Session. Added because of Streamlit Error, need to suppress.
+
+    Returns:
+        str
+
+    date_created:12-Dec-25
+    date_last_modified: 18-Dec-25
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        from connections import d_google_sheet_to_csv
+        df = import_d_google_sheet('Notes')
+        notes_df_to_outline_html(df)
+
+    Update: 
+        Added display parameter to support Streamlit Adoption.
+
+    """
+    if column_order is None:
+        column_order = df.columns.tolist()
+
+    missing = [c for c in column_order if c not in df.columns]
+    if missing:
+        raise ValueError(f"Missing columns: {missing}")
+
+    df1 = df[column_order].copy()
+
+    def clean(x):
+        if pd.isna(x):
+            return ""
+        return str(x).strip()
+
+    last = [""] * len(column_order)
+
+    html_ = """
+    <style>
+    .notes-container { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial; }
+    .notes-item { line-height: 1.45; margin: 2px 0; }
+
+    .notes-l0 { font-size: 18px; font-weight: 600; margin-left: 0px; }
+    .notes-l1 { font-size: 16px; font-weight: 500; margin-left: 18px; }
+    .notes-l2 { font-size: 14px; font-weight: 400; margin-left: 36px; }
+    .notes-l3 { font-size: 13px; font-weight: 400; margin-left: 54px; opacity: 0.85; }
+    .notes-l4 { font-size: 12px; font-weight: 400; margin-left: 72px; opacity: 0.8; }
+    </style>
+
+    <div class="notes-container">
+    """
+
+    for _, row in df1.iterrows():
+        vals = [clean(row[c]) for c in column_order]
+        if all(v == "" for v in vals):
+            continue
+
+        # Find first level where value changes
+        change_level = None
+        for i, v in enumerate(vals):
+            if v and v != last[i]:
+                change_level = i
+                break
+
+        # If nothing changes, show deepest non-blank value
+        if change_level is None:
+            for i in range(len(vals) - 1, -1, -1):
+                if vals[i]:
+                    change_level = i
+                    break
+
+        # Still nothing? (paranoia guard)
+        if change_level is None:
+            continue
+
+        # Reset deeper levels when higher level changes (deeper only)
+        for j in range(change_level + 1, len(last)):
+            last[j] = ""
+
+        # Render new values from change_level downward
+        for i in range(change_level, len(vals)):
+            v = vals[i]
+            if not v:
+                continue
+            if v != last[i]:
+                level = min(i, 4)  # cap style depth
+                safe_v = html.escape(v) # Escape Function, not String.
+                html_ += f'<div class="notes-item notes-l{level}">{safe_v}</div>\n'
+                last[i] = v
+
+    html_ += "</div>"
+    html_ = textwrap.dedent(html_).lstrip()
+    return html_
 
 # ✅ Must be first Streamlit command
 st.set_page_config(page_title="Python Function Catalog", layout="wide")
