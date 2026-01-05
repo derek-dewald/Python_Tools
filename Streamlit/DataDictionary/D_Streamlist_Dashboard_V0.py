@@ -443,8 +443,8 @@ elif page == "Words and Quotes":
     st.caption(f"Rows: {len(df_view)}")
 
     gb = GridOptionsBuilder.from_dataframe(df_view)
-    gb.configure_column("Date", width=120)
-    gb.configure_column("Item", width=120)
+    gb.configure_column("Date", width=90)
+    gb.configure_column("Item", width=90)
     gb.configure_column("Source", width=150)
     gb.configure_column("Chapter", width=90)
     gb.configure_column("Verse(s)", width=110)
