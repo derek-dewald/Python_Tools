@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -6,6 +8,85 @@ from st_aggrid import AgGrid, GridOptionsBuilder
 import datetime as dt
 import textwrap
 import html
+
+# To Download Project Template 
+from openpyxl.utils import get_column_letter
+from openpyxl.styles import Alignment
+from io import BytesIO
+import pandas as pd
+
+
+
+
+
+from io import BytesIO
+from typing import Iterable, Optional
+
+import pandas as pd
+from openpyxl.styles import Alignment
+from openpyxl.utils import get_column_letter
+
+
+def df_to_excel_bytes(df,
+                      sheet_name= "Sheet1",
+                      default_max_width= 30,
+                      long_columns=[],
+                      long_max_width= 80):
+    """
+    
+    
+    """
+    min_width = 10
+    padding = 2
+    wrap_vertical_align= "top"
+    freeze_header= True,
+
+    long_columns_set = set(long_columns or [])
+
+    buffer = BytesIO()
+    with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
+        safe_sheet = sheet_name[:31]  # Excel sheet name limit
+        df.to_excel(writer, index=False, sheet_name=safe_sheet)
+        ws = writer.sheets[safe_sheet]
+
+        if freeze_header:
+            ws.freeze_panes = "A2"
+
+        # Predefine alignments (reuse objects)
+        wrap_align = Alignment(wrap_text=True, vertical=wrap_vertical_align)
+        no_wrap_align = Alignment(wrap_text=False, vertical=wrap_vertical_align)
+
+        for i, col in enumerate(df.columns, start=1):
+            col_letter = get_column_letter(i)
+
+            # Compute max string length in this column (including header)
+            ser = df[col].astype(str).fillna("")
+            max_len = max(len(str(col)), int(ser.map(len).max()) if len(ser) else 0)
+
+            # Choose cap
+            cap = long_max_width if col in long_columns_set else default_max_width
+
+            # Proposed width (with padding)
+            proposed = max_len + padding
+
+            # Final width with min + cap
+            final_width = max(min_width, min(proposed, cap))
+            ws.column_dimensions[col_letter].width = final_width
+
+            # Wrap if we had to cap (meaning content would exceed the allowed width)
+            should_wrap = proposed > cap
+            if should_wrap:
+                # Apply wrap to entire column, incl header
+                for cell in ws[col_letter]:
+                    cell.alignment = wrap_align
+            else:
+                # Optional: set vertical alignment consistently
+                for cell in ws[col_letter]:
+                    cell.alignment = no_wrap_align
+
+    return buffer.getvalue()
+
+
 
 def notes_df_to_outline_html(
     df: pd.DataFrame,
@@ -669,6 +750,15 @@ elif page == 'Project Template':
 
     grid_options = gb.build()
 
+    excel_bytes = df_to_excel_bytes(df_view,long_columns=['Definition'])
+
+    st.download_button(
+        label="Download Excel",
+        data=excel_bytes,
+        file_name="Machine_Learning_Project_Template.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    )
+
     AgGrid(
         df_view,
         gridOptions=grid_options,
@@ -676,3 +766,5 @@ elif page == 'Project Template':
         fit_columns_on_grid_load=True,
         allow_unsafe_jscode=True,  # needed for some style behaviors in st_aggrid
     )
+
+  
