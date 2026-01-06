@@ -1,30 +1,24 @@
 from __future__ import annotations
 
+from st_aggrid import AgGrid, GridOptionsBuilder,GridUpdateMode
+import streamlit.components.v1 as components
 import streamlit as st
+
 import pandas as pd
 import numpy as np
 import plotly.express as px
-from st_aggrid import AgGrid, GridOptionsBuilder
 import datetime as dt
 import textwrap
 import html
 
+
+
+
 # To Download Project Template 
 from openpyxl.utils import get_column_letter
 from openpyxl.styles import Alignment
-from io import BytesIO
-import pandas as pd
-
-
-
-
-
-from io import BytesIO
 from typing import Iterable, Optional
-
-import pandas as pd
-from openpyxl.styles import Alignment
-from openpyxl.utils import get_column_letter
+from io import BytesIO
 
 
 def df_to_excel_bytes(df,
@@ -367,7 +361,7 @@ elif page == 'D Notes':
     c1_word = 'Category'
     c2_word = 'Categorization'
     c3_word = 'Word'
-    search_word = 'Description'
+    search_word = 'Definition'
 
     with c1:
         c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
@@ -398,21 +392,14 @@ elif page == 'D Notes':
     st.caption(f"Rows: {len(df_view)}")
 
     gb = GridOptionsBuilder.from_dataframe(df_view)
-    gb.configure_column(c1_word, width=180)
-    gb.configure_column(c2_word, width=220)
-    gb.configure_column(c3_word, width=320)
+    gb.configure_column(c1_word, width=100)
+    gb.configure_column(c2_word, width=100)
+    gb.configure_column(c3_word, width=150)
     gb.configure_column(search_word, flex=1, wrapText=True, autoHeight=True)
     gb.configure_default_column(resizable=True, sortable=True, filter=True)
 
     AgGrid(df_view, gridOptions=gb.build(), height=800, fit_columns_on_grid_load=True)
 
-# -----------------------------------
-# D Definitions
-# -----------------------------------
-elif page == "D Definitions":
-    st.title("D Definitions")
-    df_base = data_dict['google_definition_df'].copy()
-    st.write(df_base)
 
 # -----------------------------------
 # Folder Table of Content
@@ -768,3 +755,136 @@ elif page == 'Project Template':
     )
 
   
+# -----------------------------------
+# D Definitions
+# -----------------------------------
+
+elif page == "D Definitions":
+    st.title("D Definitions")
+
+    import pandas as pd
+    from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, DataReturnMode
+
+    df_base = data_dict["google_definition_df"].copy()
+
+    # Only convert actual NaN/None to ""
+    df_base = df_base.fillna("")
+
+    required = ["Category", "Categorization", "Word", "Definition"]
+    missing = [c for c in required if c not in df_base.columns]
+    if missing:
+        st.error(f"google_definition_df is missing required columns: {missing}")
+        st.stop()
+
+    # ----------------------------
+    # 1) Slicers
+    # ----------------------------
+    c1, c2, c3 = st.columns([1, 1, 1])
+
+    with c1:
+        opts1 = ["(All)"] + sorted([x for x in df_base["Category"].astype(str).unique() if str(x).strip()])
+        sel1 = st.selectbox("Category", opts1, index=0)
+
+    df1 = df_base if sel1 == "(All)" else df_base[df_base["Category"].astype(str) == str(sel1)]
+
+    with c2:
+        opts2 = ["(All)"] + sorted([x for x in df1["Categorization"].astype(str).unique() if str(x).strip()])
+        sel2 = st.selectbox("Categorization", opts2, index=0)
+
+    df2 = df1 if sel2 == "(All)" else df1[df1["Categorization"].astype(str) == str(sel2)]
+
+    with c3:
+        opts3 = ["(All)"] + sorted([x for x in df2["Word"].astype(str).unique() if str(x).strip()])
+        sel3 = st.selectbox("Word", opts3, index=0)
+
+    df_view_full = df2 if sel3 == "(All)" else df2[df2["Word"].astype(str) == str(sel3)]
+    st.caption(f"Rows: {len(df_view_full)}")
+
+    # ----------------------------
+    # 2) Grid (4 visible cols) + hidden _row_id
+    # ----------------------------
+    df_view_full = df_view_full.copy().reset_index(drop=False).rename(columns={"index": "_row_id"})
+
+    visible_cols = ["Category", "Categorization", "Word", "Definition"]
+    grid_df = df_view_full[["_row_id"] + visible_cols].copy()
+
+    gb = GridOptionsBuilder.from_dataframe(grid_df)
+    gb.configure_default_column(resizable=True, sortable=True, filter=True, wrapText=True, autoHeight=True)
+    gb.configure_selection("single", use_checkbox=False)
+    gb.configure_column("_row_id", hide=True)
+
+    gb.configure_column("Category", width=120)
+    gb.configure_column("Categorization", width=160)
+    gb.configure_column("Word", width=160)
+    gb.configure_column("Definition", width=520)
+
+    grid_resp = AgGrid(
+        grid_df,
+        gridOptions=gb.build(),
+        height=320,
+        fit_columns_on_grid_load=True,
+        allow_unsafe_jscode=True,
+        update_mode=GridUpdateMode.SELECTION_CHANGED,
+        data_return_mode=DataReturnMode.FILTERED_AND_SORTED,
+    )
+
+    selected_rows = grid_resp.get("selected_rows", [])
+    if selected_rows is None:
+        selected_rows = []
+    elif isinstance(selected_rows, pd.DataFrame):
+        selected_rows = selected_rows.to_dict("records")
+
+    # ----------------------------
+    # 3) Details (HTML-ish rendering)
+    # ----------------------------
+    st.subheader("Details")
+
+    if len(selected_rows) == 0:
+        st.info("Select a row above to view full details.")
+    else:
+        row_id = selected_rows[0].get("_row_id", None)
+
+        if row_id is None:
+            st.warning("Selection did not return _row_id (unexpected).")
+        else:
+            full_row = df_view_full[df_view_full["_row_id"] == row_id].head(1)
+
+            if full_row.empty:
+                st.warning("Could not locate the full record for the selected row.")
+            else:
+                rec = full_row.iloc[0].fillna("")
+
+                # Show Image (if present)
+                if "Image" in rec.index:
+                    img_url = str(rec["Image"]).strip()
+                    if img_url:
+                        st.image(img_url, caption="Image", width=320)
+
+                # Render each field/value like your reference function
+                # (Exclude helper + Image since already shown)
+                exclude_fields = {"_row_id", "Image"}
+
+                for field, value in rec.items():
+                    if field in exclude_fields:
+                        continue
+
+                    v = "" if value is None else str(value).strip()
+
+                    # Always show field, even if blank
+                    if field.lower() == "link":
+                        if v:
+                            st.markdown(f"**{field}:** [Open Link]({v})")
+                        else:
+                            st.markdown(f"**{field}:**")
+                    elif field.lower() in {"markdown", "latex"}:
+                        st.markdown(f"**{field}:**")
+                        if v:
+                            try:
+                                st.latex(v)
+                            except Exception:
+                                st.write(v)
+                        else:
+                            st.write("")
+                    else:
+                        st.markdown(f"**{field}:**")
+                        st.write(v)
