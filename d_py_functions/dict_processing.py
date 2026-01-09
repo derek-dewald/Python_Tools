@@ -1,3 +1,4 @@
+from collections.abc import Mapping, Sequence
 import pandas as pd
 import numpy as np
 
@@ -35,6 +36,40 @@ def flatten_clean_dict(dict_,index_name='INDEX',clean=True,apply_new_lvl=False):
         index_name(str): Default Name of Column to be applied to First Level Dictionary in DataFrame.
         clean(bool): Used to convert a single flat DF to a Matrix, which each new column
         apply_new_level(bool): Optional Argument to support the application to a Single Dictionary
+    Returns:
+        DataFrame
+
+    date_created:30-Dec-25
+    date_last_modified: 30-Dec-25
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        from synthetic_member import mbr_profile_dict
+        flatten_clean_dict (mbr_profile_dict)
+    
+    '''
+
+    if apply_new_lvl:
+        dict_ = {'ADDED_LEVEL':dict_}
+    
+
+def flatten_clean_dict(dict_,
+                       index_name='INDEX',
+                       clean=True,
+                       apply_new_lvl=False,
+                       high_low_list_fix=True):
+    
+    '''
+    Function which takes a Nested Dictionary (Dictionary, which references dictionary, and converts it into a DataFrame, works best when
+    Dictionary ultimate Values are List.
+
+    Parameters:
+        dict_(dict): Nested Dictionary
+        index_name(str): Default Name of Column to be applied to First Level Dictionary in DataFrame.
+        clean(bool): Used to convert a single flat DF to a Matrix, which each new column
+        apply_new_level(bool): Optional Argument to support the application to a Single Dictionary
+        high_low_list_fix(bool): Optional Arguement, used for resolution of list [0,1] dict extraction.
+        
     Returns:
         DataFrame
 
@@ -122,10 +157,17 @@ def flatten_clean_dict(dict_,index_name='INDEX',clean=True,apply_new_lvl=False):
         final_df = pd.DataFrame()
         for classification in dict_.keys():
             # Select Columns with Classification in it:
-            cols = [x for x in flat_df.columns if x.find(classification)!=-1]
+            name = f'{classification}.'
+            cols = [c for c in flat_df.columns if c.startswith(name)]
             temp_df = flat_df[cols].copy()
-            temp_df = temp_df.rename(columns={x:x.replace(classification+'.',"").replace('[0]','_low').replace('[1]','_high') for x in cols})
+            temp_df = temp_df.rename(columns={x:x.replace(name,"") for x in cols})
             temp_df.rename(index={0:classification},inplace=True)
             final_df = pd.concat([final_df,temp_df])
+        final_df = final_df.reset_index().rename(columns={'index':index_name})
+        
+        # Update for Usage of Bracketing for High/ Low
+        if high_low_list_fix:
+             final_df.rename(columns={x:x.replace('[0]','_low').replace('[1]','_high') for x in final_df.columns},inplace=True)
+        
         final_df = final_df.reset_index().rename(columns={'index':index_name})
         return final_df

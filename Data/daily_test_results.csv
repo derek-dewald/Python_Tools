@@ -1,0 +1,12 @@
+Date,Action,Result,Score,Category,Categorization,Word,Definition,Notes,Link,Image,Markdown Equation,Dataset Size,Learning Type,Algorithm Class
+2026-01-07,Test,Fail,-1,Model,Algorithm,SGDClassifier,Handle Large Dataset well because it treats each individual point distinctly.,,,,,Large,,
+2026-01-07,Update,Push,0,Model,Algorithm,VotingClassifier,,,,,,"Medium, Large",,
+2026-01-07,Update,Push,0,Model,Algorithm,Quantile Random Forest,,,,,,,,
+2026-01-07,Update,Push,0,Model,Algorithm,RandomTreesEmbedding,,,,,,Large,,
+2026-01-07,Test,Fail,-1,Machine Learning,Definition,Area Under the Curve,"AUC (Area Under the Curve) measures a model’s ability to distinguish between classes by summarizing the performance of the ROC (Receiver Operating Characteristic) curve. It represents the probability that the model ranks a randomly chosen positive example higher than a randomly chosen negative one. AUC ranges from 0.5 (no better than chance) to 1.0 (perfect separation), with higher values indicating better classification performance.
+AUC is primarily a binary classification metric, so when using against a multivariate challenge must determine how to score, OVR, OVO. One Vs Rest, One vs One. Using MNist as an example, OVR evaluates 10 0 vs (1,2,3,4,5,6,7,8,9), 1 vs () ... etc, Where OVO measures 45 0 Vs 1, 0 vs 2, etc..",,,,,,,
+2026-01-08,Test,Push,0,Model,Algorithm,Perceptron,,,,,,Large,,
+2026-01-08,Test,Push,0,Model,Algorithm,RidgeCV,,,,,,"Medium, Large",,
+2026-01-08,Update,Fail,-1,Machine Learning,Definition,Regularization,"Technique used to prevent overfitting by adding a penalty term to the loss function. It discourages the model from fitting too closely to the training data, ensuring better generalization to unseen data. Traditionnaly results in bias, at benefit of materially lowering Variance. Regularization is a Constraint.",,,,,,,
+2026-01-08,Test,Push,0,Model,Algorithm,SelectFpr,,,,,,Large,,
+2026-01-08,Test,Push,0,Model,Algorithm,AdaBoostClassifier,,,,,,"Small, Medium",,
