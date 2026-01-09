@@ -12,8 +12,6 @@ import textwrap
 import html
 
 
-
-
 # To Download Project Template 
 from openpyxl.utils import get_column_letter
 from openpyxl.styles import Alignment
@@ -451,15 +449,24 @@ elif page == "D Notes Outline":
 # -----------------------------------
 # Words and Quotes
 # -----------------------------------
+
 elif page == "Words and Quotes":
     st.title("Words and Quotes")
     df_base = data_dict["d_word_quote"].copy()
-    df_base = df_base[(df_base['Text'].notnull()) & (df_base['Text'] != "")]
+    df_base = df_base[(df_base['Text'].notnull()) & (df_base['Text'] != "")].copy()
 
-    # Sort by Date using the known format to avoid inference warnings
+    # --- Robust date parsing (handles strings + true date values) ---
     if "Date" in df_base.columns:
-        df_base["Date_sort"] = pd.to_datetime(df_base["Date"], format="%d-%b-%y", errors="coerce")
-        df_base = df_base.sort_values("Date_sort", ascending=False).drop(columns=["Date_sort"])
+        # First try strict known format, then fallback
+        dt1 = pd.to_datetime(df_base["Date"], format="%d-%b-%y", errors="coerce")
+        dt2 = pd.to_datetime(df_base["Date"], errors="coerce")
+        df_base["Date_dt"] = dt1.fillna(dt2)
+
+        # A consistent label for display + selection
+        df_base["Date_label"] = df_base["Date_dt"].dt.strftime("%d-%b-%y")
+
+        # Sort newest first
+        df_base = df_base.sort_values("Date_dt", ascending=False)
 
     c1_word = "Date"
     c2_word = "Item"
@@ -470,11 +477,22 @@ elif page == "Words and Quotes":
 
     c1, c2, c3, c4, c5, c6 = st.columns([1, 1, 1, 1, 1, 2])
 
+    # --- Date slicer uses Date_label, filters on Date_dt ---
     with c1:
-        opts1 = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if str(x).strip()])
-        sel1 = st.selectbox(c1_word, opts1, index=0)
+        opts1 = ["(All)"] + [
+            x for x in df_base["Date_label"].dropna().unique().tolist()
+            if str(x).strip()
+        ]
+        # keep options sorted by actual datetime (not string)
+        opts1_sorted = ["(All)"] + (
+            df_base.dropna(subset=["Date_dt"])
+                  .drop_duplicates("Date_label")
+                  .sort_values("Date_dt", ascending=False)["Date_label"]
+                  .tolist()
+        )
+        sel1 = st.selectbox("Date", opts1_sorted, index=0)
 
-    df1 = df_base if sel1 == "(All)" else df_base[df_base[c1_word] == sel1]
+    df1 = df_base if sel1 == "(All)" else df_base[df_base["Date_label"] == sel1]
 
     with c2:
         opts2 = ["(All)"] + sorted([x for x in df1[c2_word].unique() if str(x).strip()])
@@ -506,21 +524,22 @@ elif page == "Words and Quotes":
     df_view = df5
     if text_search.strip():
         s = text_search.strip().lower()
-        df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
+        df_view = df_view[df_view[search_word].astype(str).str.lower().str.contains(s, na=False)]
 
     st.caption(f"Rows: {len(df_view)}")
 
-    gb = GridOptionsBuilder.from_dataframe(df_view)
-    gb.configure_column("Date", width=90)
-    gb.configure_column("Item", width=90)
-    gb.configure_column("Source", width=150)
-    gb.configure_column("Chapter", width=90)
-    gb.configure_column("Verse(s)", width=110)
-    gb.configure_column("WP", width=110)
-    gb.configure_column("Text", flex=1, wrapText=True, autoHeight=True)
-    gb.configure_default_column(resizable=True, sortable=True, filter=True)
 
-    AgGrid(df_view, gridOptions=gb.build(), height=800, fit_columns_on_grid_load=True)
+    df_grid = df_view.drop(['Date_dt','Date_label'],axis=1,errors='ignore')
+
+    gb = GridOptionsBuilder.from_dataframe(df_grid)
+    gb.configure_column("Date", flex=1, minWidth=70)
+    gb.configure_column("Item", flex=1, minWidth=70)
+    gb.configure_column("Source", flex=2, minWidth=100, wrapText=True)
+    gb.configure_column("Chapter", flex=1, minWidth=70)
+    gb.configure_column("Verse(s)", flex=1, minWidth=70)
+    gb.configure_column("Text", flex=6, minWidth=300, wrapText=True, autoHeight=True)
+
+    AgGrid(df_grid, gridOptions=gb.build(), height=800, fit_columns_on_grid_load=True)
 
 # -----------------------------------
 # Daily Activities (UPDATED: correct window filtering via anchor date)
