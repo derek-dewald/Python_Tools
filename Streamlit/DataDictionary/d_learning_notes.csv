@@ -1,122 +1,292 @@
-Category,Categorization,Word,Definition,COUNT
-Machine Learning,Definition,Area Under the Curve,"AUC (Area Under the Curve) measures a model’s ability to distinguish between classes by summarizing the performance of the ROC (Receiver Operating Characteristic) curve. It represents the probability that the model ranks a randomly chosen positive example higher than a randomly chosen negative one. AUC ranges from 0.5 (no better than chance) to 1.0 (perfect separation), with higher values indicating better classification performance.
-AUC is primarily a binary classification metric, so when using against a multivariate challenge must determine how to score, OVR, OVO. One Vs Rest, One vs One. Using MNist as an example, OVR evaluates 10 0 vs (1,2,3,4,5,6,7,8,9), 1 vs () ... etc, Where OVO measures 45 0 Vs 1, 0 vs 2, etc..",1.0
-Machine Learning,Definition,Evaluation,"Evaluation measures how well the final model performs against defined success metrics on a truly unseen test dataset. Metrics depend on the problem type (e.g., accuracy, AUC, RMSE, precision-recall). This step provides an objective assessment of whether the model meets business or research requirements. Evaluation results often determine whether a model is production-ready.",1.0
-Machine Learning,Definition,Autoregressive,"Autoregressive models generate outputs one step at a time, where each prediction depends on the previously generated outputs. This sequential dependency allows the model to capture context and coherence, making it powerful for tasks like language modeling and time-series forecasting. However, because predictions are made step by step, autoregressive methods can be slower at inference compared to parallel approaches.",1.0
-Machine Learning,Definition,Bias,"Bias refers to the systematic error in a model that causes it to consistently deviate from the true value or correct predictions. It occurs when an algorithm makes incorrect assumptions or omissions about the data, leading to errors.
+Process,Categorization,Word,Definition
+ML Project,Definition,Problem Definition,"Problem definition clearly states the business or research question the model is intended to solve and translates it into a machine-learning task (e.g., classification, regression, ranking). It includes defining the target variable, success metrics, constraints (latency, interpretability, cost), and assumptions. This step aligns stakeholders on what success looks likebefore any data or modeling begins. A poorly defined problem almost always leads to building the “right model for the wrong problem.”"
+ML Project,Process Step,Problem Definition,"Define, Quantify and Articulate Problem."
+ML Project,Process Step,Problem Definition,"Project Goal Explicitly stated in 3-4 Sentences, can include exclusion items in addendum, not in original statement, which sould be positive, optimistic and include a value creating definition."
+ML Project,Process Step,Problem Definition,Explicilty Defined Business Delieverables
+ML Project,Process Step,Problem Definition,Explicilty Defined Expected Outcomes and KPIs
+ML Project,Process Step,Problem Definition,"Identify Model Baseline, or who is responsible for defining if not available."
+ML Project,Definition,Data Collection,"Data collection involves identifying, sourcing, and acquiring the datasets required to solve the defined problem. This may include internal databases, APIs, logs, third-party data, or manually collected data. Key considerations include data availability, coverage, granularity, freshness, and legal or privacy constraints. The quality and relevance of collected data fundamentally limit the ceiling of model performance."
+ML Project,Process Step,Data Collection,Need to Create Definition and Requirements
+ML Project,Definition,Data Preparation,"Data preparation focuses on cleaning and structuring raw data into a usable format for modeling. This includes handling missing values, correcting errors, standardizing formats, encoding categorical variables, and aligning labels with features. It also often involves train/validation/test splitting to prevent data leakage. This step is critical because most models assume clean, well-structured inputs and are highly sensitive to data issues."
+ML Project,Process Step,Data Preparation,"Identify Data Elements which appear relevant (Can be either based on desired, or what is currently Available)."
+ML Project,Process Step,Data Preparation,"Label, and Document all data elements in Model (Semantic, Functional, Business Definitions and Theoretircal Inclusion)"
+ML Project,Process Step,Data Preparation,"Document data omissions, known data quality issues, or assumptions (including Imbalances)."
+ML Project,Process Step,Data Preparation,"Document all Imputation, Deletion, Standardization to be applied."
+ML Project,Process Step,Data Preparation,"Define Approach for Training, Testing and Validation. Create Final Dataset to proceed forward."
+ML Project,Process Step,Data Preparation,Complete EDA on Dataset.
+ML Project,Process Step,Exploratory Data Analysis,NNNNNNNEEEEEWWWWWWW .Needs comments.
+ML Project,Definition,Feature Engineering,"Feature engineering is the process of creating new input variables that better represent the underlying patterns in the data. It may include transformations (log, scaling), aggregations, interactions, temporal features, or domain-specific encodings. Effective feature engineering can significantly improve model performance even with simple algorithms. It embeds domain knowledge into the model and often provides more value than algorithmic complexity."
+ML Project,Process Step,Feature Engineering,"Create Aggregation Data, Rations, PCA, etc. Note these should be identified and defined in Data Prepartion, this is simple technical execution and creation."
+ML Project,Definition,Model,"The model is the mathematical or algorithmic structure used to map input features to predictions. This includes selecting the model family (e.g., linear models, tree-based models, neural networks) and defining its architecture. Model choice balances predictive power, interpretability, computational cost, and deployment constraints. The model defines howlearning occurs but does not yet involve learning itself."
+ML Project,Process Step,Model,"Define Models which will be included in Pipeline, include explanation as to explicitly what the Model does, why it is relevant for this problem and what it will solve as it relates to this problem. Where this differs across models, must explain and document the differences."
+ML Project,Process Step,Model,"Define how model will be evaluated, what metrics will be minimized (or maximized) balance between training results versus ability to generalize, balancing overfitting and performance."
+ML Project,Process Step,Model,"If certain models are not considered, explicitly state why, what would need ot change in order to review or reconsider this model and who in the business would be responsible for next steps where obvious omissions, data quality, process or procedure gaps exist."
+ML Project,Process Step,Model,"Define how feature evaluation will occur, explicitly state KPIs and document how they relate to project delieverables, business goals and expected outcomes."
+ML Project,Consideration,Model,Is your Data Structured in a way that is conducive to your Model.
+ML Project,Consideration,Model,"Any data set can be optimized, even when there is NO relation. It will generalize."
+ML Project,Consideration,Model,"An Example of this would a classification model with Wolves and Dogs,  many wolf photos happened to be taken in snowy environments, while dog photos were often taken indoors or on grass. The model learned to detect snow, not animals."
+ML Project,Consideration,Model,"Models will cheat and can solve problems which appear to be optimal, but they might not be solving what you expect or require, they might be finding patterns in the data which you do not see. An Example of this would a classification model with Wolves and Dogs,  many wolf photos happened to be taken in snowy environments, while dog photos were often taken indoors or on grass. The model learned to detect snow, not animals."
+ML Project,Definition,Feature Selection,"Feature selection involves choosing a subset of relevant features to include in the model. This can be done using statistical tests, model-based importance scores, correlation analysis, or regularization techniques. The goal is to reduce noise, improve generalization, and simplify the model. Fewer, more informative features often lead to better performance and easier interpretability."
+ML Project,Process Step,Feature Selection,"Create Pipeline which automates selection, or document where it will be manual for Cost/Benefit reasons."
+ML Project,Consideration,Feature Selection,"Avoid ambigious features. Is a Banana ripe, who says so?"
+ML Project,Consideration,Feature Selection,"Careful when something is truly random generated, Atmospheric Change, Earthquakes, Stocks. Very difficult, if not impossible to predict."
+ML Project,Consideration,Feature Selection,"MNIST performance when tilting Images, of adding noise."
+ML Project,Definition,Feature Selection,"Area Under the Curve: AUC (Area Under the Curve) measures a model’s ability to distinguish between classes by summarizing the performance of the ROC (Receiver Operating Characteristic) curve. It represents the probability that the model ranks a randomly chosen positive example higher than a randomly chosen negative one. AUC ranges from 0.5 (no better than chance) to 1.0 (perfect separation), with higher values indicating better classification performance.
+AUC is primarily a binary classification metric, so when using against a multivariate challenge must determine how to score, OVR, OVO. One Vs Rest, One vs One. Using MNist as an example, OVR evaluates 10 0 vs (1,2,3,4,5,6,7,8,9), 1 vs () ... etc, Where OVO measures 45 0 Vs 1, 0 vs 2, etc.."
+ML Project,Definition,Feature Selection,"Bias: Bias refers to the systematic error in a model that causes it to consistently deviate from the true value or correct predictions. It occurs when an algorithm makes incorrect assumptions or omissions about the data, leading to errors.
 High Bias (Underfitting): The model is too simple and cannot capture patterns. 
-Low Bias, High Variance (Overfitting). The model memorizes the data but does not generalize.",1.0
-Machine Learning,Definition,Bias - Variance Trade Off,"The bias-variance trade-off is a key concept in machine learning that highlights the balance between two sources of error: bias and variance, tuning the relationship between a model's complexity, the accuracy of its predictions, and how well it can make predictions on previously unseen data that were not used to train the model The challenge is to find a model that strikes the right balance between bias and variance, as reducing one typically increases the other. The ultimate goal is to minimize the total error, which is the sum of bias error, variance error, and irreducible noise inherent in the data. Achieving this balance ensures the model generalizes well to new, unseen data, avoiding both underfitting and overfitting. More Data vs More Data Science - Bias vs Variance 
+Low Bias, High Variance (Overfitting). The model memorizes the data but does not generalize."
+ML Project,Definition,Feature Selection,"Bias - Variance Trade Off: The bias-variance trade-off is a key concept in machine learning that highlights the balance between two sources of error: bias and variance, tuning the relationship between a model's complexity, the accuracy of its predictions, and how well it can make predictions on previously unseen data that were not used to train the model The challenge is to find a model that strikes the right balance between bias and variance, as reducing one typically increases the other. The ultimate goal is to minimize the total error, which is the sum of bias error, variance error, and irreducible noise inherent in the data. Achieving this balance ensures the model generalizes well to new, unseen data, avoiding both underfitting and overfitting. More Data vs More Data Science - Bias vs Variance 
 It can often be explained by the Trade-Off (Bias - Data Scientist, Variance - Data), where to invest.
 
-In general, as we increase the number of tunable parameters in a model, it becomes more flexible, and can better fit a training data set. It is said to have lower error, or bias. However, for more flexible models, there will tend to be greater variance to the model fit each time we take a set of samples to create a new training data set. It is said that there is greater variance in the model's estimated parameters.High-variance learning methods may be able to represent their training set well but are at risk of overfitting to noisy or unrepresentative training data. In contrast, algorithms with high bias typically produce simpler models that may fail to capture important regularities (i.e. underfit) in the data.",1.0
-Machine Learning,Definition,Cross Validation,"Model evaluation technique used to assess how well a model generalizes to unseen data by repeatedly splitting the dataset into training and validation subsets. The model is trained on one portion of the data and evaluated on another, and the results are aggregated to provide a more reliable estimate of performance than a single train–test split. This approach helps detect overfitting and supports more robust model selection",1.0
-Machine Learning,Definition,Curse of Dimensionality,"As dimensionality grows, data points become increasingly sparse, distances lose meaning, and models require exponentially more data to learn reliable patterns. This makes learning, generalization, and computation more difficult, often degrading model performance rather than improving it. In high-dimensional spaces, the optimization landscape also becomes far more complex, with many local minima and saddle points, making it harder to identify or converge toward a meaningful global minimum.",1.0
-Machine Learning,Definition,Deep Learning,"Deep learning is a subset of machine learning that uses multi-layer neural networks to automatically learn hierarchical representations from data, reducing the need for manual feature engineering. By stacking simple processing units called layers—each acting as a filter that transforms inputs into higher-level representations—deep learning models can capture complex patterns through composition. Early challenges such as vanishing gradients, where learning signals faded through many layers, were largely addressed through improved activation functions, optimization methods, and weight initialization strategies. In practice, building a deep learning model involves defining the network architecture (number of layers, connections, and activations) and then specifying how it learns by choosing an optimizer, loss function, and evaluation metrics during compilation.",1.0
-Machine Learning,Definition,Machine Learning,"Using a process to enable computers to iteratively learn from the data and improve analysis, outcomes or understanding. Intersection of statistics, artificial intelligence and computer science. Machine's don't learn, they find optimal mathematical formulas based on the data it is presented. There is an assumption that this data set is both representative of other data sets,  and possess similiar statistical distributions', You can argue this is not learning, because slight variances can result in materially different responses and output, Term synonymous with machines doing tasks without explicitly being programmed. Building a statistical model, based on a dataset",1.0
-Machine Learning,Definition,Optimization,"Optimization is the process of finding the best possible solution to a problem by systematically adjusting inputs or decisions to maximize or minimize a defined objective, subject to given constraints. In machine learning and analytics, optimization involves selecting model parameters that minimize error or maximize performance according to a chosen loss function. Importantly, what is considered “best” depends entirely on how the objective and constraints are defined.",1.0
-Machine Learning,Definition,Reinforcement Learning,"Reinforcement learning trains an agent to make decisions by interacting with an environment and receiving rewards or penalties. The agent learns a policy that maximizes cumulative reward over time through trial and error. It is commonly used in robotics, game playing, and control systems.",1.0
-Machine Learning,Definition,Semisupervised Learning,Semi-supervised learning combines a small amount of labeled data with a large amount of unlabeled data to improve learning performance. The model leverages the structure in the unlabeled data to generalize better than supervised learning alone. This approach is useful when labeling data is expensive or time-consuming.,1.0
-Machine Learning,Definition,Supervised Learning,"Supervised learning trains a model using labeled data, where the correct answer is known in advance. The model learns a mapping from inputs to outputs by minimizing the difference between its predictions and the true labels. Common examples include classification and regression problems.",1.0
-Machine Learning,Definition,Unsupervised Learning,"Unsupervised learning works with unlabeled data and aims to discover hidden patterns or structure. The model groups, compresses, or summarizes the data without being told what the correct outcome is. Typical use cases include clustering, dimensionality reduction, and anomaly detection.",1.0
-Machine Learning,Definition,Variance,"Variance refers to errors caused by models that are too sensitive to small fluctuations in the training data, often resulting in overfitting. High-variance models are overly flexible, capturing noise as if it were meaningful patterns. A model with many degrees of freedom (such as a high-degree polynomial model) is likely to have high variance and thus overfit the training data. As an example, if you created a model of How Predicting Housing Prices in 1 Neighbourhood would work and applied it to different neighbourhoods, if your model was simple, it wouldn’t work well anywhere and thus would be Wrong, but consistently-ish wrong. If your model was Good, it would work similarly well every well. If you model was overfit, it would work really well in 1 place, not so well elsewhere.
-",1.0
-Machine Learning,Definition,Regularization,"Technique used to prevent overfitting by adding a penalty term to the loss function. It discourages the model from fitting too closely to the training data, ensuring better generalization to unseen data. Traditionnaly results in bias, at benefit of materially lowering Variance. Regularization is a Constraint.",1.0
-Machine Learning,Definition,Model Summarization / Model Interpretability,"Model summarization and interpretability aim to explain how the model makes decisions. This may include feature importance, partial dependence plots, SHAP values, or rule extraction. Interpretability builds trust with stakeholders and supports debugging, governance, and compliance. It is especially critical in high-stakes or regulated domains.",1.0
-Machine Learning,Definition,Activation Function,"A mathematical function applied to a neuron’s weighted input that introduces non-linearity into a neural network. This non-linearity enables the model to learn complex, non-linear relationships in the data. Activation functions are applied within layers during the forward pass of a neural network, transforming intermediate representations before passing them to the next layer. Activation choice affects gradient flow, training stability, and convergence speed. Poor choices can cause vanishing or exploding gradients, limiting the depth or effectiveness of the network",1.0
-Machine Learning,Definition,Loss Function,"A loss function is a mathematical function that measures how far a model’s predictions are from the true target values, producing a single scalar value that represents prediction error and defines the objective to be minimized during training. The loss function is evaluated during training after the forward pass and is the starting point for backpropagation. Its gradients drive parameter updates via the optimizer. Different loss functions encode different assumptions about error, robustness, and business objectives. Choosing an inappropriate loss can lead to models that optimize the wrong behavior, even if training converges successfully.",1.0
-Machine Learning,Definition,Optimizer,"Optimization algorithm that updates a model’s parameters using gradients of the loss function in order to minimize training error. It defines how gradient information is transformed into parameter updates. The optimizer operates during training, after gradients are computed via backpropagation, and is not used during inference. Different optimizers trade off convergence speed, stability, and generalization. Hyperparameters such as learning rate and momentum are",1.0
-Machine Learning,Definition,Instance Based Learning,"Instance-Based Learning is a learning paradigm where predictions or inferences are made by directly comparing new observations to stored examples rather than learning an explicit global model. It answers the question: “What past observations most closely resemble this one?” Its strengths are simplicity, transparency, and flexibility, as it makes few assumptions about the underlying data structure. Its weaknesses include sensitivity to feature scaling and noise, lack of global summarization, and higher computational cost at inference time for large datasets",1.0
-Machine Learning,Definition,Multimodal AI,"Artificial intelligence systems that can process and integrate multiple types of data, such as text, images, audio, and video, to perform tasks",1.0
-Machine Learning,Definition,Semantic Type ,"Describes what kind of real-world concept a variable represents, independent of any specific model. It classifies data based on meaning—such as whether a variable reflects behaviour (actions over time), structure (relatively stable state or capacity), or context (situational or explanatory attributes). For example, POS Transaction 6-Month Average is behavioural because it captures repeated member activity, while Deposit Balance is structural because it reflects financial position. Classifying semantic type is important because it prevents mixing fundamentally different concepts in ways that distort model behaviour, improves interpretability, and ensures feature choices align with the intended analytical objective.",1.0
-Machine Learning,Definition,Functional Role ,"Describes how a variable is used within a specific model or modeling process, rather than what it represents conceptually. It classifies variables based on whether they actively shape the model (core), help interpret results (descriptive), or evaluate model quality and stability (diagnostic). For example, POS Transaction 6-Month Average may be a core variable that defines clusters, while Assignment Margin is diagnostic because it evaluates how confidently members are assigned. Classifying functional role is critical in ML modeling—especially in unsupervised learning—because it makes modeling assumptions explicit, prevents unintended variables from shaping outcomes, and enables controlled, explainable model evolution.",1.0
-Machine Learning,Problem Definition,Definition,"Problem Definition: Problem definition clearly states the business or research question the model is intended to solve and translates it into a machine-learning task (e.g., classification, regression, ranking). It includes defining the target variable, success metrics, constraints (latency, interpretability, cost), and assumptions. This step aligns stakeholders on what success looks likebefore any data or modeling begins. A poorly defined problem almost always leads to building the “right model for the wrong problem.”",1.0
-Machine Learning,Problem Definition,ML Process,"Project Goal Explicitly stated in 3-4 Sentences, can include exclusion items in addendum, not in original statement, which sould be positive, optimistic and include a value creating definition.",4.0
-Machine Learning,Problem Definition,ML Process,Explicilty Defined Business Delieverables,4.0
-Machine Learning,Problem Definition,ML Process,Explicilty Defined Expected Outcomes and KPIs,4.0
-Machine Learning,Problem Definition,ML Process,"Identify Model Baseline, or who is responsible for defining if not available.",4.0
-Machine Learning,Data Collection,Definition,"Data Collection: Data collection involves identifying, sourcing, and acquiring the datasets required to solve the defined problem. This may include internal databases, APIs, logs, third-party data, or manually collected data. Key considerations include data availability, coverage, granularity, freshness, and legal or privacy constraints. The quality and relevance of collected data fundamentally limit the ceiling of model performance.",1.0
-Machine Learning,Data Collection,Goal,Need to Create Definition and Requirements,1.0
-Machine Learning,Data Preparation,Definition,"Data Preparation: Data preparation focuses on cleaning and structuring raw data into a usable format for modeling. This includes handling missing values, correcting errors, standardizing formats, encoding categorical variables, and aligning labels with features. It also often involves train/validation/test splitting to prevent data leakage. This step is critical because most models assume clean, well-structured inputs and are highly sensitive to data issues.",1.0
-Machine Learning,Data Preparation,ML Process,"Identify Data Elements which appear relevant (Can be either based on desired, or what is currently Available).",5.0
-Machine Learning,Data Preparation,ML Process,"Label, and Document all data elements in Model (Semantic, Functional, Business Definitions and Theoretircal Inclusion)",5.0
-Machine Learning,Data Preparation,ML Process,"Document data omissions, known data quality issues, or assumptions (including Imbalances).",5.0
-Machine Learning,Data Preparation,ML Process,"Document all Imputation, Deletion, Standardization to be applied.",5.0
-Machine Learning,Data Preparation,ML Process,"Define Approach for Training, Testing and Validation. Create Final Dataset to proceed forward.",5.0
-Machine Learning,Data Preparation,Semantic Type ,"Behavioural Data: Captures what a member does over time, reflecting patterns of activity, frequency, stability, and change (e.g., transaction volumes, payment regularity, rolling averages). These variables are central to defining member types because they describe ongoing actions rather than static states. Behavioural data is typically time-dependent and is most useful for segmentation, trend detection, and change analysis.",3.0
-Machine Learning,Data Preparation,Semantic Type ,"Diagnostic variables: Used to test, stress, or validate the model rather than to define clusters (e.g., volatility measures, short-term deltas, assignment margins). They help identify instability, transition states, or boundary cases and support model evaluation and monitoring. Diagnostic variables explain how well the model behaves, not the behaviour it models.",3.0
-Machine Learning,Data Preparation,Semantic Type ,"Descriptive variables: Help characterize and label clusters after they are formed but do not strongly influence cluster assignment. They provide interpretive richness and support storytelling, governance, and communication without materially affecting model structure. Descriptive variables explain what clusters look like, not how they were formed.",3.0
-Machine Learning,Data Preparation,Functional Role ,Core Variables: Primary drivers of cluster formation and directly shape the geometry of the model; removing them would materially change cluster definitions. They represent the essential behaviours or states the segmentation is intended to capture and are used consistently across model iterations. Core variables define what the clusters are.,3.0
-Machine Learning,Data Preparation,Functional Role ,"Contextual Data: Provides situational or external information that helps explain behaviour but does not define it (e.g., demographics, geography, lifecycle stage, channel access). These variables shape or influence behaviour but are not behaviours themselves. Contextual data is often better used for post-cluster interpretation, validation, or policy decisions rather than as primary clustering inputs.",3.0
-Machine Learning,Data Preparation,Functional Role ,"Structural Data: Represents relatively stable attributes that describe a member’s financial position or configuration rather than their actions (e.g., deposit balances, loan balances, product holdings). These variables change slowly and often anchor or constrain behaviour but do not, on their own, describe how a member interacts with the institution. Structural data should be included sparingly in behavioural clustering to avoid overwhelming activity-based signals.",3.0
-Machine Learning,Feature Engineering,Definition,"Feature Engineering: Feature engineering is the process of creating new input variables that better represent the underlying patterns in the data. It may include transformations (log, scaling), aggregations, interactions, temporal features, or domain-specific encodings. Effective feature engineering can significantly improve model performance even with simple algorithms. It embeds domain knowledge into the model and often provides more value than algorithmic complexity.",1.0
-Machine Learning,Feature Engineering,ML Process,"Create Aggregation Data, Rations, PCA, etc. Note these should be identified and defined in Data Prepartion, this is simple technical execution and creation.",1.0
-Machine Learning,Model,Definition,"Model: The model is the mathematical or algorithmic structure used to map input features to predictions. This includes selecting the model family (e.g., linear models, tree-based models, neural networks) and defining its architecture. Model choice balances predictive power, interpretability, computational cost, and deployment constraints. The model defines howlearning occurs but does not yet involve learning itself.",1.0
-Machine Learning,Model,ML Process,"Define Models which will be included in Pipeline, include explanation as to explicitly what the Model does, why it is relevant for this problem and what it will solve as it relates to this problem. Where this differs across models, must explain and document the differences.",4.0
-Machine Learning,Model,ML Process,"Define how model will be evaluated, what metrics will be minimized (or maximized) balance between training results versus ability to generalize, balancing overfitting and performance.",4.0
-Machine Learning,Model,ML Process,"If certain models are not considered, explicitly state why, what would need ot change in order to review or reconsider this model and who in the business would be responsible for next steps where obvious omissions, data quality, process or procedure gaps exist.",4.0
-Machine Learning,Model,ML Process,"Define how feature evaluation will occur, explicitly state KPIs and document how they relate to project delieverables, business goals and expected outcomes.",4.0
-Machine Learning,Model,Important to Remeber,Is your Data Structured in a way that is conducive to your Model.,4.0
-Machine Learning,Model,Important to Remeber,"Any data set can be optimized, even when there is NO relation. It will generalize.",4.0
-Machine Learning,Model,Important to Remeber,"An Example of this would a classification model with Wolves and Dogs,  many wolf photos happened to be taken in snowy environments, while dog photos were often taken indoors or on grass. The model learned to detect snow, not animals.",4.0
-Machine Learning,Model,Important to Remeber,"Models will cheat and can solve problems which appear to be optimal, but they might not be solving what you expect or require, they might be finding patterns in the data which you do not see. An Example of this would a classification model with Wolves and Dogs,  many wolf photos happened to be taken in snowy environments, while dog photos were often taken indoors or on grass. The model learned to detect snow, not animals.",4.0
-Machine Learning,Model,Algorithm,"Ada: Boosting technique that combines multiple weak learners (usually decision stumps) into a strong learner. ModelStrengths: Handles weak learners well, reduces overfitting. Model Weaknesses: Sensitive to noisy data, requires careful tuning of learning rate.",201.0
-Machine Learning,Model,Algorithm,AdaBoostClassifier: ,201.0
-Machine Learning,Model,Algorithm,AdaBoostRegressor: ,201.0
-Machine Learning,Model,Algorithm,AffinityPropagation: ,201.0
-Machine Learning,Model,Algorithm,"Agentic AI: Perform a Specific Task, Autonomously while learning its environment.",201.0
-Machine Learning,Model,Algorithm,"AgglomerativeClustering: Agglomerative Clustering is a type of hierarchical clustering that uses a bottom-up approach. Each data point starts in its own cluster, and pairs of clusters are merged step by step based on similarity until all points are in one cluster (or a stopping criterion is met). Strengths: Doesn’t require you to specify the number of clusters up front (if using a dendrogram). Can capture nested cluster structure. Weaknesses; Computationally expensive for large datasets (O(n²)).Once merged, clusters can't be split.",201.0
-Machine Learning,Model,Algorithm,ARDRegression: ,201.0
-Machine Learning,Model,Algorithm,BaggingClassifier: ,201.0
-Machine Learning,Model,Algorithm,BaggingRegressor: ,201.0
-Machine Learning,Model,Algorithm,BayesianGaussianMixture: ,201.0
-Machine Learning,Model,Algorithm,BayesianRidge: ,201.0
-Machine Learning,Model,Algorithm,BernoulliNB: ,201.0
-Machine Learning,Model,Algorithm,BernoulliRBM: ,201.0
-Machine Learning,Model,Algorithm,"Bidirectional Encoder Representations from Transformers (BERT):  It’s a deep learning model for NLP developed by Google in 2018 that understands the context of words in a sentence by looking in both directions — left and right. This is a major upgrade over older models that only read text left-to-right or right-to-left. BERT is like someone reading a sentence and filling in blanks based on the full context.GPT is like someone writing a sentence one word at a time, based only on what they’ve written so far.",201.0
-Machine Learning,Model,Algorithm,Binarizer: ,201.0
-Machine Learning,Model,Algorithm,Birch: ,201.0
-Machine Learning,Model,Algorithm,BisectingKMeans: ,201.0
-Machine Learning,Model,Algorithm,CalibratedClassifierCV: ,201.0
-Machine Learning,Model,Algorithm,CategoricalNB: ,201.0
-Machine Learning,Model,Algorithm,CCA: ,201.0
-Machine Learning,Model,Algorithm,ClassifierChain: ,201.0
-Machine Learning,Model,Algorithm,ComplementNB: ,201.0
-Machine Learning,Model,Algorithm,Convolutional Neural Network: ,201.0
-Machine Learning,Model,Algorithm,CountVectorizer: ,201.0
-Machine Learning,Model,Algorithm,DBSCAN: ,201.0
-Machine Learning,Model,Algorithm,"Decision Trees: An ensemble of decision trees using bagging to reduce overfitting and improve accuracy. ModelStrengths: Reduces overfitting, robust to noise, handles high-dimensional data well. Model Weaknesses': ""Computationally expensive, less interpretable than a single tree.
+In general, as we increase the number of tunable parameters in a model, it becomes more flexible, and can better fit a training data set. It is said to have lower error, or bias. However, for more flexible models, there will tend to be greater variance to the model fit each time we take a set of samples to create a new training data set. It is said that there is greater variance in the model's estimated parameters.High-variance learning methods may be able to represent their training set well but are at risk of overfitting to noisy or unrepresentative training data. In contrast, algorithms with high bias typically produce simpler models that may fail to capture important regularities (i.e. underfit) in the data."
+ML Project,Definition,Feature Selection,"Variance: Variance refers to errors caused by models that are too sensitive to small fluctuations in the training data, often resulting in overfitting. High-variance models are overly flexible, capturing noise as if it were meaningful patterns. A model with many degrees of freedom (such as a high-degree polynomial model) is likely to have high variance and thus overfit the training data. As an example, if you created a model of How Predicting Housing Prices in 1 Neighbourhood would work and applied it to different neighbourhoods, if your model was simple, it wouldn’t work well anywhere and thus would be Wrong, but consistently-ish wrong. If your model was Good, it would work similarly well every well. If you model was overfit, it would work really well in 1 place, not so well elsewhere.
+"
+ML Project,Definition,Training,"Training is the process of fitting the model to data by optimizing its parameters to minimize a loss function. During training, the model learns patterns by iteratively adjusting weights based on observed errors. This step may involve batching, optimization algorithms, and regularization techniques. Proper training ensures the model captures meaningful signal without overfitting."
+ML Project,Process Step,Training,Define Mock 0 Pipeline Once available. Insure to follow Standardized Amendment process once created. 
+ML Project,Process Step,Training,
+ML Project,Definition,Hyperparameter Tuning,"Hyperparameter tuning involves selecting optimal configuration values that control model behavior but are not learned directly from data. Examples include learning rate, tree depth, number of layers, or regularization strength. Techniques such as grid search, random search, or Bayesian optimization are commonly used. This step can materially improve performance and stability without changing the underlying model."
+ML Project,Process Step,Hyperparameter Tuning,"Identify Paramaters before implementing and running Mock 0. If results of Training change Hyperparameter tuning, document explicitly why."
+ML Project,Process Step,Hyperparameter Tuning,"Run through Hyperparameter tuning process, documenting all findings, assumptions."
+ML Project,Process Step,Hyperparameter Tuning,"Finding must be communicated at this point of time, via Dashboard. Make Explicit determination if business approval is required before proceeding forward."
+ML Project,Process Step,Model Evaluation,NNNNNNNEEEEEWWWWWWW .Needs comments.
+ML Project,Process Step,Model Selection,"Includes Determination of Final Model to be used, and parameters included within Model."
+ML Project,Process Step,Model Selection,"Must be formally documented, with all underlying results, documents and finding available in a clear and consistent documented process."
+ML Project,Process Step,Model Selection,"Decision should include an expected Performance Change, an deployment plan, and owners, in addition to agreement of go forward KPI monitoring."
+ML Project,Definition,Validation,"Process which evaluates a trained machine-learning model on data that was not used during training to assess how well it generalizes to unseen data. It is used to tune model choices and hyperparameters, detect overfitting or underfitting, and guide model selection before final testing or deployment. Validation acts as a feedback loop before final evaluation or deployment decisions are made."
+ML Project,Process Step,Validation,"Run hold back data after all decisions have been made, before approval. Need to COMMUNICATE this to people to avoid confusion. It is important as this should not bias or be done before the model is created, part of healthy Business Decisions."
+ML Project,Definition,"Bias, Fairness and Ethics","This step examines whether the model produces systematically unfair or harmful outcomes across different groups. It includes analyzing data representation, outcome disparities, and unintended correlations. Ethical considerations may involve transparency, consent, explainability, and regulatory compliance. Addressing bias and fairness is essential for responsible, trustworthy, and legally compliant ML systems."
+ML Project,Process Step,"Bias, Fairness and Ethics",Comment Needed
+ML Project,Process Step,Model Summarization/ Model Interpretability,NNNNNNNEEEEEWWWWWWW .Needs comments.
+ML Project,Definition,Deployment,"Deployment is the process of integrating the trained model into a production environment where it can generate real-world predictions. This may involve APIs, batch pipelines, streaming systems, or embedded applications. Considerations include scalability, latency, reliability, and versioning. Deployment turns a model from an experiment into a usable product."
+ML Project,Process Step,Deployment,Need to Explain this as a step. If not order will not be restored necessary.
+ML Project,Process Step,Monitoring,"Monitoring tracks model performance and behavior over time after deployment. It includes detecting data drift, concept drift, performance degradation, and operational issues. Alerts and retraining triggers are often established at this stage. Monitoring is essential because real-world data changes, and models degrade if left unattended."
+ML Project,Pipeline Stage,Evaluation,"Evaluation measures how well the final model performs against defined success metrics on a truly unseen test dataset. Metrics depend on the problem type (e.g., accuracy, AUC, RMSE, precision-recall). This step provides an objective assessment of whether the model meets business or research requirements. Evaluation results often determine whether a model is production-ready."
+ML Model,Guiding Principle,Model Type,"Within the machine learning paradigm, models are commonly categorized into distinct model types that define how learning occurs. The appropriate model type is selected based on the problem context, data availability and quality, time constraints, business objectives, and resource limitations."
+ML Model,Definition,Model Type,"Reinforcement Learning: Reinforcement learning trains an agent to make decisions by interacting with an environment and receiving rewards or penalties. The agent learns a policy that maximizes cumulative reward over time through trial and error. It is commonly used in robotics, game playing, and control systems."
+ML Model,Definition,Model Type,Semisupervised Learning: Semi-supervised learning combines a small amount of labeled data with a large amount of unlabeled data to improve learning performance. The model leverages the structure in the unlabeled data to generalize better than supervised learning alone. This approach is useful when labeling data is expensive or time-consuming.
+ML Model,Definition,Model Type,"Supervised Learning: Supervised learning trains a model using labeled data, where the correct answer is known in advance. The model learns a mapping from inputs to outputs by minimizing the difference between its predictions and the true labels. Common examples include classification and regression problems."
+ML Model,Definition,Model Type,"Unsupervised Learning: Unsupervised learning works with unlabeled data and aims to discover hidden patterns or structure. The model groups, compresses, or summarizes the data without being told what the correct outcome is. Typical use cases include clustering, dimensionality reduction, and anomaly detection."
+ML Model,Guiding Principle,Clustering,"Must Clarify this clearly, specifically the distinction between Behavior and Attributes, clustering should focus primarily on behavior. Specifically Demographics can dominate distiance differences relative to behavior without adding value."
+ML Model,Guiding Principle,Clustering,"Small Number of Stable, Interpretable, Member Archetypes that summaize the global behavior and can be reused for ML and Analysis."
+ML Model,Guiding Principle,Clustering,Stability over Uniqueness
+ML Model,Guiding Principle,Clustering,Interpretability over novelty
+ML Model,Guiding Principle,Clustering,Repeatability over perfection.
+ML Model,Algorithm,RadiusNeighborsClassifier,
+ML Model,Algorithm,QuantileRegressor,
+ML Model,Algorithm,Quantile Random Forest,"Quantile Random Forest is an extension of random forests that estimates conditional quantiles of the target variable instead of only the mean. It is important because it provides uncertainty information and prediction intervals, not just point estimates. This method is commonly used in risk modeling, forecasting, and decision-making scenarios where understanding the distribution of outcomes matters. It is particularly useful when residuals are heteroskedastic or non-Gaussian."
+ML Model,Algorithm,PolynomialFeatures,
+ML Model,Algorithm,PolynomialCountSketch,
+ML Model,Algorithm,PoissonRegressor,
+ML Model,Algorithm,PLSSVD,
+ML Model,Algorithm,PLSRegression,
+ML Model,Algorithm,PLSCanonical,
+ML Model,Algorithm,Pipeline,
+ML Model,Algorithm,Perceptron,"The Perceptron is one of the earliest linear classification algorithms, learning a decision boundary by iteratively adjusting weights based on misclassified examples. It is important historically as the foundation of modern neural networks and gradient-based learning. In practice, it is used mainly for educational purposes or as a fast baseline on linearly separable data. Its simplicity limits its performance on noisy or non-linear problems."
+ML Model,Algorithm,QuadraticDiscriminantAnalysis,
+ML Model,Algorithm,RadiusNeighborsRegressor,
+ML Model,Algorithm,MultinomialNB,
+ML Model,Algorithm,RandomForestRegressor,
+ML Model,Algorithm,PCA,
+ML Model,Algorithm,RandomizedSearchCV,
+ML Model,Algorithm,RandomTreesEmbedding,
+ML Model,Algorithm,RANSACRegressor,
+ML Model,Algorithm,Recurrent Neural Network,
+ML Model,Algorithm,RegressorChain,
+ML Model,Algorithm,RFE,
+ML Model,Algorithm,RFECV,
+ML Model,Algorithm,RidgeClassifier,
+ML Model,Algorithm,RidgeClassifierCV,
+ML Model,Algorithm,RidgeCV,"RidgeCV is a regression model that combines ridge regression (L2 regularization) with cross-validation to automatically select the optimal regularization strength. It is important because it reduces overfitting while maintaining stability in the presence of multicollinearity. RidgeCV is commonly used when predictors are highly correlated and predictive performance is prioritized over feature sparsity. It provides a principled, automated way to tune regularization."
+ML Model,Algorithm,SelectFdr,
+ML Model,Algorithm,RandomForestClassifier,
+ML Model,Algorithm,PatchExtractor,
+ML Model,Algorithm,OrthogonalMatchingPursuit,
+ML Model,Algorithm,PassiveAggressiveClassifier,
+ML Model,Algorithm,MLPRegressor,
+ML Model,Algorithm,MultiLabelBinarizer,
+ML Model,Centroid-based clustering,KMeans,"KMeans is a centroid-based clustering algorithm that iteratively updates cluster centers to minimize within-cluster variance. It produces a single cluster label per observation, making it easy to summarize and communicate results. KMeans is fast, widely understood, and works well when clusters are well-separated and similarly sized. However, it is sensitive to feature scaling, outliers, and the choice of K."
+ML Model,Algorithm,MultiOutputClassifier,
+ML Model,Algorithm,MultiOutputRegressor,
+ML Model,Algorithm,MultiTaskElasticNet,
+ML Model,Algorithm,MultiTaskElasticNetCV,
+ML Model,Algorithm,MultiTaskLasso,
+ML Model,Algorithm,MultiTaskLassoCV,
+ML Model,Algorithm,NearestCentroid,
+ML Model,Algorithm,NearestNeighbors,
+ML Model,Algorithm,NeighborhoodComponentsAnalysis,
+ML Model,Algorithm,PassiveAggressiveRegressor,
+ML Model,Algorithm,Neural Network,
+ML Model,Algorithm,Normalizer,
+ML Model,Algorithm,NuSVC,
+ML Model,Algorithm,NuSVR,
+ML Model,Algorithm,Nystroem,
+ML Model,Algorithm,OAS,
+ML Model,Algorithm,OneClassSVM,
+ML Model,Algorithm,OneVsOneClassifier,
+ML Model,Algorithm,OneVsRestClassifier,
+ML Model,Algorithm,OPTICS,
+ML Model,Algorithm,SelectFpr,SelectFpr is a feature selection method that selects features based on statistical tests while controlling the false positive rate. It is important because it helps remove irrelevant features while limiting the probability of including noise variables. SelectFpr is typically used in high-dimensional settings such as genomics or text data. It is appropriate when interpretability and statistical control are priorities.
+ML Model,Algorithm,OrthogonalMatchingPursuitCV,
+ML Model,Algorithm,OutputCodeClassifier,
+ML Model,Algorithm,NMF,
+ML Model,Algorithm,SelectFromModel,
+ML Model,Algorithm,SGDClassifier,"SGDClassifier is a linear classification algorithm that trains models using stochastic gradient descent, updating parameters incrementally with each batch or observation. It is important because it scales efficiently to very large datasets and supports multiple loss functions (e.g., logistic regression, hinge loss). SGDClassifier is commonly used when data is high-dimensional, streaming, or too large for batch optimization methods. It trades some stability for speed and scalability."
+ML Model,Algorithm,SelectKBest,
+ML Model,Algorithm,XGBoost,
+ML Model,Operational Definition,Regularization,"Technique used to prevent overfitting by adding a penalty term to the loss function. It discourages the model from fitting too closely to the training data, ensuring better generalization to unseen data. Traditionnaly results in bias, at benefit of materially lowering Variance. Regularization is a Constraint."
+ML Model,Function,AdditiveChi2Sampler,
+ML Model,Procedure,ColumnTransformer,
+ML Model,Procedure,FunctionTransformer,
+ML Model,Procedure,KNeighborsTransformer,
+ML Model,Procedure,LabelEncoder,
+ML Model,Procedure,MaxAbsScaler,
+ML Model,Procedure,MinMaxScaler,
+ML Model,Procedure,OneHotEncoder,
+ML Model,Procedure,OrdinalEncoder,
+ML Model,Procedure,PowerTransformer,
+ML Model,Algorithm,Word2Vec,"Word2Vec is a neural-network–based method that learns dense vector embeddings for words, capturing semantic and syntactic relationships. Unlike Bag of Words, which only counts word occurrences and ignores meaning, Word2Vec represents words in a continuous vector space where similarity between vectors reflects semantic closeness"
+ML Model,Procedure,QuantileTransformer,
+ML Model,Procedure,RBFSampler,
+ML Model,Procedure,RobustScaler,
+ML Model,Procedure,SkewedChi2Sampler,
+ML Model,Procedure,SplineTransformer,
+ML Model,Procedure,StandardScaler,
+ML Model,Procedure,TargetEncoder,
+ML Model,Procedure,TfidfTransformer,
+ML Model,Procedure,TransformedTargetRegressor,
+ML Model,Operational Definition,Activation Function,"A mathematical function applied to a neuron’s weighted input that introduces non-linearity into a neural network. This non-linearity enables the model to learn complex, non-linear relationships in the data. Activation functions are applied within layers during the forward pass of a neural network, transforming intermediate representations before passing them to the next layer. Activation choice affects gradient flow, training stability, and convergence speed. Poor choices can cause vanishing or exploding gradients, limiting the depth or effectiveness of the network"
+ML Model,Operational Definition,Loss Function,"A loss function is a mathematical function that measures how far a model’s predictions are from the true target values, producing a single scalar value that represents prediction error and defines the objective to be minimized during training. The loss function is evaluated during training after the forward pass and is the starting point for backpropagation. Its gradients drive parameter updates via the optimizer. Different loss functions encode different assumptions about error, robustness, and business objectives. Choosing an inappropriate loss can lead to models that optimize the wrong behavior, even if training converges successfully."
+ML Model,Operational Definition,Optimizer,"Optimization algorithm that updates a model’s parameters using gradients of the loss function in order to minimize training error. It defines how gradient information is transformed into parameter updates. The optimizer operates during training, after gradients are computed via backpropagation, and is not used during inference. Different optimizers trade off convergence speed, stability, and generalization. Hyperparameters such as learning rate and momentum are"
+ML Model,Centroid-based clustering,Centroid-based clustering,"Centroid-based clustering groups data points by assigning each point to the nearest representative center (centroid). It answers the question: “What are the main archetypal behavior patterns in the data?” Its strengths are scalability, stability, and interpretability, making it well suited for large datasets and business-facing segmentation. Its main weakness is that it assumes roughly spherical clusters and requires the number of clusters (K) to be chosen in advance."
+ML Model,Procedure,RadiusNeighborsTransformer,
+ML Model,Algorithm,VotingRegressor,
+ML Model,Algorithm,VotingClassifier,"VotingClassifier is an ensemble method that combines predictions from multiple different models into a single prediction, using either majority voting (hard voting) or averaged probabilities (soft voting). It is important because combining diverse models often improves robustness and generalization compared to any single model. Voting classifiers are typically used when several reasonably strong models exist and their errors are not perfectly correlated. They are especially useful in production systems where stability is valued over interpretability."
+ML Model,Algorithm,VarianceThreshold,
+ML Model,Algorithm,SelectPercentile,
+ML Model,Algorithm,SelfTrainingClassifier,
+ML Model,Algorithm,SequentialFeatureSelector,
+ML Model,Algorithm,MLPClassifier,
+ML Model,Algorithm,SGDOneClassSVM,
+ML Model,Algorithm,SGDRegressor,
+ML Model,Algorithm,ShrunkCovariance,
+ML Model,Algorithm,SimpleImputer,
+ML Model,Algorithm,SparseCoder,
+ML Model,Algorithm,SparsePCA,
+ML Model,Algorithm,SparseRandomProjection,
+ML Model,Algorithm,SpectralBiclustering,
+ML Model,Algorithm,SpectralClustering,
+ML Model,Algorithm,SpectralCoclustering,
+ML Model,Algorithm,SpectralEmbedding,
+ML Model,Algorithm,StackingClassifier,
+ML Model,Algorithm,StackingRegressor,
+ML Model,Algorithm,Support Vector Machines,"Finds the optimal hyperplane that best separates data points of different classes in a feature space. The hyperplane is chosen to maximize the margin, which is the distance between the hyperplane and the nearest data points from each class, known as support vectors. By default, generally a Linear Line, however can utilize Kernels to change, such that datasets where decision boundary is not linearly seperable can become so in higher dimensions.
 
-Algorithm which splits data into branches based on feature values to make decisions or predicitions. Each internal node represents a feature, each branch represens a a decision rule and each leaf node represents an outcome. Decision Trees are popular because they are simple to interpret, require litte data preprocessing and can handle both classificaiton and regression. Their strengths include handling both numerical and catoegorical data, providiing clear visual representations of decisions. They are prone to overfitting and sensitive to noisy data. They work well in scenarios where interpretabiltiy is important, but struggle with high dimensional data when complex relationships exist. ",201.0
-Machine Learning,Model,Algorithm,DecisionTreeClassifier: ,201.0
-Machine Learning,Model,Algorithm,DecisionTreeRegressor: ,201.0
-Machine Learning,Model,Algorithm,DictionaryLearning: ,201.0
-Machine Learning,Model,Algorithm,DictVectorizer: ,201.0
-Machine Learning,Model,Algorithm,DummyClassifier: ,201.0
-Machine Learning,Model,Algorithm,DummyRegressor: ,201.0
-Machine Learning,Model,Algorithm,ElasticNetCV: ,201.0
-Machine Learning,Model,Algorithm,EllipticEnvelope: ,201.0
-Machine Learning,Model,Algorithm,EmpiricalCovariance: ,201.0
-Machine Learning,Model,Algorithm,ExtraTreeClassifier: ,201.0
-Machine Learning,Model,Algorithm,ExtraTreeRegressor: ,201.0
-Machine Learning,Model,Algorithm,ExtraTreesClassifier: ,201.0
-Machine Learning,Model,Algorithm,ExtraTreesRegressor: ,201.0
-Machine Learning,Model,Algorithm,FactorAnalysis: ,201.0
-Machine Learning,Model,Algorithm,FastICA: ,201.0
-Machine Learning,Model,Algorithm,FeatureAgglomeration: ,201.0
-Machine Learning,Model,Algorithm,FeatureHasher: ,201.0
-Machine Learning,Model,Algorithm,FeatureUnion: ,201.0
-Machine Learning,Model,Algorithm,FixedThresholdClassifier: ,201.0
-Machine Learning,Model,Algorithm,FrozenEstimator: ,201.0
-Machine Learning,Model,Algorithm,GammaRegressor: ,201.0
-Machine Learning,Model,Algorithm,GaussianMixture: ,201.0
-Machine Learning,Model,Algorithm,GaussianNB: ,201.0
-Machine Learning,Model,Algorithm,GaussianProcessClassifier: ,201.0
-Machine Learning,Model,Algorithm,GaussianProcessRegressor: ,201.0
-Machine Learning,Model,Algorithm,GaussianRandomProjection: ,201.0
-Machine Learning,Model,Algorithm,Generalaized Liner Model: ,201.0
-Machine Learning,Model,Algorithm,GenericUnivariateSelect: ,201.0
-Machine Learning,Model,Algorithm,"Gradient Descent: Widely used optimization algorithm in machine learning, particularly for training models like neural networks. Its primary goal is to minimize a loss function, which measures the error between the model's predictions and the actual outcomes, by iteratively adjusting the model’s parameters.
+ModelStrengths: Effective in high-dimensional spaces, works well with clear margins of separation. Model Weaknesses:Computationally expensive, struggles with large datasets."
+ML Model,Algorithm,Support Vector Regression,"SVR tries to fit a function within a margin of tolerance (epsilon) around the true data points — instead of minimizing the error between predicted and actual values like in ordinary least squares regression. Margin of Tolerance (ε): Instead of minimizing all errors, SVR ignores errors as long as they're within this ""epsilon-tube"" around the true values.Support Vectors: Only data points outside the epsilon margin contribute to the model (i.e., they influence the regression line).Kernel Trick: Like SVM, SVR can use kernels (e.g., linear, RBF) to model nonlinear relationships."
+ML Model,Algorithm,SVC,
+ML Model,Algorithm,SVR,
+ML Model,Algorithm,TfidfVectorizer,
+ML Model,Algorithm,TheilSenRegressor,
+ML Model,Algorithm,TruncatedSVD,
+ML Model,Algorithm,TSNE,
+ML Model,Algorithm,TunedThresholdClassifierCV,
+ML Model,Algorithm,TweedieRegressor,
+ML Model,Algorithm,SelectFwe,
+ML Model,Algorithm,MissingIndicator,
+ML Model,Centroid-based clustering,MiniBatchKMeans,MiniBatchKMeans is a scalable variant of KMeans that updates centroids using small random subsets of data. It answers the same questions as KMeans but is designed for large datasets where full batch updates are expensive. Its strengths are speed and memory efficiency with minimal loss in cluster quality. The trade-off is slightly higher variability and less precise centroids compared to full KMeans.
+ML Model,Algorithm,MiniBatchNMF,
+ML Model,Algorithm,DecisionTreeRegressor,
+ML Model,Algorithm,DictionaryLearning,
+ML Model,Algorithm,DictVectorizer,
+ML Model,Algorithm,DummyClassifier,
+ML Model,Algorithm,DummyRegressor,
+ML Model,Algorithm,ElasticNetCV,
+ML Model,Algorithm,EllipticEnvelope,
+ML Model,Algorithm,EmpiricalCovariance,
+ML Model,Algorithm,ExtraTreeClassifier,
+ML Model,Algorithm,MiniBatchSparsePCA,
+ML Model,Algorithm,ExtraTreesClassifier,
+ML Model,Algorithm,ExtraTreesRegressor,
+ML Model,Algorithm,FactorAnalysis,
+ML Model,Algorithm,FastICA,
+ML Model,Algorithm,FeatureAgglomeration,
+ML Model,Algorithm,FeatureHasher,
+ML Model,Algorithm,FeatureUnion,
+ML Model,Algorithm,FixedThresholdClassifier,
+ML Model,Algorithm,FrozenEstimator,
+ML Model,Algorithm,GammaRegressor,
+ML Model,Algorithm,GaussianMixture,
+ML Model,Algorithm,GaussianNB,
+ML Model,Algorithm,GaussianProcessClassifier,
+ML Model,Algorithm,DecisionTreeClassifier,
+ML Model,Algorithm,Decision Trees,"An ensemble of decision trees using bagging to reduce overfitting and improve accuracy. ModelStrengths: Reduces overfitting, robust to noise, handles high-dimensional data well. Model Weaknesses': ""Computationally expensive, less interpretable than a single tree.
+
+Algorithm which splits data into branches based on feature values to make decisions or predicitions. Each internal node represents a feature, each branch represens a a decision rule and each leaf node represents an outcome. Decision Trees are popular because they are simple to interpret, require litte data preprocessing and can handle both classificaiton and regression. Their strengths include handling both numerical and catoegorical data, providiing clear visual representations of decisions. They are prone to overfitting and sensitive to noisy data. They work well in scenarios where interpretabiltiy is important, but struggle with high dimensional data when complex relationships exist. "
+ML Model,Algorithm,DBSCAN,
+ML Model,Algorithm,CountVectorizer,
+ML Model,General Principles,Deep Learning,"Deep learning is a subset of machine learning that uses multi-layer neural networks to automatically learn hierarchical representations from data, reducing the need for manual feature engineering. By stacking simple processing units called layers—each acting as a filter that transforms inputs into higher-level representations—deep learning models can capture complex patterns through composition. Early challenges such as vanishing gradients, where learning signals faded through many layers, were largely addressed through improved activation functions, optimization methods, and weight initialization strategies. In practice, building a deep learning model involves defining the network architecture (number of layers, connections, and activations) and then specifying how it learns by choosing an optimizer, loss function, and evaluation metrics during compilation."
+ML Model,Algorithm,Ada,"Boosting technique that combines multiple weak learners (usually decision stumps) into a strong learner. ModelStrengths: Handles weak learners well, reduces overfitting. Model Weaknesses: Sensitive to noisy data, requires careful tuning of learning rate."
+ML Model,Algorithm,AdaBoostClassifier,"AdaBoostClassifier is an ensemble boosting algorithm that builds a strong classifier by sequentially combining many weak learners, typically decision stumps. It is important because it focuses learning on previously misclassified examples, often achieving high accuracy with simple base models. AdaBoost is commonly used when data is moderately sized and relatively clean. It can be sensitive to noise and outliers due to its reweighting mechanism."
+ML Model,Algorithm,AdaBoostRegressor,
+ML Model,Algorithm,AffinityPropagation,
+ML Model,Algorithm,Agentic AI,"Perform a Specific Task, Autonomously while learning its environment."
+ML Model,Algorithm,AgglomerativeClustering,"Agglomerative Clustering is a type of hierarchical clustering that uses a bottom-up approach. Each data point starts in its own cluster, and pairs of clusters are merged step by step based on similarity until all points are in one cluster (or a stopping criterion is met). Strengths: Doesn’t require you to specify the number of clusters up front (if using a dendrogram). Can capture nested cluster structure. Weaknesses; Computationally expensive for large datasets (O(n²)).Once merged, clusters can't be split."
+ML Model,Algorithm,ARDRegression,
+ML Model,Algorithm,BaggingClassifier,
+ML Model,Algorithm,BaggingRegressor,
+ML Model,Algorithm,BayesianGaussianMixture,
+ML Model,Algorithm,GaussianProcessRegressor,
+ML Model,Algorithm,BayesianRidge,
+ML Model,Algorithm,BernoulliRBM,
+ML Model,Algorithm,Bidirectional Encoder Representations from Transformers (BERT)," It’s a deep learning model for NLP developed by Google in 2018 that understands the context of words in a sentence by looking in both directions — left and right. This is a major upgrade over older models that only read text left-to-right or right-to-left. BERT is like someone reading a sentence and filling in blanks based on the full context.GPT is like someone writing a sentence one word at a time, based only on what they’ve written so far."
+ML Model,Algorithm,Binarizer,
+ML Model,Algorithm,Birch,
+ML Model,Algorithm,BisectingKMeans,
+ML Model,Algorithm,CalibratedClassifierCV,
+ML Model,Algorithm,CategoricalNB,
+ML Model,Algorithm,CCA,
+ML Model,Algorithm,ClassifierChain,
+ML Model,Algorithm,ComplementNB,
+ML Model,Algorithm,Convolutional Neural Network,
+ML Model,Algorithm,BernoulliNB,
+ML Model,Algorithm,GaussianRandomProjection,
+ML Model,Algorithm,ExtraTreeRegressor,
+ML Model,Algorithm,GenericUnivariateSelect,
+ML Model,Algorithm,Large Language Model (LLM),Understanding and Generating Human Like Text
+ML Model,Algorithm,Lars,
+ML Model,Algorithm,LarsCV,
+ML Model,Algorithm,LassoCV,
+ML Model,Algorithm,LassoLars,
+ML Model,Algorithm,LassoLarsCV,
+ML Model,Algorithm,LassoLarsIC,
+ML Model,Algorithm,LatentDirichletAllocation,
+ML Model,Algorithm,LedoitWolf,
+ML Model,Algorithm,Linear Regression,"Models the relationship between an independent variable ( X ) and a dependent variable ( Y ) using a linear function. Model strengths include : Simple, interpretable, computationally efficient, works well for linearly separable data. Weaknesses, Assumes linear relationships, sensitive to outliers. Can calculate using two different approaches, Closed Form or Gradient Decent. Closed Form Solution was the original approach, can be calculated using advanced Calculus, which is easy for simple instances with a low number of independent variables, however Gradient Decent increasingly utilized as easy to implement via numeric calculation,  Python Linear Regression utilizies Pseudoinverse, which is computationally less expensive. However, it is Big O 2² to 2³, which means doubling features increases computations complexity 4 times.
+
+Cost function for Linear Regression is usually Mean Squared Error. While it does not have to be, it is convenient for a number of reasons. 
+1) Rarely Overfits, which Polynomial equations frequently do. 
+2) It always has a derivative, which makes it convenient for using closed forms solutions (saving computation complexity). Historically was applied via Closed Form Solution, which can be difficult to calculate, computationally expensive. "
+ML Model,Algorithm,LinearDiscriminantAnalysis,
+ML Model,Algorithm,LinearSVC,
+ML Model,Algorithm,LinearSVR,
+ML Model,Algorithm,Generalaized Liner Model,
+ML Model,Algorithm,LocalOutlierFactor,
+ML Model,Algorithm,Logistic Regression,"Predicts probabilities using the sigmoid function for binary classification problems.
+Model Strengths include; Simple, interpretable, performs well for linearly separable data. Model Weaknesses: Struggles with non-linear relationships, assumes linear relationship between features and log-odds."
+ML Model,Algorithm,LogisticRegression,
+ML Model,Algorithm,LogisticRegressionCV,
+ML Model,Algorithm,MDS,
+ML Model,Algorithm,MeanShift,
+ML Model,Algorithm,MinCovDet,
+ML Model,Algorithm,MiniBatchDictionaryLearning,
+ML Model,Algorithm,MiniBatchKMeans,
+ML Model,Algorithm,LabelSpreading,
+ML Model,Algorithm,LabelPropagation,
+ML Model,Algorithm,LocallyLinearEmbedding,
+ML Model,Algorithm,KNNImputer,
+ML Model,Algorithm,LabelBinarizer,
+ML Model,Algorithm,Gradient Descent,"Widely used optimization algorithm in machine learning, particularly for training models like neural networks. Its primary goal is to minimize a loss function, which measures the error between the model's predictions and the actual outcomes, by iteratively adjusting the model’s parameters.
 
 Traditional Gradient Descent vs. Stochastic Gradient Descent
 In Batch Gradient Descent, the algorithm computes the gradient of the loss function with respect to the model’s parameters using the entire dataset before updating the parameters. While this approach provides a precise update direction, it is computationally expensive and slow for large datasets since it requires processing all data points in each iteration.
@@ -131,257 +301,121 @@ Better exploration: The randomness in updates helps escape local minima.
 Higher variance: The noisier updates may lead to less stable convergence, requiring techniques like learning rate decay or momentum to improve performance.
 Slower convergence: Since updates are less precise, SGD may take longer to reach the optimal solution.
 Conclusion
-SGD, Mini-Batch Gradient Descent, and Batch Gradient Descent each offer different trade-offs in terms of speed, stability, and computational efficiency. In practice, Mini-Batch Gradient Descent is the most commonly used approach for deep learning, as it provides a balance between computational efficiency and convergence stability.",201.0
-Machine Learning,Model,Algorithm,GradientBoostingClassifier: ,201.0
-Machine Learning,Model,Algorithm,GradientBoostingRegressor: ,201.0
-Machine Learning,Model,Algorithm,GraphicalLasso: ,201.0
-Machine Learning,Model,Algorithm,GraphicalLassoCV: ,201.0
-Machine Learning,Model,Algorithm,GridSearchCV: ,201.0
-Machine Learning,Model,Algorithm,HashingVectorizer: ,201.0
-Machine Learning,Model,Algorithm,HDBSCAN: ,201.0
-Machine Learning,Model,Algorithm,HistGradientBoostingClassifier: ,201.0
-Machine Learning,Model,Algorithm,HistGradientBoostingRegressor: ,201.0
-Machine Learning,Model,Algorithm,HuberRegressor: ,201.0
-Machine Learning,Model,Algorithm,IncrementalPCA: ,201.0
-Machine Learning,Model,Algorithm,IsolationForest: ,201.0
-Machine Learning,Model,Algorithm,Isomap: ,201.0
-Machine Learning,Model,Algorithm,IsotonicRegression: ,201.0
-Machine Learning,Model,Algorithm,KBinsDiscretizer: ,201.0
-Machine Learning,Model,Algorithm,KernelCenterer: ,201.0
-Machine Learning,Model,Algorithm,KernelDensity: ,201.0
-Machine Learning,Model,Algorithm,KernelPCA: ,201.0
-Machine Learning,Model,Algorithm,KernelRidge: ,201.0
-Machine Learning,Model,Algorithm,KMeans: ,201.0
-Machine Learning,Model,Algorithm,KNeighborsClassifier: ,201.0
-Machine Learning,Model,Algorithm,KNeighborsRegressor: ,201.0
-Machine Learning,Model,Algorithm,"KNN: A model that classifies points based on their proximity to neighbors.. ModelStrengths: Simple to implement, works well with small datasets. Model Weaknesses: Computationally expensive with large datasets, sensitive to irrelevant features.",201.0
-Machine Learning,Model,Algorithm,KNNImputer: ,201.0
-Machine Learning,Model,Algorithm,LabelBinarizer: ,201.0
-Machine Learning,Model,Algorithm,LabelPropagation: ,201.0
-Machine Learning,Model,Algorithm,LabelSpreading: ,201.0
-Machine Learning,Model,Algorithm,Large Language Model (LLM): Understanding and Generating Human Like Text,201.0
-Machine Learning,Model,Algorithm,Lars: ,201.0
-Machine Learning,Model,Algorithm,LarsCV: ,201.0
-Machine Learning,Model,Algorithm,LassoCV: ,201.0
-Machine Learning,Model,Algorithm,LassoLars: ,201.0
-Machine Learning,Model,Algorithm,LassoLarsCV: ,201.0
-Machine Learning,Model,Algorithm,LassoLarsIC: ,201.0
-Machine Learning,Model,Algorithm,LatentDirichletAllocation: ,201.0
-Machine Learning,Model,Algorithm,LedoitWolf: ,201.0
-Machine Learning,Model,Algorithm,"Linear Regression: Models the relationship between an independent variable ( X ) and a dependent variable ( Y ) using a linear function. Model strengths include : Simple, interpretable, computationally efficient, works well for linearly separable data. Weaknesses, Assumes linear relationships, sensitive to outliers. Can calculate using two different approaches, Closed Form or Gradient Decent. Closed Form Solution was the original approach, can be calculated using advanced Calculus, which is easy for simple instances with a low number of independent variables, however Gradient Decent increasingly utilized as easy to implement via numeric calculation,  Python Linear Regression utilizies Pseudoinverse, which is computationally less expensive. However, it is Big O 2² to 2³, which means doubling features increases computations complexity 4 times.
-
-Cost function for Linear Regression is usually Mean Squared Error. While it does not have to be, it is convenient for a number of reasons. 
-1) Rarely Overfits, which Polynomial equations frequently do. 
-2) It always has a derivative, which makes it convenient for using closed forms solutions (saving computation complexity). Historically was applied via Closed Form Solution, which can be difficult to calculate, computationally expensive. ",201.0
-Machine Learning,Model,Algorithm,LinearDiscriminantAnalysis: ,201.0
-Machine Learning,Model,Algorithm,LinearSVC: ,201.0
-Machine Learning,Model,Algorithm,LinearSVR: ,201.0
-Machine Learning,Model,Algorithm,LocallyLinearEmbedding: ,201.0
-Machine Learning,Model,Algorithm,LocalOutlierFactor: ,201.0
-Machine Learning,Model,Algorithm,"Logistic Regression: Predicts probabilities using the sigmoid function for binary classification problems.
-Model Strengths include; Simple, interpretable, performs well for linearly separable data. Model Weaknesses: Struggles with non-linear relationships, assumes linear relationship between features and log-odds.",201.0
-Machine Learning,Model,Algorithm,LogisticRegression: ,201.0
-Machine Learning,Model,Algorithm,LogisticRegressionCV: ,201.0
-Machine Learning,Model,Algorithm,MDS: ,201.0
-Machine Learning,Model,Algorithm,MeanShift: ,201.0
-Machine Learning,Model,Algorithm,MinCovDet: ,201.0
-Machine Learning,Model,Algorithm,MiniBatchDictionaryLearning: ,201.0
-Machine Learning,Model,Algorithm,MiniBatchKMeans: ,201.0
-Machine Learning,Model,Algorithm,MiniBatchNMF: ,201.0
-Machine Learning,Model,Algorithm,MiniBatchSparsePCA: ,201.0
-Machine Learning,Model,Algorithm,MissingIndicator: ,201.0
-Machine Learning,Model,Algorithm,MLPClassifier: ,201.0
-Machine Learning,Model,Algorithm,MLPRegressor: ,201.0
-Machine Learning,Model,Algorithm,MultiLabelBinarizer: ,201.0
-Machine Learning,Model,Algorithm,MultinomialNB: ,201.0
-Machine Learning,Model,Algorithm,MultiOutputClassifier: ,201.0
-Machine Learning,Model,Algorithm,MultiOutputRegressor: ,201.0
-Machine Learning,Model,Algorithm,MultiTaskElasticNet: ,201.0
-Machine Learning,Model,Algorithm,MultiTaskElasticNetCV: ,201.0
-Machine Learning,Model,Algorithm,MultiTaskLasso: ,201.0
-Machine Learning,Model,Algorithm,MultiTaskLassoCV: ,201.0
-Machine Learning,Model,Algorithm,NearestCentroid: ,201.0
-Machine Learning,Model,Algorithm,NearestNeighbors: ,201.0
-Machine Learning,Model,Algorithm,NeighborhoodComponentsAnalysis: ,201.0
-Machine Learning,Model,Algorithm,Neural Network: ,201.0
-Machine Learning,Model,Algorithm,NMF: ,201.0
-Machine Learning,Model,Algorithm,Normalizer: ,201.0
-Machine Learning,Model,Algorithm,NuSVC: ,201.0
-Machine Learning,Model,Algorithm,NuSVR: ,201.0
-Machine Learning,Model,Algorithm,Nystroem: ,201.0
-Machine Learning,Model,Algorithm,OAS: ,201.0
-Machine Learning,Model,Algorithm,OneClassSVM: ,201.0
-Machine Learning,Model,Algorithm,OneVsOneClassifier: ,201.0
-Machine Learning,Model,Algorithm,OneVsRestClassifier: ,201.0
-Machine Learning,Model,Algorithm,OPTICS: ,201.0
-Machine Learning,Model,Algorithm,OrthogonalMatchingPursuit: ,201.0
-Machine Learning,Model,Algorithm,OrthogonalMatchingPursuitCV: ,201.0
-Machine Learning,Model,Algorithm,OutputCodeClassifier: ,201.0
-Machine Learning,Model,Algorithm,PassiveAggressiveClassifier: ,201.0
-Machine Learning,Model,Algorithm,PassiveAggressiveRegressor: ,201.0
-Machine Learning,Model,Algorithm,PatchExtractor: ,201.0
-Machine Learning,Model,Algorithm,PCA: ,201.0
-Machine Learning,Model,Algorithm,Perceptron: ,201.0
-Machine Learning,Model,Algorithm,Pipeline: ,201.0
-Machine Learning,Model,Algorithm,PLSCanonical: ,201.0
-Machine Learning,Model,Algorithm,PLSRegression: ,201.0
-Machine Learning,Model,Algorithm,PLSSVD: ,201.0
-Machine Learning,Model,Algorithm,PoissonRegressor: ,201.0
-Machine Learning,Model,Algorithm,PolynomialCountSketch: ,201.0
-Machine Learning,Model,Algorithm,PolynomialFeatures: ,201.0
-Machine Learning,Model,Algorithm,QuadraticDiscriminantAnalysis: ,201.0
-Machine Learning,Model,Algorithm,Quantile Random Forest: ,201.0
-Machine Learning,Model,Algorithm,QuantileRegressor: ,201.0
-Machine Learning,Model,Algorithm,RadiusNeighborsClassifier: ,201.0
-Machine Learning,Model,Algorithm,RadiusNeighborsRegressor: ,201.0
-Machine Learning,Model,Algorithm,RandomForestClassifier: ,201.0
-Machine Learning,Model,Algorithm,RandomForestRegressor: ,201.0
-Machine Learning,Model,Algorithm,RandomizedSearchCV: ,201.0
-Machine Learning,Model,Algorithm,RandomTreesEmbedding: ,201.0
-Machine Learning,Model,Algorithm,RANSACRegressor: ,201.0
-Machine Learning,Model,Algorithm,Recurrent Neural Network: ,201.0
-Machine Learning,Model,Algorithm,RegressorChain: ,201.0
-Machine Learning,Model,Algorithm,RFE: ,201.0
-Machine Learning,Model,Algorithm,RFECV: ,201.0
-Machine Learning,Model,Algorithm,RidgeClassifier: ,201.0
-Machine Learning,Model,Algorithm,RidgeClassifierCV: ,201.0
-Machine Learning,Model,Algorithm,RidgeCV: ,201.0
-Machine Learning,Model,Algorithm,SelectFdr: ,201.0
-Machine Learning,Model,Algorithm,SelectFpr: ,201.0
-Machine Learning,Model,Algorithm,SelectFromModel: ,201.0
-Machine Learning,Model,Algorithm,SelectFwe: ,201.0
-Machine Learning,Model,Algorithm,SelectKBest: ,201.0
-Machine Learning,Model,Algorithm,SelectPercentile: ,201.0
-Machine Learning,Model,Algorithm,SelfTrainingClassifier: ,201.0
-Machine Learning,Model,Algorithm,SequentialFeatureSelector: ,201.0
-Machine Learning,Model,Algorithm,SGDClassifier: Handle Large Dataset well because it treats each individual point distinctly.,201.0
-Machine Learning,Model,Algorithm,SGDOneClassSVM: ,201.0
-Machine Learning,Model,Algorithm,SGDRegressor: ,201.0
-Machine Learning,Model,Algorithm,ShrunkCovariance: ,201.0
-Machine Learning,Model,Algorithm,SimpleImputer: ,201.0
-Machine Learning,Model,Algorithm,SparseCoder: ,201.0
-Machine Learning,Model,Algorithm,SparsePCA: ,201.0
-Machine Learning,Model,Algorithm,SparseRandomProjection: ,201.0
-Machine Learning,Model,Algorithm,SpectralBiclustering: ,201.0
-Machine Learning,Model,Algorithm,SpectralClustering: ,201.0
-Machine Learning,Model,Algorithm,SpectralCoclustering: ,201.0
-Machine Learning,Model,Algorithm,SpectralEmbedding: ,201.0
-Machine Learning,Model,Algorithm,StackingClassifier: ,201.0
-Machine Learning,Model,Algorithm,StackingRegressor: ,201.0
-Machine Learning,Model,Algorithm,"Support Vector Machines: Finds the optimal hyperplane that best separates data points of different classes in a feature space. The hyperplane is chosen to maximize the margin, which is the distance between the hyperplane and the nearest data points from each class, known as support vectors. By default, generally a Linear Line, however can utilize Kernels to change, such that datasets where decision boundary is not linearly seperable can become so in higher dimensions.
-
-ModelStrengths: Effective in high-dimensional spaces, works well with clear margins of separation. Model Weaknesses:Computationally expensive, struggles with large datasets.",201.0
-Machine Learning,Model,Algorithm,"Support Vector Regression: SVR tries to fit a function within a margin of tolerance (epsilon) around the true data points — instead of minimizing the error between predicted and actual values like in ordinary least squares regression. Margin of Tolerance (ε): Instead of minimizing all errors, SVR ignores errors as long as they're within this ""epsilon-tube"" around the true values.Support Vectors: Only data points outside the epsilon margin contribute to the model (i.e., they influence the regression line).Kernel Trick: Like SVM, SVR can use kernels (e.g., linear, RBF) to model nonlinear relationships.",201.0
-Machine Learning,Model,Algorithm,SVC: ,201.0
-Machine Learning,Model,Algorithm,SVR: ,201.0
-Machine Learning,Model,Algorithm,TfidfVectorizer: ,201.0
-Machine Learning,Model,Algorithm,TheilSenRegressor: ,201.0
-Machine Learning,Model,Algorithm,TruncatedSVD: ,201.0
-Machine Learning,Model,Algorithm,TSNE: ,201.0
-Machine Learning,Model,Algorithm,TunedThresholdClassifierCV: ,201.0
-Machine Learning,Model,Algorithm,TweedieRegressor: ,201.0
-Machine Learning,Model,Algorithm,VarianceThreshold: ,201.0
-Machine Learning,Model,Algorithm,VotingClassifier: ,201.0
-Machine Learning,Model,Algorithm,VotingRegressor: ,201.0
-Machine Learning,Model,Algorithm,"Word2Vec: Word2Vec is a neural-network–based method that learns dense vector embeddings for words, capturing semantic and syntactic relationships. Unlike Bag of Words, which only counts word occurrences and ignores meaning, Word2Vec represents words in a continuous vector space where similarity between vectors reflects semantic closeness",201.0
-Machine Learning,Model,Algorithm,XGBoost: ,201.0
-Machine Learning,Model,Function,AdditiveChi2Sampler: ,1.0
-Machine Learning,Model,Procedure,ColumnTransformer: ,19.0
-Machine Learning,Model,Procedure,FunctionTransformer: ,19.0
-Machine Learning,Model,Procedure,KNeighborsTransformer: ,19.0
-Machine Learning,Model,Procedure,LabelEncoder: ,19.0
-Machine Learning,Model,Procedure,MaxAbsScaler: ,19.0
-Machine Learning,Model,Procedure,MinMaxScaler: ,19.0
-Machine Learning,Model,Procedure,OneHotEncoder: ,19.0
-Machine Learning,Model,Procedure,OrdinalEncoder: ,19.0
-Machine Learning,Model,Procedure,PowerTransformer: ,19.0
-Machine Learning,Model,Procedure,QuantileTransformer: ,19.0
-Machine Learning,Model,Procedure,RadiusNeighborsTransformer: ,19.0
-Machine Learning,Model,Procedure,RBFSampler: ,19.0
-Machine Learning,Model,Procedure,RobustScaler: ,19.0
-Machine Learning,Model,Procedure,SkewedChi2Sampler: ,19.0
-Machine Learning,Model,Procedure,SplineTransformer: ,19.0
-Machine Learning,Model,Procedure,StandardScaler: ,19.0
-Machine Learning,Model,Procedure,TargetEncoder: ,19.0
-Machine Learning,Model,Procedure,TfidfTransformer: ,19.0
-Machine Learning,Model,Procedure,TransformedTargetRegressor: ,19.0
-Machine Learning,Model,Regularization,ElasticNet: Approach which combines L1 and L2 Regularization.,3.0
-Machine Learning,Model,Regularization,"Lasso: Technique used to prevent overfitting by adding penalty term to loss function. Adds the absolute values of the coefficients as a penalty term. This leads to sparse models, as some coefficients become exactly zero",3.0
-Machine Learning,Model,Regularization,"Ridge: Technique used to prevent overfitting by adding penalty term to loss function. Adds the squared values of the coefficients as a penalty term. This incrases the cost of larger parameters, encouraging the model to distribute parameters waiting This shrinks the coefficients but does not eliminate them.",3.0
-Machine Learning,Feature Selection,Definition,"Feature Selection: Feature selection involves choosing a subset of relevant features to include in the model. This can be done using statistical tests, model-based importance scores, correlation analysis, or regularization techniques. The goal is to reduce noise, improve generalization, and simplify the model. Fewer, more informative features often lead to better performance and easier interpretability.",1.0
-Machine Learning,Feature Selection,ML Process,"Define how feature evaluation will occur, explicitly state KPIs and document how they relate to project delieverables, business goals and expected outcomes.",2.0
-Machine Learning,Feature Selection,ML Process,"Create Pipeline which automates selection, or document where it will be manual for Cost/Benefit reasons.",2.0
-Machine Learning,Feature Selection,Important to Remember,"Avoid ambigious features. Is a Banana ripe, who says so?",3.0
-Machine Learning,Feature Selection,Important to Remember,"Careful when something is truly random generated, Atmospheric Change, Earthquakes, Stocks. Very difficult, if not impossible to predict.",3.0
-Machine Learning,Feature Selection,Important to Remember,"MNIST performance when tilting Images, of adding noise.",3.0
-Machine Learning,Training,Definition,"Training: Training is the process of fitting the model to data by optimizing its parameters to minimize a loss function. During training, the model learns patterns by iteratively adjusting weights based on observed errors. This step may involve batching, optimization algorithms, and regularization techniques. Proper training ensures the model captures meaningful signal without overfitting.",1.0
-Machine Learning,Training,ML Process,Define Mock 0 Pipeline Once available. Insure to follow Standardized Amendment process once created. ,2.0
-Machine Learning,Training,Optimizer,Adadelta: Adaptive learning rate for nonstationary objectives.,7.0
-Machine Learning,Training,Optimizer,"Adagrad: Variation of Gradient Descent, which adapts the learning rate for each parameter by scaling it inversely proportional to the sum of past squared gradients. 
-",7.0
-Machine Learning,Training,Optimizer,"Adam: Variation of Gradient Descent, which combines both momentum and RMSprop, maintaining an exponentially decaying average of past gradients and squared gradients.",7.0
-Machine Learning,Training,Optimizer,"AdamW: Variant of Adam with weight decay, prevents overfitting.",7.0
-Machine Learning,Training,Optimizer,"Momentum: Variation of Gradient Descent, which accelerates learning by accumulating a moving average of past gradients.",7.0
-Machine Learning,Training,Optimizer,Nadam: Adam optimizer with Nesterov momentum for better convergence.,7.0
-Machine Learning,Training,Optimizer,"RMSprop: Variation of Gradient Descent, which adapts the learning rate by dividing by an exponentially weighted moving average of past squared gradients. Adapts learning rates based on recent gradient magnitudes. Good for RNNs.",7.0
-Machine Learning,Training,Function,"Hinge Loss: Loss function used primarily for binary classification, especially in Support Vector Machines (SVMs). It's designed to maximize the margin between classes — that is, push predictions to be confidently correct. It penalizes predictions that are: On the wrong side of the decision boundary Or correct but not confidently correct (i.e., too close to the margin)",2.0
-Machine Learning,Training,Function,Huber Loss: Loss function used in regression problems that is robust to outliers — it's essentially a blend between Mean Squared Error (MSE) and Mean Absolute Error (MAE). Regression with noisy or outlier-prone data Situations where you want the stability of MSE but the robustness of MAE,2.0
-Machine Learning,Hyperparameter Tuning,Definition,"Hyperparameter Tuning: Hyperparameter tuning involves selecting optimal configuration values that control model behavior but are not learned directly from data. Examples include learning rate, tree depth, number of layers, or regularization strength. Techniques such as grid search, random search, or Bayesian optimization are commonly used. This step can materially improve performance and stability without changing the underlying model.",1.0
-Machine Learning,Hyperparameter Tuning,ML Process,"Identify Paramaters before implementing and running Mock 0. If results of Training change Hyperparameter tuning, document explicitly why.",3.0
-Machine Learning,Hyperparameter Tuning,ML Process,"Run through Hyperparameter tuning process, documenting all findings, assumptions.",3.0
-Machine Learning,Hyperparameter Tuning,ML Process,"Finding must be communicated at this point of time, via Dashboard. Make Explicit determination if business approval is required before proceeding forward.",3.0
-Machine Learning,Model Selection,ML Process,"Includes Determination of Final Model to be used, and parameters included within Model.",3.0
-Machine Learning,Model Selection,ML Process,"Must be formally documented, with all underlying results, documents and finding available in a clear and consistent documented process.",3.0
-Machine Learning,Model Selection,ML Process,"Decision should include an expected Performance Change, an deployment plan, and owners, in addition to agreement of go forward KPI monitoring.",3.0
-Machine Learning,Validation,Definition,"Validation: Process which evaluates a trained machine-learning model on data that was not used during training to assess how well it generalizes to unseen data. It is used to tune model choices and hyperparameters, detect overfitting or underfitting, and guide model selection before final testing or deployment. Validation acts as a feedback loop before final evaluation or deployment decisions are made.",1.0
-Machine Learning,Validation,ML Process,"Run hold back data after all decisions have been made, before approval. Need to COMMUNICATE this to people to avoid confusion. It is important as this should not bias or be done before the model is created, part of healthy Business Decisions.",1.0
-Machine Learning,Validation,Function,Accuracy: Number of correctly classified examples divided by the total number of classified examples.,1.0
-Machine Learning,Validation,Procedure,"Confusion Matrix: Table used to evaluate the performance of a classification model by comparing predicted labels to actual labels. It summarizes the counts of true positives, true negatives, false positives, and false negatives, providing a detailed view of where the model makes correct and incorrect predictions. This breakdown supports the calculation of metrics such as accuracy, precision, recall, and F1 score.",3.0
-Machine Learning,Validation,Procedure,"K Fold Cross Validation: Application of Cross Validation. Method for increasing ability to generlize results by segregating Training Data into K folds, such that the model never predicts on data it has seen. As an example, if Folds = 10 and x=100, each of the iterations would hold out 10 examples (such that all examples were held out in a iteration) and when the data was held out the model would predict. To reiterate, it helps with generalization, it does not increase performance, does not average and does not boost. It does materially increase training time. Primarily useful when data limitation exist, you're early on in development and want to prevent leakage or get cursory results. Also can provide a truer indication of performance based Metrics.",3.0
-Machine Learning,Validation,Procedure,"Startified Cross Validation: Increasing the Principle of Cross Validation and ensuring that the data is split into statistically represented folds, which when data is not IID could be considered valuable to ensure that inference is accurate and representative.",3.0
-Machine Learning,"Bias, Fairness and Ethics",Definition,"Bias, Fairness and Ethics: This step examines whether the model produces systematically unfair or harmful outcomes across different groups. It includes analyzing data representation, outcome disparities, and unintended correlations. Ethical considerations may involve transparency, consent, explainability, and regulatory compliance. Addressing bias and fairness is essential for responsible, trustworthy, and legally compliant ML systems.",1.0
-Machine Learning,"Bias, Fairness and Ethics",ML Process,,1.0
-Machine Learning,Model Summarization/ Model Interpretability,ML Process,,1.0
-Machine Learning,Deployment,Definition,"Deployment: Deployment is the process of integrating the trained model into a production environment where it can generate real-world predictions. This may involve APIs, batch pipelines, streaming systems, or embedded applications. Considerations include scalability, latency, reliability, and versioning. Deployment turns a model from an experiment into a usable product.",1.0
-Machine Learning,Deployment,ML Process,,1.0
-Machine Learning,Monitoring,Definition,"Monitoring: Monitoring tracks model performance and behavior over time after deployment. It includes detecting data drift, concept drift, performance degradation, and operational issues. Alerts and retraining triggers are often established at this stage. Monitoring is essential because real-world data changes, and models degrade if left unattended.",1.0
-Machine Learning,Monitoring,ML Process,,1.0
-Machine Learning,Monitoring,Clustering,This is a Test: Does this Show???,1.0
-Machine Learning,Clustering,Goal,"Must Clarify this clearly, specifically the distinction between Behavior and Attributes, clustering should focus primarily on behavior. Specifically Demographics can dominate distiance differences relative to behavior without adding value.",2.0
-Machine Learning,Clustering,Goal,"Small Number of Stable, Interpretable, Member Archetypes that summaize the global behavior and can be reused for ML and Analysis.",2.0
-Machine Learning,Clustering,Design Decisions,Stability over Uniqueness,3.0
-Machine Learning,Clustering,Design Decisions,Interpretability over novelty,3.0
-Machine Learning,Clustering,Design Decisions,Repeatability over perfection.,3.0
-Machine Learning,Clustering,Clustering,"KMeans: KMeans is a centroid-based clustering algorithm that iteratively updates cluster centers to minimize within-cluster variance. It produces a single cluster label per observation, making it easy to summarize and communicate results. KMeans is fast, widely understood, and works well when clusters are well-separated and similarly sized. However, it is sensitive to feature scaling, outliers, and the choice of K.",1.0
-Machine Learning,Clustering,Centroid-based clustering,MiniBatchKMeans: MiniBatchKMeans is a scalable variant of KMeans that updates centroids using small random subsets of data. It answers the same questions as KMeans but is designed for large datasets where full batch updates are expensive. Its strengths are speed and memory efficiency with minimal loss in cluster quality. The trade-off is slightly higher variability and less precise centroids compared to full KMeans.,1.0
-Machine Learning,Clustering,Density-based clustering,DBSCAN: DBSCAN is a density-based clustering algorithm that groups points based on local neighborhood density without requiring a predefined number of clusters. It is especially useful for identifying anomalies and non-spherical clusters. DBSCAN’s strength is its ability to label noise explicitly and handle irregular cluster shapes. Its main weakness is poor scalability and difficulty tuning parameters when data density varies widely.,2.0
-Machine Learning,Clustering,Density-based clustering,HDBSCAN: HDBSCAN is an extension of DBSCAN that builds a hierarchy of density-based clusters and selects stable ones automatically. It answers similar questions to DBSCAN but with improved robustness and less manual parameter tuning. Its strengths are better performance on real-world data and more reliable cluster discovery. Its weaknesses include higher computational cost and more complex interpretation.,2.0
-Machine Learning,Clustering,Probabilistic clustering,Gaussian Mixture Model (GMM): A Gaussian Mixture Model assumes data is generated from a mixture of Gaussian distributions and assigns each observation a probability of belonging to each cluster. It is useful for soft segmentation and identifying transitional or ambiguous cases. GMMs are more flexible than KMeans but require careful feature scaling and can be unstable on high-dimensional or noisy data. They are best used when overlap between segments is expected and meaningful.,1.0
-Machine Learning,Clustering,Graph-based clustering,kNN graph clustering: kNN graph clustering builds a graph by connecting each observation to its nearest neighbors and then finds communities within that graph. It is useful for discovering local structure and non-obvious groupings in complex data. Its strength is flexibility and sensitivity to fine-grained patterns. Its weakness is computational cost and dependence on similarity definitions and neighborhood size.,1.0
-Machine Learning,Clustering,Evaluation,"Silhouette Score: Measures how well each data point fits within its assigned cluster compared to the nearest alternative cluster. It compares the average distance to points in the same cluster (cohesion) against the average distance to points in the closest neighboring cluster (separation). Scores range from −1 to 1, where higher values indicate tighter and more clearly separated clusters. The overall Silhouette Score is the average of these values across all data points and is best used to compare clustering configurations rather than as an absolute measure of quality.
-
-> 0.5: Strong clustering
-0.3–0.5: Reasonable structure
-< 0.3: Weak separation / noisy clusters",1.0
-Mathematics,Definition,Algorithm,"An algorithm is a procedure that unfolds over time and depends on: previous states, iteration history and accumulated information.",1.0
-Mathematics,Definition,Constraint,"A constraint is something that restricts or penalizes the solution space. It does not: directly compute outputs, directly update parameters.  Instead, it: limits what solutions are allowed nudges learning toward simplicity or stability",1.0
-Mathematics,Definition,Function,"A function is a direct mathematical mapping: given an input, it deterministically produces an output. There is: no memory, no iteration, no learning history.",1.0
-Mathematics,Best Linear Unbiased Estimator,Definition,Best Linear Unbiased Estimator: Some Definition,1.0
-Mathematics,Best Linear Unbiased Estimator,Requirements,Homoscedasticity: Variance of the residuals should be constant.,6.0
-Mathematics,Best Linear Unbiased Estimator,Requirements,Independence: Observations should be independent of each other. No Correlation between errors of residuals. Errors are autocorrelated with self. Durbin Watson,6.0
-Mathematics,Best Linear Unbiased Estimator,Requirements,Linearity: Relationship between Independent and Dependent should be Linear. With finite variance,6.0
-Mathematics,Best Linear Unbiased Estimator,Requirements,No Perfect Collinearity: No perfect linear relationship between residuals,6.0
-Mathematics,Best Linear Unbiased Estimator,Requirements,Normality of Residuals: Residuals should be normally distributed.,6.0
-Tool,Definition,Pytorch,"PyTorch is an open-source deep learning framework primarily used for research, experimentation, and custom model development. It features eager execution and dynamic computation graphs, which allow models to run and be debugged step by step like standard Python code. PyTorch is highly Pythonic and integrates naturally with the scientific Python ecosystem, making it well suited for rapid prototyping and novel model architectures. A common limitation is that additional engineering effort may be required when moving experimental models into large-scale production environments.",1.0
-Tool,Definition,Tensor Flow,"TensorFlow is an open-source machine learning framework designed to support building, training, and deploying models across a wide range of platforms. It provides high-level APIs that simplify model creation while also offering tools for large-scale, production-grade deployment. TensorFlow’s ecosystem includes specialized solutions for serving, mobile, and web environments, making it suitable for enterprise and embedded use cases. Its complexity and abstraction layers can introduce a steeper learning curve for low-level customization.",1.0
-Organization,Definition,Policy ,"It defines mandatory rules, principles, or standards that guide decision-making and behavior across the organization.",1.0
-Organization,Definition,Process,"High level, strategic sequence of related tasks or activities that transform inputs into outputs to achieve a specific goal.",1.0
-Organization,Definition,Procedure,"Is a detailed, step by step set of instructions on how to perform a specific task or part of a process.",1.0
-Organization,Definition,RASCI,"RASCI is a responsibility assignment framework used to clarify who does the work, who is accountable, and who must be involved or informed for a given activity, decision, or deliverable.",1.0
-Organization,Definition,Ownership,"State of having end-to-end accountability for a product, service, policy, process, or outcome, including its performance, quality, and continuous improvement over time.",1.0
-Organization,Definition,Stewardship,"Responsibility to safeguard, maintain, and optimize an asset on behalf of the organization, ensuring it is used appropriately, consistently, and in compliance with policy.",1.0
-,Machine Learning,Clustering,"Centroid-based clustering: Centroid-based clustering groups data points by assigning each point to the nearest representative center (centroid). It answers the question: “What are the main archetypal behavior patterns in the data?” Its strengths are scalability, stability, and interpretability, making it well suited for large datasets and business-facing segmentation. Its main weakness is that it assumes roughly spherical clusters and requires the number of clusters (K) to be chosen in advance.",
-,Machine Learning,Clustering,"Density-based clustering: Density-based clustering identifies clusters as regions of high point density separated by sparse regions. It answers the question: “Which observations naturally group together, and which ones are unusual or isolated?” Its strengths include the ability to detect arbitrarily shaped clusters and identify outliers as noise. Its weaknesses are sensitivity to hyperparameters and reduced stability on very large or unevenly distributed datasets.",
-,Machine Learning,Clustering,"Probabilistic clustering: Probabilistic clustering models data as coming from overlapping probability distributions rather than assigning hard cluster boundaries. It answers the question: “To what degree does this observation belong to each group?” Its strength is capturing uncertainty and mixed behaviors, which is often more realistic in human or financial data. The weakness is increased complexity, sensitivity to assumptions, and reduced interpretability for non-technical audiences.",
-,Machine Learning,Clustering,"Graph-based clustering: Graph-based clustering represents data as a network where nodes are observations and edges represent similarity, then identifies communities within the graph. It answers the question: “What natural communities emerge from pairwise relationships?” Its strength is capturing complex, non-linear structure that other methods miss. Its weaknesses are scalability challenges and difficulty explaining results to non-technical stakeholders.",
-,Machine Learning,Insance Based Learning,"k-Nearest Neighbors (kNN): k-Nearest Neighbors is a non-parametric, instance-based method that measures similarity between observations using a distance metric in feature space. It answers the question: “Which existing observations are most similar to this one?”rather than learning global patterns or groups. Its strengths are simplicity, transparency, and usefulness for validation, comparison, and recommendation-style problems. Its weaknesses are lack of global structure, sensitivity to feature scaling and noise, and limited interpretability for broad segmentation or storytelling",
+SGD, Mini-Batch Gradient Descent, and Batch Gradient Descent each offer different trade-offs in terms of speed, stability, and computational efficiency. In practice, Mini-Batch Gradient Descent is the most commonly used approach for deep learning, as it provides a balance between computational efficiency and convergence stability."
+ML Model,Algorithm,GradientBoostingClassifier,
+ML Model,Algorithm,GradientBoostingRegressor,
+ML Model,Algorithm,GraphicalLasso,
+ML Model,Algorithm,GraphicalLassoCV,
+ML Model,Algorithm,GridSearchCV,
+ML Model,Algorithm,HashingVectorizer,
+ML Model,Algorithm,HDBSCAN,
+ML Model,Algorithm,HistGradientBoostingClassifier,
+ML Model,Algorithm,HuberRegressor,
+ML Model,Algorithm,IncrementalPCA,
+ML Model,Algorithm,HistGradientBoostingRegressor,
+ML Model,Algorithm,Isomap,
+ML Model,Algorithm,KNN,"A model that classifies points based on their proximity to neighbors.. ModelStrengths: Simple to implement, works well with small datasets. Model Weaknesses: Computationally expensive with large datasets, sensitive to irrelevant features."
+ML Model,Algorithm,KNeighborsRegressor,
+ML Model,Algorithm,KNeighborsClassifier,
+ML Model,Algorithm,IsolationForest,
+ML Model,Algorithm,KernelRidge,
+ML Model,Algorithm,KMeans,
+ML Model,Algorithm,KernelDensity,
+ML Model,Algorithm,KernelCenterer,
+ML Model,Algorithm,KBinsDiscretizer,
+ML Model,Algorithm,IsotonicRegression,
+ML Model,Algorithm,KernelPCA,
+Problem Solving,Process Step,Problem Definition,"Define problem, in a clear and explicit way such that it can be solved, tested or experiemented. Problem MUST be solvable and should be iterative, or have a series of iterative steps such that it can be effectively managed and solved"
+Problem Solving,Process Step,Problem Definition,"Define Problem Statement. Including clearly articulating why it matters, what is the impact of not having this solution."
+Problem Solving,Process Step,Problem Definition,"Define the desired end state, in such a way that the contribution of the ML Model or project can achieve granular progress through iteration"
+Problem Solving,Process Step,Problem Definition,"Define the current state, how does the end state look different. Should be Quantifiable via metrics, and montetary impact."
+Problem Solving,Process Step,Problem Definition,"Proceed Forward Decision. Who is responsible, how does it get made."
+Problem Solving,Process Step,Problem Definition,"How to effectively and clearly document objection, concern, risks and doubts."
+Problem Solving,Process Step,Problem Definition,Define EDA Process
+Process Development,Guiding Principle,Simple,Provide Defintion.
+Process Development,Guiding Principle,Clear,Provide Defintion.
+Process Development,Guiding Principle,Evident,Provide Defintion.
+Process Development,Guiding Principle,Obvious,Provide Defintion.
+Process Development,Guiding Principle,Accountability,"Are Roles and Responsbilities explicity stated? and Is it clear who is responsible for what. Are goals SMART (or atleast defined) or at a minimum, is our partcipation understood and documented.  "
+Communication,Guiding Principle,Engaging People,Simple things can make a huge differene.
+Communication,Guiding Principle,Engaging People,"Giving people meaningful and engaging work, utilizing their thoughts, intellegence and making them feel Good are important."
+Communication,Guiding Principle,Engaging People,Don’t try and rush change. It takes time and we need to learn and understand.
+Goals,Guiding Principle,Specific,
+Goals,Guiding Principle,Measurable,
+Goals,Guiding Principle,Achievable,
+Goals,Guiding Principle,Relevant,
+Goals,Guiding Principle,Time Bound,
+A|B Testing,Guiding Principle,TBD,
+Best Linear Unbiased Estimator,Requirement,Homoscedasticity,Variance of the residuals should be constant.
+Best Linear Unbiased Estimator,Requirement,Independence,Observations should be independent of each other. No Correlation between errors of residuals. Errors are autocorrelated with self. Durbin Watson
+Best Linear Unbiased Estimator,Requirement,Linearity,Relationship between Independent and Dependent should be Linear. With finite variance
+Best Linear Unbiased Estimator,Requirement,No Perfect Collinearity,
+Best Linear Unbiased Estimator,Requirement,Normality of Residuals,
+Data Preparation,Operational Definition,Momentum,"Momentum represents the direction and rate of change in behavior over time. It answers the question “Is this entity increasing, decreasing, or remaining stable?” and captures transitional dynamics that are not visible from state or baseline alone. Momentum is critical for detecting emerging trends, shifts in behavior, and potential future movement between segments. In modeling, Momentum often explains why change is occurring rather than what the current condition is."
+Data Preparation,Operational Definition,Implementation,"An Implementation is a specific measurable representation of a dimension, constructed from available data. It answers the question: “How do we observe this dimension in practice?” Implementations can change as data improves, but they should always map clearly back to a single dimension. Examples include; 6-month rolling average balance, 12-month median transaction value, Seasonally adjusted mean.
+Ultimately it is the question, How do we measure it."
+Data Preparation,Operational Definition,Volatility,"Volatility represents the consistency or variability of behavior over time. It answers the question “How stable or predictable is this entity’s behavior?” and distinguishes steady patterns from irregular or erratic ones. Volatility provides important diagnostic context, helping differentiate sustained change from noise or one-off events. In modeling, Volatility is typically explanatory or risk-related rather than defining core identity."
+Data Preparation,Operational Definition,Baseline,"Baseline represents the typical or expected behavior of an entity over a meaningful historical period. It answers the question “What is normal for this entity?” and provides context against which current state and changes can be interpreted. Baseline is conceptually stable even when its numeric value evolves, allowing models to distinguish structural differences between entities from temporary deviations. In modeling, Baseline is often foundational for defining identity and long-term segmentation."
+Data Preparation,Regularization,Ridge,"Technique used to prevent overfitting by adding penalty term to loss function. Adds the squared values of the coefficients as a penalty term. This incrases the cost of larger parameters, encouraging the model to distribute parameters waiting This shrinks the coefficients but does not eliminate them."
+Data Preparation,Regularization,Lasso,"Technique used to prevent overfitting by adding penalty term to loss function. Adds the absolute values of the coefficients as a penalty term. This leads to sparse models, as some coefficients become exactly zero"
+Data Preparation,Regularization,ElasticNet,Approach which combines L1 and L2 Regularization.
+Data Preparation,Operational Definition,State,"State represents the current condition of an entity at a specific point in time. It answers the question “Where is this entity right now?” and reflects the most recent observed values of relevant measures. State is essential for anchoring decisions in the present but is insufficient on its own without historical context. In modeling, State provides immediacy and scale but must be interpreted alongside other dimensions to avoid over-reacting to short-term fluctuations."
+Data Preparation,Operational Definition,Dimension,"A Dimension is a conceptual axis of behavior or meaning that you believe exists in the real world and want your model to represent. It answers a behavioral or semantic question, not a technical one. Dimensions are stable over time, even as data sources, features, or models change (for example, we always need to understand Current State, and rate of change, even though both of what is being studied may change drastically). They are the why behind your features.
+Ultimately, it is the question, What Behaviour Matters."
+Data Preparation,Operational Definition,Parameter,"A Parameter is a tuning choice that controls how an implementation is calculated, without changing what it represents. Parameters affect sensitivity, smoothness, or scale, but not conceptual meaning. They are the knobs you turn during experimentation. Examples include Window length: 3M vs 6M vs 12M, Weighting scheme: equal vs exponential, Aggregation: mean vs median
+Ultimately it is the questions, How do we compute it."
+Machine Learning,General Principles,Machine Learning,"Using a process to enable computers to iteratively learn from the data and improve analysis, outcomes or understanding. Intersection of statistics, artificial intelligence and computer science. Machine's don't learn, they find optimal mathematical formulas based on the data it is presented. There is an assumption that this data set is both representative of other data sets,  and possess similiar statistical distributions', You can argue this is not learning, because slight variances can result in materially different responses and output, Term synonymous with machines doing tasks without explicitly being programmed. Building a statistical model, based on a dataset"
+Machine Learning,Pipeline Stage,Model Summarization / Model Interpretability,"Model summarization and interpretability aim to explain how the model makes decisions. This may include feature importance, partial dependence plots, SHAP values, or rule extraction. Interpretability builds trust with stakeholders and supports debugging, governance, and compliance. It is especially critical in high-stakes or regulated domains."
+Machine Learning,General Principles,Optimization,"Optimization is the process of finding the best possible solution to a problem by systematically adjusting inputs or decisions to maximize or minimize a defined objective, subject to given constraints. In machine learning and analytics, optimization involves selecting model parameters that minimize error or maximize performance according to a chosen loss function. Importantly, what is considered “best” depends entirely on how the objective and constraints are defined."
+Mathematics,Concept,Normality,Residuals should be normally distributed.
+Mathematics,Theorem,Best Linear Unbiased Estimator,"The Best Linear Unbiased Estimator (BLUE) is an estimation method in statistics that produces parameter estimates that are linear in the observed data, unbiased, and have the smallest possible variance among all such estimators. It originates from the Gauss–Markov theorem, developed in the early 19th century in the context of least squares and error theory. Its importance lies in providing a theoretical benchmark: under specific assumptions about error structure, no other linear unbiased estimator can be more precise. In practice, BLUE underpins ordinary and generalized least squares, and is widely applied in econometrics, engineering, and data science when modeling relationships with correlated or heteroskedastic errors"
+Mathematics,Property,Colinearity,No perfect linear relationship between residuals
+Mathematics,Operational Definition,Function,"A function is a direct mathematical mapping: given an input, it deterministically produces an output. There is: no memory, no iteration, no learning history."
+Mathematics,Operational Definition,Constraint,"A constraint is something that restricts or penalizes the solution space. It does not: directly compute outputs, directly update parameters.  Instead, it: limits what solutions are allowed nudges learning toward simplicity or stability"
+Mathematics,Theorm,Algorithm,"An algorithm is a procedure that unfolds over time and depends on: previous states, iteration history and accumulated information."
+Modelling,Model Architecture,Autoregressive,"Autoregressive models generate outputs one step at a time, where each prediction depends on the previously generated outputs. This sequential dependency allows the model to capture context and coherence, making it powerful for tasks like language modeling and time-series forecasting. However, because predictions are made step by step, autoregressive methods can be slower at inference compared to parallel approaches."
+Modelling,Theorm,Curse of Dimensionality,"As dimensionality grows, data points become increasingly sparse, distances lose meaning, and models require exponentially more data to learn reliable patterns. This makes learning, generalization, and computation more difficult, often degrading model performance rather than improving it. In high-dimensional spaces, the optimization landscape also becomes far more complex, with many local minima and saddle points, making it harder to identify or converge toward a meaningful global minimum."
+Organization,Operational Definition,Process,"Terminology created by myself and utilized to identify the abstract level of how I would classiify items for inclusion of Notes and Definitions. Process is the HIGHEST level of abstraction, within a classification system. NOTE: The use of this differs sligtly across Notes and Definitions tabs, specifically the Highest Level of abstraction differs, with Definitions including MULTIPLE levels of abstraction, both at a individual concept level and at a Overall level. Please refer to Read Me for examples."
+Organization,Operational Definition,Definition,Self Explanatory
+Organization,Operational Definition,Word,Self Explanatory
+Organization,Operational Definition,Categorization,"Terminology created by myself and utilized to identify the abstract level of how I would classiify items for inclusion of Notes and Definitions. Categorization is used to explain process, and provide context  as to the relevance."
+Tool,Definition,Pytorch,"PyTorch is an open-source deep learning framework primarily used for research, experimentation, and custom model development. It features eager execution and dynamic computation graphs, which allow models to run and be debugged step by step like standard Python code. PyTorch is highly Pythonic and integrates naturally with the scientific Python ecosystem, making it well suited for rapid prototyping and novel model architectures. A common limitation is that additional engineering effort may be required when moving experimental models into large-scale production environments."
+Tool,Definition,Tensor Flow,"TensorFlow is an open-source machine learning framework designed to support building, training, and deploying models across a wide range of platforms. It provides high-level APIs that simplify model creation while also offering tools for large-scale, production-grade deployment. TensorFlow’s ecosystem includes specialized solutions for serving, mobile, and web environments, making it suitable for enterprise and embedded use cases. Its complexity and abstraction layers can introduce a steeper learning curve for low-level customization."
+Training,Function,Huber Loss,Loss function used in regression problems that is robust to outliers — it's essentially a blend between Mean Squared Error (MSE) and Mean Absolute Error (MAE). Regression with noisy or outlier-prone data Situations where you want the stability of MSE but the robustness of MAE
+Training,Optimizer,RMSprop,"Variation of Gradient Descent, which adapts the learning rate by dividing by an exponentially weighted moving average of past squared gradients. Adapts learning rates based on recent gradient magnitudes. Good for RNNs."
+Training,Optimizer,Nadam,Adam optimizer with Nesterov momentum for better convergence.
+Training,Optimizer,Momentum,"Variation of Gradient Descent, which accelerates learning by accumulating a moving average of past gradients."
+Training,Optimizer,AdamW,"Variant of Adam with weight decay, prevents overfitting."
+Training,Optimizer,Adam,"Variation of Gradient Descent, which combines both momentum and RMSprop, maintaining an exponentially decaying average of past gradients and squared gradients."
+Training,Optimizer,Adagrad,"Variation of Gradient Descent, which adapts the learning rate for each parameter by scaling it inversely proportional to the sum of past squared gradients. 
+"
+Training,Optimizer,Adadelta,Adaptive learning rate for nonstationary objectives.
+Training,Function,Hinge Loss,"Loss function used primarily for binary classification, especially in Support Vector Machines (SVMs). It's designed to maximize the margin between classes — that is, push predictions to be confidently correct. It penalizes predictions that are: On the wrong side of the decision boundary Or correct but not confidently correct (i.e., too close to the margin)"
+Training,Model Architecture,Cross Validation,"Model evaluation technique used to assess how well a model generalizes to unseen data by repeatedly splitting the dataset into training and validation subsets. The model is trained on one portion of the data and evaluated on another, and the results are aggregated to provide a more reliable estimate of performance than a single train–test split. This approach helps detect overfitting and supports more robust model selection"
+Validation,Function,Accuracy,Number of correctly classified examples divided by the total number of classified examples.
+Validation,Procedure,Confusion Matrix,"Table used to evaluate the performance of a classification model by comparing predicted labels to actual labels. It summarizes the counts of true positives, true negatives, false positives, and false negatives, providing a detailed view of where the model makes correct and incorrect predictions. This breakdown supports the calculation of metrics such as accuracy, precision, recall, and F1 score."
+Validation,Procedure,K Fold Cross Validation,"Application of Cross Validation. Method for increasing ability to generlize results by segregating Training Data into K folds, such that the model never predicts on data it has seen. As an example, if Folds = 10 and x=100, each of the iterations would hold out 10 examples (such that all examples were held out in a iteration) and when the data was held out the model would predict. To reiterate, it helps with generalization, it does not increase performance, does not average and does not boost. It does materially increase training time. Primarily useful when data limitation exist, you're early on in development and want to prevent leakage or get cursory results. Also can provide a truer indication of performance based Metrics."
+Validation,Procedure,Startified Cross Validation,"Increasing the Principle of Cross Validation and ensuring that the data is split into statistically represented folds, which when data is not IID could be considered valuable to ensure that inference is accurate and representative."
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
+,,,
