@@ -445,7 +445,7 @@ elif page == "D Notes Outline":
 
     import streamlit.components.v1 as components
     html = notes_df_to_outline_html(df_view,column_order=['Process','Word','Categorization','Definition'])
-    components.html(html, height=800, scrolling=True)
+    components.html(html, height=1000, scrolling=True)
 
 # -----------------------------------
 # Words and Quotes
@@ -729,14 +729,14 @@ elif page == 'Project Template':
     df = data_dict["d_learning_notes"].copy()
 
     # update dataframe
-    df = df[df['Word']=='ML Process'].copy()
-    df_view = df.drop(['Process','Word'],axis=1)
+    df = df[df['Categorization']=='Process Step'].copy()
+    df_view = df.drop(['Process','Categorization'],axis=1)
     df_view['Business Owner'] = ""
     df_view['Analytics Owner'] = ""
     df_view['Expected Due Date'] = ""
     
     gb = GridOptionsBuilder.from_dataframe(df_view)
-    gb.configure_column('Categorization', width=80)
+    gb.configure_column('Word', width=80)
     gb.configure_column('Business Owner', width=50)
     gb.configure_column('Analytics Owner', width=50)
     gb.configure_column('Expected Due Date', width=50)
