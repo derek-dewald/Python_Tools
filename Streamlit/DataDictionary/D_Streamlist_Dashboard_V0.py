@@ -444,7 +444,7 @@ elif page == "D Notes Outline":
     st.caption(f"Rows: {len(df_view)}")
 
     import streamlit.components.v1 as components
-    html = notes_df_to_outline_html(df_view)
+    html = notes_df_to_outline_html(df_view,column_order=['Process','Word','Categorization','Definition'])
     components.html(html, height=800, scrolling=True)
 
 # -----------------------------------
