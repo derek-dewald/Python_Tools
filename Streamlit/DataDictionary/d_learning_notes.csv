@@ -36,6 +36,8 @@ Net Wealth not indicative of poverty, Doctor who just finished med school with $
 The billion poorest people who have a net worth of Zero might be poorer than someone with $5 as $0 doesn’t add up fast.",Insert Records2
 ML Model,Definition,Definition,"Batch and API Processing: Batch processing is simplier, and more heavily reliant on transformations conducted with a Data Warehouse, API, great for smaller, incremental review or transaction level processes.",Insert Records2
 ML Model,Definition,Definition,"Cache: Cache takes load away from critical systems. Databases. Things that are looked up every second, minute. Can Cache at every layer.  Memory Buffers exist everywhere. Authentication is terrible caching. Don't Cache purchases and refunds. Search Queries, too broad. Can't cache transaction.",Insert Records2
+ML Model,Definition,Definition,Shebang: First line of a script that tells the operating system which interpreter should be used to run that file.,Insert Records2
+ML Model,Definition,Definition,Wrapper: A wrapper is a small piece of code whose only job is to run something else in a controlled way. It doesnt change the code.It does not change your program’s logic. It just sets up the environment and then calls the real program.,Insert Records2
 ML Model,Definition,Definition,"Baseline: Baseline represents the typical or expected behavior of an entity over a meaningful historical period. It answers the question “What is normal for this entity?” and provides context against which current state and changes can be interpreted. Baseline is conceptually stable even when its numeric value evolves, allowing models to distinguish structural differences between entities from temporary deviations. In modeling, Baseline is often foundational for defining identity and long-term segmentation.",Insert Records2
 ML Model,Definition,Definition,"Dimension: A Dimension is a conceptual axis of behavior or meaning that you believe exists in the real world and want your model to represent. It answers a behavioral or semantic question, not a technical one. Dimensions are stable over time, even as data sources, features, or models change (for example, we always need to understand Current State, and rate of change, even though both of what is being studied may change drastically). They are the why behind your features.
 Ultimately, it is the question, What Behaviour Matters.",Insert Records2
@@ -500,3 +502,37 @@ Behavioural Economics,Consideration,How to Efficiently Guestimate,"""The populat
 
 Length of a bed: 2 meters (or 7 feet). As Elliott points out, this helps you visualize the size of a room: How many beds is that? The gross domestic product of the United States: about $20 trillion (or $20,000 billion). It’s a lot of walls, if that’s really how you want to spend it. 100,000 words: the length of a medium-size novel. 1,454 feet: the height of the Empire State Building to its tip. (It’s also about 102 stories.)""",Notes DF
 Data Engineering,Process Step,Think!,Is there a better way to do this. You can replace this eventually.,Notes DF
+,,Automating Python,"mkdir -p ~/scripts ~/logs
+nano ~/scripts/automated_job_name.sh
+#!/bin/bash
+/Users/derekdewald/anaconda3/envs/d2/bin/python /Users/derekdewald/Documents/Python/Github_Repo/automated_py_jobs/daily_job.py
+chmod +x ~/scripts/daily_d_py_job.sh",Examine Further
+,,,"
+<?xml version=""1.0"" encoding=""UTF-8""?>
+<!DOCTYPE plist PUBLIC ""-//Apple//DTD PLIST 1.0//EN""
+""http://www.apple.com/DTDs/PropertyList-1.0.dtd"">
+<plist version=""1.0"">
+<dict>
+    <key>Label</key>
+    <string>com.derekdewald.daily_d2_job</string>
+
+    <key>ProgramArguments</key>
+    <array>
+        <string>/Users/derekdewald/scripts/run_d2_job.sh</string>
+    </array>
+
+    <key>StartCalendarInterval</key>
+    <dict>
+        <key>Hour</key><integer>22</integer>
+        <key>Minute</key><integer>57</integer>
+    </dict>
+
+    <key>StandardOutPath</key>
+    <string>/Users/derekdewald/logs/d2_job.out</string>
+
+    <key>StandardErrorPath</key>
+    <string>/Users/derekdewald/logs/d2_job.err</string>
+</dict>
+</plist>
+
+launchctl load ~/Library/LaunchAgents/com.derekdewald.daily_d2_job.plist",Examine Further

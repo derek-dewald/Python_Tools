@@ -107,3 +107,4 @@ def password_generator(minimum=8,maximum=10):
     p_list = list(password)
     random.shuffle(p_list)  # shuffle in place
     return "".join(p_list)
+

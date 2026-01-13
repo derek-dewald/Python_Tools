@@ -1,0 +1,282 @@
+Process,Categorization,Word,Definition,C1_ORDER,C12_ORDER,C3_ORDER,COL2_ORDER,C2_ORDER
+ML Model,Definition,Model Type,"Reinforcement Learning: Reinforcement learning trains an agent to make decisions by interacting with an environment and receiving rewards or penalties. The agent learns a policy that maximizes cumulative reward over time through trial and error. It is commonly used in robotics, game playing, and control systems.",1.0,1000,1,1000.0,1.0
+ML Model,Definition,Model Type,Semisupervised Learning: Semi-supervised learning combines a small amount of labeled data with a large amount of unlabeled data to improve learning performance. The model leverages the structure in the unlabeled data to generalize better than supervised learning alone. This approach is useful when labeling data is expensive or time-consuming.,1.0,1000,1,1000.0,1.0
+ML Model,Definition,Model Type,"Supervised Learning: Supervised learning trains a model using labeled data, where the correct answer is known in advance. The model learns a mapping from inputs to outputs by minimizing the difference between its predictions and the true labels. Common examples include classification and regression problems.",1.0,1000,1,1000.0,1.0
+ML Model,Definition,Model Type,"Unsupervised Learning: Unsupervised learning works with unlabeled data and aims to discover hidden patterns or structure. The model groups, compresses, or summarizes the data without being told what the correct outcome is. Typical use cases include clustering, dimensionality reduction, and anomaly detection.",1.0,1000,1,1000.0,1.0
+ML Model,Definition,Clustering,"Density-based clustering: Density-based clustering identifies clusters as regions of high point density separated by sparse regions. It answers the question: “Which observations naturally group together, and which ones are unusual or isolated?” Its strengths include the ability to detect arbitrarily shaped clusters and identify outliers as noise. Its weaknesses are sensitivity to hyperparameters and reduced stability on very large or unevenly distributed datasets.",1.0,1000,2,1000.0,1.0
+ML Model,Definition,Clustering,"Graph-based clustering: Graph-based clustering represents data as a network where nodes are observations and edges represent similarity, then identifies communities within the graph. It answers the question: “What natural communities emerge from pairwise relationships?” Its strength is capturing complex, non-linear structure that other methods miss. Its weaknesses are scalability challenges and difficulty explaining results to non-technical stakeholders.",1.0,1000,2,1000.0,1.0
+ML Model,Definition,Clustering,"Probabilistic clustering: Probabilistic clustering models data as coming from overlapping probability distributions rather than assigning hard cluster boundaries. It answers the question: “To what degree does this observation belong to each group?” Its strength is capturing uncertainty and mixed behaviors, which is often more realistic in human or financial data. The weakness is increased complexity, sensitivity to assumptions, and reduced interpretability for non-technical audiences.",1.0,1000,2,1000.0,1.0
+ML Model,Definition,Instance Based Learning,"Instance-Based Learning is a learning paradigm where predictions or inferences are made by directly comparing new observations to stored examples rather than learning an explicit global model. It answers the question: “What past observations most closely resemble this one?” Its strengths are simplicity, transparency, and flexibility, as it makes few assumptions about the underlying data structure. Its weaknesses include sensitivity to feature scaling and noise, lack of global summarization, and higher computational cost at inference time for large datasets",1.0,9,35,1000.0,1.0
+ML Model,Definition,Multimodal AI,"Artificial intelligence systems that can process and integrate multiple types of data, such as text, images, audio, and video, to perform tasks",1.0,9,35,1000.0,1.0
+ML Model,Operational Definition,Activation Function,"A mathematical function applied to a neuron’s weighted input that introduces non-linearity into a neural network. This non-linearity enables the model to learn complex, non-linear relationships in the data. Activation functions are applied within layers during the forward pass of a neural network, transforming intermediate representations before passing them to the next layer. Activation choice affects gradient flow, training stability, and convergence speed. Poor choices can cause vanishing or exploding gradients, limiting the depth or effectiveness of the network",1.0,9,35,1000.0,2.0
+ML Model,Operational Definition,Loss Function,"A loss function is a mathematical function that measures how far a model’s predictions are from the true target values, producing a single scalar value that represents prediction error and defines the objective to be minimized during training. The loss function is evaluated during training after the forward pass and is the starting point for backpropagation. Its gradients drive parameter updates via the optimizer. Different loss functions encode different assumptions about error, robustness, and business objectives. Choosing an inappropriate loss can lead to models that optimize the wrong behavior, even if training converges successfully.",1.0,9,35,1000.0,2.0
+ML Model,Operational Definition,Optimizer,"Optimization algorithm that updates a model’s parameters using gradients of the loss function in order to minimize training error. It defines how gradient information is transformed into parameter updates. The optimizer operates during training, after gradients are computed via backpropagation, and is not used during inference. Different optimizers trade off convergence speed, stability, and generalization. Hyperparameters such as learning rate and momentum are",1.0,9,35,1000.0,2.0
+ML Model,Operational Definition,Regularization,"Technique used to prevent overfitting by adding a penalty term to the loss function. It discourages the model from fitting too closely to the training data, ensuring better generalization to unseen data. Traditionnaly results in bias, at benefit of materially lowering Variance. Regularization is a Constraint.",1.0,9,35,1000.0,2.0
+ML Model,Guiding Principle,Model Type,"Within the machine learning paradigm, models are commonly categorized into distinct model types that define how learning occurs. The appropriate model type is selected based on the problem context, data availability and quality, time constraints, business objectives, and resource limitations.",1.0,1,1,1000.0,3.0
+ML Model,Guiding Principle,Clustering,"Must Clarify this clearly, specifically the distinction between Behavior and Attributes, clustering should focus primarily on behavior. Specifically Demographics can dominate distiance differences relative to behavior without adding value.",1.0,1,2,1000.0,3.0
+ML Model,Guiding Principle,Clustering,"Small Number of Stable, Interpretable, Member Archetypes that summaize the global behavior and can be reused for ML and Analysis.",1.0,1,2,1000.0,3.0
+ML Model,Guiding Principle,Clustering,Stability over Uniqueness,1.0,1,2,1000.0,3.0
+ML Model,Guiding Principle,Clustering,Interpretability over novelty,1.0,1,2,1000.0,3.0
+ML Model,Guiding Principle,Clustering,Repeatability over perfection.,1.0,1,2,1000.0,3.0
+ML Model,Algorithm,ARDRegression,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,RFE,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,RFECV,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,RadiusNeighborsClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,RadiusNeighborsRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,RandomForestClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,RandomForestRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,RandomTreesEmbedding,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,RandomizedSearchCV,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Recurrent Neural Network,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,RegressorChain,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,RidgeCV,"RidgeCV is a regression model that combines ridge regression (L2 regularization) with cross-validation to automatically select the optimal regularization strength. It is important because it reduces overfitting while maintaining stability in the presence of multicollinearity. RidgeCV is commonly used when predictors are highly correlated and predictive performance is prioritized over feature sparsity. It provides a principled, automated way to tune regularization.",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,RidgeClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,RidgeClassifierCV,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SGDClassifier,"SGDClassifier is a linear classification algorithm that trains models using stochastic gradient descent, updating parameters incrementally with each batch or observation. It is important because it scales efficiently to very large datasets and supports multiple loss functions (e.g., logistic regression, hinge loss). SGDClassifier is commonly used when data is high-dimensional, streaming, or too large for batch optimization methods. It trades some stability for speed and scalability.",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SGDOneClassSVM,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SGDRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SVC,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SVR,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SelectFdr,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SelectFpr,SelectFpr is a feature selection method that selects features based on statistical tests while controlling the false positive rate. It is important because it helps remove irrelevant features while limiting the probability of including noise variables. SelectFpr is typically used in high-dimensional settings such as genomics or text data. It is appropriate when interpretability and statistical control are priorities.,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SelectFromModel,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SelectFwe,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SelectKBest,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SelectPercentile,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SelfTrainingClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,RANSACRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,QuantileRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Quantile Random Forest,"Quantile Random Forest is an extension of random forests that estimates conditional quantiles of the target variable instead of only the mean. It is important because it provides uncertainty information and prediction intervals, not just point estimates. This method is commonly used in risk modeling, forecasting, and decision-making scenarios where understanding the distribution of outcomes matters. It is particularly useful when residuals are heteroskedastic or non-Gaussian.",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,QuadraticDiscriminantAnalysis,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,NearestNeighbors,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,NeighborhoodComponentsAnalysis,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Neural Network,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Normalizer,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,NuSVC,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,NuSVR,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Nystroem,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,OAS,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,OneClassSVM,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,OneVsOneClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,OneVsRestClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,OrthogonalMatchingPursuit,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SequentialFeatureSelector,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,OrthogonalMatchingPursuitCV,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,PCA,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,PLSCanonical,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,PLSRegression,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,PLSSVD,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,PassiveAggressiveClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,PassiveAggressiveRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,PatchExtractor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Perceptron,"The Perceptron is one of the earliest linear classification algorithms, learning a decision boundary by iteratively adjusting weights based on misclassified examples. It is important historically as the foundation of modern neural networks and gradient-based learning. In practice, it is used mainly for educational purposes or as a fast baseline on linearly separable data. Its simplicity limits its performance on noisy or non-linear problems.",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Pipeline,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,PoissonRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,PolynomialCountSketch,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,PolynomialFeatures,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,OutputCodeClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,NearestCentroid,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,ShrunkCovariance,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SparseCoder,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SparsePCA,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SparseRandomProjection,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SpectralBiclustering,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SpectralClustering,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SpectralCoclustering,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SpectralEmbedding,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,StackingClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,StackingRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Support Vector Machines,"Finds the optimal hyperplane that best separates data points of different classes in a feature space. The hyperplane is chosen to maximize the margin, which is the distance between the hyperplane and the nearest data points from each class, known as support vectors. By default, generally a Linear Line, however can utilize Kernels to change, such that datasets where decision boundary is not linearly seperable can become so in higher dimensions.
+
+ModelStrengths: Effective in high-dimensional spaces, works well with clear margins of separation. Model Weaknesses:Computationally expensive, struggles with large datasets.",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Support Vector Regression,"SVR tries to fit a function within a margin of tolerance (epsilon) around the true data points — instead of minimizing the error between predicted and actual values like in ordinary least squares regression. Margin of Tolerance (ε): Instead of minimizing all errors, SVR ignores errors as long as they're within this ""epsilon-tube"" around the true values.Support Vectors: Only data points outside the epsilon margin contribute to the model (i.e., they influence the regression line).Kernel Trick: Like SVM, SVR can use kernels (e.g., linear, RBF) to model nonlinear relationships.",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,TSNE,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,TfidfVectorizer,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,SimpleImputer,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,TheilSenRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,TunedThresholdClassifierCV,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,TweedieRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,VarianceThreshold,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,VotingClassifier,"VotingClassifier is an ensemble method that combines predictions from multiple different models into a single prediction, using either majority voting (hard voting) or averaged probabilities (soft voting). It is important because combining diverse models often improves robustness and generalization compared to any single model. Voting classifiers are typically used when several reasonably strong models exist and their errors are not perfectly correlated. They are especially useful in production systems where stability is valued over interpretability.",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,VotingRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Word2Vec,"Word2Vec is a neural-network–based method that learns dense vector embeddings for words, capturing semantic and syntactic relationships. Unlike Bag of Words, which only counts word occurrences and ignores meaning, Word2Vec represents words in a continuous vector space where similarity between vectors reflects semantic closeness",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,XGBoost,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,TruncatedSVD,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,NMF,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,OPTICS,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MultiTaskLassoCV,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,DummyRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,ElasticNetCV,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,EllipticEnvelope,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,EmpiricalCovariance,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,ExtraTreeClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,ExtraTreeRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,ExtraTreesClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,ExtraTreesRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,FactorAnalysis,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,FastICA,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,FeatureAgglomeration,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,FeatureHasher,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,DummyClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,FeatureUnion,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,FrozenEstimator,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,GammaRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,GaussianMixture,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MultinomialNB,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,GaussianProcessClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,GaussianProcessRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,GaussianRandomProjection,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Generalaized Liner Model,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,GenericUnivariateSelect,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Gradient Descent,"Widely used optimization algorithm in machine learning, particularly for training models like neural networks. Its primary goal is to minimize a loss function, which measures the error between the model's predictions and the actual outcomes, by iteratively adjusting the model’s parameters.
+
+Traditional Gradient Descent vs. Stochastic Gradient Descent
+In Batch Gradient Descent, the algorithm computes the gradient of the loss function with respect to the model’s parameters using the entire dataset before updating the parameters. While this approach provides a precise update direction, it is computationally expensive and slow for large datasets since it requires processing all data points in each iteration.
+
+Stochastic Gradient Descent (SGD) addresses this issue by approximating the gradient. Instead of computing gradients over the full dataset, SGD updates the model’s parameters using just a single data point at each step. This significantly reduces computational cost per iteration, making the algorithm much faster. However, since updates are based on a single random sample, they introduce high variance (noise), causing fluctuations that may prevent smooth convergence.
+Mini-Batch Gradient Descent: To balance efficiency and stability, a common alternative is Mini-Batch Gradient Descent. Instead of using the full dataset (Batch Gradient Descent) or a single data point (SGD), Mini-Batch Gradient Descent computes updates using a small batch of randomly selected data points (e.g., 32, 64, or 128 samples per batch). This approach: Reduces noise compared to SGD while still being computationally efficient. 
+Leverages vectorized operations for faster computation using modern hardware (e.g., GPUs).
+Smooths out updates while still allowing some stochasticity to escape local minima.
+Benefits & Trade-offs of SGD
+Faster updates: Each iteration is computationally cheaper than full-batch gradient descent.
+Better exploration: The randomness in updates helps escape local minima.
+Higher variance: The noisier updates may lead to less stable convergence, requiring techniques like learning rate decay or momentum to improve performance.
+Slower convergence: Since updates are less precise, SGD may take longer to reach the optimal solution.
+Conclusion
+SGD, Mini-Batch Gradient Descent, and Batch Gradient Descent each offer different trade-offs in terms of speed, stability, and computational efficiency. In practice, Mini-Batch Gradient Descent is the most commonly used approach for deep learning, as it provides a balance between computational efficiency and convergence stability.",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,GradientBoostingClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,GradientBoostingRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,FixedThresholdClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,GraphicalLasso,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,DictionaryLearning,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,DecisionTreeRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Ada,"Boosting technique that combines multiple weak learners (usually decision stumps) into a strong learner. ModelStrengths: Handles weak learners well, reduces overfitting. Model Weaknesses: Sensitive to noisy data, requires careful tuning of learning rate.",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,AdaBoostClassifier,"AdaBoostClassifier is an ensemble boosting algorithm that builds a strong classifier by sequentially combining many weak learners, typically decision stumps. It is important because it focuses learning on previously misclassified examples, often achieving high accuracy with simple base models. AdaBoost is commonly used when data is moderately sized and relatively clean. It can be sensitive to noise and outliers due to its reweighting mechanism.",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,AdaBoostRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,AffinityPropagation,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Agentic AI,"Perform a Specific Task, Autonomously while learning its environment.",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,AgglomerativeClustering,"Agglomerative Clustering is a type of hierarchical clustering that uses a bottom-up approach. Each data point starts in its own cluster, and pairs of clusters are merged step by step based on similarity until all points are in one cluster (or a stopping criterion is met). Strengths: Doesn’t require you to specify the number of clusters up front (if using a dendrogram). Can capture nested cluster structure. Weaknesses; Computationally expensive for large datasets (O(n²)).Once merged, clusters can't be split.",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,BaggingClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,BaggingRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,BayesianGaussianMixture,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,BayesianRidge,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,BernoulliNB,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,BernoulliRBM,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,DictVectorizer,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Bidirectional Encoder Representations from Transformers (BERT)," It’s a deep learning model for NLP developed by Google in 2018 that understands the context of words in a sentence by looking in both directions — left and right. This is a major upgrade over older models that only read text left-to-right or right-to-left. BERT is like someone reading a sentence and filling in blanks based on the full context.GPT is like someone writing a sentence one word at a time, based only on what they’ve written so far.",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Birch,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,BisectingKMeans,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,CCA,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,CalibratedClassifierCV,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,CategoricalNB,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,ClassifierChain,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,ComplementNB,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Convolutional Neural Network,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,CountVectorizer,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,DBSCAN,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Decision Trees,"An ensemble of decision trees using bagging to reduce overfitting and improve accuracy. ModelStrengths: Reduces overfitting, robust to noise, handles high-dimensional data well. Model Weaknesses': ""Computationally expensive, less interpretable than a single tree.
+
+Algorithm which splits data into branches based on feature values to make decisions or predicitions. Each internal node represents a feature, each branch represens a a decision rule and each leaf node represents an outcome. Decision Trees are popular because they are simple to interpret, require litte data preprocessing and can handle both classificaiton and regression. Their strengths include handling both numerical and catoegorical data, providiing clear visual representations of decisions. They are prone to overfitting and sensitive to noisy data. They work well in scenarios where interpretabiltiy is important, but struggle with high dimensional data when complex relationships exist. ",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,DecisionTreeClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Binarizer,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,GraphicalLassoCV,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,GaussianNB,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,HDBSCAN,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Linear Regression,"Models the relationship between an independent variable ( X ) and a dependent variable ( Y ) using a linear function. Model strengths include : Simple, interpretable, computationally efficient, works well for linearly separable data. Weaknesses, Assumes linear relationships, sensitive to outliers. Can calculate using two different approaches, Closed Form or Gradient Decent. Closed Form Solution was the original approach, can be calculated using advanced Calculus, which is easy for simple instances with a low number of independent variables, however Gradient Decent increasingly utilized as easy to implement via numeric calculation,  Python Linear Regression utilizies Pseudoinverse, which is computationally less expensive. However, it is Big O 2² to 2³, which means doubling features increases computations complexity 4 times.
+
+Cost function for Linear Regression is usually Mean Squared Error. While it does not have to be, it is convenient for a number of reasons. 
+1) Rarely Overfits, which Polynomial equations frequently do. 
+2) It always has a derivative, which makes it convenient for using closed forms solutions (saving computation complexity). Historically was applied via Closed Form Solution, which can be difficult to calculate, computationally expensive. ",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LinearDiscriminantAnalysis,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LinearSVC,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LinearSVR,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LocalOutlierFactor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LocallyLinearEmbedding,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Logistic Regression,"Predicts probabilities using the sigmoid function for binary classification problems.
+Model Strengths include; Simple, interpretable, performs well for linearly separable data. Model Weaknesses: Struggles with non-linear relationships, assumes linear relationship between features and log-odds.",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LogisticRegression,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,GridSearchCV,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MDS,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MLPClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MLPRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MeanShift,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MinCovDet,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MiniBatchDictionaryLearning,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MiniBatchKMeans,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MiniBatchNMF,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MiniBatchSparsePCA,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MissingIndicator,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MultiLabelBinarizer,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MultiOutputClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MultiOutputRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MultiTaskElasticNet,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MultiTaskElasticNetCV,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,MultiTaskLasso,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LedoitWolf,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LatentDirichletAllocation,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LogisticRegressionCV,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LassoLarsCV,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,HashingVectorizer,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,HistGradientBoostingClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,HistGradientBoostingRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LassoLarsIC,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,IncrementalPCA,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,IsolationForest,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Isomap,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,IsotonicRegression,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,KBinsDiscretizer,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,KMeans,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,KNN,"A model that classifies points based on their proximity to neighbors.. ModelStrengths: Simple to implement, works well with small datasets. Model Weaknesses: Computationally expensive with large datasets, sensitive to irrelevant features.",1.0,9,35,1000.0,4.0
+ML Model,Algorithm,KNNImputer,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,KNeighborsClassifier,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,HuberRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,KernelCenterer,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LassoLars,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LassoCV,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LarsCV,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Lars,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LabelSpreading,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,Large Language Model (LLM),Understanding and Generating Human Like Text,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LabelBinarizer,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,KernelRidge,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,KernelPCA,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,KernelDensity,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,LabelPropagation,,1.0,9,35,1000.0,4.0
+ML Model,Algorithm,KNeighborsRegressor,,1.0,9,35,1000.0,4.0
+ML Model,Density-based clustering,Clustering,DBSCAN: DBSCAN is a density-based clustering algorithm that groups points based on local neighborhood density without requiring a predefined number of clusters. It is especially useful for identifying anomalies and non-spherical clusters. DBSCAN’s strength is its ability to label noise explicitly and handle irregular cluster shapes. Its main weakness is poor scalability and difficulty tuning parameters when data density varies widely.,1.0,1001,2,1000.0,1000.0
+ML Model,Density-based clustering,Clustering,HDBSCAN: HDBSCAN is an extension of DBSCAN that builds a hierarchy of density-based clusters and selects stable ones automatically. It answers similar questions to DBSCAN but with improved robustness and less manual parameter tuning. Its strengths are better performance on real-world data and more reliable cluster discovery. Its weaknesses include higher computational cost and more complex interpretation.,1.0,1001,2,1000.0,1000.0
+ML Model,Evaluation,Clustering,"Silhouette Score: Measures how well each data point fits within its assigned cluster compared to the nearest alternative cluster. It compares the average distance to points in the same cluster (cohesion) against the average distance to points in the closest neighboring cluster (separation). Scores range from −1 to 1, where higher values indicate tighter and more clearly separated clusters. The overall Silhouette Score is the average of these values across all data points and is best used to compare clustering configurations rather than as an absolute measure of quality.
+
+> 0.5: Strong clustering
+0.3–0.5: Reasonable structure
+< 0.3: Weak separation / noisy clusters",1.0,1001,2,1000.0,1000.0
+ML Model,Graph-based clustering,Clustering,kNN graph clustering: kNN graph clustering builds a graph by connecting each observation to its nearest neighbors and then finds communities within that graph. It is useful for discovering local structure and non-obvious groupings in complex data. Its strength is flexibility and sensitivity to fine-grained patterns. Its weakness is computational cost and dependence on similarity definitions and neighborhood size.,1.0,1001,2,1000.0,1000.0
+ML Model,Probabilistic clustering,Clustering,Gaussian Mixture Model (GMM): A Gaussian Mixture Model assumes data is generated from a mixture of Gaussian distributions and assigns each observation a probability of belonging to each cluster. It is useful for soft segmentation and identifying transitional or ambiguous cases. GMMs are more flexible than KMeans but require careful feature scaling and can be unstable on high-dimensional or noisy data. They are best used when overlap between segments is expected and meaningful.,1.0,1001,2,1000.0,1000.0
+ML Model,Insance Based Learning,k-Nearest Neighbors (kNN),"k-Nearest Neighbors is a non-parametric, instance-based method that measures similarity between observations using a distance metric in feature space. It answers the question: “Which existing observations are most similar to this one?”rather than learning global patterns or groups. Its strengths are simplicity, transparency, and usefulness for validation, comparison, and recommendation-style problems. Its weaknesses are lack of global structure, sensitivity to feature scaling and noise, and limited interpretability for broad segmentation or storytelling",1.0,9,35,1000.0,1000.0
+ML Model,Pipeline Stage,Model Summarization / Model Interpretability,"Model summarization and interpretability aim to explain how the model makes decisions. This may include feature importance, partial dependence plots, SHAP values, or rule extraction. Interpretability builds trust with stakeholders and supports debugging, governance, and compliance. It is especially critical in high-stakes or regulated domains.",1.0,9,35,1000.0,1000.0
+ML Model,Procedure,ColumnTransformer,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,FunctionTransformer,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,KNeighborsTransformer,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,LabelEncoder,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,MaxAbsScaler,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,MinMaxScaler,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,OneHotEncoder,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,OrdinalEncoder,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,PowerTransformer,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,QuantileTransformer,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,RBFSampler,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,RadiusNeighborsTransformer,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,RobustScaler,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,SkewedChi2Sampler,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,SplineTransformer,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,StandardScaler,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,TargetEncoder,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,TfidfTransformer,,1.0,9,35,1000.0,1000.0
+ML Model,Procedure,TransformedTargetRegressor,,1.0,9,35,1000.0,1000.0
+ML Model,General Principles,Optimization,"Optimization is the process of finding the best possible solution to a problem by systematically adjusting inputs or decisions to maximize or minimize a defined objective, subject to given constraints. In machine learning and analytics, optimization involves selecting model parameters that minimize error or maximize performance according to a chosen loss function. Importantly, what is considered “best” depends entirely on how the objective and constraints are defined.",1.0,9,35,1000.0,1000.0
+ML Model,General Principles,Machine Learning,"Using a process to enable computers to iteratively learn from the data and improve analysis, outcomes or understanding. Intersection of statistics, artificial intelligence and computer science. Machine's don't learn, they find optimal mathematical formulas based on the data it is presented. There is an assumption that this data set is both representative of other data sets,  and possess similiar statistical distributions', You can argue this is not learning, because slight variances can result in materially different responses and output, Term synonymous with machines doing tasks without explicitly being programmed. Building a statistical model, based on a dataset",1.0,9,35,1000.0,1000.0
+ML Model,General Principles,Deep Learning,"Deep learning is a subset of machine learning that uses multi-layer neural networks to automatically learn hierarchical representations from data, reducing the need for manual feature engineering. By stacking simple processing units called layers—each acting as a filter that transforms inputs into higher-level representations—deep learning models can capture complex patterns through composition. Early challenges such as vanishing gradients, where learning signals faded through many layers, were largely addressed through improved activation functions, optimization methods, and weight initialization strategies. In practice, building a deep learning model involves defining the network architecture (number of layers, connections, and activations) and then specifying how it learns by choosing an optimizer, loss function, and evaluation metrics during compilation.",1.0,9,35,1000.0,1000.0
+ML Model,Function,AdditiveChi2Sampler,,1.0,9,35,1000.0,1000.0
+ML Model,Centroid-based clustering,Centroid-based clustering,"Centroid-based clustering groups data points by assigning each point to the nearest representative center (centroid). It answers the question: “What are the main archetypal behavior patterns in the data?” Its strengths are scalability, stability, and interpretability, making it well suited for large datasets and business-facing segmentation. Its main weakness is that it assumes roughly spherical clusters and requires the number of clusters (K) to be chosen in advance.",1.0,9,35,1000.0,1000.0
+ML Model,Centroid-based clustering,KMeans,"KMeans is a centroid-based clustering algorithm that iteratively updates cluster centers to minimize within-cluster variance. It produces a single cluster label per observation, making it easy to summarize and communicate results. KMeans is fast, widely understood, and works well when clusters are well-separated and similarly sized. However, it is sensitive to feature scaling, outliers, and the choice of K.",1.0,9,35,1000.0,1000.0
+ML Model,Centroid-based clustering,MiniBatchKMeans,MiniBatchKMeans is a scalable variant of KMeans that updates centroids using small random subsets of data. It answers the same questions as KMeans but is designed for large datasets where full batch updates are expensive. Its strengths are speed and memory efficiency with minimal loss in cluster quality. The trade-off is slightly higher variability and less precise centroids compared to full KMeans.,1.0,9,35,1000.0,1000.0
