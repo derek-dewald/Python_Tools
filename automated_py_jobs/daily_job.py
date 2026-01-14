@@ -11,18 +11,22 @@ from connections import DownloadFilesFromGit,BackUpGoogleSheets
 
 # Updates saved //Github_Repo//Data//daily_test_results.csv which is Streamlit Input, Via Git.
 # Note this is saved in a different place than other Daily Functions. BAD APPROACH
+print('Generated D Conolidate Notes/ Definition Dictionary')
 generate_dictionary()
 
 # Updates Github_Repo/Streamlit/DataDictionary/folder_listing.csv' which is Streamlit Input via Git. 
 # Note this is saved in a different place then other Daily Functions. BAD APPROACH
+print('Generated Python Table of Contents')
 create_py_table_dict()
 
 # Updates Github_Repo/Streamlit/DataDictionary/folder_listing.csv' which is Streamlit Input via Git. 
 # Note this is saved in a different place than other Daily Functions. BAD APPROACH
+print('Generated Other Pythong File?')
 parse_dot_py_folder()
 
 # Back Up Google Sheets and Git Files Once a Week (On Wednesday)
 # Github_Repo/CSV Backup Files/
 if datetime.datetime.now().weekday()==2:
+    print('Its Wednesday tine to back up Google Sheets and Git Hub Functions!')
     download_file_from_git()
     backup_google_worksheets()
