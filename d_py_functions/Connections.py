@@ -1,5 +1,6 @@
 import pandas as pd
 import requests
+import os
 
 def import_d_google_sheet(definition=None):
 
@@ -110,7 +111,7 @@ def read_git_file(git_url):
 def download_file_from_git(user='derek-dewald',
                         repo='Python_Tools',
                         folder='d_py_functions',
-                        output_folder=""):
+                        export_folder='/Users/derekdewald/Documents/Python/Github_Repo/CSV Backup Files/'):
     '''
     Function to Download Files from Github to a dedicated folder. 
     Used for ease of access, and when utilizing Git Directly not readily available.
@@ -134,8 +135,8 @@ def download_file_from_git(user='derek-dewald',
 
     '''
     
-    if len(output_folder) == 0:
-        output_folder = os.getcwd()
+    if len(export_folder) == 0:
+        export_folder = os.getcwd()
     
     api_url = f"https://api.github.com/repos/{user}/{repo}/contents/{folder}"
     response = requests.get(api_url)
@@ -150,14 +151,14 @@ def download_file_from_git(user='derek-dewald',
             file_response = requests.get(file_url)
 
             if file_response.status_code == 200:
-                with open(os.path.join(output_folder, file_name), "w", encoding="utf-8") as f:
+                with open(os.path.join(export_folder, file_name), "w", encoding="utf-8") as f:
                     f.write(file_response.text)
                     
         return True
     else:
         return False
 
-def backup_google_worksheets(location='/Users/derekdewald/Documents/Python/Github_Repo/CSV Backup Files/'):
+def backup_google_worksheets(export_folder='/Users/derekdewald/Documents/Python/Github_Repo/CSV Backup Files/'):
     '''
     Definition of Function
 
@@ -190,5 +191,5 @@ def backup_google_worksheets(location='/Users/derekdewald/Documents/Python/Githu
         name = df.iloc[row]['Definition']
         google_df_dict[name] = pd.read_csv(link)
 
-        if location:
-            google_df_dict[name].to_csv(f"{location}/{name}_{month_str}.csv",index=False)
+        if export_folder:
+            google_df_dict[name].to_csv(f"{export_folder}/{name}_{month_str}.csv",index=False)

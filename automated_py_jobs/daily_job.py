@@ -21,7 +21,8 @@ create_py_table_dict()
 # Note this is saved in a different place than other Daily Functions. BAD APPROACH
 parse_dot_py_folder()
 
-# Back Up Google Sheets and Git Files Once a Week
+# Back Up Google Sheets and Git Files Once a Week (On Wednesday)
+# Github_Repo/CSV Backup Files/
 if datetime.datetime.now().weekday()==2:
-    DownloadFilesFromGit()
-    BackUpGoogleSheets()
+    download_file_from_git()
+    backup_google_worksheets()

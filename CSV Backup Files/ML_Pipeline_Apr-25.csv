@@ -1,4 +1,0 @@
-Model,LearningType,Unnamed: 2,Standardization,BalanceRecords
-LinearRegression,Supervised,Regression,All,Y
-LogisticRegression,Supervised,Classification,All,Y
-LogisticRegression,Supervised,Regression,All,Y
