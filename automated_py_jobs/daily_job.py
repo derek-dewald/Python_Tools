@@ -11,7 +11,7 @@ from connections import download_file_from_git,backup_google_worksheets
 
 # Updates saved //Github_Repo//Data//daily_test_results.csv which is Streamlit Input, Via Git.
 # Note this is saved in a different place than other Daily Functions. BAD APPROACH
-print('Generated D Conolidate Notes/ Definition Dictionary')
+print('Generated Ds Consolidated Notes/ Definition Dictionary')
 generate_dictionary()
 
 # Updates Github_Repo/Streamlit/DataDictionary/folder_listing.csv' which is Streamlit Input via Git. 
