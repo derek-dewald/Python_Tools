@@ -5,7 +5,10 @@ import datetime
 import sys
 sys.path.append("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions")
 
-from data_d_dicts import links
+from data_d_dicts import function_table_dictionary,links
+from dict_processing import dict_to_dataframe
+from list_processing import list_to_dataframe
+from shared_folder import read_directory
 
 def generate_dictionary(notes_df=None,
                         definition_df=None,
@@ -346,8 +349,6 @@ def create_py_table_dict(base_location= '/Users/derekdewald/Documents/Python/Git
     usage:
         python_function_dict_df = create_py_table_dict()
     '''
-    from data_d_dicts import function_table_dictionary
-    from dict_processing import dict_to_dataframe
 
     # Get Defined Functions from Dictionary Reference Listing
     temp_ = dict_to_dataframe( function_table_dictionary,key_name='Function Name',value_name='Definition')
