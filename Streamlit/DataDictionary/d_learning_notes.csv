@@ -502,12 +502,7 @@ Behavioural Economics,Consideration,How to Efficiently Guestimate,"""The populat
 
 Length of a bed: 2 meters (or 7 feet). As Elliott points out, this helps you visualize the size of a room: How many beds is that? The gross domestic product of the United States: about $20 trillion (or $20,000 billion). It’s a lot of walls, if that’s really how you want to spend it. 100,000 words: the length of a medium-size novel. 1,454 feet: the height of the Empire State Building to its tip. (It’s also about 102 stories.)""",Notes DF
 Data Engineering,Process Step,Think!,Is there a better way to do this. You can replace this eventually.,Notes DF
-,,Automating Python,"mkdir -p ~/scripts ~/logs
-nano ~/scripts/automated_job_name.sh
-#!/bin/bash
-/Users/derekdewald/anaconda3/envs/d2/bin/python /Users/derekdewald/Documents/Python/Github_Repo/automated_py_jobs/daily_job.py
-chmod +x ~/scripts/daily_d_py_job.sh",Examine Further
-,,,"
+Data Engineering,Automating Python,Creating Automated Task,"
 <?xml version=""1.0"" encoding=""UTF-8""?>
 <!DOCTYPE plist PUBLIC ""-//Apple//DTD PLIST 1.0//EN""
 ""http://www.apple.com/DTDs/PropertyList-1.0.dtd"">
@@ -536,3 +531,9 @@ chmod +x ~/scripts/daily_d_py_job.sh",Examine Further
 </plist>
 
 launchctl load ~/Library/LaunchAgents/com.derekdewald.daily_d2_job.plist",Examine Further
+Data Engineering,Automating Python,Creating Shell,"mkdir -p ~/scripts ~/logs
+nano ~/scripts/automated_job_name.sh
+#!/bin/bash
+/Users/derekdewald/anaconda3/envs/d2/bin/python /Users/derekdewald/Documents/Python/Github_Repo/automated_py_jobs/daily_job.py
+chmod +x ~/scripts/daily_d_py_job.sh",Examine Further
+Data Engineering,Automating Python,Testing Shell,~/scripts/daily_shell_job.sh,Examine Further
