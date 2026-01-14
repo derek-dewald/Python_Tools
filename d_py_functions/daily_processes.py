@@ -5,10 +5,11 @@ import datetime
 import sys
 sys.path.append("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions")
 
+from shared_folder import read_directory,text_file_import
 from data_d_dicts import function_table_dictionary,links
 from dict_processing import dict_to_dataframe
 from list_processing import list_to_dataframe
-from shared_folder import read_directory
+
 
 def generate_dictionary(notes_df=None,
                         definition_df=None,
