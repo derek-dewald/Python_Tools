@@ -25,33 +25,6 @@ def dict_to_dataframe(dict_,
     '''
     return pd.DataFrame.from_dict(dict_, orient='index', columns=[value_name]).reset_index().rename(columns={'index': key_name})
 
-def flatten_clean_dict(dict_,index_name='INDEX',clean=True,apply_new_lvl=False):
-    
-    '''
-    Function which takes a Nested Dictionary (Dictionary, which references dictionary, and converts it into a DataFrame, works best when
-    Dictionary ultimate Values are List.
-
-    Parameters:
-        dict_(dict): Nested Dictionary
-        index_name(str): Default Name of Column to be applied to First Level Dictionary in DataFrame.
-        clean(bool): Used to convert a single flat DF to a Matrix, which each new column
-        apply_new_level(bool): Optional Argument to support the application to a Single Dictionary
-    Returns:
-        DataFrame
-
-    date_created:30-Dec-25
-    date_last_modified: 30-Dec-25
-    classification:TBD
-    sub_classification:TBD
-    usage:
-        from synthetic_member import mbr_profile_dict
-        flatten_clean_dict (mbr_profile_dict)
-    
-    '''
-
-    if apply_new_lvl:
-        dict_ = {'ADDED_LEVEL':dict_}
-    
 
 def flatten_clean_dict(dict_,
                        index_name='INDEX',
