@@ -347,6 +347,7 @@ def create_py_table_dict(base_location= '/Users/derekdewald/Documents/Python/Git
         python_function_dict_df = create_py_table_dict()
     '''
     from data_d_dicts import function_table_dictionary
+    from dict_processing import dict_to_dataframe
 
     # Get Defined Functions from Dictionary Reference Listing
     temp_ = dict_to_dataframe( function_table_dictionary,key_name='Function Name',value_name='Definition')
