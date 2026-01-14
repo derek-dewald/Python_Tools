@@ -4,25 +4,93 @@ InspectFunction(InspectFunction)",utility_functions.py
 view_df,Function which helps to set default Visualization View in Pandads. Can be applied to a dataframe specifically or the current Session,"['df', 'update_decimal']",Object Type,15-Dec-25,15-Dec-25,TBD,TBD,ViewDf(df),utility_functions.py
 password_generator,Function to Create a Randomly Generated Password.,"['minimum', 'maximum']",Object Type,15-Dec-25,15-Dec-25,TBD,TBD,password_generator(),utility_functions.py
 dict_to_dataframe,Function to Simplify the creation of a Dictionary into a Dataframe into a single Command.,"['dict_', 'key_name', 'value_name']",Dataframe,4-Dec-25,4-Dec-25,TBD,TBD,temp_df = dict_to_dataframe(dict),dict_processing.py
-df_to_dict,"Function to Simply Convert A DF into a Dictionary.
-Takes 2 Arguments, and converts them into a DF of the format {key:value}","['df', 'key', 'value']",df,12-Dec-25,12-Dec-25,TBD,TBD,"from data_d_strings import google_mapping_sheet_csv
-df = pd.read_csv(google_mapping_sheet_csv)
-df_to_dict(df,'Definition','CSV')",dict_processing.py
+flatten_clean_dict,"Function which takes a Nested Dictionary (Dictionary, which references dictionary, and converts it into a DataFrame, works best when
+Dictionary ultimate Values are List.","['dict_', 'index_name', 'clean', 'apply_new_lvl', 'high_low_list_fix']",DataFrame,30-Dec-25,30-Dec-25,TBD,TBD,"from synthetic_member import mbr_profile_dict
+flatten_clean_dict (mbr_profile_dict)",dict_processing.py
 read_directory,Function which reads reads a directory and returns a list of files included within,"['location', 'file_type', 'match_str']",Dataframe containing a listing of selected files.,3-Dec-25,3-Dec-25,TBD,TBD,"d_py_function =  '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/'
-ReadDirectory(d_py_function)",shared_folder.py
+read_directory(d_py_function)",shared_folder.py
 text_file_import,Function Used to Import .txt or .py File into Python.,"['file_name', 'encoding']",Str,3-Dec-25,3-Dec-25,TBD,TBD,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/DFProcessing.py'
 file = TextFileImport(location)",shared_folder.py
 parse_dot_py_file,"Function which reads a Python file (as text) and provides a summary of
 functions and their components, using a structured docstring format.",['file_text'],function_list (DataFrame): One row per function with metadata. function_parameters (DataFrame): One row per parameter per function.,4-Dec-25,4-Dec-25,TBD,TBD,"function_list, function_parameters = ParseDDotPYFile(file_text)",shared_folder.py
 parse_dot_py_folder,"Function which Allows for the Quick Review of All Python Functions in a Particular Directory, using the functions
-Read Directory and ParseDDotPYFile",['location'],DataFrame,4-Dec-25,4-Dec-25,TBD,TBD,"function_list, function_parameters = parse_dot_py_folder()",shared_folder.py
-create_py_table_dict,"Function which Generates a Dataframe representing a Function Dictionary, sourcing the Functions from a Shared Folder Location, and
-using the definitions sourced from a Python Dictionary",['base_location'],DataFrame,4-Dec-25,4-Dec-25,TBD,TBD,python_function_dict_df = create_py_table_dict(),shared_folder.py
+Read Directory and ParseDDotPYFile","['location', 'export_location']",DataFrame,4-Dec-25,4-Dec-25,TBD,TBD,"function_list, function_parameters = parse_dot_py_folder()",shared_folder.py
 list_to_dataframe,Function to Simplify the creation of a Dictionary into a Dataframe into a single Command.,"['list_', 'column_name_list']",Object Type,4-Dec-25,4-Dec-25,TBD,TBD,temp_df = list_to_dataframe(dict),list_processing.py
+random_uniform_normalized_list,"Function to create a list of RNG numbers for the purposes of creating a distribution.
+Values equal 1.","['n', 'skew']",list,29-Dec-25,29-Dec-25,TBD,TBD,create_distribution_weight(5),list_processing.py
+random_choice_from_uniform_list,"Create a random generate list from provided inputs. List is of length as defined in total records, the name of the records is defined in name.
+The distribution of values is conditionally determined by either distinct entities, or the distribution as provided in list_distribution.","['total_records', 'name', 'distinct_entities', 'list_distribution', 'return_value', 'skew']",list if return_value is 'df' then DataFrame,29-Dec-25,29-Dec-25,TBD,TBD,"random_choice_from_uniform_list(unique_records=40,name='BRANCHNAME',LEGACY=[.5,.15,.3,.05])",list_processing.py
 import_d_google_sheet,"Function Which Extracts a DataFrame from D's Google Sheets, using the Map as provided in Google Mapping Sheet",['definition'],Dataframe (Dict is value is not try condition fails).,12-Dec-25,12-Dec-25,TBD,TBD,Example Function Call,connections.py
 read_git_folder,"Program to Extract .py files from a Git Directory.
 Parameters borrowed from Git Mapping Structure, https://github.com/owner/repo/tree/branch/folder","['owner', 'repo', 'branch', 'folder']",dictionary,15-Dec-25,15-Dec-25,TBD,TBD,py_files_in_git_folder = read_git_folder(),connections.py
 read_git_file,Read the contents of a single public GitHub file.,['git_url'],List,15-Dec-25,15-Dec-25,TBD,TBD,read_git_file('https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/d_py_functions/Connections.py'),connections.py
+download_file_from_git,"Function to Download Files from Github to a dedicated folder.
+Used for ease of access, and when utilizing Git Directly not readily available.","['user', 'repo', 'folder', 'output_folder']",.py files to Windows Folder,1-Jan-25,30-Dec-25,TBD,TBD,download_file_from_git(),connections.py
+backup_google_worksheets,Definition of Function,['location'],Object Type,30-Dec-25,30-Dec-25,TBD,TBD,Example Function Call,connections.py
+pick_from_dict,,"['dict_', 'text']",,,,,,,synthetic_mbr.py
+calculate_rng_from_df_low_high,"Generate a column of random values between df[low] and df[high].
+- distribution: 'continuous' or 'discrete'
+- skew: 1 = uniform (no skew), >1 bias low, <1 bias high
+- seed: optional for reproducibility","['df', 'new_column_name', 'low', 'high', 'decimal', 'distribution', 'skew']",,,,,,,synthetic_mbr.py
+simplistic_engagement_calculation,"Is Absolute Value an indication of Rate Shopping.
+Can we look at certain types of Activity - Refinances, New TDs with Nothing Else. Etc.
+Are Almost Loyal Members more/less/equally suseptible to engagement.
+What other types of metrics could be included, contact, complaints, referrals.
+# Update duration with Primary is Beem.
+# Can we look for members which have flags, first mortgage, student funded, etc...
+# Does Legacy Entity Impact Loyalty.","['df', 'new_column_name']",,,,,,,synthetic_mbr.py
+create_column_from_dict_distribution,,"['df', 'column_name', 'new_column_name', 'cdf_dict', 'calculation']",,,,,,,synthetic_mbr.py
+calculate_distribution_from_dictlist,,"['dict_', 'decimals']",,,,,,,synthetic_mbr.py
+create_mbr_information,,"['branch_df', 'branch_profile_dict', 'mbr_profile_df', 'mbr_nbr_start', 'columns_not_weights']",,,,,,,synthetic_mbr.py
+create_random_value_from_dict,,"['df', 'dict_', 'dict_lvl', 'decimals']",,,,,,,synthetic_mbr.py
+decouple_txn,,"['df', 'reference_value', 'txn_dict', 'primary_key', 'exclude_non_ho']",,,,,,,synthetic_mbr.py
+transpose_df,"Transposes a non-time-series DataFrame from wide to long format by melting specified columns.
+This is especially useful for flattening columns into a single column to support tools
+like Power BI, where long format enables dynamic pivoting and aggregation.","['df', 'index', 'columns']",DataFrame: A long-format DataFrame with 'variable' and 'value' columns.,1-Jan-24,30-Dec-25,TBD,TBD,Example Function Call,synthetic_mbr.py
+random_uniform_normalized_list,"Function to create a list of RNG numbers for the purposes of creating a distribution.
+Values equal 1.","['n', 'skew']",list,29-Dec-25,29-Dec-25,TBD,TBD,create_distribution_weight(5),synthetic_mbr.py
+random_choice_from_uniform_list,"Create a random generate list from provided inputs. List is of length as defined in total records, the name of the records is defined in name.
+The distribution of values is conditionally determined by either distinct entities, or the distribution as provided in list_distribution.","['total_records', 'name', 'distinct_entities', 'list_distribution', 'return_value', 'skew']",list if return_value is 'df' then DataFrame,29-Dec-25,29-Dec-25,TBD,TBD,"random_choice_from_uniform_list(unique_records=40,name='BRANCHNAME',LEGACY=[.5,.15,.3,.05])",synthetic_mbr.py
+replicate_df_row,"Function which Replicates a single row DataFrame for the purposes of Multiplying it against a larger row.
+Function written using tile, which is a C based language, and considerably faster than straight using nunpy vectorized Calculations.","['df', 'records']",df,30-Dec-25,30-Dec-25,TBD,TBD,"df = pd.DataFrame([[1,2,3]],columns=['A','B','C'])
+replicate_df_row(df)",synthetic_mbr.py
+random_uniform_normalized_df,"Create a Dataframe (which is a series of n * 1) of Random Values for purposes of creating a Random Distribution DataFrame.
+Kwargs can be used to create New Columns. Kwargs should be Lists of distribution Frequencies, to create new random Columns (Not cdf).","['unique_records', 'name', 'skew']",Object Type,29-Dec-25,29-Dec-25,TBD,TBD,"random_uniform_normalized_df(unique_records=40,name='BRANCHNAME',LEGACY=[.5,.15,.3,.05])",synthetic_mbr.py
+flatten_clean_dict,"Function which takes a Nested Dictionary (Dictionary, which references dictionary, and converts it into a DataFrame, works best when
+Dictionary ultimate Values are List.","['dict_', 'index_name', 'clean', 'apply_new_lvl']",DataFrame,30-Dec-25,30-Dec-25,TBD,TBD,"from synthetic_member import mbr_profile_dict
+flatten_clean_dict (mbr_profile_dict)",synthetic_mbr.py
+FunctionToSTR,"Function which Converts the Documentation of a Python Function into a List, breaking on White Space. For purposes of development of
+CompareFunction, which looks for differences.",['func'],list,17-Dec-25,17-Dec-25,TBD,TBD,"from data_d_strings import template_doc_string_print
+FunctionToSTR(template_doc_string_print)",string_processing.py
+compare_function,"Function which compares the Text of 2 python function objections, for the purposes of validiting equivalency or easily identify changes.
+Used to reduce impact of manual validation and creation of function in multiple environments without a consistent tool such as Git.
+Once adopting better practices, this will no longer be necessary.
+Function Utilizes the Input Function FunctionToSTR() as a Base. Currently it Does","['func1', 'func2', 'additional_records', 'strip_docstring']","Object Type Function which Compares 2 Functions and determines if they are different. Specifically, it can help to easily Manage Version control of Functions outside of a More robust environment such as GIT.",17-Dec-25,17-Dec-25,TBD,TBD,Example Function Call,string_processing.py
+historical_month_end_list,Function which Creates a list of Month End Dates.,"['end_dt', 'total_months', 'sort_ascending', 'format_']",List,19-Dec-25,19-Dec-25,TBD,TBD,df = historical_month_end_list(),date_functions.py
+generate_dictionary,"Function Used to Generate D Learning Notes, which is a consolidated view of D Notes and D Definitions.
+Used as a crtical input to D Streamlit Dashboard.
+CSV Generated from this process saved to Github and Used for Streamlit Dashboard.
+Approach takes D Notes as the Primary Source and then merges in Definitions, based on a 4 step integration process.
+Approach uses some Filtering Logic
+Step1:
+When Word in Both Sheets is Identical, then utilize word as definition.
+If Word Does not have a Definition in the D Notes, then replace blank with the definition.
+If word has a definition, then add a new record.
+Step2:
+Utilzing Function notes_word_equals_word_definition_categorization, integration where notes.word=definitions.categorization
+It also begins to replace Word.
+Step3:
+Utilizing Function notes_word_equals_definition_process, integration where notes.word=definitions.process
+Step4:
+Merge all other Definitions into Notes Sheet.","['notes_df', 'definition_df', 'export_location']",Object Type,12-Jan-26,12-Jan-26,TBD,TBD,"notes_df,examine_further= generate_dictionary()
+notes_df,insert_records,insert_records2,insert_records3,examine_further= generate_dictionary()",daily_processes.py
+review_test_results,"Function to Facilitate a Daily Review of Historically Created Words.
+Function has a scoring Component, a Correct Answer (Pass is worth 1 Point), A Incorrect Answer (Fail is worth -2 points), if cummulative score is not postive
+then user is expected to Answer, with expectation of making score positive, if less than 10 examples with a negative score, it randomly samples from
+positive scores.",['file_location'],,,,,,,daily_processes.py
+daily_test,,"['observations', 'file_location']",,,,,,,daily_processes.py
+create_py_table_dict,"Function which Generates a Dataframe representing a Function Dictionary, sourcing the Functions from a Shared Folder Location, and
+using the definitions sourced from a Python Dictionary","['base_location', 'export_location']",DataFrame,4-Dec-25,4-Dec-25,TBD,TBD,python_function_dict_df = create_py_table_dict(),daily_processes.py
 input1,"Originally Named convert_dict_to_parameters
 Convert a .py file containing Dict into a Dataframe which can is used to populate Function Parameters",['module'],Dataframe,4-Dec-25,4-Dec-25,TBD,TBD,"import d_dictionaries
 temp = convertlisttoparameters(d_dictionaries)",input_functions_ignore.py
@@ -38,7 +106,38 @@ generate_create_table_sql,"Function to create a SQL Statement to Create a New Ta
 Function Utilizes a review of the DataFrame to recommend Column Names, Formating and appropriate Column Sizing.
 Function is NOT BEYOND REPROACH, requires some manual review and should not be automated.","['df', 'table_name', 'schema', 'db']",- str: SQL CREATE TABLE statement,,,,,,sql_.py
 TableRecordCountByDate,Generate a SQL Server query to count records by day for each table and pivot them.,"['table_dict', 'end_date', 'total_days']",str: A full SQL query string.,,,,,,sql_.py
+template_doc_string_print,Function to Return the Printed Value of the Doc String template_doc_string. Easier to Copy and Paste in this format opposed ot raw text.,['text_'],string,17-Dec-25,17-Dec-25,TBD,TBD,template_doc_string_print(),data_d_strings.py
+notebook_break,,[],,,,,,,data_d_strings.py
 notes_df_to_outline_html,"Function to Take a Dataframe and convert it into A Structured Indented Point form Format.
-Used for Clear Visualization of Notes.","['df', 'column_order']",str,12-Dec-25,12-Dec-25,TBD,TBD,"from connections import d_google_sheet_to_csv
+Used for Clear Visualization of Notes.","['df', 'column_order']",str Update: Added display parameter to support Streamlit Adoption.,12-Dec-25,18-Dec-25,TBD,TBD,"from connections import d_google_sheet_to_csv
 df = import_d_google_sheet('Notes')
 notes_df_to_outline_html(df)",df_processing.py
+final_dataset_for_markdown,"Function which helps to combined Notes and Definitions into a Single Combined Representation which can ultimately be used as a Learning Reference Tools.
+How this function Works:
+It takes the two sheets and attemps to Consolidate them together to make Final Dataset, generated as d_learning_notes.csv.
+Approach is to Take Notes As the Framework and Distribute All Information into the Notes Sequentially in Specific Order so i can
+Understand the structure and how to continue and utilize the Sheet.
+Principles:
+- Define all types of Records in Notes and then Move them Out Definiton By Definition
+- Worry about Order at End.
+Step 1: Insert Records where Categorization = Definition directly into Sheet.
+With Modification:
+Where Word is also A Categorization, Update Categorization from Definition to Word, Change Word to Definition,
+and Updated Definition to include WORD:
+Step 2: Take Everything else. Should be nothing remaining from Notes Category, so need to update Category, by moving all information
+to the Right 1 column and consolidating Definition.","['notes', 'definitions', 'export_location']",,,,,,,df_processing.py
+random_uniform_normalized_df,"Create a Dataframe (which is a series of n * 1) of Random Values for purposes of creating a Random Distribution DataFrame.
+Kwargs can be used to create New Columns. Kwargs should be Lists of distribution Frequencies, to create new random Columns (Not cdf).","['unique_records', 'name', 'skew']",Object Type,29-Dec-25,29-Dec-25,TBD,TBD,"random_uniform_normalized_df(unique_records=40,name='BRANCHNAME',LEGACY=[.5,.15,.3,.05])",df_processing.py
+df_to_dict,"Function to Simply Convert A DF into a Dictionary.
+Takes 2 Arguments, and converts them into a DF of the format {key:value}","['df', 'key', 'value']",df,12-Dec-25,12-Dec-25,TBD,TBD,"from data_d_strings import google_mapping_sheet_csv
+df = pd.read_csv(google_mapping_sheet_csv)
+df_to_dict(df,'Definition','CSV')",df_processing.py
+replicate_df_row,"Function which Replicates a single row DataFrame for the purposes of Multiplying it against a larger row.
+Function written using tile, which is a C based language, and considerably faster than straight using nunpy vectorized Calculations.","['df', 'records']",df,30-Dec-25,30-Dec-25,TBD,TBD,"df = pd.DataFrame([[1,2,3]],columns=['A','B','C'])
+replicate_row(df)",df_processing.py
+tranpose_df,"Transposes a non-time-series DataFrame from wide to long format by melting specified columns.
+This is especially useful for flattening columns into a single column to support tools
+like Power BI, where long format enables dynamic pivoting and aggregation.","['df', 'index', 'columns']",DataFrame: A long-format DataFrame with 'variable' and 'value' columns.,1-Jan-24,30-Dec-25,TBD,TBD,Example Function Call,df_processing.py
+export_to_excel,"Function Created to Export Data to Excel, with increased Control over the output, including adding a sheet name and attempting to
+format the columns, which would be the primary use over simple .to_excel.
+Given CSV format does not have explicit memory, there is no benefit when requirement dictate a CSV file.","['df', 'file_name', 'sheet_name', 'default_max_width', 'long_columns', 'long_max_width']",,,,,,,df_processing.py

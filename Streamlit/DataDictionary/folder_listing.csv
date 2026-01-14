@@ -1,8 +1,11 @@
 File Name,Source,Function Name,Definition,Type
 connections.py,PY File,connections,Functions Connecting to External Data Sources,Definition
+daily_processes.py,PY File,daily_processes,,
 data_d_dicts.py,PY File,data_d_dicts,Repository of Dictionaries which have been saved for Easy Use and Reference,Definition
 data_d_lists.py,PY File,data_d_lists,Repository of Lists which have been saved for Easy Use and Reference,Definition
 data_d_strings.py,PY File,data_d_strings,Repository of Strings which have been saved for Easy Use and Reference,Definition
+data_sets.py,PY File,data_sets,,
+date_functions.py,PY File,date_functions,,
 df_processing.py,PY File,df_processing,"Functions related to dataframe Transformations, including; Filtering, Slicing, Parsing, Transposing. Individual Column Level Transformations Primarily in FeatureEngineering",Definition
 dict_processing.py,PY File,dict_processing,"Functions related to Manipulating, Transforming and Altering Dictionaries",Definition
 input_functions_ignore.py,PY File,input_functions_ignore,"Functions which are Created for Single Use, or I can not reconcile their purpose, but they are used as Input for previosuly created functions",Definition
@@ -10,4 +13,5 @@ list_processing.py,PY File,list_processing,"Functions related to Manipulating, T
 shared_folder.py,PY File,shared_folder,"Functions related to Management, Maintenance and Upkeep of Windows and Mac OS File Folders",Definition
 sql_.py,PY File,sql_,Functions related to Processing of SQL,Definition
 string_processing.py,PY File,string_processing,"Functions related to Manipulating, Transforming and Altering Strings",Definition
+synthetic_mbr.py,PY File,synthetic_mbr,,
 utility_functions.py,PY File,utility_functions,"Functions which are in development, do not nicely fit into the existing schema, or otherwise need attention",Definition

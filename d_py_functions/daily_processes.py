@@ -5,6 +5,7 @@ import datetime
 import sys
 sys.path.append("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions")
 
+from data_d_dicts import links
 
 def generate_dictionary(notes_df=None,
                         definition_df=None,
@@ -217,3 +218,220 @@ def generate_dictionary(notes_df=None,
         notes_df.to_csv(export_location,index=False)
 
     return notes_df,examine_further
+
+def review_test_results(
+    file_location='/Users/derekdewald/Documents/Python/Github_Repo/Data/daily_test_results.csv'):
+
+    '''
+    Function to Facilitate a Daily Review of Historically Created Words. 
+    Function has a scoring Component, a Correct Answer (Pass is worth 1 Point), A Incorrect Answer (Fail is worth -2 points), if cummulative score is not postive
+    then user is expected to Answer, with expectation of making score positive, if less than 10 examples with a negative score, it randomly samples from 
+    positive scores.
+
+    
+    '''
+    
+    primary_key = ['Process','Categorization','Word']
+    
+    results_df = pd.read_csv(file_location)
+
+    results_df.loc[results_df["Word"] == 'SGDClassifier', "Historical_Score"] = 2
+    
+    results_df["Date"] = pd.to_datetime(results_df["Date"], format='%Y-%m-%d')
+    results_df["Date"] = results_df["Date"].apply(lambda x:x.date())
+    
+    # Generate Data Set to Test. 
+    # Test Everything where Review_Score is 0.
+    review_df = results_df[(results_df['Historical_Score']<0)]
+
+    # If Less than 10 Items to review then sample historical items 
+    if len(review_df)<10:
+        review_df = pd.concat([
+            review_df,
+            results_df[(results_df['Historical_Score']>0)].sample(10-len(review_df))
+        ])
+        
+    review_df = review_df.reset_index(drop=True)
+
+    results_dict = {}
+    for count in range(len(review_df)):
+        cat,cat1,word = review_df[primary_key].iloc[count]    
+        print(f"Process: {cat}\nClassification: {cat1}\nWord: {word}\n")
+        print("#############################################################################################################################")
+        result = input('Did you Pass or Fail?')
+        results_dict[word] = [1 if result.lower() =='p' else -2][0] 
+        df, nt,lk,md,ds, lt,ac = review_df.iloc[count][['Definition','Notes','Link','Markdown Equation','Dataset Size','Learning Type',"Algorithm Class"]]
+        print(f"Definition: {df}\nNotes: {nt}\nLink: {lk}\nMarkdown: {md}\nDataset Size: {ds}\nLearning Type: {lt}\nAlogrithm Class: {ac}\n")
+
+    results_df['Temp_Score'] = results_df['Word'].map(dict_).fillna(0)
+    results_df['Historical_Score'] = results_df['Historical_Score'] + results_df['Temp_Score'] 
+    results_df['Temp_Score'] = 0
+
+    result_df.to_csv(file_location,index=False)
+    
+    return results_df
+
+
+def daily_test(observations=5,
+               file_location='/Users/derekdewald/Documents/Python/Github_Repo/Data/daily_test_results.csv'):
+    '''
+    
+    '''
+    # Set Definitions
+    primary_key = ['Process','Categorization','Word']
+    
+    # Source Required Data
+    
+    # Definitions from Google
+    definitions = pd.read_csv(links['google_definition_csv'])
+    
+    # Import Daily Results Tracker 
+    results_df = pd.read_csv(file_location)
+    results_df["Date"] = pd.to_datetime(results_df["Date"], format='%Y-%m-%d')
+    results_df["Date"] = results_df["Date"].apply(lambda x:x.date())
+
+    # Update Results DF to Include Newest Information
+    final_df = results_df[['Date','Temp_Score','Historical_Score','Word']].merge(definitions,on='Word',how='left')
+    
+    # Sample New Results and Test on Historical Learning Opportunities.
+    today_test = definitions[~definitions['Word'].isin(final_df['Word'])].sample(observations)
+    today_test = today_test.reset_index(drop=True)
+    today_test = today_test.fillna('')
+    
+    today_test['Date'] = datetime.datetime.now().date()
+
+    result_score = {}
+    for count in range(len(today_test)):
+        cat,cat1,word = today_test[primary_key].iloc[count]
+        print(f'Word {count+1}')
+        print(f"Category: {cat}\nClassification: {cat1}\nWord: {word}\n")
+    
+        if today_test.iloc[count]['Definition']=="":
+            result_dict[word] = -2
+            input(f'Update Google Sheet with Definition\n')
+        else:
+            input("######################### ANSWER QUESTION #########################")
+            df, nt,lk,md,ds, lt,ac = today_test.iloc[count][['Definition','Notes','Link','Markdown Equation','Dataset Size','Learning Type',"Algorithm Class"]]
+            print(f"Definition: {df}\nNotes: {nt}\nLink: {lk}\nMarkdown: {md}\nDataset Size: {ds}\nLearning Type: {lt}\nAlogrithm Class: {ac}\n")
+            score = input(f'What was the result? (P/F)\n')
+            result_dict[word] = [1 if result.lower() =='p' else -3][0]
+
+    today_test['Historical_Score'] = today_test['Word'].map(result_dict)
+    today_test['Temp_Score']= 0
+    
+    # Score Data
+    final_df = pd.concat([final_df,today_test]).reset_index(drop=True)
+    final_df.to_csv(file_location,index=False)
+
+    return final_df
+
+
+def create_py_table_dict(base_location= '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/',
+                         export_location='/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/DataDictionary/folder_listing.csv'):
+    
+    '''
+    Function which Generates a Dataframe representing a Function Dictionary, sourcing the Functions from a Shared Folder Location, and
+    using the definitions sourced from a Python Dictionary
+
+    Parameters:
+        base_location (str): Location of Windows Directory containing .py Files.
+
+    Returns:
+        DataFrame
+
+    date_created:4-Dec-25
+    date_last_modified:4-Dec-25
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        python_function_dict_df = create_py_table_dict()
+    '''
+    from data_d_dicts import function_table_dictionary
+
+    # Get Defined Functions from Dictionary Reference Listing
+    temp_ = dict_to_dataframe( function_table_dictionary,key_name='Function Name',value_name='Definition')
+    temp_['Type'] = 'Definition'
+
+    py_functions = list_to_dataframe([x for x in read_directory(base_location,file_type='.py') if (x.find('init')==-1)],column_name_list=['File Name'])
+    py_functions['Source'] = 'PY File'
+    py_functions['Function Name'] = py_functions['File Name'].apply(lambda x:x.replace('.py',''))
+
+    final_df = py_functions.merge(temp_,on='Function Name',how='outer')
+
+
+    if export_location:
+        print(f'folder_listing Saved to {export_location}')
+        final_df.to_csv(export_location,index=False)
+
+    return final_df
+
+
+
+def parse_dot_py_folder(location=None,
+                        export_location='/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/DataDictionary/'):
+    '''
+    
+    Function which Allows for the Quick Review of All Python Functions in a Particular Directory, using the functions 
+    Read Directory and ParseDDotPYFile
+
+    Parameters:
+        location (str): Windows or Mac OS Folder Directory (defaults to D's Mac Directory)
+        export_location(str): Location to where CSV file is to be exported. If left Blank, will not export a CSV.
+
+    Returns:
+        DataFrame
+
+    date_created:4-Dec-25
+    date_last_modified: 4-Dec-25
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        function_list, function_parameters = parse_dot_py_folder()
+    
+    
+    '''
+
+    # GEnerate List of Files
+
+    function_list = pd.DataFrame()
+    function_parameters = pd.DataFrame()
+    
+
+    if not location:
+        folder = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions'
+
+    func_list = read_directory(folder,file_type='.py')
+    func_list = [x for x in func_list if (x.find('init')==-1) | (x not in ['d_lists','d_strings','d_dictionaries'])]
+
+    for file_name in func_list:
+        filename = f"{folder}/{file_name}"
+        file_ = text_file_import(filename)
+
+        temp_a,temp_b = parse_dot_py_file(file_)
+        temp_a['Folder'] = file_name
+        temp_b['Folder'] = file_name
+
+        function_list = pd.concat([function_list,temp_a])
+        function_parameters = pd.concat([function_parameters,temp_b])
+
+
+    temp_param = pd.concat([
+        input3(data_d_strings),
+        input1(data_d_dicts),
+        input2(data_d_lists)
+    ])
+
+    function_parameters = pd.concat([
+        function_parameters,
+        temp_param
+    ])
+
+    if export_location:
+        print(f'python_function_list Saved to {export_location}')
+        print(f'python_function_parameters Saved to {export_location}')
+        function_list.to_csv(f'{export_location}python_function_list.csv',index=False)
+        function_parameters.to_csv(f'{export_location}python_function_parameters.csv',index=False)
+
+    return function_list,function_parameters
+
+

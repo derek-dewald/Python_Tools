@@ -7,9 +7,11 @@ password_generator,maximum,int,Maximum Number of Required Characters,utility_fun
 dict_to_dataframe,dict_,,,dict_processing.py
 dict_to_dataframe,key_name,str,Name of Column which will include values from Key (Default is KEY),dict_processing.py
 dict_to_dataframe,value_name,str,Name of Column which will include values from Values (Default is Value),dict_processing.py
-df_to_dict,df,df,Any DataFrame,dict_processing.py
-df_to_dict,key,str,String representing Column Name for Dictionary Key,dict_processing.py
-df_to_dict,value,str,String representing Column Name for Value Key,dict_processing.py
+flatten_clean_dict,dict_,dict,Nested Dictionary,dict_processing.py
+flatten_clean_dict,index_name,str,Default Name of Column to be applied to First Level Dictionary in DataFrame.,dict_processing.py
+flatten_clean_dict,clean,bool,"Used to convert a single flat DF to a Matrix, which each new column",dict_processing.py
+flatten_clean_dict,apply_new_lvl,,,dict_processing.py
+flatten_clean_dict,high_low_list_fix,bool,"Optional Arguement, used for resolution of list [0,1] dict extraction.",dict_processing.py
 read_directory,location,str,The path to the directory. Defaults to the current working directory if not provided.,shared_folder.py
 read_directory,file_type,str,"The file extension or type to filter by (e.g., '.ipynb'). If empty, returns all files.",shared_folder.py
 read_directory,match_str,str,,shared_folder.py
@@ -17,15 +19,97 @@ text_file_import,file_name,,,shared_folder.py
 text_file_import,encoding,,,shared_folder.py
 parse_dot_py_file,file_text,str,Full text of a .py file.,shared_folder.py
 parse_dot_py_folder,location,str,Windows or Mac OS Folder Directory (defaults to D's Mac Directory),shared_folder.py
-create_py_table_dict,base_location,str,Location of Windows Directory containing .py Files.,shared_folder.py
+parse_dot_py_folder,export_location,str,"Location to where CSV file is to be exported. If left Blank, will not export a CSV.",shared_folder.py
 list_to_dataframe,list_,list,List of Values to be iterated into Row.,list_processing.py
 list_to_dataframe,column_name_list,list,"Name of Column to be added, add as List.",list_processing.py
+random_uniform_normalized_list,n,int,Number of Values to Return in list.,list_processing.py
+random_uniform_normalized_list,skew,int,"Skew to include in data, Values Greater than 0 will create",list_processing.py
+random_choice_from_uniform_list,total_records,int,Number of records to be returned in list.,list_processing.py
+random_choice_from_uniform_list,name,str,Name of Random Records.,list_processing.py
+random_choice_from_uniform_list,distinct_entities,int,"If populated, it will be used to generate a random distribution of defined values, also used as the number of reocrds",list_processing.py
+random_choice_from_uniform_list,list_distribution,list,Distribution to be used for random sampling.,list_processing.py
+random_choice_from_uniform_list,return_value,str,"Default to None, and will return a list. Can input 'df' to return a dataframe",list_processing.py
+random_choice_from_uniform_list,skew,float,Skew to include in random distribution.,list_processing.py
 import_d_google_sheet,definition,str,"Value to be Filtered from D Mapping Sheet, using Column Definition. Which is the name of the sheet.",connections.py
 read_git_folder,owner,str,As defined in Git Mapping Structure,connections.py
 read_git_folder,repo,str,As defined in Git Mapping Structure,connections.py
 read_git_folder,branch,str,As defined in Git Mapping Structure,connections.py
 read_git_folder,folder,str,As defined in Git Mapping Structure,connections.py
 read_git_file,git_url,str,"Link of Git URL, can be populated using read_git_folder",connections.py
+download_file_from_git,user,,,connections.py
+download_file_from_git,repo,,,connections.py
+download_file_from_git,folder,,,connections.py
+download_file_from_git,output_folder,,,connections.py
+backup_google_worksheets,location,,,connections.py
+pick_from_dict,dict_,,,synthetic_mbr.py
+pick_from_dict,text,,,synthetic_mbr.py
+calculate_rng_from_df_low_high,df,,,synthetic_mbr.py
+calculate_rng_from_df_low_high,new_column_name,,,synthetic_mbr.py
+calculate_rng_from_df_low_high,low,,,synthetic_mbr.py
+calculate_rng_from_df_low_high,high,,,synthetic_mbr.py
+calculate_rng_from_df_low_high,decimal,,,synthetic_mbr.py
+calculate_rng_from_df_low_high,distribution,,,synthetic_mbr.py
+calculate_rng_from_df_low_high,skew,,,synthetic_mbr.py
+simplistic_engagement_calculation,df,,,synthetic_mbr.py
+simplistic_engagement_calculation,new_column_name,,,synthetic_mbr.py
+create_column_from_dict_distribution,df,,,synthetic_mbr.py
+create_column_from_dict_distribution,column_name,,,synthetic_mbr.py
+create_column_from_dict_distribution,new_column_name,,,synthetic_mbr.py
+create_column_from_dict_distribution,cdf_dict,,,synthetic_mbr.py
+create_column_from_dict_distribution,calculation,,,synthetic_mbr.py
+calculate_distribution_from_dictlist,dict_,,,synthetic_mbr.py
+calculate_distribution_from_dictlist,decimals,,,synthetic_mbr.py
+create_mbr_information,branch_df,,,synthetic_mbr.py
+create_mbr_information,branch_profile_dict,,,synthetic_mbr.py
+create_mbr_information,mbr_profile_df,,,synthetic_mbr.py
+create_mbr_information,mbr_nbr_start,,,synthetic_mbr.py
+create_mbr_information,columns_not_weights,,,synthetic_mbr.py
+create_random_value_from_dict,df,,,synthetic_mbr.py
+create_random_value_from_dict,dict_,,,synthetic_mbr.py
+create_random_value_from_dict,dict_lvl,,,synthetic_mbr.py
+create_random_value_from_dict,decimals,,,synthetic_mbr.py
+decouple_txn,df,,,synthetic_mbr.py
+decouple_txn,reference_value,,,synthetic_mbr.py
+decouple_txn,txn_dict,,,synthetic_mbr.py
+decouple_txn,primary_key,,,synthetic_mbr.py
+decouple_txn,exclude_non_ho,,,synthetic_mbr.py
+transpose_df,df,DataFrame,The input pandas DataFrame.,synthetic_mbr.py
+transpose_df,index,list,Columns to retain as identifiers (will remain unchanged).,synthetic_mbr.py
+transpose_df,columns,list,Columns to unpivot into key-value pairs.,synthetic_mbr.py
+random_uniform_normalized_list,n,int,Number of Values to Return in list.,synthetic_mbr.py
+random_uniform_normalized_list,skew,int,"Skew to include in data, Values Greater than 0 will create",synthetic_mbr.py
+random_choice_from_uniform_list,total_records,int,Number of records to be returned in list.,synthetic_mbr.py
+random_choice_from_uniform_list,name,str,Name of Random Records.,synthetic_mbr.py
+random_choice_from_uniform_list,distinct_entities,int,"If populated, it will be used to generate a random distribution of defined values, also used as the number of reocrds",synthetic_mbr.py
+random_choice_from_uniform_list,list_distribution,list,Distribution to be used for random sampling.,synthetic_mbr.py
+random_choice_from_uniform_list,return_value,str,"Default to None, and will return a list. Can input 'df' to return a dataframe",synthetic_mbr.py
+random_choice_from_uniform_list,skew,float,Skew to include in random distribution.,synthetic_mbr.py
+replicate_df_row,df,dataframe,"DataFrame which you wish to extend, should be a Single Row, but techincally it will duplicate any size",synthetic_mbr.py
+replicate_df_row,records,int,"Number of times you wish DF to be duplicated, ideally it should be len(other_df) to which you want to multiply",synthetic_mbr.py
+random_uniform_normalized_df,unique_records,,,synthetic_mbr.py
+random_uniform_normalized_df,name,str,Name of Column to Included (values will be numbered).,synthetic_mbr.py
+random_uniform_normalized_df,skew,float,"If Data is to have a skewed distribution, 1 will be normal uniform (mean=1,std_dev=0). **kwargs: Should be List of values equalling 1, to create a new random value.",synthetic_mbr.py
+flatten_clean_dict,dict_,dict,Nested Dictionary,synthetic_mbr.py
+flatten_clean_dict,index_name,str,Default Name of Column to be applied to First Level Dictionary in DataFrame.,synthetic_mbr.py
+flatten_clean_dict,clean,bool,"Used to convert a single flat DF to a Matrix, which each new column",synthetic_mbr.py
+flatten_clean_dict,apply_new_lvl,,,synthetic_mbr.py
+FunctionToSTR,func,function,Python Function,string_processing.py
+compare_function,func1,function,Python Function,string_processing.py
+compare_function,func2,function,Python Function,string_processing.py
+compare_function,additional_records,int,Number of String Characters for each function which will be displayed after the point of identifying difference.,string_processing.py
+compare_function,strip_docstring,bool,Boolean to determine whether you wish to compare the Doc String aswell as the function.,string_processing.py
+historical_month_end_list,end_dt,datetime,"Last date in period. Remember it is month end, so technically it will not return this month unless it is a month end date",date_functions.py
+historical_month_end_list,total_months,int,"Total number of records in list, by default it will be 12.",date_functions.py
+historical_month_end_list,sort_ascending,bool,"True/False to Determine whether end_dt will be the First, or Last value in list. By default (True) it is the Last",date_functions.py
+historical_month_end_list,format_,str,"Optional Argument to change the format of the values in list, 5 options incude (if valid option not selected, datetime returned). Valid options include: '%d-%b-%y', '%b-%y', timestamp, dt_date.",date_functions.py
+generate_dictionary,notes_df,df,"If Blank, then Function will generate call",daily_processes.py
+generate_dictionary,definition_df,,,daily_processes.py
+generate_dictionary,export_location,,,daily_processes.py
+review_test_results,file_location,,,daily_processes.py
+daily_test,observations,,,daily_processes.py
+daily_test,file_location,,,daily_processes.py
+create_py_table_dict,base_location,str,Location of Windows Directory containing .py Files.,daily_processes.py
+create_py_table_dict,export_location,,,daily_processes.py
 input1,module,module,Py file containing Dict.,input_functions_ignore.py
 input2,module,module,Py file containing Lists.,input_functions_ignore.py
 input3,module,module,Py file containing Strings.,input_functions_ignore.py
@@ -40,9 +124,30 @@ generate_create_table_sql,db,str,"Database Name (function designed for Analytics
 TableRecordCountByDate,table_dict,"Dict[str, str]",Mapping of table name -> date column name.,sql_.py
 TableRecordCountByDate,end_date,,,sql_.py
 TableRecordCountByDate,total_days,,,sql_.py
+template_doc_string_print,text_,,,data_d_strings.py
 notes_df_to_outline_html,df,df,Any DataFrame,df_processing.py
 notes_df_to_outline_html,column_order,list,"List of Columns to Include, in Order. If not defined, all will be included.",df_processing.py
-Reference String,today,str,15-Dec-25,data_d_strings.py
+final_dataset_for_markdown,notes,df,DataFrame of D Notes as stored in: https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv,df_processing.py
+final_dataset_for_markdown,definitions,df,DataFrame of D Definitions as stored in: https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv,df_processing.py
+final_dataset_for_markdown,export_location,str,"Location of where to Save CSV File. If blank, no CSV is made. date_created:20-Dec-25 date_last_modified: 21-Dec-25 classification:TBD sub_classification:TBD usage: final_dataset_for_markdown() ############## Has been tested for a Single Value - Machine Learning. Need to Validate once extending. ##############",df_processing.py
+random_uniform_normalized_df,unique_records,,,df_processing.py
+random_uniform_normalized_df,name,str,Name of Column to Included (values will be numbered).,df_processing.py
+random_uniform_normalized_df,skew,float,"If Data is to have a skewed distribution, 1 will be normal uniform (mean=1,std_dev=0). **kwargs: Should be List of values equalling 1, to create a new random value.",df_processing.py
+df_to_dict,df,df,Any DataFrame,df_processing.py
+df_to_dict,key,str,String representing Column Name for Dictionary Key,df_processing.py
+df_to_dict,value,str,String representing Column Name for Value Key,df_processing.py
+replicate_df_row,df,dataframe,"DataFrame which you wish to extend, should be a Single Row, but techincally it will duplicate any size",df_processing.py
+replicate_df_row,records,int,"Number of times you wish DF to be duplicated, ideally it should be len(other_df) to which you want to multiply",df_processing.py
+tranpose_df,df,DataFrame,The input pandas DataFrame.,df_processing.py
+tranpose_df,index,list,Columns to retain as identifiers (will remain unchanged).,df_processing.py
+tranpose_df,columns,list,Columns to unpivot into key-value pairs.,df_processing.py
+export_to_excel,df,,,df_processing.py
+export_to_excel,file_name,,,df_processing.py
+export_to_excel,sheet_name,str,Name of Sheet to be utilized in Excel.,df_processing.py
+export_to_excel,default_max_width,int,Default Column Width,df_processing.py
+export_to_excel,long_columns,list,"Any column which would be requested to have a default column width beyond 30, include in thelist",df_processing.py
+export_to_excel,long_max_width,int,Max width for long_columns,df_processing.py
+Reference String,today,str,14-Jan-26,data_d_strings.py
 Reference String,template_doc_string,str,"
 
     Definition of Function
@@ -53,24 +158,25 @@ Reference String,template_doc_string,str,"
     Returns:
         Object Type
 
-    date_created:15-Dec-25
-    date_last_modified: 15-Dec-25
+    date_created:14-Jan-26
+    date_last_modified: 14-Jan-26
     classification:TBD
     sub_classification:TBD
     usage:
         Example Function Call
 ",data_d_strings.py
-Reference String,google_mapping_sheet_csv,str,https://docs.google.com/spreadsheets/d/e/2PACX-1vSwDznLz-GKgWFT1uN0XZYm3bsos899I9MS-pSvEoDC-Cjqo9CWeEuSdjitxjqzF3O39LmjJB0_Fg-B/pub?output=csv,data_d_strings.py
 function_table_dictionary,connections,dict,Functions Connecting to External Data Sources,data_d_lists.py
 function_table_dictionary,data_d_dicts,dict,Repository of Dictionaries which have been saved for Easy Use and Reference,data_d_lists.py
 function_table_dictionary,data_d_lists,dict,Repository of Lists which have been saved for Easy Use and Reference,data_d_lists.py
 function_table_dictionary,data_d_strings,dict,Repository of Strings which have been saved for Easy Use and Reference,data_d_lists.py
 function_table_dictionary,df_processing,dict,"Functions related to dataframe Transformations, including; Filtering, Slicing, Parsing, Transposing. Individual Column Level Transformations Primarily in FeatureEngineering",data_d_lists.py
 function_table_dictionary,dict_processing,dict,"Functions related to Manipulating, Transforming and Altering Dictionaries",data_d_lists.py
+function_table_dictionary,input_functions_ignore,dict,"Functions which are Created for Single Use, or I can not reconcile their purpose, but they are used as Input for previosuly created functions",data_d_lists.py
 function_table_dictionary,list_processing,dict,"Functions related to Manipulating, Transforming and Altering Lists",data_d_lists.py
 function_table_dictionary,string_processing,dict,"Functions related to Manipulating, Transforming and Altering Strings",data_d_lists.py
 function_table_dictionary,shared_folder,dict,"Functions related to Management, Maintenance and Upkeep of Windows and Mac OS File Folders",data_d_lists.py
 function_table_dictionary,sql_,dict,Functions related to Processing of SQL,data_d_lists.py
+function_table_dictionary,utility_functions,dict,"Functions which are in development, do not nicely fit into the existing schema, or otherwise need attention",data_d_lists.py
 tbd,data_creation,dict,"Functions related to the creation of Data, for testing, reference or validation",data_d_lists.py
 tbd,df_eda,dict,"Functions related to the Structured Exploration of Datasets, to understand and explain",data_d_lists.py
 tbd,date_functions,dict,"Functions related Manipulation, Change and process of datetime",data_d_lists.py
@@ -78,9 +184,21 @@ tbd,df_stats,dict,"Functions utilizing Statistical Concepts, and Calculations",d
 tbd,feature_engineering,dict,"Functions related to the creation of New Columns, excludes TEXT cleaning.",data_d_lists.py
 tbd,ml_pipeline,dict,"Functions related to Custom Build ML Pipelines, Approaches and Techniques",data_d_lists.py
 tbd,validations,dict,"Functions related to Validation of Dataframes, Data Sets and Comparisons. This differs from EDA, where it is only about understanding, not Comparison",data_d_lists.py
-tbd,utility_functions,dict,"Functions which are in development, do not nicely fit into the existing schema, or otherwise need attention",data_d_lists.py
+links,google_mapping_sheet_csv,dict,https://docs.google.com/spreadsheets/d/e/2PACX-1vSwDznLz-GKgWFT1uN0XZYm3bsos899I9MS-pSvEoDC-Cjqo9CWeEuSdjitxjqzF3O39LmjJB0_Fg-B/pub?output=csv,data_d_lists.py
+links,google_notes_csv,dict,https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv,data_d_lists.py
+links,google_definition_csv,dict,https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv,data_d_lists.py
+links,google_word_quote,dict,https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=1117793378&single=true&output=csv,data_d_lists.py
+links,google_daily_activities,dict,https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=472900611&single=true&output=csv,data_d_lists.py
 function_fields,date_created,str,,data_d_lists.py
 function_fields,date_last_modified,str,,data_d_lists.py
 function_fields,classification,str,,data_d_lists.py
 function_fields,sub_classification,str,,data_d_lists.py
 function_fields,usage,str,,data_d_lists.py
+notes_default,Goal,str,,data_d_lists.py
+notes_default,Approach,str,,data_d_lists.py
+notes_default,Important to Remember,str,,data_d_lists.py
+notes_default,Lessons Learnt,str,,data_d_lists.py
+notes_default,Algorithm,str,,data_d_lists.py
+notes_default,Function,str,,data_d_lists.py
+notes_default,Constraint,str,,data_d_lists.py
+notes_default,Procedure,str,,data_d_lists.py

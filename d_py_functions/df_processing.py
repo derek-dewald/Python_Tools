@@ -373,3 +373,86 @@ def tranpose_df(df, index, columns=None):
     if not columns:
         columns = [col for col in df.columns if col not in index]
     return df.melt(id_vars=index, value_vars=columns)   
+
+
+
+def export_to_excel(df,
+                    file_name='python_excel_file.xlsx',
+                    sheet_name= "Sheet1",
+                    default_max_width= 30,
+                    long_columns=[],
+                    long_max_width= 80):
+    """
+    Function Created to Export Data to Excel, with increased Control over the output, including adding a sheet name and attempting to 
+    format the columns, which would be the primary use over simple .to_excel. 
+
+    Given CSV format does not have explicit memory, there is no benefit when requirement dictate a CSV file.
+
+
+    Parameters:
+    sheet_name(str): Name of Sheet to be utilized in Excel.
+    default_max_width(int): Default Column Width
+    long_columns (list): Any column which would be requested to have a default column width beyond 30, include in thelist
+    long_max_width(int): Max width for long_columns
+    
+    
+    """
+    from openpyxl.styles import Alignment
+    from openpyxl.utils import get_column_letter
+    from typing import Iterable, Optional
+    from io import BytesIO
+    
+    min_width = 10
+    padding = 2
+    wrap_vertical_align= "top"
+    freeze_header= True,
+
+    long_columns_set = set(long_columns or [])
+
+    buffer = BytesIO()
+    with pd.ExcelWriter(buffer, engine="openpyxl") as writer:
+        safe_sheet = sheet_name[:31]  # Excel sheet name limit
+        df.to_excel(writer, index=False, sheet_name=safe_sheet)
+        ws = writer.sheets[safe_sheet]
+
+        if freeze_header:
+            ws.freeze_panes = "A2"
+
+        # Predefine alignments (reuse objects)
+        wrap_align = Alignment(wrap_text=True, vertical=wrap_vertical_align)
+        no_wrap_align = Alignment(wrap_text=False, vertical=wrap_vertical_align)
+
+        for i, col in enumerate(df.columns, start=1):
+            col_letter = get_column_letter(i)
+
+            # Compute max string length in this column (including header)
+            ser = df[col].astype(str).fillna("")
+            max_len = max(len(str(col)), int(ser.map(len).max()) if len(ser) else 0)
+
+            # Choose cap
+            cap = long_max_width if col in long_columns_set else default_max_width
+
+            # Proposed width (with padding)
+            proposed = max_len + padding
+
+            # Final width with min + cap
+            final_width = max(min_width, min(proposed, cap))
+            ws.column_dimensions[col_letter].width = final_width
+
+            # Wrap if we had to cap (meaning content would exceed the allowed width)
+            should_wrap = proposed > cap
+            if should_wrap:
+                # Apply wrap to entire column, incl header
+                for cell in ws[col_letter]:
+                    cell.alignment = wrap_align
+            else:
+                # Optional: set vertical alignment consistently
+                for cell in ws[col_letter]:
+                    cell.alignment = no_wrap_align
+
+    excel_bytes = buffer.getvalue()
+    
+    with open(file_name, "wb") as f:
+        f.write(excel_bytes)
+
+

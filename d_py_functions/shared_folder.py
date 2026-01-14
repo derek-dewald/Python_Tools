@@ -317,46 +317,8 @@ def parse_dot_py_folder(location=None,
         print(f'python_function_list Saved to {export_location}')
         print(f'python_function_parameters Saved to {export_location}')
         function_list.to_csv(f'{export_location}python_function_list.csv',index=False)
-        function_parameters.to_csv(f'{export_locaiton}python_function_parameters.csv',index=False)
+        function_parameters.to_csv(f'{export_location}python_function_parameters.csv',index=False)
 
     return function_list,function_parameters
 
 
-def create_py_table_dict(base_location= '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/',
-                         export_location='/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/DataDictionary/folder_listing.csv'):
-    
-    '''
-    Function which Generates a Dataframe representing a Function Dictionary, sourcing the Functions from a Shared Folder Location, and
-    using the definitions sourced from a Python Dictionary
-
-    Parameters:
-        base_location (str): Location of Windows Directory containing .py Files.
-
-    Returns:
-        DataFrame
-
-    date_created:4-Dec-25
-    date_last_modified:4-Dec-25
-    classification:TBD
-    sub_classification:TBD
-    usage:
-        python_function_dict_df = create_py_table_dict()
-    '''
-    from data_d_dicts import function_table_dictionary
-
-    # Get Defined Functions from Dictionary Reference Listing
-    temp_ = dict_to_dataframe( function_table_dictionary,key_name='Function Name',value_name='Definition')
-    temp_['Type'] = 'Definition'
-
-    py_functions = list_to_dataframe([x for x in read_directory(base_location,file_type='.py') if (x.find('init')==-1)],column_name_list=['File Name'])
-    py_functions['Source'] = 'PY File'
-    py_functions['Function Name'] = py_functions['File Name'].apply(lambda x:x.replace('.py',''))
-
-    final_df = py_functions.merge(temp_,on='Function Name',how='outer')
-
-
-    if export_location:
-        print(f'folder_listing Saved to {export_location}')
-        final_df.to_csv(export_location,index=False)
-
-    return final_df
