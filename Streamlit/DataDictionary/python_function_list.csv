@@ -13,8 +13,6 @@ text_file_import,Function Used to Import .txt or .py File into Python.,"['file_n
 file = TextFileImport(location)",shared_folder.py
 parse_dot_py_file,"Function which reads a Python file (as text) and provides a summary of
 functions and their components, using a structured docstring format.",['file_text'],function_list (DataFrame): One row per function with metadata. function_parameters (DataFrame): One row per parameter per function.,4-Dec-25,4-Dec-25,TBD,TBD,"function_list, function_parameters = ParseDDotPYFile(file_text)",shared_folder.py
-parse_dot_py_folder,"Function which Allows for the Quick Review of All Python Functions in a Particular Directory, using the functions
-Read Directory and ParseDDotPYFile","['location', 'export_location']",DataFrame,4-Dec-25,4-Dec-25,TBD,TBD,"function_list, function_parameters = parse_dot_py_folder()",shared_folder.py
 list_to_dataframe,Function to Simplify the creation of a Dictionary into a Dataframe into a single Command.,"['list_', 'column_name_list']",Object Type,4-Dec-25,4-Dec-25,TBD,TBD,temp_df = list_to_dataframe(dict),list_processing.py
 random_uniform_normalized_list,"Function to create a list of RNG numbers for the purposes of creating a distribution.
 Values equal 1.","['n', 'skew']",list,29-Dec-25,29-Dec-25,TBD,TBD,create_distribution_weight(5),list_processing.py
@@ -25,8 +23,8 @@ read_git_folder,"Program to Extract .py files from a Git Directory.
 Parameters borrowed from Git Mapping Structure, https://github.com/owner/repo/tree/branch/folder","['owner', 'repo', 'branch', 'folder']",dictionary,15-Dec-25,15-Dec-25,TBD,TBD,py_files_in_git_folder = read_git_folder(),connections.py
 read_git_file,Read the contents of a single public GitHub file.,['git_url'],List,15-Dec-25,15-Dec-25,TBD,TBD,read_git_file('https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/d_py_functions/Connections.py'),connections.py
 download_file_from_git,"Function to Download Files from Github to a dedicated folder.
-Used for ease of access, and when utilizing Git Directly not readily available.","['user', 'repo', 'folder', 'output_folder']",.py files to Windows Folder,1-Jan-25,30-Dec-25,TBD,TBD,download_file_from_git(),connections.py
-backup_google_worksheets,Definition of Function,['location'],Object Type,30-Dec-25,30-Dec-25,TBD,TBD,Example Function Call,connections.py
+Used for ease of access, and when utilizing Git Directly not readily available.","['user', 'repo', 'folder', 'export_folder']",.py files to Windows Folder,1-Jan-25,30-Dec-25,TBD,TBD,download_file_from_git(),connections.py
+backup_google_worksheets,Definition of Function,['export_folder'],Object Type,30-Dec-25,30-Dec-25,TBD,TBD,Example Function Call,connections.py
 pick_from_dict,,"['dict_', 'text']",,,,,,,synthetic_mbr.py
 calculate_rng_from_df_low_high,"Generate a column of random values between df[low] and df[high].
 - distribution: 'continuous' or 'discrete'
@@ -91,6 +89,8 @@ positive scores.",['file_location'],,,,,,,daily_processes.py
 daily_test,,"['observations', 'file_location']",,,,,,,daily_processes.py
 create_py_table_dict,"Function which Generates a Dataframe representing a Function Dictionary, sourcing the Functions from a Shared Folder Location, and
 using the definitions sourced from a Python Dictionary","['base_location', 'export_location']",DataFrame,4-Dec-25,4-Dec-25,TBD,TBD,python_function_dict_df = create_py_table_dict(),daily_processes.py
+parse_dot_py_folder,"Function which Allows for the Quick Review of All Python Functions in a Particular Directory, using the functions
+Read Directory and ParseDDotPYFile","['location', 'export_location']",DataFrame,4-Dec-25,4-Dec-25,TBD,TBD,"function_list, function_parameters = parse_dot_py_folder()",daily_processes.py
 input1,"Originally Named convert_dict_to_parameters
 Convert a .py file containing Dict into a Dataframe which can is used to populate Function Parameters",['module'],Dataframe,4-Dec-25,4-Dec-25,TBD,TBD,"import d_dictionaries
 temp = convertlisttoparameters(d_dictionaries)",input_functions_ignore.py

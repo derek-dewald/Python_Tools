@@ -18,8 +18,6 @@ read_directory,match_str,str,,shared_folder.py
 text_file_import,file_name,,,shared_folder.py
 text_file_import,encoding,,,shared_folder.py
 parse_dot_py_file,file_text,str,Full text of a .py file.,shared_folder.py
-parse_dot_py_folder,location,str,Windows or Mac OS Folder Directory (defaults to D's Mac Directory),shared_folder.py
-parse_dot_py_folder,export_location,str,"Location to where CSV file is to be exported. If left Blank, will not export a CSV.",shared_folder.py
 list_to_dataframe,list_,list,List of Values to be iterated into Row.,list_processing.py
 list_to_dataframe,column_name_list,list,"Name of Column to be added, add as List.",list_processing.py
 random_uniform_normalized_list,n,int,Number of Values to Return in list.,list_processing.py
@@ -39,8 +37,8 @@ read_git_file,git_url,str,"Link of Git URL, can be populated using read_git_fold
 download_file_from_git,user,,,connections.py
 download_file_from_git,repo,,,connections.py
 download_file_from_git,folder,,,connections.py
-download_file_from_git,output_folder,,,connections.py
-backup_google_worksheets,location,,,connections.py
+download_file_from_git,export_folder,,,connections.py
+backup_google_worksheets,export_folder,,,connections.py
 pick_from_dict,dict_,,,synthetic_mbr.py
 pick_from_dict,text,,,synthetic_mbr.py
 calculate_rng_from_df_low_high,df,,,synthetic_mbr.py
@@ -110,6 +108,8 @@ daily_test,observations,,,daily_processes.py
 daily_test,file_location,,,daily_processes.py
 create_py_table_dict,base_location,str,Location of Windows Directory containing .py Files.,daily_processes.py
 create_py_table_dict,export_location,,,daily_processes.py
+parse_dot_py_folder,location,str,Windows or Mac OS Folder Directory (defaults to D's Mac Directory),daily_processes.py
+parse_dot_py_folder,export_location,str,"Location to where CSV file is to be exported. If left Blank, will not export a CSV.",daily_processes.py
 input1,module,module,Py file containing Dict.,input_functions_ignore.py
 input2,module,module,Py file containing Lists.,input_functions_ignore.py
 input3,module,module,Py file containing Strings.,input_functions_ignore.py
