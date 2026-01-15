@@ -6,10 +6,11 @@ import sys
 sys.path.append("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions")
 
 from shared_folder import read_directory,text_file_import,parse_dot_py_file
+from input_functions_ignore import input1,input2,input3
+import data_d_dicts,data_d_lists,data_d_strings
 from data_d_dicts import function_table_dictionary,links
 from dict_processing import dict_to_dataframe
 from list_processing import list_to_dataframe
-from input_functions_ignore import input1,input2,input3
 
 def generate_dictionary(notes_df=None,
                         definition_df=None,
@@ -416,7 +417,6 @@ def parse_dot_py_folder(location=None,
 
         function_list = pd.concat([function_list,temp_a])
         function_parameters = pd.concat([function_parameters,temp_b])
-
 
     temp_param = pd.concat([
         input3(data_d_strings),
