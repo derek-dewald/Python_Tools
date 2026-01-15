@@ -1,0 +1,282 @@
+Program,Classification,Command_Code,Description,Comments
+Anaconda,TBD,conda info,Information on Program,
+Anaconda,TBD,conda --version,Version of Program,
+Anaconda,TBD,conda update conda,Update Program,
+Anaconda,TBD,conda create -n py39 python=3.9,Create Environment,
+Anaconda,TBD,conda activate TimeSeries39,Activate Environment,
+Anaconda,TBD,conda install pandas=1.4.2 | conda install pandas,Install Package,
+Anaconda,TBD,conda env remove -n py39,Delete Environment,
+Anaconda,TBD,conda create --name newpy39 --clone py39,Create Environment from Exising Env,
+Anaconda,TBD,conda env create -f BASE_REQUIREMENTS.yaml,Create Environment from YAML,
+Anaconda,TBD,conda list,List Available Environments,
+Anaconda,TBD,conda search scikit-learn,Search Available Packages,
+Azure,TBD,az login,Log into AKS,
+Azure,TBD,az acr login --name w255mids,Log into ACR,
+Azure,TBD,az account list --output table,Check which AKS Account,
+Azure,TBD,"Log into Azure - az login
+Set Subscription to Class - az account set --subscription=""0257ef73-2cbf-424a-af32-f3d41524e705""
+Authenticate to the AKS cluster - az aks get-credentials --name w255-aks --resource-group w255 --overwrite-existing
+az acr login --name w255mids",Signing in and Calibration Process,
+Debian,TBD,,apt-get,Command-line-centric and might have a steeper learning curve for beginners.
+Debian,TBD,,apt,"User-friendly and intuitive, providing a simpler interface."
+Docker,TBD,docker run -it NAME /bin/sh,Run Image,
+Docker,TBD,docker ps -a,Check Open Containers,
+Docker,TBD,,Docker Image,"An image is a read-only template used to create containers, it contains the application code, runtime, system tools, libraries, and other dependencies required to run the application."
+Docker,TBD,,Docker Container,"A container is a runnable instance of a Docker image, it encapsulates the application and its dependencies, ensuring consistency and isolation from the host system"
+Docker,TBD,docker stop CONTAINER_NAME,Stop Container,
+Docker,TBD,docker remove CONTAINER_NAME,Delete Container,Remove a Docker Container
+Docker,TBD,docker rmi IMAGE_NAME,Delete Image,Remove a Docker Image
+Docker,TBD,docker build -t NAME .,Create Image,"Build a Docker Image. Note that the image build is environment specific, as such when buiding on a MAC and deploying to a Windows Machine or Linux, need to be mindful. docker build --platform linux/amd64 -t project ."
+Docker,TBD,docker exec -it my_container /bin/sh,,
+Docker,TBD,ARG APP_DIR=/app,,Builds a Document in Docker in this case it is the argument /app
+Docker,TBD,http://localhost:8000/docs,"Connect to Uvicorn, Via Docker",
+Docker,TBD,"export PATH=""$HOME/.local/bin:$PATH""",Docker Image Creation,
+Docker,TBD,docker run -d -p 8000:8000 w255_api,Run,Detached Mode
+Docker,TBD,docker run -d --name temp-redis -p 6379:6379 redis,Create Redis Database,
+Docker,TBD,docker tag project w255mids.azurecr.io/derekdewald/,Tag a Project with a Specific Name,"Must be mindful of issue of using, Latest. Specifically when needing to roll back."
+Docker,TBD,docker push w255mids.azurecr.io/derekdewald/project:64293a0,Push Image to Repo,
+FastAPI,TBD,,FastAPI,
+FastAPI,TBD,,Test a Application End Point from Command Line,"curl -X POST \
+  https://derekdewald.mids255.com/project/bulk-predict \
+  -H 'Content-Type: application/json' \
+  -d '{""text"": [""example 1"", ""example 2""]}'"
+Git,TBD,git clone,Clone Directory,"Type of Clone commands depends on authentication method, appears that the primary method is now SSH. git@github.com:derek-dewald/d_functions.git"
+Git,TBD,git status,Compare with Main Branch,
+Git,TBD,git add,Include File to be Syncronized with Main Branch,"Variations in add ., add .*png, add .A-"
+Git,TBD,"git commit -m ""Include Message""",Commit to Main Branch,
+Git,TBD,git push,Push To Main Branch,
+Git,TBD,,Rename Existing Folder,"Log into Git, go into Folder, Settings. Option to Rename"
+Git,TBD,,Delete Exising Folder,"Log into Git, go into Folder, Settings. Option to Delete at Bottom after verification"
+Git,TBD,git pull origin,Pull or Update from Main,
+Git,TBD,git stash apply,Apply Stashed Changes,
+Git,TBD,git stash,Stash Pending Changes,
+Git,TBD,git pull --rebase,Apply updates to Repo,"If there is a conflict, it will alert, otherwise all Local and Remote Change will be applied."
+Git,TBD,config pull.rebase true,Apply Updates to Repo,Change default setting to always apply this approach.
+Git,TBD,git reset --hard HEAD,Restore state before previous Git Add,Deletes files on Computer. Be Careful.
+Git,TBD,"echo ""Clean Up Historical Work.ipynb"" >> .gitignore",Add A file to Ignore,
+Git,TBD,cat .gitignore,See Contents of GitIgnore,
+Hadoop,TBD,!hadoop jar {JAR_FILE},,!hadoop jar {JAR_FILE}: This command submits a Hadoop job using the specified JAR file. Replace {JAR_FILE} with the actual path to your MapReduce JAR file.
+Hadoop,TBD,D mapreduce.job.output.key.comparator.class=org.apache.hadoop.mapreduce.lib.partition.KeyFieldBasedComparator,,"This sets the key comparator class to KeyFieldBasedComparator, which allows you to specify key-based sorting"
+Hadoop,TBD,"D mapreduce.partition.keycomparator.options=""-k1,2nr -k2,3nr",,"This sets the key comparator options, specifying the sorting criteria. In this case, it is sorting first on the first and second columns in reverse numerical order (nr), and then on the second and third columns in reverse numerical order."
+Hadoop,TBD,"D mapreduce.partition.keypartitioner.options=""-k1,1",,"This sets the key partitioner options, specifying that the partitioning is based on the first column"
+Hadoop,TBD,D mapreduce.job.reduces=1,,"This sets the number of reducers to 1, indicating that the final sorted output will be written by a single reducer."
+Hadoop,TBD,input {HDFS_DIR}/eda-output/part-0000*,,Specifies the input directory for the MapReduce job. It uses wildcard part-0000* to include all files starting with part-0000 in the specified HDFS directory.
+Hadoop,TBD,mapper /bin/cat \,,"Specifies the mapper to be /bin/cat, which means it uses the cat command to output the input data without any modification."
+Hadoop,TBD,reducer /bin/cat,,"Specifies the reducer to be /bin/cat, which means it uses the cat command to concatenate the sorted output from the mapper without any additional processing."
+Jupyter,TBD,![Alt Text](https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/cosine_similiarity.png),Embed Link to Git Image,Must be In Markdown
+Jupyter,TBD,,Create New File,"with open('/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/__init__.py', ""w"") as file:
+    # Optional: Add content to the file
+    file.write(""# This is the __init__.py file\n"")"
+Kubernetes,TBD,kubectl get namespaces,Retrieve all Namespaces,
+Kubernetes,TBD,kubectl delete namespace w255,Delete All Name Spaces,
+Kubernetes,TBD,kubectl get pods -n w255,Get Pod Name,
+Kubernetes,TBD,kubectl describe deployment redis -n w255,Describe Deployments,
+Kubernetes,TBD,kubectl apply -f filename.yaml,Run .yaml File,
+Kubernetes,TBD,kubectl exec -it redis-7968b47c9-zgdbr  -n w255 -- /bin/bash,Remote into Redis DB,
+Kubernetes,TBD,kubectl delete -k .k8s/base/  .k8s/overlays/prod,Delete Yaml Deployment,
+Kubernetes,TBD,kubectl apply -k .k8s/base/ .k8s/overlays/prod,Apply YAML Deployment,
+Kubernetes,TBD,kubectl config current-context,Check Current Context,
+Kubernetes,TBD,kubectl config view --minify | grep namespace:,Verify Namespace in Context,
+Kubernetes,TBD,kubectl config set-context --current --namespace=derekdewald,Set Context to Specific Namespace,
+Kubernetes,TBD,kubectl config use-context w255-aks,Set Context to Specific Namespace,
+Kubernetes,TBD,,Port Forward to Grafana,"kubectl port-forward -n prometheus svc/grafana 3000:3000
+kubectl port-forward svc/prediction-service 8080:8000 -n derekdewald"
+Kubernetes,TBD,kubectl get all -n derekdewald,Search All Resources,
+Minikube,TBD,brew install minikube,Install,Install Minikube
+Minikube,TBD,minikube stop,Stop Minikube,
+Minikube,TBD,minikube delete,Delete Minikube,
+Minikube,TBD,minikube start --kubernetes-version=v1.27.3,,
+Minikube,TBD,kubectl delete pods api-deployment-5c488d6dd9-jmwcf -n w255,Delete Pod,
+Minikube,TBD,kubectl rollout pause deployment api-deployment -n w255,Pause Deployment,
+Minikube,TBD,kubectl delete deployment api-deployment -n w255,Stop Deployment,
+Minikube,TBD,kubectl get services -n w255,,
+Minikube,TBD,kubectl describe service redis-service -n w255,,
+Minikube,TBD,kubectl logs pod/api-deployment-5c488d6dd9-2tn6c -c init-verify-redis-service-dns -n w255,Check what,
+Minikube,TBD,kubectl get all,Check Everything,
+Minikube,TBD,kubectl delete all --all --namespace=w255,Delete Everything in NameSpace,
+Minikube,TBD,"kubectl config use-context minikube
+kubectl config use-context w255-aks",Configuration Management,
+Nano,TBD,CTRL + X,Save File,
+Nano,TBD,CTRL + O,Close File,
+Nano,TBD,nano FILENAME,Create/ Open File,
+Nano,TBD,CTRL + O,Open File to Edit,Open File to Edit
+Nano,TBD,CTRL + X,Close File,Close File
+Nano,TBD,"nano .gitignore
+Type Changes Desired
+CTRL + X
+Y - Enter",Implement Changes to File From Bash,
+Pandas,TBD,"pd.set_option('display.max_columns',None)",Dataframe Display All Columns,
+Pandas,TBD,"pd.set_option('display.width',1000)",Dataframe Display Max Width,
+Pandas,TBD,"pd.set_option('display.float_format',lambda x:'%.2f %x)",Dataframe Display Max 2 Decimals,
+Pandas,TBD,"pd.Categorical(df.index,categories = [], ordered = True)",Create Customer Order Series/ Column,
+Poetry,TBD,poetry install,,
+Poetry,TBD,poetry shell,,
+Poetry,TBD,,poetry install --no-root,"Application would not install without the --no-root addition, claimed to be missing dictories."
+Poetry,TBD,poetry update,Update TOML file,
+Poetry,TBD,poetry install,Install,
+Poetry,TBD,poetry env list --full-path,poetry env list,
+Python,Formatting,pd.options.display.float_format = '{:.2f}'.format,Fixed Decimal Points,
+Python,TBD,*args,Args,Allows a function to accept any number of positional arguments as a tuple. This is useful when the exact number of inputs isn't known in advance. It enables flexible function calls without requiring a fixed number of parameters.
+Python,TBD,**kwargs,Kwargs,"Enables a function to accept any number of keyword arguments as a dictionary. This allows passing named parameters dynamically, making the function adaptable to different sets of inputs. It's especially useful for configuring behavior or passing optional settings."
+Python,TBD,,Generator function,
+Python,TBD,,Classes,
+Python,TBD,"make_pipeline(SimpleImputer(), RobustScaler(), SVR())",Data Pipeline,
+Python,TBD,"grid = GridSearchCV(processing_pipeline, param_grid=params, n_jobs=-1, cv=5, verbose=3)",Grid Search,
+Python,TBD,dock,Decorator,"Is a syntactic sugar that allows you to wrap a function or class with common logic without compromising readability. It’s roughly equivalent to app.get(""/"")(hello_world)."
+Python,TBD,"joblib.dump(model,model_name.pkl)",Export ML Model,
+Python,TBD,,Import ML Model,
+Python,TBD,sys.path.append(path),Add New Path to System Path,
+Python,TBD,df[new_column_name] = df[column_name].ffill(),Force Fill,"Must be Careful with np.nan, """" and blanks. None works."
+Python,TBD,%history -f history.txt,,
+Python,TBD,"functools.reduce(functools.partial(pd.merge(on=key,how=left), [list of tables])",Merge Multiple Tables on Same Key,
+Python,TBD,df.sample(frac=.5),Random Sample DF,df.sample(frac=1) Will reset randomly sort the dataframe.
+Python,TBD,"np.random.choice(list,size=n,p=probability)",Random Binary Dataframe,"np.random.choice([0,1],size=10000,p=[.9,.1])"
+Python,Documentation,"import inspect
+print(inspect.getsource(ParamterMapping))",Return Function Documentation,Ability to Print out Documentation as included with Function Doc String
+Python,Documentation,"import os
+os.listdir()",Return Contents of Directory,
+Python,Documentation,"import os
+os.getcwd()",Return Current Working Directory,
+Python,Information,os.cpu_count(),Identify Number of Cores CPU Has.,
+Python,Hack,".replace(hour=0, minute=0, second=0, microsecond=0)",Datetime Normalization,
+Python,Hack,pd.DataFrame(df[column_name].value_counts(dropna=False),Value Count Including Null,
+Python,Documentation,model_list['Estimator Class'].iloc[0].__doc__,Read Python Documentation,
+RE,TBD,"df[column].astype(str).str.replace(r'[^\d.]', """", regex=True)",Find Only Numbers,
+Redis,TBD,brew install minikube,Install,Install Minikube
+Redis,TBD,redis-server --daemonize yes,,
+Redis,TBD,redis-server,,
+Redis,TBD,redis-cli ping,,
+Redis,TBD,ps aux | grep redis-server,Check Status of Server,
+Redis,TBD,kill process_id,Stop Redis,
+Redis,TBD,redis-server --daemonize yes,Start Redis,
+Redis,TBD,redis-cli monitor,Monitor Redis,
+Redis,TBD,redis-cli -h localhost -p 6379 monitor,,
+Regen,TBD,[A-Za-z],Filter for Any Letters,"r""^003[A-Za-z']"""
+Regen,TBD,[0-9],Filter for Any Numbers,"r""^003[0-9']"""
+Spark,TBD,"from pyspark.sql import SparkSession
+
+try:
+  spark
+  print(""Spark is already running"")
+  print(f""{sc.master} appName: {sc.appName}"")
+except NameError:
+  print('starting Spark')
+  app_name = 'hw3_notebook'
+  master = ""local[*]""
+  spark = SparkSession\
+  .builder\
+  .appName(app_name)\
+  .master(master)\
+  .getOrCreate()
+sc = spark.sparkContext",,How to Start A Spark Session.
+Spark,TBD,sp.textFile(FILENAME),Create RDD from File,
+Spark,TBD,sp.parralellize([LISTVALUES]),Create RDD from df,
+Spark,TBD,,Transformations,
+Spark,TBD,,Actions,
+Spark,TBD,trainRDDCached.count(),Total Record Count,
+Spark,TBD,,Total Column Count,
+Spark,TBD,,Spark,"Memory Based. Memory, relatively cheap, 100x faster than HD, Lazy.Resource Management,Data Management,Data Processing,AKA Executor,AKA Cluster Manager. K-Mean, Page Rank, HDFS, RDD"
+Spark,TBD,,sc.parallelize,
+Spark,TBD,,DAG,Directed acyclic graph:
+Spark,TBD,"df = df.drop('Id'), df.drop(*columns_to_drop)",Drop Column,
+Spark,TBD,"df = df.withColumn(new_column_name, when(df[""row_number""] == 1, None).otherwise(df[new_column_name]))",If Then With Column,
+Spark,TBD,"df.withColumn(""Result"", col(""Value1"") - col(""Value2""))",Mathamatical Operator on 2 columns,
+Spark,TBD,"perf_df_routes = df_flights2.groupby('OP_CARRIER_AIRLINE_ID','ORIGIN',""DEST"").agg(
+  mean('AIR_TIME').alias('Mean Air Time'),
+  sum('FLIGHTS').alias('Total Flights'),
+  sum('DEP_DEL15').alias('Departure Delays'),
+  sum('ARR_DEL15').alias('Arrival Delays')).toPandas()",Groupby,
+Spark,TBD,"df.filter(col(""column_name"") ==1)",Filter Dataframe,
+Spark,TBD,"df.select(""name"", ""age"")",Select Specific Columns,
+Spark,TBD,"test_df.withColumn(""Time_Difference_Minutes"",
+  (unix_timestamp(""Previous_Flight_Touchdown_Time"") - unix_timestamp(""CRS_Departure_Timestamp"")) / 60)",,
+Spark,TBD,,Filter,"df_filtered = df.filter(df.column_name.isNotNull() & (df.column_name != """"))"
+SparkConf,TBD,"This is used to configure the settings of Spark, such as the master node, application name, etc",,
+SparkContext,TBD,"The entry point to low-level Spark functionalities, including creating and managing RDDs. It provides the connection to the cluster and manages job execution.",,
+SQL,TBD,,Cheat Sheet,https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/SQL_Cheatsheet.png
+SQL,TBD,"with name as ( SQL Query),
+name2 as (SQL Query),
+name3 as (SQL Query)
+select t1.*, t2.*,t3.* 
+from name t1
+left join name2 t2 t1.key=t2.key
+left join name3 t3 on t1.key=t3.key",Joining Series of Subqueries,
+SQL,TBD,max(case when daysdelinq>=90 then 1 else 0 end) as Name,"If then, Single Value",
+SQL,TBD,sum(case when minor = 'ES01' then currbal else 0 end) as Name,If then Aggregation,
+SQL,TBD,1 as Variable Name,Static Value,
+SQL,TBD,"COALESCE(a.CURRENT_ES01, 0) AS CURRENT_ES01",Replace Null Values with 0,
+SQL,TBD,"select top(10) * from table
+select * from table fetch first 5 rows only",,
+SQL,TBD,select * from (select * from table),Subquery,"A table, which is comprised of logic made by another query."
+SQL,TBD,"SELECT department, SUM(salary) AS total_salary
+FROM employees
+GROUP BY department
+HAVING SUM(salary) > 100000;",Having,Ability to apply a Condition review statement after a Group By.
+SQL,TBD,"SELECT * from  employees
+order by (RIGHT employee_ID)
+",Custom Order,"Sort by the Last 3 Digits of a Particular Field, which might not exist in Data"
+SQL,TBD,Select * from table where year(date) = 2024,YEAR,
+SQL,TBD,select * from table where dept_id = (select dept_id from other_tabe where name = 'something'),Subquery List,
+SQL,TBD,select * from table where date between day1 and day2,Between,
+SQL,TBD,"select a.*, b.* from table1 a inner join table2 b on a.value>b.value2 and a.value3 >= b.value4",Non Equi Joins,Joins on something other than a Primary Key.
+SQL,TBD,"WITH date_range AS (
+        DATE '2024-01-01' AS start_date,
+        DATE '2024-01-31' AS end_date)",Define Date Variables with CTE,"Can reference by joining table, giving an alias an then a.date=table.start_date."
+SQL,TBD,"generate_series(d.start_date, d.end_date - INTERVAL '1 day', INTERVAL '1 day')",Generate List of Dates,
+SQL,TBD,"Oracle: date > SYSDATE - 30
+Microsoft: DATE > DATEADD(DAY,-30,GETDATE())",Date Filtering,
+SQL,TBD,"COALESCE(Column1,Column2,') is null then 1 else 0
+COALESCE(Column1,Column2,','Default')",COALESCE,Can Add a default condition 
+SQL,TBD,"nvl(column1,column2) as FieldName",nvl,"Oracle Specific , can only check 2 conditions."
+SQL,TBD,"DECLARE @CUTOFFDATE DATE = DATEADD(Day,-30,GETDATE())",Then use @DATE,
+Streamlit,TBD,"Repository: derek-dewald/Python_Tools
+Main File Path: Streamlit/DataDictionary/MarkdownNotes.py",Deploying Dashboard,
+Terminal,TBD,rm FILENAME,Delete File,
+Terminal,TBD,mkdir DIRECTORYNAME,Make Directory,
+Terminal,TBD,curl,,"Command-line tool and library for transferring data with URLs. It stands for ""Client for URLs""."
+Terminal,TBD,( > ),,The greater than operator  indicates to the command line that we wish the programs output (or whatever it sends to STDOUT) to be saved in a file instead of printed to the screen. Let's see an example.
+Terminal,TBD,>>,,Append data to existing file
+Terminal,TBD,program -- version,Check Program Version,
+Terminal,TBD,echo,,
+Terminal,TBD,grep,,"A command-line utility used in Unix-like operating systems to search for patterns within files or input text. It is a powerful tool for text pattern matching and is commonly used for searching, filtering, and extracting information from files or command output"
+Terminal,TBD,CTRL + C,,To Exit out of Command Line Error
+Terminal,TBD,"!wget -O data/alice.txt ""http://www.gutenberg.org/files/11/11-0.txt""",,
+Terminal,TBD,!head -n 6 data/alice.txt,,
+Terminal,TBD,%%writefile data/alice_test.txt,,
+Terminal,TBD,!ls data | grep test,,
+Terminal,TBD,!python wordCount.py < data/alice_test.txt,,
+Terminal,TBD,!python wordCount.py < data/alice.txt > data/alice_counts.txt,,
+Terminal,TBD,!grep alice data/alice_counts.txt,,
+Terminal,TBD,!head data/alice_counts.txt,,
+Terminal,TBD,!grep hatter data/alice_counts.txt,,
+Terminal,TBD,!wc -l data/alice_counts.txt,,
+Terminal,TBD,sort yourfile.txt or sort -r yourfile.txt,,
+Terminal,TBD,!sort data/alice_counts.txt > data/alice_counts_A-Z.txt,,
+Terminal,TBD,"!sort -k2,2nr data/alice_counts.txt >data/alice_counts_sorted.txt",,
+Terminal,TBD,!conda install -c conda-forge -y wget,,
+Terminal,TBD,!chmod a+x pWordCount_v2.sh,,
+Terminal,TBD,!chmod a+x aggregateCounts_v2.sh,,
+Terminal,TBD,!python aggregateCounts_v1.py < data/alice_pCounts.txt > data/random_test.txt,,
+Terminal,TBD,Piping ( | ),,
+Terminal,TBD,python3 -m venv DATASCI255,,
+Terminal,TBD,source DATASCI255/bin/activate,,
+Terminal,TBD,ls -l,List Authorizations of File,
+Terminal,TBD,echo $SHELL,,
+Terminal,TBD,LL,,"The ll command is not a standard command in all shells. It's often an alias for the ls -l command, which displays detailed information about files and directories"
+Terminal,TBD,CHMOD,CHMOD,
+Terminal,TBD,,How to Create Folder,
+Terminal,TBD,,How to Create Document,
+Terminal,TBD,,How to Input Text into Document,
+Terminal,TBD,,How to Copy a File,
+Terminal,TBD,"find ~/ -name ""conda"" 2>/dev/null",Find Word in Directories,
+Terminal,TBD,"""- y""",By Pass Prompting,
+Unix,TBD,bin/cat,,"command is a Unix command-line utility that is commonly used to concatenate and display the content of one or more files. The name ""cat"" is derived from ""concatenate."""
+Uvicorn,TBD,uvicorn src.main:app --reload,sc.parallelize,
+Uvicorn,TBD,ps aux | grep uvicorn,Check Open Program,
+Uvicorn,TBD,kill process_id,Stop Open Programs,
+Uvicorn,TBD,http://localhost:8000,Access while on Docker,
+Colab,,"from google.colab import drive
+drive.mount('/content/drive')","!ls ""/content/drive/MyDrive""",
+Python,ITERTOOLS,,,
+Python,COMBO,,,
+Python,PERMU,,,
