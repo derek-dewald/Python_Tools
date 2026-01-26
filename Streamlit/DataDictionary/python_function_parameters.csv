@@ -1,4 +1,66 @@
 Function,Parameters,Type,Definition,Folder
+binary_complex_equivlance,df,,,feature_engineering.py
+binary_complex_equivlance,col,,,feature_engineering.py
+binary_complex_equivlance,col1,,,feature_engineering.py
+binary_complex_equivlance,new_column_name,,,feature_engineering.py
+binary_column_creator,df,,,feature_engineering.py
+binary_column_creator,column_name,,,feature_engineering.py
+binary_column_creator,new_column_name,,,feature_engineering.py
+binary_column_creator,value,,,feature_engineering.py
+binary_column_creator,calculation,,,feature_engineering.py
+binary_column_creator,balance_column,,,feature_engineering.py
+custom_preprocessor,df,,,SY_M_SUPPORT.py
+custom_preprocessor,data_dictionary_df,,,SY_M_SUPPORT.py
+custom_preprocessor,index_name,,,SY_M_SUPPORT.py
+Heatmap,df,,,SY_M_SUPPORT.py
+Heatmap,correlation,,,SY_M_SUPPORT.py
+Heatmap,column_list,,,SY_M_SUPPORT.py
+Heatmap,title,,,SY_M_SUPPORT.py
+Heatmap,cmap,,,SY_M_SUPPORT.py
+Heatmap,annotate,,,SY_M_SUPPORT.py
+Heatmap,x_rotate,,,SY_M_SUPPORT.py
+Heatmap,y_rotate,,,SY_M_SUPPORT.py
+Heatmap,cbar,,,SY_M_SUPPORT.py
+Heatmap,set_center,,,SY_M_SUPPORT.py
+Heatmap,figsize,,,SY_M_SUPPORT.py
+make_kmeans_pipeline,X,,,SY_M_SUPPORT.py
+make_kmeans_pipeline,data_dictionary_df,,,SY_M_SUPPORT.py
+make_kmeans_pipeline,index_name,,,SY_M_SUPPORT.py
+make_kmeans_pipeline,n_clusters,,,SY_M_SUPPORT.py
+create_clustering_visualization,df,,,SY_M_SUPPORT.py
+create_clustering_visualization,pipeline_object,,,SY_M_SUPPORT.py
+create_clustering_visualization,name_map,,,SY_M_SUPPORT.py
+scatter_from_dataframe,df,,,SY_M_SUPPORT.py
+scatter_from_dataframe,x_col,,,SY_M_SUPPORT.py
+scatter_from_dataframe,y_col,,,SY_M_SUPPORT.py
+scatter_from_dataframe,x_label,,,SY_M_SUPPORT.py
+scatter_from_dataframe,y_label,,,SY_M_SUPPORT.py
+scatter_from_dataframe,color_col,,,SY_M_SUPPORT.py
+scatter_from_dataframe,title,,,SY_M_SUPPORT.py
+scatter_from_dataframe,x_axis_limit,,,SY_M_SUPPORT.py
+scatter_from_dataframe,y_axis_limit,,,SY_M_SUPPORT.py
+sample_score_silhouette,df,,,SY_M_SUPPORT.py
+sample_score_silhouette,label,,,SY_M_SUPPORT.py
+sample_score_silhouette,metric,,,SY_M_SUPPORT.py
+sample_score_silhouette,sample_size,,,SY_M_SUPPORT.py
+iteratively_test_sampled_model_performance,model_testing_function,,,SY_M_SUPPORT.py
+iteratively_test_sampled_model_performance,sample_size,,,SY_M_SUPPORT.py
+iteratively_test_sampled_model_performance,iterations_,,,SY_M_SUPPORT.py
+iteratively_test_sampled_model_performance,maximum_run_time,,,SY_M_SUPPORT.py
+iteratively_test_sampled_model_performance,threshold,,,SY_M_SUPPORT.py
+feature_importance_by_clusters,df,,,SY_M_SUPPORT.py
+feature_importance_by_clusters,cluster_labels,,,SY_M_SUPPORT.py
+feature_importance_by_clusters,features,,,SY_M_SUPPORT.py
+mutual_information_per_feature,df,,,SY_M_SUPPORT.py
+mutual_information_per_feature,cluster_labels,,,SY_M_SUPPORT.py
+mutual_information_per_feature,features,,,SY_M_SUPPORT.py
+mutual_information_per_feature,n_bins,,,SY_M_SUPPORT.py
+SampleDataFrame,df,pd.DataFrame,The dataset to sample from.,statistical.py
+SampleDataFrame,conf,float,"Desired Confidence Percentage Level (e.g., 90, 95, 99).",statistical.py
+SampleDataFrame,me,float,"Margin of Error, (default is 5%).",statistical.py
+SampleDataFrame,mv,float,Maximum Variability (Expected Level of Default),statistical.py
+SampleDataFrame,print_,,,statistical.py
+SampleDataFrame,new_column_name,,,statistical.py
 inspect_function,function_name,str,Name of Function which is Loaded into Current Python Session Memory,utility_functions.py
 view_df,df,dataframe,Any Dataframe,utility_functions.py
 view_df,update_decimal,int,Number of Default Decimal Places to Show in Notebook,utility_functions.py
@@ -39,63 +101,150 @@ download_file_from_git,repo,,,connections.py
 download_file_from_git,folder,,,connections.py
 download_file_from_git,export_folder,,,connections.py
 backup_google_worksheets,export_folder,,,connections.py
-pick_from_dict,dict_,,,synthetic_mbr.py
-pick_from_dict,text,,,synthetic_mbr.py
-calculate_rng_from_df_low_high,df,,,synthetic_mbr.py
-calculate_rng_from_df_low_high,new_column_name,,,synthetic_mbr.py
-calculate_rng_from_df_low_high,low,,,synthetic_mbr.py
-calculate_rng_from_df_low_high,high,,,synthetic_mbr.py
-calculate_rng_from_df_low_high,decimal,,,synthetic_mbr.py
-calculate_rng_from_df_low_high,distribution,,,synthetic_mbr.py
-calculate_rng_from_df_low_high,skew,,,synthetic_mbr.py
-simplistic_engagement_calculation,df,,,synthetic_mbr.py
-simplistic_engagement_calculation,new_column_name,,,synthetic_mbr.py
-create_column_from_dict_distribution,df,,,synthetic_mbr.py
-create_column_from_dict_distribution,column_name,,,synthetic_mbr.py
-create_column_from_dict_distribution,new_column_name,,,synthetic_mbr.py
-create_column_from_dict_distribution,cdf_dict,,,synthetic_mbr.py
-create_column_from_dict_distribution,calculation,,,synthetic_mbr.py
-calculate_distribution_from_dictlist,dict_,,,synthetic_mbr.py
-calculate_distribution_from_dictlist,decimals,,,synthetic_mbr.py
-create_mbr_information,branch_df,,,synthetic_mbr.py
-create_mbr_information,branch_profile_dict,,,synthetic_mbr.py
-create_mbr_information,mbr_profile_df,,,synthetic_mbr.py
-create_mbr_information,mbr_nbr_start,,,synthetic_mbr.py
-create_mbr_information,columns_not_weights,,,synthetic_mbr.py
-create_random_value_from_dict,df,,,synthetic_mbr.py
-create_random_value_from_dict,dict_,,,synthetic_mbr.py
-create_random_value_from_dict,dict_lvl,,,synthetic_mbr.py
-create_random_value_from_dict,decimals,,,synthetic_mbr.py
-decouple_txn,df,,,synthetic_mbr.py
-decouple_txn,reference_value,,,synthetic_mbr.py
-decouple_txn,txn_dict,,,synthetic_mbr.py
-decouple_txn,primary_key,,,synthetic_mbr.py
-decouple_txn,exclude_non_ho,,,synthetic_mbr.py
-transpose_df,df,DataFrame,The input pandas DataFrame.,synthetic_mbr.py
-transpose_df,index,list,Columns to retain as identifiers (will remain unchanged).,synthetic_mbr.py
-transpose_df,columns,list,Columns to unpivot into key-value pairs.,synthetic_mbr.py
-random_uniform_normalized_list,n,int,Number of Values to Return in list.,synthetic_mbr.py
-random_uniform_normalized_list,skew,int,"Skew to include in data, Values Greater than 0 will create",synthetic_mbr.py
-random_choice_from_uniform_list,total_records,int,Number of records to be returned in list.,synthetic_mbr.py
-random_choice_from_uniform_list,name,str,Name of Random Records.,synthetic_mbr.py
-random_choice_from_uniform_list,distinct_entities,int,"If populated, it will be used to generate a random distribution of defined values, also used as the number of reocrds",synthetic_mbr.py
-random_choice_from_uniform_list,list_distribution,list,Distribution to be used for random sampling.,synthetic_mbr.py
-random_choice_from_uniform_list,return_value,str,"Default to None, and will return a list. Can input 'df' to return a dataframe",synthetic_mbr.py
-random_choice_from_uniform_list,skew,float,Skew to include in random distribution.,synthetic_mbr.py
-replicate_df_row,df,dataframe,"DataFrame which you wish to extend, should be a Single Row, but techincally it will duplicate any size",synthetic_mbr.py
-replicate_df_row,records,int,"Number of times you wish DF to be duplicated, ideally it should be len(other_df) to which you want to multiply",synthetic_mbr.py
-random_uniform_normalized_df,unique_records,,,synthetic_mbr.py
-random_uniform_normalized_df,name,str,Name of Column to Included (values will be numbered).,synthetic_mbr.py
-random_uniform_normalized_df,skew,float,"If Data is to have a skewed distribution, 1 will be normal uniform (mean=1,std_dev=0). **kwargs: Should be List of values equalling 1, to create a new random value.",synthetic_mbr.py
-flatten_clean_dict,dict_,dict,Nested Dictionary,synthetic_mbr.py
-flatten_clean_dict,index_name,str,Default Name of Column to be applied to First Level Dictionary in DataFrame.,synthetic_mbr.py
-flatten_clean_dict,clean,bool,"Used to convert a single flat DF to a Matrix, which each new column",synthetic_mbr.py
-flatten_clean_dict,apply_new_lvl,,,synthetic_mbr.py
+pick_from_dict,dict_,,,synthetic_member.py
+pick_from_dict,text,,,synthetic_member.py
+calculate_rng_from_df_low_high,df,,,synthetic_member.py
+calculate_rng_from_df_low_high,new_column_name,,,synthetic_member.py
+calculate_rng_from_df_low_high,low,,,synthetic_member.py
+calculate_rng_from_df_low_high,high,,,synthetic_member.py
+calculate_rng_from_df_low_high,decimal,,,synthetic_member.py
+calculate_rng_from_df_low_high,distribution,,,synthetic_member.py
+calculate_rng_from_df_low_high,skew,,,synthetic_member.py
+simplistic_engagement_calculation,df,,,synthetic_member.py
+simplistic_engagement_calculation,new_column_name,,,synthetic_member.py
+create_column_from_dict_distribution,df,,,synthetic_member.py
+create_column_from_dict_distribution,column_name,,,synthetic_member.py
+create_column_from_dict_distribution,new_column_name,,,synthetic_member.py
+create_column_from_dict_distribution,cdf_dict,,,synthetic_member.py
+create_column_from_dict_distribution,calculation,,,synthetic_member.py
+calculate_distribution_from_dictlist,dict_,,,synthetic_member.py
+calculate_distribution_from_dictlist,decimals,,,synthetic_member.py
+create_random_value_from_dict,df,,,synthetic_member.py
+create_random_value_from_dict,dict_,,,synthetic_member.py
+create_random_value_from_dict,dict_lvl,,,synthetic_member.py
+create_random_value_from_dict,decimals,,,synthetic_member.py
+decouple_txn,df,,,synthetic_member.py
+decouple_txn,reference_value,,,synthetic_member.py
+decouple_txn,txn_dict,,,synthetic_member.py
+decouple_txn,primary_key,,,synthetic_member.py
+decouple_txn,exclude_non_ho,,,synthetic_member.py
+update_growth_rates,df,,,synthetic_member.py
+update_growth_rates,cols,,,synthetic_member.py
+create_mbr_information,branch_df,,,synthetic_member.py
+create_mbr_information,branch_profile_dict,,,synthetic_member.py
+create_mbr_information,mbr_profile_df,,,synthetic_member.py
+create_mbr_information,start_date,,,synthetic_member.py
+create_mbr_information,mbr_nbr_start,,,synthetic_member.py
+create_mbr_information,columns_not_weights,,,synthetic_member.py
+create_branch,unique_records,,,synthetic_member.py
+create_branch,legacy_distribution,,,synthetic_member.py
+create_txn_df,df,,,synthetic_member.py
+create_txn_df,exclude,,,synthetic_member.py
+generate_historical_data,mbr_df,,,synthetic_member.py
+generate_historical_data,total_months,,,synthetic_member.py
+generate_historical_data,start_date,,,synthetic_member.py
+progress_df_one_month,df,,,synthetic_member.py
+progress_df_one_month,start_date,,,synthetic_member.py
+generate_synthetic_dataset,number_branches,,,synthetic_member.py
+generate_synthetic_dataset,total_months,,,synthetic_member.py
+generate_synthetic_dataset,legacy_distribution,,,synthetic_member.py
+generate_synthetic_dataset,start_date,,,synthetic_member.py
+transpose_df,df,DataFrame,The input pandas DataFrame.,synthetic_member.py
+transpose_df,index,list,Columns to retain as identifiers (will remain unchanged).,synthetic_member.py
+transpose_df,columns,list,Columns to unpivot into key-value pairs.,synthetic_member.py
+random_uniform_normalized_list,n,int,Number of Values to Return in list.,synthetic_member.py
+random_uniform_normalized_list,skew,int,"Skew to include in data, Values Greater than 0 will create",synthetic_member.py
+random_choice_from_uniform_list,total_records,int,Number of records to be returned in list.,synthetic_member.py
+random_choice_from_uniform_list,name,str,Name of Random Records.,synthetic_member.py
+random_choice_from_uniform_list,distinct_entities,int,"If populated, it will be used to generate a random distribution of defined values, also used as the number of reocrds",synthetic_member.py
+random_choice_from_uniform_list,list_distribution,list,Distribution to be used for random sampling.,synthetic_member.py
+random_choice_from_uniform_list,return_value,str,"Default to None, and will return a list. Can input 'df' to return a dataframe",synthetic_member.py
+random_choice_from_uniform_list,skew,float,Skew to include in random distribution.,synthetic_member.py
+replicate_df_row,df,dataframe,"DataFrame which you wish to extend, should be a Single Row, but techincally it will duplicate any size",synthetic_member.py
+replicate_df_row,records,int,"Number of times you wish DF to be duplicated, ideally it should be len(other_df) to which you want to multiply",synthetic_member.py
+random_uniform_normalized_df,unique_records,,,synthetic_member.py
+random_uniform_normalized_df,name,str,Name of Column to Included (values will be numbered).,synthetic_member.py
+random_uniform_normalized_df,skew,float,"If Data is to have a skewed distribution, 1 will be normal uniform (mean=1,std_dev=0). **kwargs: Should be List of values equalling 1, to create a new random value.",synthetic_member.py
+time_series_statistics,df,,,synthetic_member.py
+time_series_statistics,calculuation_periods,,,synthetic_member.py
+time_series_statistics,skipna,,,synthetic_member.py
+flatten_clean_dict,dict_,dict,Nested Dictionary,synthetic_member.py
+flatten_clean_dict,index_name,str,Default Name of Column to be applied to First Level Dictionary in DataFrame.,synthetic_member.py
+flatten_clean_dict,clean,bool,"Used to convert a single flat DF to a Matrix, which each new column",synthetic_member.py
+flatten_clean_dict,apply_new_lvl,,,synthetic_member.py
+flatten_clean_dict,high_low_list_fix,,,synthetic_member.py
+Heatmap,df,,,visualization.py
+Heatmap,correlation,,,visualization.py
+Heatmap,column_list,,,visualization.py
+Heatmap,title,,,visualization.py
+Heatmap,cmap,,,visualization.py
+Heatmap,annotate,,,visualization.py
+Heatmap,x_rotate,,,visualization.py
+Heatmap,y_rotate,,,visualization.py
+Heatmap,cbar,,,visualization.py
+Heatmap,set_center,,,visualization.py
+Heatmap,figsize,,,visualization.py
 FunctionToSTR,func,function,Python Function,string_processing.py
 compare_function,func1,function,Python Function,string_processing.py
 compare_function,func2,function,Python Function,string_processing.py
 compare_function,additional_records,int,Number of String Characters for each function which will be displayed after the point of identifying difference.,string_processing.py
 compare_function,strip_docstring,bool,Boolean to determine whether you wish to compare the Doc String aswell as the function.,string_processing.py
+df_column_compare,df,dataframe,Dataframe,data_validation.py
+df_column_compare,df1,dataframe,DataFrame,data_validation.py
+df_column_compare,return_df,,,data_validation.py
+merge_identical_df,df,,,data_validation.py
+merge_identical_df,df1,,,data_validation.py
+merge_identical_df,primary_key_list,list,List of Primary Key Values,data_validation.py
+merge_identical_df,column_distinction,str,Value which will be added to Columns in DF1 to distinguish records once connsolidated,data_validation.py
+merge_identical_df,include_merge,True/False,Value to identify whether inclusion or _merge field when combining columns,data_validation.py
+get_decile,df,df,Any DataFrame,data_validation.py
+get_decile,column_name,str,Column Name of Any Numeric Column,data_validation.py
+get_decile,n,,,data_validation.py
+get_segments,df,df,Any Dataframe,data_validation.py
+get_segments,column_name,str,Name of Column,data_validation.py
+get_segments,number_segments,int,Number of Segments to be Calculated. Note that to cut segments it is required to calculate N+1,data_validation.py
+column_segmenter,df,df,DataFrame,data_validation.py
+column_segmenter,column_name,str,Name of Column to be Analyzed.,data_validation.py
+column_segmenter,new_column_name,str,Name of column to be created in DF if a list of edges is not selected,data_validation.py
+column_segmenter,bin_list,,,data_validation.py
+column_segmenter,number_segments,,,data_validation.py
+column_segmenter,force_segmentation,bool,Item to force the return of edges as defined in function by removing duplication in DF,data_validation.py
+column_segmenter,right_edge_is_min,bool,"When Using Custom Edges, whether values in Column exist which are less than defined Minimum.",data_validation.py
+column_segmenter,left_edge_is_max,bool,"When Using Custom Edges, whether values in Column exist which are greated than defined Maximum",data_validation.py
+column_segmenter,leading_text,str,Desired Format of Value to be returned when using segment_name,data_validation.py
+column_segmenter,format_,,,data_validation.py
+column_segmenter,return_value,str,"Indication of what user would like in return. df_column: New Column with Index Position of Segment/Edge segment_name: New Column with Text Description of Segment, for Visualization segments: List of Edge Positions TO BE DEVELOPED impute_blanks=False, remove_zeros=False,",data_validation.py
+segment_to_text,df,,,data_validation.py
+segment_to_text,bin_list,,,data_validation.py
+segment_to_text,column_name,,,data_validation.py
+segment_to_text,new_column_name,,,data_validation.py
+segment_to_text,leading_text,,,data_validation.py
+segment_to_text,format_,,,data_validation.py
+round_up_power10,series,pd.Series,Series or Array.,data_validation.py
+round_up_power10,infer_neg_vals,bool,Logical condition to determine whether values of 0 or,data_validation.py
+column_comparison,df,,,data_validation.py
+column_comparison,column_name,str,,data_validation.py
+column_comparison,column_name1,str,,data_validation.py
+column_comparison,metric_name,,,data_validation.py
+column_comparison,bin_list,,,data_validation.py
+column_comparison,retain_columns,,,data_validation.py
+column_comparison,number_segments,,,data_validation.py
+column_comparison,force_segmentation,,,data_validation.py
+df_column_comparison,df,,,data_validation.py
+df_column_comparison,column_list,,,data_validation.py
+df_column_comparison,column_distinction,,,data_validation.py
+df_column_comparison,retain_columns,,,data_validation.py
+df_column_comparison,bin_list,,,data_validation.py
+df_column_comparison,number_segments,,,data_validation.py
+df_column_comparison,force_segmentation,,,data_validation.py
+column_statistical_review,df,df,Any DataFrame.,data_validation.py
+column_statistical_review,column_name,str,Name of particular column to where function will be applied.,data_validation.py
+column_statistical_review,partitions,int,"Number of Partitions to be applied in returned DF (default is 10, if 0 nothing returned.)",data_validation.py
+column_statistical_review,top_records_to_include,int,"Number of Top Records to be returned in DF (default is 5, if 0 nothing returned.)",data_validation.py
+column_statistical_review,cummulative_sum,bool,"Boolean, if True, will add the Cummulative Sum Value into the Return DF",data_validation.py
+column_statistical_review,cummulative_percent,bool,"Boolean, if True, will add the Cummulative Sum Percent  into the Return DF",data_validation.py
+column_statistical_review,remove_null_from_decile,bool,"Boolean, if true, it will remove Null and NA values from Caluclation of Decile",data_validation.py
+column_statistical_review,remove_zero_from_decile,bool,"Boolean, if true, it will remove Zero values from Caluclation of Decile",data_validation.py
 historical_month_end_list,end_dt,datetime,"Last date in period. Remember it is month end, so technically it will not return this month unless it is a month end date",date_functions.py
 historical_month_end_list,total_months,int,"Total number of records in list, by default it will be 12.",date_functions.py
 historical_month_end_list,sort_ascending,bool,"True/False to Determine whether end_dt will be the First, or Last value in list. By default (True) it is the Last",date_functions.py
@@ -103,13 +252,13 @@ historical_month_end_list,format_,str,"Optional Argument to change the format of
 generate_dictionary,notes_df,df,"If Blank, then Function will generate call",daily_processes.py
 generate_dictionary,definition_df,,,daily_processes.py
 generate_dictionary,export_location,,,daily_processes.py
-review_test_results,file_location,,,daily_processes.py
-daily_test,observations,,,daily_processes.py
-daily_test,file_location,,,daily_processes.py
 create_py_table_dict,base_location,str,Location of Windows Directory containing .py Files.,daily_processes.py
 create_py_table_dict,export_location,,,daily_processes.py
 parse_dot_py_folder,location,str,Windows or Mac OS Folder Directory (defaults to D's Mac Directory),daily_processes.py
 parse_dot_py_folder,export_location,str,"Location to where CSV file is to be exported. If left Blank, will not export a CSV.",daily_processes.py
+daily_test,observations,,,daily_processes.py
+daily_test,file_location,,,daily_processes.py
+review_test_results,file_location,,,daily_processes.py
 input1,module,module,Py file containing Dict.,input_functions_ignore.py
 input2,module,module,Py file containing Lists.,input_functions_ignore.py
 input3,module,module,Py file containing Strings.,input_functions_ignore.py
@@ -124,7 +273,19 @@ generate_create_table_sql,db,str,"Database Name (function designed for Analytics
 TableRecordCountByDate,table_dict,"Dict[str, str]",Mapping of table name -> date column name.,sql_.py
 TableRecordCountByDate,end_date,,,sql_.py
 TableRecordCountByDate,total_days,,,sql_.py
+gpt_question,list_,,,data_d_strings.py
+gpt_question,word_list,,,data_d_strings.py
 template_doc_string_print,text_,,,data_d_strings.py
+BinaryComplexEquivlancey,df,,,df_processing.py
+BinaryComplexEquivlancey,col,,,df_processing.py
+BinaryComplexEquivlancey,col1,,,df_processing.py
+BinaryComplexEquivlancey,new_column_name,,,df_processing.py
+binary_column_creator,df,,,df_processing.py
+binary_column_creator,column_name,,,df_processing.py
+binary_column_creator,new_column_name,,,df_processing.py
+binary_column_creator,value,,,df_processing.py
+binary_column_creator,calculation,,,df_processing.py
+binary_column_creator,balance_column,,,df_processing.py
 notes_df_to_outline_html,df,df,Any DataFrame,df_processing.py
 notes_df_to_outline_html,column_order,list,"List of Columns to Include, in Order. If not defined, all will be included.",df_processing.py
 final_dataset_for_markdown,notes,df,DataFrame of D Notes as stored in: https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv,df_processing.py
@@ -147,7 +308,10 @@ export_to_excel,sheet_name,str,Name of Sheet to be utilized in Excel.,df_process
 export_to_excel,default_max_width,int,Default Column Width,df_processing.py
 export_to_excel,long_columns,list,"Any column which would be requested to have a default column width beyond 30, include in thelist",df_processing.py
 export_to_excel,long_max_width,int,Max width for long_columns,df_processing.py
-Reference String,today,str,14-Jan-26,data_d_strings.py
+transpose_df,df,DataFrame,The input pandas DataFrame.,df_processing.py
+transpose_df,index,list,Columns to retain as identifiers (will remain unchanged).,df_processing.py
+transpose_df,columns,list,Columns to unpivot into key-value pairs.,df_processing.py
+Reference String,today,str,26-Jan-26,data_d_strings.py
 Reference String,template_doc_string,str,"
 
     Definition of Function
@@ -158,8 +322,8 @@ Reference String,template_doc_string,str,"
     Returns:
         Object Type
 
-    date_created:14-Jan-26
-    date_last_modified: 14-Jan-26
+    date_created:26-Jan-26
+    date_last_modified: 26-Jan-26
     classification:TBD
     sub_classification:TBD
     usage:

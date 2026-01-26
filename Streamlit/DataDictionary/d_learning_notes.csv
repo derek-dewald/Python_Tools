@@ -1,7 +1,8 @@
 Process,Categorization,Word,Definition,Source
 ML Definitions,Model Type,Types of ML,"Within the machine learning paradigm, models are commonly categorized into distinct model types that define how learning occurs. The appropriate model type is selected based on the problem context, data availability and quality, time constraints, business objectives, and resource limitations.",Notes DF
-ML Definitions,General Principles,XOR,"Not Linearly Seperable. Problem for ML. Nand as Function of (x1,x2) new function (h1, h2) - ",Examine Further
+ML Definitions,General Principles,XOR,"Logical operation that outputs true when exactly one of its inputs is true, but not both. It originates from Boolean algebra and early digital logic design. XOR is important in machine learning because it represents a classic example of a non-linearly separable problem. This made it historically significant in exposing the limitations of single-layer perceptrons. XOR is widely used in cryptography, digital circuits, and as a teaching example for neural networks and feature interactions.",Examine Further
 ML Model,Definition,Definition,Self Explanatory,Insert Records
+ML Model,Definition,Definition,"Decision Strategy: A Decision Strategy is a method used to determine a final outcome by applying rules or aggregation logic to one or more intermediate model outputs, scores, or signals. It originates from decision theory and ensemble methods, where the focus is on how decisions are made rather than how predictions are generated. Decision strategies are important because they separate prediction from decision-making, allowing the same models to support different operational or business objectives. They operate downstream of models and do not learn feature representations or decision boundaries themselves. Common applications include ensemble voting, thresholding, ranking, arbitration between systems, and policy-driven decision logic.",Insert Records2
 ML Model,Definition,Definition,"Anchoring Effect: A cognitive bias where people rely too heavily on the first piece of information (the “anchor”) when making decisions. Once an anchor is set, it influences subsequent judgments, even if it’s arbitrary or unrelated. For example, when asked whether the Eiffel Tower is taller or shorter than 500 feet, people’s estimates will cluster around that number. This bias can affect pricing, negotiations, and even forecasting.",Insert Records2
 ML Model,Definition,Definition,"Base Rate Fallacy: People ignore or undervalue general statistical information (the base rate) and focus instead on specific information, often leading to incorrect conclusions. In decision-making, individuals may give more weight to anecdotal or vivid information, despite the broader statistical reality that should influence their judgment. Imagine a test for a rare disease that is 95% accurate. The disease affects 1 in 10,000 people. If a person tests positive, many might assume the likelihood of them having the disease is high. However, considering the base rate (the rarity of the disease), the probability of actually having the disease is still very low. In this scenario, the base rate fallacy would be ignoring the low prevalence of the disease (the base rate) and overestimating the accuracy of the test result, leading to an exaggerated belief in the likelihood of the person having the disease. The fallacy demonstrates how people's intuitive reasoning often neglects the significance of background statistical data in favor of more attention-grabbing or salient information.",Insert Records2
 ML Model,Definition,Definition,"Beaucratic Politics: Organization decision making paradign in which decisions are made based solely on who is making the decision, specifically, they will decide in their own best interests. Counters prevelant theory in which a rational, fair or logical decision making process will occur.",Insert Records2
@@ -34,8 +35,12 @@ ML Model,Definition,Definition,"What Meaning Does a KPI actually have?: Before w
 Before lamenting the prevalence of self-harm in young people, stop to consider whether you know what “self-harm” is supposed to mean. Before concluding that inequality has soared, ask, “Inequality of what?” Demanding a short, sharp answer to the question “Has inequality risen?” is not only unfair, but strangely incurious. If we are curious instead, and ask the right questions, deeper insight is within easy reach.
 Net Wealth not indicative of poverty, Doctor who just finished med school with $100k in debt.
 The billion poorest people who have a net worth of Zero might be poorer than someone with $5 as $0 doesn’t add up fast.",Insert Records2
-ML Model,Definition,Definition,"Batch and API Processing: Batch processing is simplier, and more heavily reliant on transformations conducted with a Data Warehouse, API, great for smaller, incremental review or transaction level processes.",Insert Records2
+ML Model,Definition,Definition,"API Processing: API processing involves handling requests and responses through an Application Programming Interface to enable system-to-system communication. It emerged alongside service-oriented and later microservices architectures. Its importance lies in enabling modular, scalable, and interoperable systems. API processing is fundamental to modern applications, allowing real-time access to models, databases, and services. In ML systems, APIs are often used to deploy models for inference in production.",Insert Records2
+ML Model,Definition,Definition,"Batch Processing: Batch processing refers to executing data processing tasks on large volumes of data all at once, rather than continuously or in real time. It originated in early mainframe computing, where jobs were collected and run during scheduled windows. Its importance lies in efficiency and scalability, making it ideal for heavy computations and historical analysis. Batch processing is commonly used in data warehousing, ETL pipelines, and large-scale machine learning training. It prioritizes throughput over latency.",Insert Records2
 ML Model,Definition,Definition,"Cache: Cache takes load away from critical systems. Databases. Things that are looked up every second, minute. Can Cache at every layer.  Memory Buffers exist everywhere. Authentication is terrible caching. Don't Cache purchases and refunds. Search Queries, too broad. Can't cache transaction.",Insert Records2
+ML Model,Definition,Definition,"Latency: Time delay between a request being made and the corresponding response being received. It originates from telecommunications and systems engineering. Latency is important because it directly impacts user experience, system responsiveness, and real-time decision-making. In data and ML systems, latency constraints often drive architectural choices and model complexity. It is a critical consideration in APIs, streaming systems, and real-time inference pipelines.",Insert Records2
+ML Model,Definition,Definition,"Microservies Architecture: Approach that structures applications as a collection of small, independently deployable services focused on a single business capability. It evolved from SOA, driven by cloud computing, DevOps, and scalability demands. Microservices are important because they enable rapid iteration, fault isolation, and independent scaling. They are widely used in modern cloud-native applications and ML platforms where services such as data ingestion, training, and inference are separated. Microservices trade operational simplicity for architectural flexibility.",Insert Records2
+ML Model,Definition,Definition,"Service Oriented Architecture: Software design paradigm where functionality is organized into reusable, loosely coupled services that communicate over standardized interfaces. It emerged in the early 2000s as enterprises sought scalable and interoperable systems. SOA is important because it enables modularity, reuse, and organizational alignment between business capabilities and technical services. It is commonly applied in large enterprise systems, integration platforms, and legacy modernization efforts. SOA often emphasizes governance, shared infrastructure, and centralized control.",Insert Records2
 ML Model,Definition,Definition,Shebang: First line of a script that tells the operating system which interpreter should be used to run that file.,Insert Records2
 ML Model,Definition,Definition,Wrapper: A wrapper is a small piece of code whose only job is to run something else in a controlled way. It doesnt change the code.It does not change your program’s logic. It just sets up the environment and then calls the real program.,Insert Records2
 ML Model,Definition,Definition,"Baseline: Baseline represents the typical or expected behavior of an entity over a meaningful historical period. It answers the question “What is normal for this entity?” and provides context against which current state and changes can be interpreted. Baseline is conceptually stable even when its numeric value evolves, allowing models to distinguish structural differences between entities from temporary deviations. In modeling, Baseline is often foundational for defining identity and long-term segmentation.",Insert Records2
@@ -48,31 +53,37 @@ ML Model,Definition,Definition,"Momentum: Momentum represents the direction and 
 ML Model,Definition,Definition,"Parameter: A Parameter is a tuning choice that controls how an implementation is calculated, without changing what it represents. Parameters affect sensitivity, smoothness, or scale, but not conceptual meaning. They are the knobs you turn during experimentation. Examples include Window length: 3M vs 6M vs 12M, Weighting scheme: equal vs exponential, Aggregation: mean vs median
 Ultimately it is the questions, How do we compute it.",Insert Records2
 ML Model,Definition,Definition,"Semantic Type : Influenced by the literal definition of semantic: the meaning or  nature of a variable, describes what kind of real-world concept a variable represents, independent of any specific model. It classifies data based on meaning—such as whether a variable reflects behaviour (actions over time), structure (relatively stable state or capacity), or context (situational or explanatory attributes). Definition helps to classify the variable for inclusion, or exclusion of a model.",Insert Records2
-ML Model,Definition,Definition,"State: State represents the current condition of an entity at a specific point in time. It answers the question “Where is this entity right now?” and reflects the most recent observed values of relevant measures. State is essential for anchoring decisions in the present but is insufficient on its own without historical context. In modeling, State provides immediacy and scale but must be interpreted alongside other dimensions to avoid over-reacting to short-term fluctuations.",Insert Records2
 ML Model,Definition,Definition,"Volatility: Volatility represents the consistency or variability of behavior over time. It answers the question “How stable or predictable is this entity’s behavior?” and distinguishes steady patterns from irregular or erratic ones. Volatility provides important diagnostic context, helping differentiate sustained change from noise or one-off events. In modeling, Volatility is typically explanatory or risk-related rather than defining core identity.",Insert Records2
 ML Model,Definition,Definition,,Insert Records2
 ML Model,Definition,Definition,,Insert Records2
 ML Model,Definition,Definition,,Insert Records2
 ML Model,Definition,Definition,,Insert Records2
 ML Model,Definition,Definition,,Insert Records2
-ML Model,Definition,Definition,,Insert Records2
+ML Model,Definition,Definition,"Algorithm Classification : Describes the primary task or problem the algorithm is designed to solve, independent of its mathematical form. It answers the question: What kind of output or decision does this algorithm produce? This column is essential for aligning techniques to business or analytical objectives rather than implementation details.",Insert Records2
+ML Model,Definition,Definition,"Learning Type: Describes how the model or technique learns from data, specifically the nature of the labels or feedback it receives during training. It distinguishes whether learning is driven by known outcomes (Supervised), structure discovery without labels (Unsupervised), or performance assessment rather than learning itself (Evaluation). This column anchors where in the ML lifecycle a concept operates.",Insert Records2
+ML Model,Definition,Definition,Model Type: Captures the structural or mathematical nature of how an algorithm represents relationships in data. It reflects the inductive bias of the model—how it assumes patterns are formed—rather than what task it performs. This column helps explain why models behave differently even when solving the same problem.,Insert Records2
 ML Model,Definition,Definition,"Multimodal AI: Artificial intelligence systems that can process and integrate multiple types of data, such as text, images, audio, and video, to perform tasks",Insert Records2
 ML Model,Definition,Definition,"Activation Function: A mathematical function applied to a neuron’s weighted input that introduces non-linearity into a neural network. This non-linearity enables the model to learn complex, non-linear relationships in the data. Activation functions are applied within layers during the forward pass of a neural network, transforming intermediate representations before passing them to the next layer. Activation choice affects gradient flow, training stability, and convergence speed. Poor choices can cause vanishing or exploding gradients, limiting the depth or effectiveness of the network",Insert Records2
 ML Model,Definition,Definition,"Loss Function: A loss function is a mathematical function that measures how far a model’s predictions are from the true target values, producing a single scalar value that represents prediction error and defines the objective to be minimized during training. The loss function is evaluated during training after the forward pass and is the starting point for backpropagation. Its gradients drive parameter updates via the optimizer. Different loss functions encode different assumptions about error, robustness, and business objectives. Choosing an inappropriate loss can lead to models that optimize the wrong behavior, even if training converges successfully.",Insert Records2
 ML Model,Definition,Definition,"Model: The model is the mathematical or algorithmic structure used to map input features to predictions. This includes selecting the model family (e.g., linear models, tree-based models, neural networks) and defining its architecture. Model choice balances predictive power, interpretability, computational cost, and deployment constraints. The model defines howlearning occurs but does not yet involve learning itself.",Insert Records2
 ML Model,Definition,Definition,"Optimizer: Optimization algorithm that updates a model’s parameters using gradients of the loss function in order to minimize training error. It defines how gradient information is transformed into parameter updates. The optimizer operates during training, after gradients are computed via backpropagation, and is not used during inference. Different optimizers trade off convergence speed, stability, and generalization. Hyperparameters such as learning rate and momentum are",Insert Records2
 ML Model,Definition,Definition,"Regularization: Technique used to prevent overfitting by adding a penalty term to the loss function. It discourages the model from fitting too closely to the training data, ensuring better generalization to unseen data. Traditionnaly results in bias, at benefit of materially lowering Variance. Regularization is a Constraint.",Insert Records2
+ML Model,Definition,Definition,"MLOps: (Machine Learning Operations) framework is a structured set of practices, tools, and processes used to develop, deploy, monitor, and maintain machine-learning models in production in a reliable and repeatable way. It extends ideas from DevOps into ML, addressing ML-specific challenges such as data versioning, model drift, reproducibility, and continuous retraining. An MLOps framework defines how models move from experimentation to production, how changes are tracked, and how performance is governed over time. Without MLOps, ML systems tend to break silently, become impossible to reproduce, or drift away from real-world performance.",Insert Records2
 ML Model,Definition,Definition,"Acyclic Graph: A graph that does not contain any cycles. This means there is no path in the graph that starts from a node and eventually returns to the same node. There are 2 types of Acyclic Graphs, Directed and Undirected. ",Insert Records2
 ML Model,Definition,Definition,"Constraint: A constraint is something that restricts or penalizes the solution space. It does not: directly compute outputs, directly update parameters.  Instead, it: limits what solutions are allowed nudges learning toward simplicity or stability",Insert Records2
 ML Model,Definition,Definition,"Density-based clustering: Density-based clustering identifies clusters as regions of high point density separated by sparse regions. It answers the question: “Which observations naturally group together, and which ones are unusual or isolated?” Its strengths include the ability to detect arbitrarily shaped clusters and identify outliers as noise. Its weaknesses are sensitivity to hyperparameters and reduced stability on very large or unevenly distributed datasets.",Insert Records2
 ML Model,Definition,Definition,"Euclidean distance : Straight-line distance between two points in space, calculated as the square root of the sum of squared differences across each dimension. It is important because it provides a natural, intuitive measure of similarity in continuous numeric spaces and underpins many algorithms in geometry, physics, and machine learning (especially distance-based methods like clustering). The concept originates from Euclid, whose Elements (circa 300 BCE) formalized geometry based on distances and angles in flat space. In modern data science, Euclidean distance generalizes this idea to higher dimensions, where each feature represents an axis in space.",Insert Records2
 ML Model,Definition,Definition,"Function: A function is a direct mathematical mapping: given an input, it deterministically produces an output. There is: no memory, no iteration, no learning history.",Insert Records2
+ML Model,Definition,Definition,"Grapth Theory: Branch of mathematics focused on the study of graphs, which model relationships using nodes (vertices) and connections (edges) between them. It originated in 1736 with Leonhard Euler’s solution to the Königsberg bridge problem, widely regarded as the first formal result in the field. Graph Theory is important because it provides a powerful and flexible framework for representing and analyzing complex relational structures. It underpins many modern algorithms by enabling reasoning about connectivity, flow, influence, and structure in systems. Applications span computer science and data science (networks, search, recommendation systems), operations research (routing, scheduling), biology (protein and gene interaction networks), and social sciences (social and organizational networks)",Insert Records2
+ML Model,Definition,Definition,"Heteroskedasticity: Condition in which the variance of errors (or residuals) in a model is not constant across observations. The term originates from econometrics, combining the Greek hetero (different) and skedasis (dispersion). It is important because many statistical models—especially linear regression—assume constant variance (homoskedasticity), and violations can lead to inefficient estimates and misleading confidence intervals. In practice, heteroskedasticity commonly appears in financial, economic, and behavioral data where variability grows with scale (e.g., higher income → more variable spending). Addressing it often involves transformations, robust standard errors, or alternative models.",Insert Records2
 ML Model,Definition,Definition,"Instance Based Learning: Instance-Based Learning is a learning paradigm where predictions or inferences are made by directly comparing new observations to stored examples rather than learning an explicit global model. It answers the question: “What past observations most closely resemble this one?” Its strengths are simplicity, transparency, and flexibility, as it makes few assumptions about the underlying data structure. Its weaknesses include sensitivity to feature scaling and noise, lack of global summarization, and higher computational cost at inference time for large datasets",Insert Records2
 ML Model,Definition,Definition,"Manifold Hypothesis: The manifold hypothesis suggests that although data lives in a very high-dimensional space, the meaningful structure (e.g., images of digits) lies on a much lower-dimensional surface (the manifold). While digits like ""3"" and ""8"" are visually distinct, they are all constrained by shared generative factors (stroke thickness, slant, etc.), so they occupy nearby regions of this manifold — which is tiny compared to the full space. A manifold is a smooth shape that may curve and twist in space but can be described with a few dimensions. Machine learning models assume that high-dimensional data lies on such a shape, allowing them to learn simpler patterns.",Insert Records2
 ML Model,Definition,Definition,"Margin of Error: The margin of error represents the range within which the true population value is expected to lie, given the sample estimate. It is usually expressed as a percentage (e.g., ±5%). It helps determine how precise or reliable the sample estimate is, indicating the level of uncertainty in the results.",Insert Records2
 ML Model,Definition,Definition,Mean Absolute Error: Mean Absolute Error measures the average absolute difference between actual and predicted values. It is easy to interpret and gives equal weight to all errors.. Manhattan Norm. L1 Norm,Insert Records2
 ML Model,Definition,Definition,"Mean Absolute Error (MAE): Absolute difference between Y and Y hat. It is easy to calcuate, rarely utilized given advantages of MSE and RMSE.",Insert Records2
 ML Model,Definition,Definition,"Mean Absolute Percentage Error (MAPE): Measures differences between Prediction and Actual as expressed by percentages, opposed to absolute error. Scale indepedent, not as useful when values near zero.",Insert Records2
+ML Model,Definition,Definition,"Multicollinearity: When two or more predictor variables in a model are highly correlated with one another. The term comes from regression analysis and highlights a structural issue rather than a data-quality problem. It is important because multicollinearity inflates variance in coefficient estimates, making them unstable and difficult to interpret, even if overall model performance appears strong. This can obscure the true relationship between predictors and the target variable. In practice, multicollinearity is addressed through feature selection, dimensionality reduction (e.g., PCA), or regularization techniques like Ridge regression.",Insert Records2
+ML Model,Definition,Definition,"Non-Gaussian: Data or error distributions that do not follow a normal (Gaussian) distribution. The concept arises from probability theory and statistics, where the Gaussian distribution is often assumed due to its mathematical convenience and the Central Limit Theorem. Its importance lies in the fact that many real-world datasets—such as financial returns, network traffic, or biological signals—exhibit skewness, heavy tails, or multimodality that violate normality assumptions. Non-Gaussian data can significantly affect model performance and inference if not properly handled. In applications, this often motivates the use of robust statistics, nonparametric methods, or models explicitly designed for alternative distributions.",Insert Records2
 ML Model,Definition,Definition,"Probabilistic clustering: Probabilistic clustering models data as coming from overlapping probability distributions rather than assigning hard cluster boundaries. It answers the question: “To what degree does this observation belong to each group?” Its strength is capturing uncertainty and mixed behaviors, which is often more realistic in human or financial data. The weakness is increased complexity, sensitivity to assumptions, and reduced interpretability for non-technical audiences.",Insert Records2
 ML Model,Definition,Definition,"Categorization: Terminology created by myself and utilized to identify the abstract level of how I would classiify items for inclusion of Notes and Definitions. Categorization is used to explain process, and provide context  as to the relevance.",Insert Records2
 ML Model,Definition,Definition,"Ownership: State of having end-to-end accountability for a product, service, policy, process, or outcome, including its performance, quality, and continuous improvement over time.",Insert Records2
@@ -94,7 +105,7 @@ ML Model,Definition,Definition,"FastAPI: Simplified Framework for creating API a
 ML Model,Definition,Definition,"Pydantic: Pydantic is a data validation and settings management library in Python, primarily used to validate data against a specific data model (schema) and to parse and serialize complex data types. A ""Pydantic model"" refers to a class definition in Python that inherits from pydantic.BaseModel. These models define the structure of data that you expect to receive or send in your application and allow you to enforce constraints on that data.",Insert Records2
 ML Model,Definition,Definition,"Spark: A fast and general engine for large scale data processing. Distributes information across nodes to limit strain and bottleneck on individual machine. Runs ontop of a cluster Manager, script like any other script, Spark knows how to distribute . Master Program run code and manages interactions between slave tasks (executors). Can run ontop of a Hadoop Cluster – Yarn. Fault tolerant – allows node to go down without crashing or restarting job. A distributed processing framework written primarily in the Scala programming language. The framework offers different language APIs on top of the core Scala-based framework. Spark maintains MapReduce’s linear scalability and fault tolerance, but extends it in three important ways: First, rather than relying on a rigid map-then-reduce format, its engine can execute a more general directed acyclic graph of operators. This means that in situations where MapReduce must write out intermediate results to the distributed filesystem, Spark can pass them directly to the next step in the pipeline. Second, it complements its computational capability with a rich set of transformations that enable users to express computation more naturally. Out-of-the-box functions are provided for various tasks, including numerical computation, datetime processing, and string manipulation. Third, Spark extends its predecessors with in-memory processing. This means that future steps that want to deal with the same dataset need not recompute it or reload it from disk. Spark is well-suited for highly iterative algorithms as well as ad hoc queries.
 Apache Spark is an open-source, distributed computing system designed for fast processing of large-scale data by performing tasks in-memory, which significantly speeds up computation compared to disk-based systems like Hadoop. Spark is particularly known for its lazy evaluation model, where transformations on data (such as map or filter) are not executed immediately but are only computed when an action (like collect or reduce) is triggered. This allows Spark to optimize the execution plan by minimizing the number of data passes and combining transformations. Unlike traditional systems that rely heavily on disk storage, Spark primarily keeps data in memory, leading to faster processing, though it can spill to disk if memory limits are exceeded. This design makes it highly efficient for iterative machine learning algorithms and interactive data analytics. Overhead using PySpark because of conversation to Java, P4J Python for Java.Difference Between PySpark and Python Terminal. PySpark, session is already active.",Insert Records2
-ML Model,Process,Definition,ML Models is a process designed to store records for all of the models.\,Notes DF
+ML Model,Process,Definition,ML Models is a process designed to store records for all of the models.,Notes DF
 ML Model,Algorithm,ARDRegression,,Examine Further
 ML Model,Algorithm,Ada,"Boosting technique that combines multiple weak learners (usually decision stumps) into a strong learner. ModelStrengths: Handles weak learners well, reduces overfitting. Model Weaknesses: Sensitive to noisy data, requires careful tuning of learning rate.",Examine Further
 ML Model,Algorithm,AdaBoostClassifier,"AdaBoostClassifier is an ensemble boosting algorithm that builds a strong classifier by sequentially combining many weak learners, typically decision stumps. It is important because it focuses learning on previously misclassified examples, often achieving high accuracy with simple base models. AdaBoost is commonly used when data is moderately sized and relatively clean. It can be sensitive to noise and outliers due to its reweighting mechanism.",Examine Further
@@ -111,7 +122,7 @@ ML Model,Algorithm,BernoulliRBM,,Examine Further
 ML Model,Algorithm,Bidirectional Encoder Representations from Transformers (BERT)," It’s a deep learning model for NLP developed by Google in 2018 that understands the context of words in a sentence by looking in both directions — left and right. This is a major upgrade over older models that only read text left-to-right or right-to-left. BERT is like someone reading a sentence and filling in blanks based on the full context.GPT is like someone writing a sentence one word at a time, based only on what they’ve written so far.",Examine Further
 ML Model,Algorithm,Binarizer,,Examine Further
 ML Model,Algorithm,Birch,,Examine Further
-ML Model,Algorithm,BisectingKMeans,,Examine Further
+ML Model,Algorithm,Bisecting K-Means,"Hierarchical clustering algorithm that iteratively splits clusters using standard K-Means (with k = 2) until the desired number of clusters is reached. It originated as a hybrid of partitional (K-Means) and hierarchical clustering approaches to improve scalability and cluster quality. Its importance lies in producing more stable and interpretable clusters than standard K-Means, particularly for large datasets. The method is commonly used in document clustering, text mining, and large-scale segmentation tasks. It balances computational efficiency with improved structure discovery.",Examine Further
 ML Model,Algorithm,CCA,,Examine Further
 ML Model,Algorithm,CalibratedClassifierCV,,Examine Further
 ML Model,Algorithm,CategoricalNB,,Examine Further
@@ -176,10 +187,11 @@ ML Model,Algorithm,GraphicalLassoCV,,Examine Further
 ML Model,Algorithm,GridSearchCV,,Examine Further
 ML Model,Algorithm,HDBSCAN,HDBSCAN is an extension of DBSCAN that builds a hierarchy of density-based clusters and selects stable ones automatically. It answers similar questions to DBSCAN but with improved robustness and less manual parameter tuning. Its strengths are better performance on real-world data and more reliable cluster discovery. Its weaknesses include higher computational cost and more complex interpretation.,Examine Further
 ML Model,Algorithm,HDBSCAN,HDBSCAN is an extension of DBSCAN that builds a hierarchy of density-based clusters and selects stable ones automatically. It answers similar questions to DBSCAN but with improved robustness and less manual parameter tuning. Its strengths are better performance on real-world data and more reliable cluster discovery. Its weaknesses include higher computational cost and more complex interpretation.,Examine Further
+ML Model,Algorithm,Hard Voting,"Hard voting is an ensemble decision strategy where multiple classifiers each cast a single class prediction, and the final output is determined by majority vote. It emerged from early ensemble and committee-based learning approaches. Its importance lies in its simplicity and robustness, particularly when individual models make uncorrelated errors. Hard voting is most effective when all models have comparable performance and confidence calibration is not required. It is commonly used in baseline ensemble classifiers and interpretable decision systems.",Examine Further
 ML Model,Algorithm,HashingVectorizer,,Examine Further
 ML Model,Algorithm,HistGradientBoostingClassifier,,Examine Further
 ML Model,Algorithm,HistGradientBoostingRegressor,,Examine Further
-ML Model,Algorithm,HuberRegressor,,Examine Further
+ML Model,Algorithm,HuberRegressor,"HuberRegressor is a robust linear regression model that uses the Huber loss function, which behaves like squared error for small rsiduals and absolute error for large residuals, reducing sensitivity to outliers. It originates from Peter J. Huber’s work in the 1960s on robust statistics, where he introduced the Huber loss as a compromise between least squares and least absolute deviations. Its importance lies in providing stable, reliable parameter estimates when datasets contain noise or outliers that would disproportionately influence ordinary linear regression. HuberRegressor is commonly used in supervised learning for regression problems where data quality is uneven or heavy-tailed. Typical applications include finance, economics, sensor data analysis, and any real-world modeling scenario where robustness matters more than strict optimality under ideal assumptions",Examine Further
 ML Model,Algorithm,IncrementalPCA,,Examine Further
 ML Model,Algorithm,IsolationForest,,Examine Further
 ML Model,Algorithm,Isomap,,Examine Further
@@ -188,7 +200,7 @@ ML Model,Algorithm,KBinsDiscretizer,,Examine Further
 ML Model,Algorithm,KMeans,,Examine Further
 ML Model,Algorithm,KNN,"k-Nearest Neighbors is a non-parametric, instance-based method that measures similarity between observations using a distance metric in feature space. It answers the question: “Which existing observations are most similar to this one?”rather than learning global patterns or groups. Its strengths are simplicity, transparency, and usefulness for validation, comparison, and recommendation-style problems. Its weaknesses are lack of global structure, sensitivity to feature scaling and noise, and limited interpretability for broad segmentation or storytelling",Examine Further
 ML Model,Algorithm,KNNImputer,,Examine Further
-ML Model,Algorithm,KNeighborsClassifier,,Examine Further
+ML Model,Algorithm,KNeighborsClassifier,"KNeighborsClassifier is a non-parametric classification algorithm that assigns a class based on the majority label among the k nearest data points in feature space. It originates from early pattern recognition and instance-based learning research. Its importance lies in its simplicity and interpretability, requiring no explicit training phase. The model is commonly applied in recommendation systems, pattern recognition, and baseline classification tasks. Its performance depends heavily on distance metrics and feature scaling.",Examine Further
 ML Model,Algorithm,KNeighborsRegressor,,Examine Further
 ML Model,Algorithm,KernelCenterer,,Examine Further
 ML Model,Algorithm,KernelDensity,,Examine Further
@@ -215,7 +227,7 @@ ML Model,Algorithm,LinearDiscriminantAnalysis,,Examine Further
 ML Model,Algorithm,LinearSVC,,Examine Further
 ML Model,Algorithm,LinearSVR,,Examine Further
 ML Model,Algorithm,LocalOutlierFactor,,Examine Further
-ML Model,Algorithm,LocallyLinearEmbedding,,Examine Further
+ML Model,Algorithm,LocallyLinearEmbedding,"Locally Linear Embedding is a nonlinear dimensionality reduction technique that preserves local neighborhood relationships when projecting high-dimensional data into a lower-dimensional space. It originated in the early 2000s from manifold learning research aimed at uncovering intrinsic geometric structure in data. Its importance lies in capturing nonlinear patterns that linear techniques like PCA cannot represent. LLE is widely used for visualization, exploratory analysis, and preprocessing in complex datasets such as images or sensor data. It assumes the data lies on a smooth, lower-dimensional manifold.",Examine Further
 ML Model,Algorithm,Logistic Regression,"Predicts probabilities using the sigmoid function for binary classification problems.
 Model Strengths include; Simple, interpretable, performs well for linearly separable data. Model Weaknesses: Struggles with non-linear relationships, assumes linear relationship between features and log-odds.",Examine Further
 ML Model,Algorithm,LogisticRegression,,Examine Further
@@ -238,10 +250,10 @@ ML Model,Algorithm,MultiTaskElasticNetCV,,Examine Further
 ML Model,Algorithm,MultiTaskLasso,,Examine Further
 ML Model,Algorithm,MultiTaskLassoCV,,Examine Further
 ML Model,Algorithm,MultinomialNB,,Examine Further
-ML Model,Algorithm,NMF,,Examine Further
+ML Model,Algorithm,NMF,"Non-negative Matrix Factorization is a matrix decomposition technique that factorizes a non-negative data matrix into two lower-rank non-negative matrices, typically interpreted as parts-based representations of the original data. It was popularized in the late 1990s by Daniel D. Lee and H. Sebastian Seung, who showed that the non-negativity constraint leads to more interpretable components than methods like PCA or SVD. NMF is important because it aligns well with many real-world datasets where values are naturally non-negative (e.g., counts, intensities, frequencies) and because its components often correspond to meaningful latent factors. It is widely used in unsupervised learning for dimensionality reduction and feature extraction. Common applications include topic modeling in text analysis, image and signal processing, bioinformatics (e.g., gene expression analysis), and customer behavior segmentation.",Examine Further
 ML Model,Algorithm,NearestCentroid,,Examine Further
 ML Model,Algorithm,NearestNeighbors,,Examine Further
-ML Model,Algorithm,NeighborhoodComponentsAnalysis,,Examine Further
+ML Model,Algorithm,NeighborhoodComponentsAnalysis,Neighborhood Components Analysis is a supervised dimensionality reduction and metric learning method that learns a transformation optimizing nearest-neighbor classification performance. It originated in the context of distance metric learning to improve k-NN accuracy. Its importance comes from directly aligning feature space geometry with predictive performance rather than variance preservation. NCA is commonly applied in classification tasks where distance-based reasoning is critical. It learns task-specific representations rather than general-purpose embeddings.,Examine Further
 ML Model,Algorithm,Neural Network,,Examine Further
 ML Model,Algorithm,Normalizer,,Examine Further
 ML Model,Algorithm,NuSVC,,Examine Further
@@ -256,7 +268,7 @@ ML Model,Algorithm,OrthogonalMatchingPursuit,,Examine Further
 ML Model,Algorithm,OrthogonalMatchingPursuitCV,,Examine Further
 ML Model,Algorithm,OutputCodeClassifier,,Examine Further
 ML Model,Algorithm,PCA,,Examine Further
-ML Model,Algorithm,PLSCanonical,,Examine Further
+ML Model,Algorithm,PLSCanonical,"PLSCanonical is a multivariate statistical method that finds latent variables maximizing the correlation between two datasets. It originates from Partial Least Squares methods developed in chemometrics in the 1960s–70s. Its importance lies in modeling relationships between two high-dimensional, collinear datasets where traditional regression fails. PLSCanonical is often used when predictors and responses are both multivariate. Applications include bioinformatics, econometrics, and multi-view data analysis.",Examine Further
 ML Model,Algorithm,PLSRegression,,Examine Further
 ML Model,Algorithm,PLSSVD,,Examine Further
 ML Model,Algorithm,PassiveAggressiveClassifier,,Examine Further
@@ -271,15 +283,15 @@ ML Model,Algorithm,QuadraticDiscriminantAnalysis,,Examine Further
 ML Model,Algorithm,Quantile Random Forest,"Quantile Random Forest is an extension of random forests that estimates conditional quantiles of the target variable instead of only the mean. It is important because it provides uncertainty information and prediction intervals, not just point estimates. This method is commonly used in risk modeling, forecasting, and decision-making scenarios where understanding the distribution of outcomes matters. It is particularly useful when residuals are heteroskedastic or non-Gaussian.",Examine Further
 ML Model,Algorithm,QuantileRegressor,,Examine Further
 ML Model,Algorithm,RANSACRegressor,,Examine Further
-ML Model,Algorithm,RFE,,Examine Further
 ML Model,Algorithm,RFECV,,Examine Further
 ML Model,Algorithm,RadiusNeighborsClassifier,,Examine Further
 ML Model,Algorithm,RadiusNeighborsRegressor,,Examine Further
-ML Model,Algorithm,RandomForestClassifier,,Examine Further
+ML Model,Algorithm,RandomForestClassifier,"RandomForestClassifier is an ensemble learning algorithm that builds many decision trees using bootstrapped samples of the data and aggregates their predictions via majority voting. It was formalized by Leo Breiman (2001), building on earlier work in decision trees and bagging to reduce variance and overfitting. Its importance lies in its strong out-of-the-box performance, robustness to noise, and ability to model complex non-linear relationships without heavy feature engineering. The model is widely used because it balances predictive power with interpretability through feature importance measures. In practice, it is a common baseline and production model across many applied machine-learning domains.",Examine Further
 ML Model,Algorithm,RandomForestRegressor,,Examine Further
-ML Model,Algorithm,RandomTreesEmbedding,,Examine Further
+ML Model,Algorithm,RandomTreesEmbedding,"RandomTreesEmbedding is an unsupervised transformation technique that maps data into a high-dimensional sparse feature space using randomly generated decision trees. It originates from ensemble tree methods and was introduced to create nonlinear feature representations. Its importance lies in enabling downstream linear models to capture complex, nonlinear structures. Unlike Random Forests, it does not use target labels during training. It is commonly used for feature engineering, clustering, and anomaly detection.",Examine Further
 ML Model,Algorithm,RandomizedSearchCV,,Examine Further
 ML Model,Algorithm,Recurrent Neural Network,,Examine Further
+ML Model,Algorithm,Recursive Feature Elimination," (RFE) is a feature selection technique that iteratively trains a model, ranks features by importance, and removes the least important features at each step. It originated in the early 2000s from work in statistical learning and bioinformatics, most notably Guyon et al. (2002) for gene selection using support vector machines. Its importance lies in reducing model complexity, improving generalization, and increasing interpretability by systematically identifying the most predictive subset of features. RFE is model-agnostic in concept but depends on an underlying estimator that can provide feature rankings. In practice, it is widely applied when feature dimensionality is high and understanding feature contribution is as important as predictive accuracy.",Examine Further
 ML Model,Algorithm,RegressorChain,,Examine Further
 ML Model,Algorithm,RidgeCV,"RidgeCV is a regression model that combines ridge regression (L2 regularization) with cross-validation to automatically select the optimal regularization strength. It is important because it reduces overfitting while maintaining stability in the presence of multicollinearity. RidgeCV is commonly used when predictors are highly correlated and predictive performance is prioritized over feature sparsity. It provides a principled, automated way to tune regularization.",Examine Further
 ML Model,Algorithm,RidgeClassifier,,Examine Further
@@ -299,6 +311,7 @@ ML Model,Algorithm,SelfTrainingClassifier,,Examine Further
 ML Model,Algorithm,SequentialFeatureSelector,,Examine Further
 ML Model,Algorithm,ShrunkCovariance,,Examine Further
 ML Model,Algorithm,SimpleImputer,,Examine Further
+ML Model,Algorithm,Soft Voting,"Soft voting is an ensemble technique where classifiers output class probabilities, which are averaged (or weighted) to determine the final prediction. It evolved as probabilistic classifiers became more common and better calibrated. Soft voting is important because it incorporates confidence information, often leading to better performance than hard voting. It is especially effective when combining diverse models with well-calibrated probability outputs. Soft voting is widely used in production ML systems and competitive modeling.",Examine Further
 ML Model,Algorithm,SparseCoder,,Examine Further
 ML Model,Algorithm,SparsePCA,,Examine Further
 ML Model,Algorithm,SparseRandomProjection,,Examine Further
@@ -306,7 +319,7 @@ ML Model,Algorithm,SpectralBiclustering,,Examine Further
 ML Model,Algorithm,SpectralClustering,,Examine Further
 ML Model,Algorithm,SpectralCoclustering,,Examine Further
 ML Model,Algorithm,SpectralEmbedding,,Examine Further
-ML Model,Algorithm,StackingClassifier,,Examine Further
+ML Model,Algorithm,StackingClassifier,"StackingClassifier is an ensemble learning method that combines multiple base classifiers by training a higher-level “meta-model” to learn how best to aggregate their predictions. It emerged from ensemble learning research in the 1990s, building on the idea that diverse models capture different patterns in data. Its importance lies in its ability to improve predictive performance beyond any single model by leveraging complementary strengths. Stacking is especially effective when base models are heterogeneous (e.g., trees, linear models, SVMs). It is commonly applied in high-stakes predictive tasks such as fraud detection, credit scoring, and machine-learning competitions.",Examine Further
 ML Model,Algorithm,StackingRegressor,,Examine Further
 ML Model,Algorithm,Support Vector Machines,"Finds the optimal hyperplane that best separates data points of different classes in a feature space. The hyperplane is chosen to maximize the margin, which is the distance between the hyperplane and the nearest data points from each class, known as support vectors. By default, generally a Linear Line, however can utilize Kernels to change, such that datasets where decision boundary is not linearly seperable can become so in higher dimensions.
 
@@ -362,6 +375,8 @@ ML Model,Procedure,TargetEncoder,,Examine Further
 ML Model,Procedure,TfidfTransformer,,Examine Further
 ML Model,Procedure,TransformedTargetRegressor,,Examine Further
 ML Model,Theorem,Curse of Dimensionality,"As dimensionality grows, data points become increasingly sparse, distances lose meaning, and models require exponentially more data to learn reliable patterns. This makes learning, generalization, and computation more difficult, often degrading model performance rather than improving it. In high-dimensional spaces, the optimization landscape also becomes far more complex, with many local minima and saddle points, making it harder to identify or converge toward a meaningful global minimum.",Examine Further
+ML Project,Process Step,Goals,"It is imperative to have clear goals, specifically as it relates to outcomes.",Notes DF
+ML Project,Process Step,Goals,"Goals of a ML Project Differ from Goals of BI or Analytics Project and it is important to understand these at the outset. Specifically, when looking at Data in multiple dimensions, do we want to visually see it, or technically understand it. If we seek to truly understand it, we need to look at a ML Project, not a Dashboard, where trends are misleading.",Notes DF
 ML Project,Definition,Problem Definition,"Problem definition clearly states the business or research question the model is intended to solve and translates it into a machine-learning task (e.g., classification, regression, ranking). It includes defining the target variable, success metrics, constraints (latency, interpretability, cost), and assumptions. This step aligns stakeholders on what success looks likebefore any data or modeling begins. A poorly defined problem almost always leads to building the “right model for the wrong problem.”",Insert Records
 ML Project,Process Step,Problem Definition,"Define, Quantify and Articulate Problem.",Notes DF
 ML Project,Process Step,Problem Definition,"Project Goal Explicitly stated in 3-4 Sentences, can include exclusion items in addendum, not in original statement, which sould be positive, optimistic and include a value creating definition.",Notes DF
@@ -377,18 +392,20 @@ ML Project,Process Step,Data Preparation,"Document data omissions, known data qu
 ML Project,Process Step,Data Preparation,"Document all Imputation, Deletion, Standardization to be applied.",Notes DF
 ML Project,Process Step,Data Preparation,"Define Approach for Training, Testing and Validation. Create Final Dataset to proceed forward.",Notes DF
 ML Project,Process Step,Data Preparation,Complete EDA on Dataset.,Notes DF
-ML Project,Functional Role ,Data Preparation,"Contextual Data: Provides situational or external information that helps explain behaviour but does not define it (e.g., demographics, geography, lifecycle stage, channel access). These variables shape or influence behaviour but are not behaviours themselves. Contextual data is often better used for post-cluster interpretation, validation, or policy decisions rather than as primary clustering inputs.",Insert Records3
-ML Project,Functional Role ,Data Preparation,Core Variables: Primary drivers of cluster formation and directly shape the geometry of the model; removing them would materially change cluster definitions. They represent the essential behaviours or states the segmentation is intended to capture and are used consistently across model iterations. Core variables define what the clusters are.,Insert Records3
+ML Project,Functional Role ,Data Preparation,"Core Variables: Primary drivers of cluster formation that directly shape similarity and distance between entities. Removing these variables would materially alter cluster definitions. Core variables represent the essential behavioral dimensions the segmentation is intended to capture and remain consistent across model iterations. These variables should be mandatory to explain and understand and Archetype. Include primary State, perhaps Descriptive.",Insert Records3
+ML Project,Functional Role ,Data Preparation,"Explanatory: Variables that provide interpretive or explanatory context for understanding clusters after formation. These variables help explain why clusters look the way they do but are not intended to influence similarity calculations directly. Often includes Structural, Contextual or Demographic, they help explain or govern clusters, not form them.",Insert Records3
 ML Project,Functional Role ,Data Preparation,"Structural Data: Represents relatively stable attributes that describe a member’s financial position or configuration rather than their actions (e.g., deposit balances, loan balances, product holdings). These variables change slowly and often anchor or constrain behaviour but do not, on their own, describe how a member interacts with the institution. Structural data should be included sparingly in behavioural clustering to avoid overwhelming activity-based signals.",Insert Records3
+ML Project,Functional Role ,Data Preparation,"Supporting: Variables that contribute to cluster separation, stability, or boundary refinement but do not define the fundamental nature of the clusters. Supporting variables may influence cluster placement but should not independently determine cluster identity. Can Include, State, Descriptive, Structural and Diagnostic.",Insert Records3
 ML Project,Regularization,Data Preparation,ElasticNet: Approach which combines L1 and L2 Regularization.,Insert Records3
 ML Project,Regularization,Data Preparation,"Lasso: Technique used to prevent overfitting by adding penalty term to loss function. Adds the absolute values of the coefficients as a penalty term. This leads to sparse models, as some coefficients become exactly zero",Insert Records3
 ML Project,Regularization,Data Preparation,"Ridge: Technique used to prevent overfitting by adding penalty term to loss function. Adds the squared values of the coefficients as a penalty term. This incrases the cost of larger parameters, encouraging the model to distribute parameters waiting This shrinks the coefficients but does not eliminate them.",Insert Records3
-ML Project,Semantic Type ,Data Preparation,Contextual: Representing external or situational factors which influence behaviours but are not behaviours themselves.,Insert Records3
-ML Project,Semantic Type ,Data Preparation,"Demographic: Representing member level attributes and characteristics which infrequently change, and are of critical importance in understanding the member, but do not influence behavior (as defined in the model).",Insert Records3
-ML Project,Semantic Type ,Data Preparation,"Descriptive: Representing aggregated summarizations over more than one period or measures of central tendancy. Includes definitions such as 3M Bill Payment Total, 3M Mean Deposit Balance, Periodic Max and Min values.",Insert Records3
-ML Project,Semantic Type ,Data Preparation,"Diagnostic : Representing metrics of directionality, momentum or variability, including periodic changes, standard deviations, volatility, or growth percentages. ",Insert Records3
-ML Project,Semantic Type ,Data Preparation,State: Representing current or point-in-time condition of a member’s activity or holdings. Includes definitions such as Spot Balance and single period aggregation (ex. Current Period Bill Payment Total).,Insert Records3
-ML Project,Semantic Type ,Data Preparation,"Structural: Representing attributes which apply to the member, but do not define the member. Including product holding definitions, channel usage, tenure. ",Insert Records3
+ML Project,Semantic Type ,Data Preparation,"Constraint: Constraint represents limitations or enabling conditions that bound an entity’s range of possible behavior. It answers the question “What limits or enables this entity’s choices?” by approximating capacity, dependency, or stress through proxy measures such as income concentration or balance volatility. Constraint measures help distinguish inability from preference. In modeling, Constraint variables are best used diagnostically to interpret cluster composition rather than to define cluster membership.",Insert Records3
+ML Project,Semantic Type ,Data Preparation,"Contextual: Contextual represents external or situational factors that influence behavior but are not behaviors themselves. It answers the question “What conditions surround this entity?” by capturing environmental, geographic, policy, or situational elements that shape observed actions. Contextual measures help explain why similar entities may behave differently under different circumstances. In modeling, Contextual variables are generally inappropriate as primary drivers of similarity but are critical for interpretation, validation, and responsible application of results. Examples include, Regional Indicator, Interest Rate Macro Flags, Employement Type)",Insert Records3
+ML Project,Semantic Type ,Data Preparation,"Demographic: Demographic represents intrinsic attributes of an entity that change infrequently and describe who the entity is rather than what it does. It answers the question “Who is this entity?” by capturing characteristics such as age, household composition, or other identity-level descriptors. Demographic measures provide essential interpretive context and support equity-aware analysis but do not directly represent behavior. In modeling, Demographic variables are typically excluded from defining similarity to avoid embedding bias or non-actionable distinctions, and are instead used for post-hoc analysis, monitoring, and policy alignment. Examples inlcude, Member Age Band, Language Preferences, Postal Code, Household Parameters, etc.",Insert Records3
+ML Project,Semantic Type ,Data Preparation,"Descriptive: Descriptive represents summarized or smoothed representations of an entity’s behavior over a defined historical window. It answers the question “What does this entity typically look like?” by reducing short-term noise and highlighting central tendency or typical patterns across time. Descriptive measures provide stability and interpretability by contextualizing current behavior within a broader historical baseline. In modeling, Descriptive variables help prevent over-reaction to transient spikes or dips but must be carefully managed to avoid redundancy with State measures. Examples include Avg Balances, Maximums over an extended period of time.",Insert Records3
+ML Project,Semantic Type ,Data Preparation,"Diagnostic : Diagnostic represents measures of directionality, momentum, or variability in an entity’s behavior over time. It answers the question “How is this entity changing?” by capturing growth, decline, volatility, or acceleration relative to prior periods. Diagnostic measures are essential for understanding trajectory, early warning signals, and emerging shifts that may not yet be visible in current state alone. In modeling, Diagnostic variables enhance interpretability and foresight but should be used cautiously, as excessive reliance can introduce instability and reduce cluster persistence. Examples include Change During Period, Volatility, Directional Slopes. ",Insert Records3
+ML Project,Semantic Type ,Data Preparation,"State: State represents the current condition of an entity at a specific point in time. It answers the question “Where is this entity right now?” and reflects the most recent observed values of relevant measures, frequency, balances, etc. State is essential for anchoring decisions in the present but is insufficient on its own without historical context. In modeling, State provides immediacy and scale but must be interpreted alongside other dimensions to avoid over-reacting to short-term fluctuations. Examples Include: Current Deposit Balance, Current Month POS TXN Count, Number of Active Accounts.",Insert Records3
+ML Project,Semantic Type ,Data Preparation,"Structural: Structural represents relatively stable attributes that describe how an entity is configured within the system rather than how it behaves at a given moment. It answers the question “What is the entity’s structural position?” by reflecting enduring characteristics such as product holdings, account composition, or long-term balances. Structural measures anchor and constrain behavior by defining capacity, access, and configuration. In modeling, Structural variables provide important context but should be included sparingly to avoid overwhelming activity-based signals or unintentionally clustering entities by size rather than behavior. Product Count, Product Flags, Tenure.",Insert Records3
 ML Project,Process Step,Exploratory Data Analysis,NNNNNNNEEEEEWWWWWWW .Needs comments.,Notes DF
 ML Project,Definition,Feature Engineering,"Feature engineering is the process of creating new input variables that better represent the underlying patterns in the data. It may include transformations (log, scaling), aggregations, interactions, temporal features, or domain-specific encodings. Effective feature engineering can significantly improve model performance even with simple algorithms. It embeds domain knowledge into the model and often provides more value than algorithmic complexity.",Insert Records
 ML Project,Process Step,Feature Engineering,"Create Aggregation Data, Rations, PCA, etc. Note these should be identified and defined in Data Prepartion, this is simple technical execution and creation.",Notes DF
@@ -403,6 +420,7 @@ ML Project,Process Step,Model Selection,"Define how feature evaluation will occu
 ML Project,Process Step,Model Selection,"Includes Determination of Final Model to be used, and parameters included within Model.",Notes DF
 ML Project,Process Step,Model Selection,"Must be formally documented, with all underlying results, documents and finding available in a clear and consistent documented process.",Notes DF
 ML Project,Process Step,Model Selection,"Decision should include an expected Performance Change, an deployment plan, and owners, in addition to agreement of go forward KPI monitoring.",Notes DF
+ML Project,Definition,Feature Selection,"Methods that identify and retain a subset of existing features based on their relevance, importance, or contribution to a learning task. The goal is to reduce model complexity, improve generalization, and enhance interpretability without creating new features or altering their definitions. Feature selection techniques are typically applied as preprocessing or model-selection steps and often rely on statistical criteria or model-based importance measures.",Insert Records
 ML Project,Definition,Feature Selection,"Feature selection involves choosing a subset of relevant features to include in the model. This can be done using statistical tests, model-based importance scores, correlation analysis, or regularization techniques. The goal is to reduce noise, improve generalization, and simplify the model. Fewer, more informative features often lead to better performance and easier interpretability.",Insert Records
 ML Project,Definition,Feature Selection,"Area Under the Curve: AUC (Area Under the Curve) measures a model’s ability to distinguish between classes by summarizing the performance of the ROC (Receiver Operating Characteristic) curve. It represents the probability that the model ranks a randomly chosen positive example higher than a randomly chosen negative one. AUC ranges from 0.5 (no better than chance) to 1.0 (perfect separation), with higher values indicating better classification performance.
 AUC is primarily a binary classification metric, so when using against a multivariate challenge must determine how to score, OVR, OVO. One Vs Rest, One vs One. Using MNist as an example, OVR evaluates 10 0 vs (1,2,3,4,5,6,7,8,9), 1 vs () ... etc, Where OVO measures 45 0 Vs 1, 0 vs 2, etc..",Insert Records2
@@ -413,6 +431,10 @@ ML Project,Definition,Feature Selection,"Bias - Variance Trade Off: The bias-var
 It can often be explained by the Trade-Off (Bias - Data Scientist, Variance - Data), where to invest.
 
 In general, as we increase the number of tunable parameters in a model, it becomes more flexible, and can better fit a training data set. It is said to have lower error, or bias. However, for more flexible models, there will tend to be greater variance to the model fit each time we take a set of samples to create a new training data set. It is said that there is greater variance in the model's estimated parameters.High-variance learning methods may be able to represent their training set well but are at risk of overfitting to noisy or unrepresentative training data. In contrast, algorithms with high bias typically produce simpler models that may fail to capture important regularities (i.e. underfit) in the data.",Insert Records2
+ML Project,Definition,Feature Selection,"F1 Score: F1 is harmonic mean is a type of average that is calculated by dividing the number of values by the sum of the reciprocals of the values, making it useful for situations where rates or ratios are involved, such as calculating average speeds or in situations where equal weighting is given to each data point’s contribution to the average. The F-score (or F1-score) is a measure of a model’s accuracy that considers both precision and recall. The F1-score is particularly useful when your dataset is imbalanced, and you want to ensure both precision and recall are considered. For example, if you only focus on precision, you might ignore false negatives (missed positive cases), and if you focus only on recall, you could have many false positives. The F1-score provides a balanced assessment by combining both metrics. The F Score is a Harmonic Mean, which means that it gives additional consideration to the effect of Lower Values (1/ sum (1/x)). Using travel time as an example, if you travelled 20 Miles (10 Miles at 30 MPH and 10 Miles at 60 MPH) your harmonic mean would be 36, not 45.",Insert Records2
+ML Project,Definition,Feature Selection,"Precision: Precision is the ratio of correct positive predictions to the overall number of Positive Predictions.  It is useful when false positives are costly (e.g., spam detection, where predicting a normal email as spam is bad).",Insert Records2
+ML Project,Definition,Feature Selection,"Recall: Recall is the correct positive predicitions to the overall number of positive examples. It is useful when false negatives are costly (e.g., medical diagnosis, where missing a disease case can be dangerous).",Insert Records2
+ML Project,Definition,Feature Selection,"Receiver Operating Characteristic (ROC): Graphical tool used to evaluate the performance of a binary classifier by plotting the true positive rate against the false positive rate across varying decision thresholds. It originated during World War II in signal detection theory to assess radar system performance. ROC analysis is important because it separates a model’s discriminative ability from any single threshold choice. The curve and its summary statistic, the Area Under the Curve (AUC), provide a threshold-independent measure of performance. ROC is widely used in machine learning, medicine, finance, and risk modeling where trade-offs between sensitivity and specificity matter.",Insert Records2
 ML Project,Definition,Feature Selection,"Variance: Variance refers to errors caused by models that are too sensitive to small fluctuations in the training data, often resulting in overfitting. High-variance models are overly flexible, capturing noise as if it were meaningful patterns. A model with many degrees of freedom (such as a high-degree polynomial model) is likely to have high variance and thus overfit the training data. As an example, if you created a model of How Predicting Housing Prices in 1 Neighbourhood would work and applied it to different neighbourhoods, if your model was simple, it wouldn’t work well anywhere and thus would be Wrong, but consistently-ish wrong. If your model was Good, it would work similarly well every well. If you model was overfit, it would work really well in 1 place, not so well elsewhere.
 ",Insert Records2
 ML Project,Consideration,Feature Selection,"Avoid ambigious features. Is a Banana ripe, who says so?",Notes DF
@@ -448,8 +470,14 @@ ML Project,Process Step,"Bias, Fairness and Ethics",Comment Needed,Notes DF
 ML Project,Process Step,Model Summarization/ Model Interpretability,NNNNNNNEEEEEWWWWWWW .Needs comments.,Notes DF
 ML Project,Definition,Deployment,"Deployment is the process of integrating the trained model into a production environment where it can generate real-world predictions. This may involve APIs, batch pipelines, streaming systems, or embedded applications. Considerations include scalability, latency, reliability, and versioning. Deployment turns a model from an experiment into a usable product.",Insert Records
 ML Project,Process Step,Deployment,Need to Explain this as a step. If not order will not be restored necessary.,Notes DF
+ML Project,Process Step,Monitoring,"Variables used to track outcomes, drift, or post-engagement effects over time. Monitoring variables are excluded from clustering inputs to avoid leakage but are essential for evaluating stability and impact.",Notes DF
 ML Project,Process Step,Monitoring,"Monitoring tracks model performance and behavior over time after deployment. It includes detecting data drift, concept drift, performance degradation, and operational issues. Alerts and retraining triggers are often established at this stage. Monitoring is essential because real-world data changes, and models degrade if left unattended.",Notes DF
-ML Project,Pipeline Stage,Evaluation,"Evaluation measures how well the final model performs against defined success metrics on a truly unseen test dataset. Metrics depend on the problem type (e.g., accuracy, AUC, RMSE, precision-recall). This step provides an objective assessment of whether the model meets business or research requirements. Evaluation results often determine whether a model is production-ready.",Examine Further
+ML Project,Pipeline Stage,Evaluation,"
+As a general term, Evaluation has multiple meanings, so care is required to be explicit about its usage. In the context of machine learning, Evaluation has two distinct and valid meanings: one as an Algorithm Classification and one as an ML Pipeline Stage. These uses are related but serve different conceptual purposes.
+
+Pipeline Step: Measures how well the final model performs against defined success metrics on a truly unseen test dataset. Metrics depend on the problem type (e.g., accuracy, AUC, RMSE, precision–recall). This step provides an objective assessment of whether the model meets business or research requirements. Evaluation results often determine whether a model is production-ready.
+
+Algorithm Class: Methods that quantify the performance, quality, or reliability of models or learned structures. These techniques produce metrics, scores, or diagnostic summaries rather than predictions or feature transformations. Evaluation methods support model comparison, validation, and selection but do not directly influence how models are trained or how decisions are made.",Examine Further
 Problem Solving,Process Step,Problem Definition,"Define problem, in a clear and explicit way such that it can be solved, tested or experiemented. Problem MUST be solvable and should be iterative, or have a series of iterative steps such that it can be effectively managed and solved",Notes DF
 Problem Solving,Process Step,Problem Definition,"Define Problem Statement. Including clearly articulating why it matters, what is the impact of not having this solution.",Notes DF
 Problem Solving,Process Step,Problem Definition,"Define the desired end state, in such a way that the contribution of the ML Model or project can achieve granular progress through iteration",Notes DF
@@ -483,11 +511,10 @@ Clustering Implementation,Process Step,Feature Selection,"Must Clarify this clea
 Clustering Implementation,Process Step,Feature Selection,"Small Number of Stable, Interpretable, Member Archetypes that summaize the global behavior and can be reused for ML and Analysis.",Notes DF
 Mathematics,Process,Definition,"Process designed to store Formulas, guidance and help information related to Mathematical properities.",Notes DF
 Mathematics,Concept,Normality,Residuals should be normally distributed.,Examine Further
-Mathematics,Property,Colinearity,No perfect linear relationship between residuals,Examine Further
 Mathematics,Theorem,Algorithm,"An algorithm is a procedure that unfolds over time and depends on: previous states, iteration history and accumulated information.",Examine Further
 Mathematics,Theorem,Best Linear Unbiased Estimator,"The Best Linear Unbiased Estimator (BLUE) is an estimation method in statistics that produces parameter estimates that are linear in the observed data, unbiased, and have the smallest possible variance among all such estimators. It originates from the Gauss–Markov theorem, developed in the early 19th century in the context of least squares and error theory. Its importance lies in providing a theoretical benchmark: under specific assumptions about error structure, no other linear unbiased estimator can be more precise. In practice, BLUE underpins ordinary and generalized least squares, and is widely applied in econometrics, engineering, and data science when modeling relationships with correlated or heteroskedastic errors",Examine Further
 Tooling,Process,Definition,"Tooling contains notes, Information, maps and hints related to various Technologies. NEED TO UPDATE. How about the other.",Notes DF
-Tooling,Hadoop,HDFS,"It is the storage layer of the Apache Hadoop ecosystem, designed to store and manage large volumes of data across a distributed cluster of machines. Files are split into blocks (default: 128MB or 256MB).These blocks are distributed across multiple nodes in a cluster.Each block is replicated (default: 3 copies) across different machines. If one node fails, data is still accessible from other nodes.Files in HDFS are typically written once and read many times. Optimized for streaming reads of large files, not quick random access.",Examine Further
+Tooling,Hadoop,HDFS,"It is the storage layer of the Apache Hadoop ecosystem, designed to store and manage large volumes of data across a distributed cluster of machines. Files are split into blocks (default: 128MB or 256MB).These blocks are distributed across multiple nodes in a cluster.Each block is replicated (default: 3 copies) across different machines. If one node fails, data is still accessible from other nodes.Files in HDFS are typically written once and read many times. Optimized for streaming reads of large files, not quick random access. Hadoop Distributed File System.",Examine Further
 Tooling,Paradigm,Distributed Computing,"A simple way to think about distributed systems is that they are a group of independent computers that appear to the end user as a single computer. They allow for horizontal scaling. That means adding more computers rather than upgrading a single system (vertical scaling). The latter is relatively expensive and often insufficient for large workloads. Distributed systems are great for scaling and reliability but also introduce complexity when it comes to design, construction, and debugging. One should understand this trade-off before opting for such a tool. A great tool when: Data does not fit into RAM, must be partitioned, Increases Cost of Moving Data, Memory Faster than Harddrive, Increased cost and risk of failure.",Examine Further
 Tooling,Spark,Action,"In Spark, actions trigger the execution of transformations and return a result to the driver. The collect action retrieves all elements of an RDD and brings them to the driver, while count returns the total number of elements in the RDD, and countByValue provides the frequency of each unique element. take retrieves the first N elements, top returns the largest N elements, and reduce applies a specified associative function to aggregate all the elements of the RDD into a single result.",Examine Further
 Tooling,Spark,Narrow Transformation,"Each partition of the parent RDD is used by at most one partition of the child RDD. This means that data is not shuffled across the network between partitions, and each transformation can be executed locally on the same node. Examples of narrow transformations include map, filter, and flatMap. Because they don't involve data movement, narrow transformations are more efficient.]",Examine Further
@@ -537,3 +564,588 @@ nano ~/scripts/automated_job_name.sh
 /Users/derekdewald/anaconda3/envs/d2/bin/python /Users/derekdewald/Documents/Python/Github_Repo/automated_py_jobs/daily_job.py
 chmod +x ~/scripts/daily_d_py_job.sh",Examine Further
 Data Engineering,Automating Python,Testing Shell,~/scripts/daily_shell_job.sh,Examine Further
+Tree Based Models,Definition,Property,Colinearity: No perfect linear relationship between residuals,Insert Records2
+Tree Based Models,Consideration,Property,Feature importance in a tree based model is based on Information Gain. And the combined value of the features equal to one.,Notes DF
+Tree Based Models,Consideration,Property,"Because a feature has a low feature importance as scored by the model does not mean that the feature is not important, could interact with the model in complex and unknown way.",Notes DF
+Tree Based Models,Consideration,Property,"Standardized vs Non Standardized in interpreting values, .5 - High, .1.5 - Moderate, .1 Low",Notes DF
+Transformers,Consideration,Property," This shift was possible because transformers process sequential data in parallel, enabling a deeper and more contextual understanding of language than was achievable with previous sequential models, like long short-term memory (LSTM) networks.",Notes DF
+Transformers,Consideration,Property,"Among the most exciting developments are reasoning models, which are advanced LLMs trained with reinforcement learning to perform complex, multi-step reasoning.",Notes DF
+Machine Learning Operations,Consideration,Lifecycle Structure,"Defines clear stages such as data ingestion, training, validation, deployment, monitoring, and retraining, with handoffs between them. This creates consistency and prevents “one-off” models that cannot be maintained.",Notes DF
+Machine Learning Operations,Consideration,Versioning & Reproducibility ,"Tracks versions of data, features, code, models, and hyperparameters so results can be reproduced and audited. This is critical for debugging, compliance, and rollback.",Notes DF
+Machine Learning Operations,Consideration, Automation & Pipelines," Automates training, testing, deployment, and retraining using pipelines (CI/CD for ML). Automation reduces human error and accelerates iteration",Notes DF
+Machine Learning Operations,Consideration,Monitoring & Governance ,"Monitors model performance, data drift, bias, and system health in production. Governance ensures models remain ethical, compliant, and aligned with business goals.",Notes DF
+Machine Learning Operations,Consideration,How it Differs from ML Model,"It orchestrates and operationalizes ML Models, provides a framework to ensure that they continue to be relevant and meaningful.",Notes DF
+Machine Learning Operations,Consideration,Why It Exists?,Reproducibility,Notes DF
+Machine Learning Operations,Consideration,Why It Exists?,Model and Data Drift,Notes DF
+Machine Learning Operations,Consideration,Why It Exists?,Training vs Serving Skew,Notes DF
+Machine Learning Operations,Consideration,Why It Exists?,Offline vs Online Metrics,Notes DF
+Machine Learning Operations,Consideration,Why It Exists?,Model Lifecycle Management,Notes DF
+Machine Learning Operations,Consideration,Why It Exists?,"Causes you to think, what breaks when my models runs for 6 months?",Notes DF
+Machine Learning Operations,Consideration,What it contains,CI/CD for ML,Notes DF
+Machine Learning Operations,Consideration,What it contains,Feature Stores,Notes DF
+Machine Learning Operations,Consideration,What it contains,Model Registries,Notes DF
+Machine Learning Operations,Consideration,What it contains,Monitoring Loops,Notes DF
+Machine Learning Operations,Consideration,Steps Included,Experiment Tracking: MLflow,Notes DF
+Machine Learning Operations,Consideration,Steps Included,Pipelines: Airflow / Prefect / Dagster,Notes DF
+Machine Learning Operations,Consideration,Steps Included,"Versioning: Git + data versioning concepts (e.g., DVC)",Notes DF
+Machine Learning Operations,Consideration,Steps Included," Deployment: REST APIs, batch jobs, or simple cloud services",Notes DF
+Machine Learning Operations,Consideration,Steps Included,Monitoring: performance + drift metrics,Notes DF
+Machine Learning Operations,Consideration,Comparison to Traditional ML,Model Accuracy vs System Reliability,Notes DF
+Machine Learning Operations,Consideration,Comparison to Traditional ML,One-Time Training vs Continuous Lifecycle,Notes DF
+Machine Learning Operations,Consideration,Comparison to Traditional ML,Notebook vs Pipeline Driven,Notes DF
+Machine Learning Operations,Consideration,Comparison to Traditional ML,Manual vs Automated Deployment,Notes DF
+Machine Learning Operations,Consideration,Comparison to Traditional ML,Static Evaluation vs Continuous Monitoring,Notes DF
+Machine Learning Operations,Consideration,Comparison to Traditional ML,ML Builds Models. MLOps builds system that keep models working.,Notes DF
+,,,"Assessment refers to techniques that do not learn patterns from data but instead evaluate, diagnose, or measure the behavior, performance, or reliability of models or data. These methods operate on model outputs, predictions, or residuals rather than updating model parameters. Assessment is essential for understanding model quality, robustness, and fitness for purpose, but it does not produce a trained model. This learning type characterizes analytical or evaluative tools rather than learning algorithms.",Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,"Assessment refers to techniques that do not learn patterns from data but instead evaluate, diagnose, or measure the behavior, performance, or reliability of models or data. These methods operate on model outputs, predictions, or residuals rather than updating model parameters. Assessment is essential for understanding model quality, robustness, and fitness for purpose, but it does not produce a trained model. This learning type characterizes analytical or evaluative tools rather than learning algorithms.",Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,"Assessment refers to techniques that do not learn patterns from data but instead evaluate, diagnose, or measure the behavior, performance, or reliability of models or data. These methods operate on model outputs, predictions, or residuals rather than updating model parameters. Assessment is essential for understanding model quality, robustness, and fitness for purpose, but it does not produce a trained model. This learning type characterizes analytical or evaluative tools rather than learning algorithms.",Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,"Assessment refers to techniques that do not learn patterns from data but instead evaluate, diagnose, or measure the behavior, performance, or reliability of models or data. These methods operate on model outputs, predictions, or residuals rather than updating model parameters. Assessment is essential for understanding model quality, robustness, and fitness for purpose, but it does not produce a trained model. This learning type characterizes analytical or evaluative tools rather than learning algorithms.",Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
+Clustering,TBD,TBD,Multidimensional,Notes DF
+Clustering,TBD,TBD,Non Linear,Notes DF
+Clustering,TBD,TBD,"Based on Numeric Similarity, not ambigious thresholds or complex static rules",Notes DF
+Clustering,TBD,TBD,"Understand the impact of components, can prevent overweighting on traditionally dominant items, such as raw balances.",Notes DF
+Clustering,TBD,TBD,Implementation of Tailored Strategy based on understanding of a Member,Notes DF
+Clustering,TBD,TBD,Decisions can be segment specific based on perceived understanding of how a member engages,Notes DF
+Clustering,TBD,TBD,Consistent,Notes DF
+Clustering,TBD,TBD,Repeatable,Notes DF
+Clustering,TBD,TBD,Insights into Results,Notes DF
+Clustering,TBD,TBD,Strategic Conversations become diagnostic not reactive,Notes DF
+Clustering,TBD,TBD,Precision without Personalization,Notes DF
+Clustering,TBD,TBD,Differenitation without Discrimination,Notes DF
+Clustering,TBD,TBD,Optimization without cumbersome rules,Notes DF
+Algorthim Classification,Parameter,Anomaly Detection,"Algorithm which designed to identify observations that deviate significantly from expectedor normal patterns. Its importance lies in surfacing rare, unusual, or potentially harmful events that standard predictive models may overlook. It is applied in domains such as fraud detection, system monitoring, and quality control, where outliers themselves are the signal rather than noise.",Examine Further
+Algorthim Classification,Parameter,Classification,"Algorithm which assign observations to one of a finite set of discrete categories based on learned patterns in labeled data. The goal is to predict which class an observation belongs to, not how much or how many. Classification is foundational in tasks such as diagnosis, spam detection, and customer segmentation with predefined labels.",Examine Further
+Algorthim Classification,Parameter,Clustering,"Algorithm which group observations into clusters based on similarity without using labeled outcomes. The objective is to discover latent structure or natural groupings within data rather than to predict predefined categories. Clustering is commonly applied in exploratory analysis, segmentation, and pattern discovery.",Examine Further
+Algorthim Classification,Parameter,Decision Strategy," Methods that define how predictions or model outputs are converted into final decisions. These techniques operate on outputs from one or more models rather than directly on raw features. Examples include voting schemes, thresholding, cost-sensitive decisions, and calibration strategies.",Examine Further
+Algorthim Classification,Parameter,Density Estimation,"Approaches which involve modeling the underlying probability distribution of data points in feature space. Its importance lies in understanding data generation, uncertainty, and likelihood rather than predicting labels directly. Density estimation is often used as a foundation for anomaly detection, clustering, and probabilistic reasoning.",Examine Further
+Algorthim Classification,Parameter,Dimensionality Reduction,"Algorithm which reduce the number of variables by projecting data into a lower-dimensional space while preserving important structure or information. These methods aim to simplify data for visualization, noise reduction, or downstream modeling. The key distinction is that they create new latent features, rather than selecting from existing ones.",Examine Further
+Algorthim Classification,Parameter,Feature Transformation,"
+Methods which modify existing features into new representations to improve learning, scale, or interpretability. Unlike dimensionality reduction, transformed features often retain a direct relationship to original variables. This category includes normalization, encoding, and learned transformations used as preprocessing steps.",Examine Further
+Algorthim Classification,Parameter,Ranking / Recommendation,"Algorithm which order items or suggest relevant options based on predicted relevance, preference, or utility. The objective is not classification or regression, but relative prioritization among alternatives. These methods are central to search, personalization, and content discovery systems.",Examine Further
+Algorthim Classification,Parameter,Regression,"Algorithm which predict continuous numerical values by modeling relationships between input features and a target variable. The emphasis is on estimating magnitude and direction rather than categorical assignment. Regression is widely used in forecasting, risk estimation, and trend analysis.",Examine Further
+Model Type,Parameter,Ensemble Models,"Models which combine multiple base models to produce a single, usually more robust, prediction. The core idea is that diverse models can compensate for one another’s errors, improving generalization and stability. A model belongs here if multiple learners are explicitly trained and aggregated as part of the algorithm.",Examine Further
+Model Type,Parameter,Instance Based Models,Models which make predictions by directly comparing new observations to stored training examples rather than learning a global model. They defer learning until inference time and rely heavily on distance or similarity measures. A model belongs here if predictions are driven primarily by local neighborhood relationships.,Examine Further
+Model Type,Parameter,Kernel-based Models,"Models which  implicitly map data into high-dimensional feature spaces to make complex patterns linearly separable. They rely on similarity functions rather than explicit feature construction. A model belongs here if a kernel function is central to learning, not optional.",Examine Further
+Model Type,Parameter,Linear Models,"Linear models assume a linear relationship between input features and the target, meaning changes in inputs produce proportional changes in outputs. They represent patterns using weighted sums of features and are valued for interpretability, stability, and computational efficiency. Models belong here only if the core decision function is linear in the parameters, even if the inputs are transformed beforehand.",Examine Further
+Model Type,Parameter,Meta Models,"Models which operate on top of other models, either by combining, selecting, calibrating, or learning from their outputs. They do not model raw data directly but instead reason about predictions or model behavior. A model belongs here if its inputs are outputs of other models.",Examine Further
+Model Type,Parameter,Neural Models,"Models which learn representations through layers of interconnected units inspired by biological neurons. They are highly expressive and excel at capturing complex, hierarchical patterns in large datasets. A model belongs here if learning occurs via weighted layers optimized through gradient-based training.",Examine Further
+Model Type,Parameter,Nonlinear Models,"Models which capture relationships that cannot be represented as a straight-line combination of inputs. They allow interactions, thresholds, and curvature to emerge naturally from the model structure rather than explicit feature engineering. A model belongs here if nonlinearity is intrinsic to the learning mechanism, not merely the result of preprocessing.",Examine Further
+Model Type,Parameter,Probabilistic Models,"Models which explicitly represent uncertainty by modeling data as random variables governed by probability distributions. They produce likelihoods or posterior probabilities rather than only point estimates. A model belongs here if probability theory is central to its formulation, not merely an output option.",Examine Further
+Model Type,Parameter,Rule-base Models,Models which operate using explicit if–then logical rules that define decision boundaries. These rules may be learned from data or manually specified and prioritize transparency and control over flexibility. A model belongs here if decision logic is expressed directly as interpretable rules.,Examine Further
+Model Type,Parameter,Tree-Based Models,"Models which learn decision rules by recursively splitting the feature space into regions based on threshold conditions. They originate from decision theory and are prized for interpretability, handling mixed data types, and capturing nonlinear interactions without feature scaling. A model belongs here if its primary structure is a decision tree, regardless of whether it is used alone or in combination.",Examine Further

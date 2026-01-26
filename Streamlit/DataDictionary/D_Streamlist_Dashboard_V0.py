@@ -427,19 +427,19 @@ elif page == "D Notes Outline":
         opts1 = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
         sel1 = st.selectbox(c1_word, opts1, index=0)
 
-    df1 = df_base if sel1 == "(All)" else df_base[df_base[c1_word] == sel1].drop(c1_word, axis=1)
+    df1 = df_base if sel1 == "(All)" else df_base[df_base[c1_word] == sel1]
 
     with c2:
         opts2 = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
         sel2 = st.selectbox(c2_word, opts2, index=0)
 
-    df2 = df1 if sel2 == "(All)" else df1[df1[c2_word] == sel2].drop(c2_word, axis=1)
+    df2 = df1 if sel2 == "(All)" else df1[df1[c2_word] == sel2]
 
     with c3:
         opts3 = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
         sel3 = st.selectbox(c3_word, opts3, index=0)
 
-    df_view = df2 if sel3 == "(All)" else df2[df2[c3_word] == sel3].drop(c3_word, axis=1)
+    df_view = df2 if sel3 == "(All)" else df2[df2[c3_word] == sel3]
 
     st.caption(f"Rows: {len(df_view)}")
 

@@ -1,4 +1,25 @@
 Function,Purpose,Parameters,Returns,date_created,date_last_modified,classification,sub_classification,usage,Folder
+binary_complex_equivlance,,"['df', 'col', 'col1', 'new_column_name']",,,,,,,feature_engineering.py
+binary_column_creator,"Function to Create a Binary Flag.
+Updated to remove Dictionary capabilities. Which seems overtly complex and unncessary. 23Jul25","['df', 'column_name', 'new_column_name', 'value', 'calculation', 'balance_column']",,,,,,,feature_engineering.py
+custom_preprocessor,,"['df', 'data_dictionary_df', 'index_name']",,,,,,,SY_M_SUPPORT.py
+Heatmap,Function Which Generates a Heatmap,"['df', 'correlation', 'column_list', 'title', 'cmap', 'annotate', 'x_rotate', 'y_rotate', 'cbar', 'set_center', 'figsize']",matlplot plot.,,,,,,SY_M_SUPPORT.py
+make_kmeans_pipeline,"KMeans in scikit-learn requires dense arrays. If your preprocessor uses OneHotEncoder, set sparse_output=False (new) or sparse=False (older versions).","['X', 'data_dictionary_df', 'index_name', 'n_clusters']",,,,,,,SY_M_SUPPORT.py
+create_clustering_visualization,,"['df', 'pipeline_object', 'name_map']",,,,,,,SY_M_SUPPORT.py
+scatter_from_dataframe,"Creates a scatter plot from a DataFrame with optional color mapping and axis limits.
+action: ""show"" (display), ""save"" (save to file), ""memory"" (return BytesIO object)
+save_path: required if action=""save""","['df', 'x_col', 'y_col', 'x_label', 'y_label', 'color_col', 'title', 'x_axis_limit', 'y_axis_limit']",,,,,,,SY_M_SUPPORT.py
+sample_score_silhouette,"Close to +1: Clusters are well-separated and points are near their own cluster center.
+Around 0: Clusters overlap or points are near the decision boundary.
+Negative: Many points are likely assigned to the wrong cluster.","['df', 'label', 'metric', 'sample_size']",,,,,,,SY_M_SUPPORT.py
+iteratively_test_sampled_model_performance,"Make Comment abbout NEEDING SAMPLE_SIZE to WORK. CLear Purpose of this, can make models for other types of Performance
+Make Comment about required input","['model_testing_function', 'sample_size', 'iterations_', 'maximum_run_time', 'threshold']",,,,,,,SY_M_SUPPORT.py
+feature_importance_by_clusters,"Compute feature importance for clustering:
+- ANOVA F-statistic and p-value
+- Kruskal-Wallis H-statistic and p-value
+- Eta-squared and Omega-squared effect sizes","['df', 'cluster_labels', 'features']",,,,,,,SY_M_SUPPORT.py
+mutual_information_per_feature,,"['df', 'cluster_labels', 'features', 'n_bins']",,,,,,,SY_M_SUPPORT.py
+SampleDataFrame,Returns a random sample from a DataFrame based on confidence level and margin of error.,"['df', 'conf', 'me', 'mv', 'print_', 'new_column_name']",pd.DataFrame: A random sample of the required size.,,,,,,statistical.py
 inspect_function,Function which Reads the Document String of a Python Function,['function_name'],Object Type,15-Dec-25,15-Dec-25,TBD,TBD,"from utility_functions import InspectFunction
 InspectFunction(InspectFunction)",utility_functions.py
 view_df,Function which helps to set default Visualization View in Pandads. Can be applied to a dataframe specifically or the current Session,"['df', 'update_decimal']",Object Type,15-Dec-25,15-Dec-25,TBD,TBD,ViewDf(df),utility_functions.py
@@ -25,38 +46,51 @@ read_git_file,Read the contents of a single public GitHub file.,['git_url'],List
 download_file_from_git,"Function to Download Files from Github to a dedicated folder.
 Used for ease of access, and when utilizing Git Directly not readily available.","['user', 'repo', 'folder', 'export_folder']",.py files to Windows Folder,1-Jan-25,30-Dec-25,TBD,TBD,download_file_from_git(),connections.py
 backup_google_worksheets,Definition of Function,['export_folder'],Object Type,30-Dec-25,30-Dec-25,TBD,TBD,Example Function Call,connections.py
-pick_from_dict,,"['dict_', 'text']",,,,,,,synthetic_mbr.py
+pick_from_dict,,"['dict_', 'text']",,,,,,,synthetic_member.py
 calculate_rng_from_df_low_high,"Generate a column of random values between df[low] and df[high].
 - distribution: 'continuous' or 'discrete'
 - skew: 1 = uniform (no skew), >1 bias low, <1 bias high
-- seed: optional for reproducibility","['df', 'new_column_name', 'low', 'high', 'decimal', 'distribution', 'skew']",,,,,,,synthetic_mbr.py
+- seed: optional for reproducibility","['df', 'new_column_name', 'low', 'high', 'decimal', 'distribution', 'skew']",,,,,,,synthetic_member.py
 simplistic_engagement_calculation,"Is Absolute Value an indication of Rate Shopping.
 Can we look at certain types of Activity - Refinances, New TDs with Nothing Else. Etc.
 Are Almost Loyal Members more/less/equally suseptible to engagement.
 What other types of metrics could be included, contact, complaints, referrals.
 # Update duration with Primary is Beem.
 # Can we look for members which have flags, first mortgage, student funded, etc...
-# Does Legacy Entity Impact Loyalty.","['df', 'new_column_name']",,,,,,,synthetic_mbr.py
-create_column_from_dict_distribution,,"['df', 'column_name', 'new_column_name', 'cdf_dict', 'calculation']",,,,,,,synthetic_mbr.py
-calculate_distribution_from_dictlist,,"['dict_', 'decimals']",,,,,,,synthetic_mbr.py
-create_mbr_information,,"['branch_df', 'branch_profile_dict', 'mbr_profile_df', 'mbr_nbr_start', 'columns_not_weights']",,,,,,,synthetic_mbr.py
-create_random_value_from_dict,,"['df', 'dict_', 'dict_lvl', 'decimals']",,,,,,,synthetic_mbr.py
-decouple_txn,,"['df', 'reference_value', 'txn_dict', 'primary_key', 'exclude_non_ho']",,,,,,,synthetic_mbr.py
+# Does Legacy Entity Impact Loyalty.","['df', 'new_column_name']",,,,,,,synthetic_member.py
+create_column_from_dict_distribution,,"['df', 'column_name', 'new_column_name', 'cdf_dict', 'calculation']",,,,,,,synthetic_member.py
+calculate_distribution_from_dictlist,,"['dict_', 'decimals']",,,,,,,synthetic_member.py
+create_random_value_from_dict,,"['df', 'dict_', 'dict_lvl', 'decimals']",,,,,,,synthetic_member.py
+decouple_txn,,"['df', 'reference_value', 'txn_dict', 'primary_key', 'exclude_non_ho']",,,,,,,synthetic_member.py
+update_growth_rates,"Simple function to update the growth rates for members who are flagged as no change to be whatever the random assignment
+Provided","['df', 'cols']",,,,,,,synthetic_member.py
+create_mbr_information,,"['branch_df', 'branch_profile_dict', 'mbr_profile_df', 'start_date', 'mbr_nbr_start', 'columns_not_weights']",,,,,,,synthetic_member.py
+create_branch,,"['unique_records', 'legacy_distribution']",,,,,,,synthetic_member.py
+create_txn_df,,"['df', 'exclude']",,,,,,,synthetic_member.py
+generate_historical_data,,"['mbr_df', 'total_months', 'start_date']",,,,,,,synthetic_member.py
+progress_df_one_month,"# Do I want to Update Liquid Assets and Such based on PRogression.
+# Update Classification of Definition.
+# Update Number of Kids
+# Amortize Debt.
+# Add Mortgage and TD Renewal","['df', 'start_date']",,,,,,,synthetic_member.py
+generate_synthetic_dataset,,"['number_branches', 'total_months', 'legacy_distribution', 'start_date']",,,,,,,synthetic_member.py
 transpose_df,"Transposes a non-time-series DataFrame from wide to long format by melting specified columns.
 This is especially useful for flattening columns into a single column to support tools
-like Power BI, where long format enables dynamic pivoting and aggregation.","['df', 'index', 'columns']",DataFrame: A long-format DataFrame with 'variable' and 'value' columns.,1-Jan-24,30-Dec-25,TBD,TBD,Example Function Call,synthetic_mbr.py
+like Power BI, where long format enables dynamic pivoting and aggregation.","['df', 'index', 'columns']",DataFrame: A long-format DataFrame with 'variable' and 'value' columns.,1-Jan-24,30-Dec-25,TBD,TBD,Example Function Call,synthetic_member.py
 random_uniform_normalized_list,"Function to create a list of RNG numbers for the purposes of creating a distribution.
-Values equal 1.","['n', 'skew']",list,29-Dec-25,29-Dec-25,TBD,TBD,create_distribution_weight(5),synthetic_mbr.py
+Values equal 1.","['n', 'skew']",list,29-Dec-25,29-Dec-25,TBD,TBD,create_distribution_weight(5),synthetic_member.py
 random_choice_from_uniform_list,"Create a random generate list from provided inputs. List is of length as defined in total records, the name of the records is defined in name.
-The distribution of values is conditionally determined by either distinct entities, or the distribution as provided in list_distribution.","['total_records', 'name', 'distinct_entities', 'list_distribution', 'return_value', 'skew']",list if return_value is 'df' then DataFrame,29-Dec-25,29-Dec-25,TBD,TBD,"random_choice_from_uniform_list(unique_records=40,name='BRANCHNAME',LEGACY=[.5,.15,.3,.05])",synthetic_mbr.py
+The distribution of values is conditionally determined by either distinct entities, or the distribution as provided in list_distribution.","['total_records', 'name', 'distinct_entities', 'list_distribution', 'return_value', 'skew']",list if return_value is 'df' then DataFrame,29-Dec-25,29-Dec-25,TBD,TBD,"random_choice_from_uniform_list(unique_records=40,name='BRANCHNAME',LEGACY=[.5,.15,.3,.05])",synthetic_member.py
 replicate_df_row,"Function which Replicates a single row DataFrame for the purposes of Multiplying it against a larger row.
 Function written using tile, which is a C based language, and considerably faster than straight using nunpy vectorized Calculations.","['df', 'records']",df,30-Dec-25,30-Dec-25,TBD,TBD,"df = pd.DataFrame([[1,2,3]],columns=['A','B','C'])
-replicate_df_row(df)",synthetic_mbr.py
+replicate_df_row(df)",synthetic_member.py
 random_uniform_normalized_df,"Create a Dataframe (which is a series of n * 1) of Random Values for purposes of creating a Random Distribution DataFrame.
-Kwargs can be used to create New Columns. Kwargs should be Lists of distribution Frequencies, to create new random Columns (Not cdf).","['unique_records', 'name', 'skew']",Object Type,29-Dec-25,29-Dec-25,TBD,TBD,"random_uniform_normalized_df(unique_records=40,name='BRANCHNAME',LEGACY=[.5,.15,.3,.05])",synthetic_mbr.py
+Kwargs can be used to create New Columns. Kwargs should be Lists of distribution Frequencies, to create new random Columns (Not cdf).","['unique_records', 'name', 'skew']",Object Type,29-Dec-25,29-Dec-25,TBD,TBD,"random_uniform_normalized_df(unique_records=40,name='BRANCHNAME',LEGACY=[.5,.15,.3,.05])",synthetic_member.py
+time_series_statistics,# Note How I calucated PERIOD CHANGE and CHANGE PERC. Made simpler to avoid Complications and error out.s,"['df', 'calculuation_periods', 'skipna']",,,,,,,synthetic_member.py
 flatten_clean_dict,"Function which takes a Nested Dictionary (Dictionary, which references dictionary, and converts it into a DataFrame, works best when
-Dictionary ultimate Values are List.","['dict_', 'index_name', 'clean', 'apply_new_lvl']",DataFrame,30-Dec-25,30-Dec-25,TBD,TBD,"from synthetic_member import mbr_profile_dict
-flatten_clean_dict (mbr_profile_dict)",synthetic_mbr.py
+Dictionary ultimate Values are List.","['dict_', 'index_name', 'clean', 'apply_new_lvl', 'high_low_list_fix']",DataFrame,30-Dec-25,30-Dec-25,TBD,TBD,"from synthetic_member import mbr_profile_dict
+flatten_clean_dict (mbr_profile_dict)",synthetic_member.py
+Heatmap,Function Which Generates a Heatmap,"['df', 'correlation', 'column_list', 'title', 'cmap', 'annotate', 'x_rotate', 'y_rotate', 'cbar', 'set_center', 'figsize']",matlplot plot.,,,,,,visualization.py
 FunctionToSTR,"Function which Converts the Documentation of a Python Function into a List, breaking on White Space. For purposes of development of
 CompareFunction, which looks for differences.",['func'],list,17-Dec-25,17-Dec-25,TBD,TBD,"from data_d_strings import template_doc_string_print
 FunctionToSTR(template_doc_string_print)",string_processing.py
@@ -64,6 +98,51 @@ compare_function,"Function which compares the Text of 2 python function objectio
 Used to reduce impact of manual validation and creation of function in multiple environments without a consistent tool such as Git.
 Once adopting better practices, this will no longer be necessary.
 Function Utilizes the Input Function FunctionToSTR() as a Base. Currently it Does","['func1', 'func2', 'additional_records', 'strip_docstring']","Object Type Function which Compares 2 Functions and determines if they are different. Specifically, it can help to easily Manage Version control of Functions outside of a More robust environment such as GIT.",17-Dec-25,17-Dec-25,TBD,TBD,Example Function Call,string_processing.py
+df_column_compare,"Function to Compare Column Values contained within 2 Dataframes, Identifying Equivalency and Variance.","['df', 'df1', 'return_df']",Multiple Dataframes,18-Aug-25,18-Aug-25,TBD,TBD,Example Function Call,data_validation.py
+merge_identical_df,"Function Designed to Simplify the Joining of Two Identical Dataframes.
+Created for the purposes of DQ Validaiton, where taking 2 identical Dataframes with similar records and near identical
+columns.","['df', 'df1', 'primary_key_list', 'column_distinction', 'include_merge']",DataFrame (Combined Columns) Date Created: 18-Aug-25,,18-Aug-25,TBD,TBD,,data_validation.py
+get_decile,"Function designed to Seperate Data into N equal segments.
+Differs from get_segments, which is about segmenting for the purposes of Creating Segments for Slicing, not utilizing the
+bottom position, changing the top position, and doing providing a safety net against duplication in Segment Duplication,
+as when more than 10% of observations share a common record segmenting becomes problematic.","['df', 'column_name', 'n']",List,20-Jan-26,20-Jan-26,TBD,TBD,"bin_list = get_decile(df1,column_name='DIFFERENCE',number_segments=10)",data_validation.py
+get_segments,"Function Designed to seperate a Dataframe Column into N Segments.
+Note that it simply looks for the Position of the respective column in the Dataframe, it will return duplication, which can be a
+problem for many functions, including NP.CUT
+Input Function into: column_segment","['df', 'column_name', 'number_segments']",List,19-Jan-26,19-Jan-26,TBD,TBD,"bin_list = get_segments(df1,column_name='DIFFERENCE',number_segments=10)",data_validation.py
+column_segmenter,"Function which Takes a SINGLE column in a DataFrame and calculates the segments as designed by the appropriate size of
+the dataframe by number of segments, as an example, a Decile Analysis would include 10 Segments.
+NOTE: This is not a PERFECT EQUAL Segment Funcition. When segments Share Edges it is Problematic, specifically, in Dataframes which have a
+median value which can include multiple segments, the mathematical representation can be problematic. There are multiple approaches to handle
+must be aware of what one is trying to accomplish and whether this function and the pre-determined process support exactly the desired end goal
+The issue with this is that Uniform datasets, or those which have a material number of common values will not have clean
+edges. As an example, Binary Data sets will have 2 records, Loan Balance will have a material number of 0 balances,
+so if you look for 10 Edges, 5 of the 10 are likely to be 0. This causes issue when using the np and pd options.
+Some assumptions and work arounds have been implemented, primary related to force_number_edges, you can force and it will
+remove duplicates, guaranteeing a minimum number of edges, but as a result you will lose equality in segment size.","['df', 'column_name', 'new_column_name', 'bin_list', 'number_segments', 'force_segmentation', 'right_edge_is_min', 'left_edge_is_max', 'leading_text', 'format_', 'return_value']",,,,,,,data_validation.py
+segment_to_text,"Function which takes a Dataframe Column, which takes a Column Segment or Bin List and converts this to a text based
+definition, which can be more easily applied and read in Visualizations.","['df', 'bin_list', 'column_name', 'new_column_name', 'leading_text', 'format_']",,,,,,,data_validation.py
+round_up_power10,"Function which takes a Series (or Array) and determines the base 10 value of the Logrithm.
+This function is meant to support with EDA/Visualization/ Validation tasks, but trying to help standardize and
+simplify how Segments are Presented.","['series', 'infer_neg_vals']",List,,,,,,data_validation.py
+column_comparison,"Function which takes a dataframe with 2 Columns which are identical and compare the values for equivalency.
+In addition to comparing, it attempts to calculate the value differences and report on statistical properties
+of the differences. Uses a number of input functions, including:
+Binary Complex Equivalency, column_segmenter,","['df', 'column_name', 'column_name1', 'metric_name', 'bin_list', 'retain_columns', 'number_segments', 'force_segmentation']",,,,,,,data_validation.py
+df_column_comparison,"Function which applies column_comparison across an Entire Dataframe.
+It expands the original in 2 distinct ways,
+1) It looks to iterate across the entire Dataframe.
+2) It looks to consolidate on the Group By Level, although it only applies the calculation of EQ,GT,LT, once to improve
+process and reduce duplication.
+##############
+what happens when a column doesn't have a corresponding Value?
+# Need to Use Bin Segments. But How?
+##############","['df', 'column_list', 'column_distinction', 'retain_columns', 'bin_list', 'number_segments', 'force_segmentation']",,,,,,,data_validation.py
+column_statistical_review,"Function to compute statistical properities of a particular column, function approaches Numeric and Non Numberic Differntly, non numeric
+calculations, Total Records, Unique Records, Null Records and the Mode.
+For Numreic Calculations, can also return, Mean, Mode, Standard Deviation, Max, Min, Mode, Number of Nulls, Zeroes, Non Zeros.
+Additionally, there are 4 Additional Components, which can include a top Value count of the most frequent records, the decile positions o
+the records, the Cummulative Sum of the Records, and the Percentage of Cummulative POsition at each decile.","['df', 'column_name', 'partitions', 'top_records_to_include', 'cummulative_sum', 'cummulative_percent', 'remove_null_from_decile', 'remove_zero_from_decile']",Dataframe,24-Jan-26,24-Jan-26,TBD,TBD,"df = column_statistical_review(final_mbr_df,'AGE')",data_validation.py
 historical_month_end_list,Function which Creates a list of Month End Dates.,"['end_dt', 'total_months', 'sort_ascending', 'format_']",List,19-Dec-25,19-Dec-25,TBD,TBD,df = historical_month_end_list(),date_functions.py
 generate_dictionary,"Function Used to Generate D Learning Notes, which is a consolidated view of D Notes and D Definitions.
 Used as a crtical input to D Streamlit Dashboard.
@@ -82,15 +161,15 @@ Utilizing Function notes_word_equals_definition_process, integration where notes
 Step4:
 Merge all other Definitions into Notes Sheet.","['notes_df', 'definition_df', 'export_location']",Object Type,12-Jan-26,12-Jan-26,TBD,TBD,"notes_df,examine_further= generate_dictionary()
 notes_df,insert_records,insert_records2,insert_records3,examine_further= generate_dictionary()",daily_processes.py
-review_test_results,"Function to Facilitate a Daily Review of Historically Created Words.
-Function has a scoring Component, a Correct Answer (Pass is worth 1 Point), A Incorrect Answer (Fail is worth -2 points), if cummulative score is not postive
-then user is expected to Answer, with expectation of making score positive, if less than 10 examples with a negative score, it randomly samples from
-positive scores.",['file_location'],,,,,,,daily_processes.py
-daily_test,,"['observations', 'file_location']",,,,,,,daily_processes.py
 create_py_table_dict,"Function which Generates a Dataframe representing a Function Dictionary, sourcing the Functions from a Shared Folder Location, and
 using the definitions sourced from a Python Dictionary","['base_location', 'export_location']",DataFrame,4-Dec-25,4-Dec-25,TBD,TBD,python_function_dict_df = create_py_table_dict(),daily_processes.py
 parse_dot_py_folder,"Function which Allows for the Quick Review of All Python Functions in a Particular Directory, using the functions
 Read Directory and ParseDDotPYFile","['location', 'export_location']",DataFrame,4-Dec-25,4-Dec-25,TBD,TBD,"function_list, function_parameters = parse_dot_py_folder()",daily_processes.py
+daily_test,,"['observations', 'file_location']",,,,,,,daily_processes.py
+review_test_results,"Function to Facilitate a Daily Review of Historically Created Words.
+Function has a scoring Component, a Correct Answer (Pass is worth 1 Point), A Incorrect Answer (Fail is worth -2 points), if cummulative score is not postive
+then user is expected to Answer, with expectation of making score positive, if less than 10 examples with a negative score, it randomly samples from
+positive scores.",['file_location'],,,,,,,daily_processes.py
 input1,"Originally Named convert_dict_to_parameters
 Convert a .py file containing Dict into a Dataframe which can is used to populate Function Parameters",['module'],Dataframe,4-Dec-25,4-Dec-25,TBD,TBD,"import d_dictionaries
 temp = convertlisttoparameters(d_dictionaries)",input_functions_ignore.py
@@ -106,8 +185,12 @@ generate_create_table_sql,"Function to create a SQL Statement to Create a New Ta
 Function Utilizes a review of the DataFrame to recommend Column Names, Formating and appropriate Column Sizing.
 Function is NOT BEYOND REPROACH, requires some manual review and should not be automated.","['df', 'table_name', 'schema', 'db']",- str: SQL CREATE TABLE statement,,,,,,sql_.py
 TableRecordCountByDate,Generate a SQL Server query to count records by day for each table and pivot them.,"['table_dict', 'end_date', 'total_days']",str: A full SQL query string.,,,,,,sql_.py
+gpt_question,,"['list_', 'word_list']",,,,,,,data_d_strings.py
 template_doc_string_print,Function to Return the Printed Value of the Doc String template_doc_string. Easier to Copy and Paste in this format opposed ot raw text.,['text_'],string,17-Dec-25,17-Dec-25,TBD,TBD,template_doc_string_print(),data_d_strings.py
 notebook_break,,[],,,,,,,data_d_strings.py
+BinaryComplexEquivlancey,,"['df', 'col', 'col1', 'new_column_name']",,,,,,,df_processing.py
+binary_column_creator,"Function to Create a Binary Flag.
+Updated to remove Dictionary capabilities. Which seems overtly complex and unncessary. 23Jul25","['df', 'column_name', 'new_column_name', 'value', 'calculation', 'balance_column']",,,,,,,df_processing.py
 notes_df_to_outline_html,"Function to Take a Dataframe and convert it into A Structured Indented Point form Format.
 Used for Clear Visualization of Notes.","['df', 'column_order']",str Update: Added display parameter to support Streamlit Adoption.,12-Dec-25,18-Dec-25,TBD,TBD,"from connections import d_google_sheet_to_csv
 df = import_d_google_sheet('Notes')
@@ -141,3 +224,6 @@ like Power BI, where long format enables dynamic pivoting and aggregation.","['d
 export_to_excel,"Function Created to Export Data to Excel, with increased Control over the output, including adding a sheet name and attempting to
 format the columns, which would be the primary use over simple .to_excel.
 Given CSV format does not have explicit memory, there is no benefit when requirement dictate a CSV file.","['df', 'file_name', 'sheet_name', 'default_max_width', 'long_columns', 'long_max_width']",,,,,,,df_processing.py
+transpose_df,"Transposes a non-time-series DataFrame from wide to long format by melting specified columns.
+This is especially useful for flattening columns into a single column to support tools
+like Power BI, where long format enables dynamic pivoting and aggregation.","['df', 'index', 'columns']",DataFrame: A long-format DataFrame with 'variable' and 'value' columns. Definition of Function,1-JUL-25,1-JUL-25,TBD,TBD,,df_processing.py
