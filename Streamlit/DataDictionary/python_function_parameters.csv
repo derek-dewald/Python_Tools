@@ -353,6 +353,10 @@ links,google_notes_csv,dict,https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF
 links,google_definition_csv,dict,https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv,data_d_lists.py
 links,google_word_quote,dict,https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=1117793378&single=true&output=csv,data_d_lists.py
 links,google_daily_activities,dict,https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=472900611&single=true&output=csv,data_d_lists.py
+links,function_list_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_list.csv,data_d_lists.py
+links,parameter_list_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_parameters.csv,data_d_lists.py
+links,folder_toc_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/folder_listing.csv,data_d_lists.py
+links,d_learning_notes_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_learning_notes.csv,data_d_lists.py
 function_fields,date_created,str,,data_d_lists.py
 function_fields,date_last_modified,str,,data_d_lists.py
 function_fields,classification,str,,data_d_lists.py
