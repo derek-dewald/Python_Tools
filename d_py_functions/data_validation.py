@@ -3,13 +3,14 @@ import numpy as np
 import math
 
 import sys
-#sys.path.append('K:\\INFORMATION_SYSTEMS\\Reporting and Analytics\\Derek\\BEEM_PY\\')
-#sys.path.append('K:\\INFORMATION_SYSTEMS\\Reporting and Analytics\\Derek\\d_py_functions\\')
-#from FeatureEngineering import BinaryComplexEquivlancey as binary_complex_equivlance
-
-sys.path.append("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions")
-
-from feature_engineering import binary_complex_equivlance
+import os
+if os.getcwd().find('Users/derekdewald/Doc')!=-1:
+    sys.path.append("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions")
+    from feature_engineering import binary_complex_equivlance
+else:
+    sys.path.append('K:\\INFORMATION_SYSTEMS\\Reporting and Analytics\\Derek\\BEEM_PY\\')
+    sys.path.append('K:\\INFORMATION_SYSTEMS\\Reporting and Analytics\\Derek\\d_py_functions\\')
+    from FeatureEngineering import BinaryComplexEquivlancey as binary_complex_equivlance
 
 def df_column_compare(df,df1,return_df=False):
     
@@ -182,145 +183,7 @@ def get_segments(df,
     
     return edges
 
-def column_segmenter(df,
-                     column_name,
-                     new_column_name=None,
-                     bin_list=[],
-                     number_segments=10,
-                     force_segmentation=True,
-                     right_edge_is_min=False,
-                     left_edge_is_max=False,
-                     leading_text="$",
-                     format_=',.2f',
-                    return_value='df_column'):
-    
-    '''
-    
-    Function which Takes a SINGLE column in a DataFrame and calculates the segments as designed by the appropriate size of
-    the dataframe by number of segments, as an example, a Decile Analysis would include 10 Segments.
 
-    NOTE: This is not a PERFECT EQUAL Segment Funcition. When segments Share Edges it is Problematic, specifically, in Dataframes which have a 
-    median value which can include multiple segments, the mathematical representation can be problematic. There are multiple approaches to handle
-    must be aware of what one is trying to accomplish and whether this function and the pre-determined process support exactly the desired end goal
-    
-    The issue with this is that Uniform datasets, or those which have a material number of common values will not have clean
-    edges. As an example, Binary Data sets will have 2 records, Loan Balance will have a material number of 0 balances, 
-    so if you look for 10 Edges, 5 of the 10 are likely to be 0. This causes issue when using the np and pd options. 
-    
-    Some assumptions and work arounds have been implemented, primary related to force_number_edges, you can force and it will 
-    remove duplicates, guaranteeing a minimum number of edges, but as a result you will lose equality in segment size.
-    
-    Parameters:
-        df(df): DataFrame
-        column_name(str): Name of Column to be Analyzed.
-        new_column_name(str): Name of column to be created in DF if a list of edges is not selected
-        segments(list): Predetermined and requested listing from User.
-        return_value(str): Indication of what user would like in return.
-            df_column: New Column with Index Position of Segment/Edge
-            segment_name: New Column with Text Description of Segment, for Visualization
-            segments: List of Edge Positions
-        number_edges(int): Number of distinct Edges to return
-        force_segmentation(bool): Item to force the return of edges as defined in function by removing duplication in DF
-        leading_text(str): Additional Leading Text to be Added when using segment_name
-        leading_text(str): Desired Format of Value to be returned when using segment_name
-        
-        right_edge_is_min(bool): When Using Custom Edges, whether values in Column exist which are less than defined Minimum.
-        left_edge_is_max(bool):  When Using Custom Edges, whether values in Column exist which are greated than defined Maximum
-        
-
-    TO BE DEVELOPED
-    
-         impute_blanks=False,
-         remove_zeros=False,
-        
-    '''
-    # If New Column Name is not defined, Create it.
-    if not new_column_name:
-        new_column_name = f"{column_name}_SEGMENT"
-    
-    # Whether you want to Force Edges or Not
-    if force_segmentation:
-        temp = df.drop_duplicates(column_name)[[column_name]]    
-    else:
-        temp = df[[column_name]]
-        
-    if len(bin_list)==0:
-        bin_list = get_segments(temp,
-                                 column_name=column_name,
-                                 number_segments=number_segments)
-    else:
-        number_segments = len(bin_list)+1
-        
-    if return_value=='bin_list':
-        return bin_list
-    try:
-        seg = np.searchsorted(bin_list, df[column_name], side="right") 
-        df[new_column_name] = seg
-    except:
-        pass    
-
-    return df,bin_list
-
-def segment_to_text(df,
-                    bin_list,
-                    column_name=None,
-                    new_column_name=None,
-                    leading_text="$",
-                    format_=',.2f'):
-    
-    '''
-    Function which takes a Dataframe Column, which takes a Column Segment or Bin List and converts this to a text based
-    definition, which can be more easily applied and read in Visualizations. 
-    
-    '''
-    
-    if not column_name:
-        column_name = 'DIFFERENCE'
-    if not new_column_name:
-        new_column_name = 'DIFF_TEXT_SEGMENT'
-    
-    # Test to see if Lower Bound is actual Limit.
-    if (df[column_name].lt(bin_list[0])).any():
-        right_is_min=False
-    else:
-        right_is_min=True
-    
-    if (df[column_name].gt(bin_list[-1])).any():
-        left_is_max=False
-    else:
-        left_is_max=True
-        
-    count = 0
-    
-    # Create Mapping Dict
-    mapping_dict = {}
-    
-    for value in bin_list:
-        if count == 0:
-            # Increase Count by 1 for Lower Bound Hard Edge
-            if right_is_min:
-                count +=1
-                count_=0
-                le_max_adj = -1
-            else:
-                count_ =1
-                le_max_adj=1
-                
-            mapping_dict[count] = f"1) LT {bin_list[count]:{format_}}"
-        
-        elif count == len(bin_list)&left_is_max:
-            mapping_dict[count-1+count_] = f"{count+le_max_adj}) GT {bin_list[-1]:{format_}}"
-            
-        elif count == len(bin_list):
-            mapping_dict[count-1+count_] = f"{count+le_max_adj}) GT {bin_list[-2]:{format_}}"
-            
-        else:
-            mapping_dict[count] = f"{count+count_}) GT {bin_list[count-1]:{format_}}, LT {bin_list[count]:{format_}}"
-    
-        # Increase Count for Iteration
-        count+=1
-            
-    df[new_column_name] = df[new_column_name].map(mapping_dict)
     
 def round_up_power10(series, infer_neg_vals=True):
     """
@@ -335,6 +198,13 @@ def round_up_power10(series, infer_neg_vals=True):
         
     Returns:
         List
+
+    date_created:20-Jan-26
+    date_last_modified: 20-Jan-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        
         
         
     
@@ -393,6 +263,12 @@ def column_comparison(df,
         column_name1 (str):
     
     Returns:
+
+    date_created:20-Jan-26
+    date_last_modified: 20-Jan-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
     
     '''
     temp_df = df[[column_name,column_name1]].copy()
@@ -497,6 +373,18 @@ def df_column_comparison(df,
     # Need to Use Bin Segments. But How?
     
     ##############
+
+    Parameters:
+        df(df): Dataframe
+
+    Returns:
+        Something
+
+    date_created:20-Jan-26
+    date_last_modified: 20-Jan-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
     
     
     '''
@@ -538,129 +426,181 @@ def df_column_comparison(df,
     return output_dict
 
 
-def column_statistical_review(
-    df,
-    column_name,
-    partitions=10,
-    top_records_to_include=5,
-    cummulative_sum=False,
-    cummulative_percent=False,
-    remove_null_from_decile=False,
-    remove_zero_from_decile=False):
+
+def column_segmenter(df,
+                     column_name,
+                     new_column_name=None,
+                     bin_list=[],
+                     number_segments=9,
+                     force_segmentation=True,
+                     leading_text="$",
+                     format_=",.2f",
+                     print_=True,
+                     return_value=''):
 
     '''
-    Function to compute statistical properities of a particular column, function approaches Numeric and Non Numberic Differntly, non numeric
-    calculations, Total Records, Unique Records, Null Records and the Mode.
+    
+    Function which Takes a SINGLE column in a DataFrame and calculates the segments as designed by the appropriate size of
+    the dataframe by number of segments, as an example, a Decile Analysis would include 10 Segments.
 
-    For Numreic Calculations, can also return, Mean, Mode, Standard Deviation, Max, Min, Mode, Number of Nulls, Zeroes, Non Zeros.
+    NOTE: This is not a PERFECT EQUAL Segment Funcition. When segments Share Edges it is Problematic, specifically, in Dataframes which have a 
+    median value which can include multiple segments, the mathematical representation can be problematic. There are multiple approaches to handle
+    must be aware of what one is trying to accomplish and whether this function and the pre-determined process support exactly the desired end goal
+    
+    The issue with this is that Uniform datasets, or those which have a material number of common values will not have clean
+    edges. As an example, Binary Data sets will have 2 records, Loan Balance will have a material number of 0 balances, 
+    so if you look for 10 Edges, 5 of the 10 are likely to be 0. This causes issue when using the np and pd options. 
+    
+    Some assumptions and work arounds have been implemented, primary related to force_number_edges, you can force and it will 
+    remove duplicates, guaranteeing a minimum number of edges, but as a result you will lose equality in segment size.
+    
+    Parameters:
+        df(df): DataFrame
+        column_name(str): Name of Column to be Analyzed.
+        new_column_name(str): Name of column to be created in DF if a list of edges is not selected
+        bin_list (list): LIst of predetermined Bins where User wants to define themselves.
+        number_segments(list): Predetermined and requested listing from User.
+        force_segmentation(bool): Item to force the return of edges as defined in function by removing duplication in DF
+        leading_text (str): Optional Text to be added into Text Segment before Number is presented
+        format_(str): Optional f-string based formating to apply to number
+        print_(bool): Optional Print statement so you can easily see the brackets in print as created.
 
-    Additionally, there are 4 Additional Components, which can include a top Value count of the most frequent records, the decile positions o
-    the records, the Cummulative Sum of the Records, and the Percentage of Cummulative POsition at each decile.
-
-    Parameters: 
-        df (df): Any DataFrame.
-        column_name(str): Name of particular column to where function will be applied.
-        partitions(int): Number of Partitions to be applied in returned DF (default is 10, if 0 nothing returned.) 
-        top_records_to_include(int): Number of Top Records to be returned in DF (default is 5, if 0 nothing returned.) 
-        cummulative_sum (bool): Boolean, if True, will add the Cummulative Sum Value into the Return DF
-        cummulative_percent (bool): Boolean, if True, will add the Cummulative Sum Percent  into the Return DF
-        remove_null_from_decile (bool): Boolean, if true, it will remove Null and NA values from Caluclation of Decile
-        remove_zero_from_decile (bool): Boolean, if true, it will remove Zero values from Caluclation of Decile
-
+        return_value(str): Indication of what user would like in return. ("",bin_list,segment_dict)
+            
     Returns:
-        Dataframe
+        Contingent on Return Value.
+            If "" then it updates df and returns nothing
+            if return_value == 'bin_list', it returns a List of the Bin Position
+            if return_value == 'segment_dict', it returns a dict of the index name and bin value, with creating a column in DF
+        
+    TO BE DEVELOPED
+    
+         impute_blanks=False,
+         remove_zeros=False,
 
-    date_created:24-Jan-26
-    date_last_modified: 24-Jan-26
+        Incoporated Changes from WorkFile, which removed counting of Min/Max and applied better logic.
+         
+    date_created:20-Jan-26
+    date_last_modified: 01-Feb-26
     classification:TBD
     sub_classification:TBD
     usage:
-        df = column_statistical_review(final_mbr_df,'AGE')
-    
+        
     '''
-    # Create a Series
-    s = df[column_name]
 
-    # Boolean
-    is_numeric = pd.api.types.is_numeric_dtype(s)
 
-    # Calculations
-    total = len(s)
-    is_null = s.isna()  # covers NaN / None
-    null_count = int(is_null.sum())
+    if not new_column_name:
+        new_column_name = f"TEXT_SEGMENT"
 
-    # Value Dict.
-    out = {
-        "TOTAL_RECORDS": total,
-        "UNIQUE_RECORDS": s.nunique(dropna=False),   # closer to “unique records” intent
-        "NULL_RECORDS": null_count,
-        "MODE":s.mode().to_list()
+    if force_segmentation:
+        temp = df.drop_duplicates(column_name)[[column_name]]
+    else:
+        temp = df[[column_name]]
+
+    # Determine bin_list if not provided
+    if len(bin_list) == 0:
+        bin_list = get_segments(temp,
+                                column_name=column_name,
+                                number_segments=number_segments)[1:]
+        print(bin_list)
+    else:
+        number_segments = len(bin_list)
+
+    # Return only bin_list if requested
+    if return_value == "bin_list":
+        return bin_list
+
+    # Assign segments using searchsorted
+    seg = np.searchsorted(bin_list, df[column_name], side="right")
+    df['SEGMENT_INDEX'] = seg
+
+    # Create a Dictionary to insure Consistency in Application
+    segment_dict = {
+        idx: edge for idx, edge in enumerate(bin_list)
     }
+    
+    # Used to Insure that a GT Value exists where highest Bin is not Highest Value
+    segment_dict[len(bin_list)] = None
+    
+    if return_value=='segment_dict':
+        return segment_dict
 
-    if is_numeric:
-        # quick numeric stats (skipna=True by default)
-        out.update({
-            "SUM": s.sum(),
-            "MEAN": s.mean(),
-            "STD_DEV": s.std(),
-            "MEDIAN": s.median(),
-            "MAX": s.max(),
-            "MIN": s.min(),
-        })
-
-        # compute once and reuse
-        is_zero = s.eq(0) & ~is_null
-        zero_count = int(is_zero.sum())
-        out["ZERO_RECORDS"] = zero_count
-        out["NON_ZERO_RECORDS"] = total - null_count - zero_count
-
-    # Build output frame
-    temp_df = pd.Series(out, name=column_name).to_frame()
+    else:
+        segment_to_text(df,
+                        segment_dict=segment_dict,
+                        value_col=column_name,
+                        index_col='SEGMENT_INDEX',
+                        new_column_name=new_column_name,
+                        leading_text=leading_text,
+                        format_=format_,
+                        print_=print_)
         
-    if total == null_count:
-        return temp_df
 
-    if (remove_null_from_decile | remove_zero_from_decile):
-    
-        mask = pd.Series(True, index=s.index)
-    
-        if remove_null_from_decile:
-            mask &= s.notna()
-    
-        if remove_zero_from_decile:
-            mask &= s.ne(0)
 
-        s = s.loc[mask]
+def segment_to_text(df,
+                    segment_dict,
+                    value_col='DIFFERENCE',
+                    index_col='INDEX_SEGMENT',
+                    new_column_name="TEXT_SEGMENT",
+                    leading_text="$",
+                    format_=",.2f",
+                    print_=True):
+    """
+    Function to Create a Text Based Segmentation in a dataframe, based off of column_segmntation, which creates the 
+    index. Input is a Dictionary, to insure consistency, as there where some logic based issues. 
     
-    if top_records_to_include>0:
-        try:
-            temp_df = pd.concat([temp_df,top_x_records(s,column_name)])
-        except:
-            pass
-    
-    if partitions>0:
-        segments = s.sort_values().quantile(np.linspace(1/10, 1, 10), interpolation="higher").tolist()
-        df_segments = pd.DataFrame({
-            column_name: segments,
-            'Decile': [f"Decile {x+1}" for x in range(len(segments))]
-        }).set_index('Decile')
-        temp_df = pd.concat([temp_df,df_segments])
-
-    if cummulative_sum:
-        cumm_segments = s.sort_values().cumsum().quantile(np.linspace(1/10, 1, 10), interpolation="higher").tolist()
-        df_cumm_sum = pd.DataFrame({
-            column_name: cumm_segments,
-            'CUMMALATIVE_SUM': [f"Cummulative Sum at Decile {x+1}" for x in range(len(segments))]
-        }).set_index('CUMMALATIVE_SUM')
-        temp_df = pd.concat([temp_df,df_cumm_sum])
+    Parameters:
+        df(df):
+        segment_dict(dict):
         
-    if cummulative_percent:
-        cumm_seg_perc = [(x/cumm_segments[-1])*100 for x in cumm_segments]
-
-        df_cumm_sum_perc = pd.DataFrame({
-            column_name: cumm_seg_perc,
-            'CUMMALATIVE_SUM_PERC': [f"Cummulative Sum Percentage at Decile {x+1}" for x in range(len(segments))]
-        }).set_index('CUMMALATIVE_SUM_PERC')
-        temp_df = pd.concat([temp_df,df_cumm_sum_perc])
         
-    return temp_df
+        leading_text (str): Optional Text to be added into Text Segment before Number is presented
+        format_(str): Optional f-string based formating to apply to number
+        print_(bool): Optional Print statement so you can easily see the brackets in print as created.
+    
+    Returns: 
+        Inputs Column into existing DataFrame
+
+    date_created:20-Jan-26
+    date_last_modified: 01-Feb-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
+    
+    
+    """
+
+    mapping = {}
+
+    segment_indices = sorted(segment_dict.keys())
+
+    for seg_index in segment_indices:
+        edge = segment_dict[seg_index]
+
+        # --- CASE 1: LOWER EDGE (first segment) -------------------
+        if seg_index == 0:
+            mapping[seg_index] = (
+                f"{seg_index+1}) LT {leading_text}{float(edge):{format_}}"
+            )
+
+        # --- CASE 2: UPPER EDGE (GT last bin) ----------------------
+        elif edge is None:
+            last_edge = segment_dict[seg_index - 1]
+            mapping[seg_index] = (
+                f"{seg_index+1}) GT {leading_text}{float(last_edge):{format_}}"
+            )
+
+        # --- CASE 3: MIDDLE BINS ----------------------------------
+        else:
+            prev_edge = segment_dict[seg_index - 1]
+            mapping[seg_index] = (
+                f"{seg_index+1}) GTE {leading_text}{float(prev_edge):{format_}}, "
+                f"LT {leading_text}{float(edge):{format_}}"
+            )
+
+    # Apply mapping directly
+    df[new_column_name] = df[index_col].map(mapping)
+
+    if print_:
+        display(df[[new_column_name, value_col]].groupby(new_column_name)
+              .agg(['mean','count','max','min']).reset_index())

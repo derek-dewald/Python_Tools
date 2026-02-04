@@ -369,8 +369,8 @@ def daily_test(observations=5,
             input(f'Update Google Sheet with Definition\n')
         else:
             input("######################### ANSWER QUESTION #########################")
-            df, nt,lk,md,ds, lt,ac = today_test.iloc[count][['Definition','Notes','Link','Markdown Equation','Dataset Size','Learning Type',"Algorithm Class"]]
-            print(f"Definition: {df}\nNotes: {nt}\nLink: {lk}\nMarkdown: {md}\nDataset Size: {ds}\nLearning Type: {lt}\nAlogrithm Class: {ac}\n")
+            df, nt,lk,md,ds, lt,ac,mt = today_test.iloc[count][['Definition','Notes','Link','Markdown Equation','Dataset Size','Learning Type',"Algorithm Classification",'Model Type']]
+            print(f"Definition: {df}\nNotes: {nt}\nLink: {lk}\nMarkdown: {md}\nDataset Size: {ds}\nLearning Type: {lt}\nAlogrithm Class: {ac}\nModel Type: {mt}")
             result = input(f'What was the result? (P/F)\n')
             result_dict[word] = [1 if result.lower() =='p' else -3][0]
 

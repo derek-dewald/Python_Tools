@@ -27,9 +27,7 @@ tbd = {
     'ml_pipeline':"Functions related to Custom Build ML Pipelines, Approaches and Techniques",
     'validations':"Functions related to Validation of Dataframes, Data Sets and Comparisons. This differs from EDA, where it is only about understanding, not Comparison",
     
-
 }
-
 
 links = {
     'google_mapping_sheet_csv':'https://docs.google.com/spreadsheets/d/e/2PACX-1vSwDznLz-GKgWFT1uN0XZYm3bsos899I9MS-pSvEoDC-Cjqo9CWeEuSdjitxjqzF3O39LmjJB0_Fg-B/pub?output=csv',
@@ -40,6 +38,79 @@ links = {
     'function_list_url':"https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_list.csv",
     'parameter_list_url':"https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_parameters.csv",
     'folder_toc_url':"https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/folder_listing.csv",
-    'd_learning_notes_url':"https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_learning_notes.csv"
+    'd_learning_notes_url':"https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_learning_notes.csv",
+    'technical_notes':'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv'
+}
 
+emoji_dict = {
+    "STATUS": {
+        "label": "Status / Progress / Outcome",
+        "description": "Execution state, progress tracking, completion, and flow of work.",
+        "emojis": ['✅', '✔️', '⏸️', '🟢', '🟡', '🔴', '⏳', '🕐', '📤', '📥', '🗂️']
+    },
+    "DATA": {
+        "label": "Data / Analytics / Artifacts",
+        "description": "Raw data, analytical outputs, reports, documentation, and structured artifacts.",
+        "emojis": ['📊', '📈', '📉', '📋', '📝', '📚', '🔢', '📦', '🧾']
+    },
+    "QUALITY": {
+        "label": "Data Quality / Validity / Trust",
+        "description": "Data cleanliness, assumptions, validation, lineage, and reliability checks.",
+        "emojis": ['🧼', '🔍', '🧪', '🧾', '🧯', '🪪']
+    },
+    "ANALYSIS": {
+        "label": "Analysis / Statistics / Reasoning",
+        "description": "Measurement, statistical thinking, mathematical rigor, and analytical reasoning.",
+        "emojis": ['🧠', '🧮', '📐', '📏', '🎲', '🔔', '🌡️', '⚖️']
+    },
+    "MODEL": {
+        "label": "Modeling / Machine Learning",
+        "description": "Feature engineering, model construction, training, tuning, and pipelines.",
+        "emojis": ['🤖', '🧩', '🧱', '🏗️', '🎛️', '🪜', '🪝', '🔄']
+    },
+    "EVAL": {
+        "label": "Evaluation / Performance / Testing",
+        "description": "Model assessment, metrics, validation, experimentation, and testing outcomes.",
+        "emojis": ['🧪', '🎯', '📉', '📈', '🔁']
+    },
+    "INSIGHT": {
+        "label": "Insight / Discovery / Understanding",
+        "description": "Pattern discovery, interpretation, understanding, and sense-making.",
+        "emojis": ['💡', '💭', '🤔', '🧐', '🧭']
+    },
+    "DECISION": {
+        "label": "Decision / Optimization / Strategy",
+        "description": "Judgment, trade-offs, prioritization, optimization, and final recommendations.",
+        "emojis": ['⚖️', '🎯', '🚦', '🏁', '🧠']
+    },
+    "ACTION": {
+        "label": "Tools / Engineering / Execution",
+        "description": "Implementation, engineering work, tooling, and operational execution.",
+        "emojis": ['🛠️', '🔧', '🧰', '⚙️', '🗜️']
+    },
+    "TIME": {
+        "label": "Time / Change / Drift",
+        "description": "Trends over time, decay, refresh cycles, and model or data drift.",
+        "emojis": ['🕰️', '🌊', '📉', '🔄', '🧊']
+    },
+    "CAUSAL": {
+        "label": "Causality / Impact / Inference",
+        "description": "Cause-effect reasoning, inference, treatments, and impact assessment.",
+        "emojis": ['🔗', '🧪', '🎯', '🧠', '🧯']
+    },
+    "RISK": {
+        "label": "Risk / Alerts / Flags",
+        "description": "Warnings, failures, blockers, risks, and critical issues.",
+        "emojis": ['⚠️', '❌', '🚨', '🚩', '🛑', '❗', '❓', '⛔']
+    },
+    "COLLAB": {
+        "label": "Collaboration / Communication",
+        "description": "Sharing, alignment, discussion, and coordination with others.",
+        "emojis": ['📣', '🗣️', '👥', '🤝', '📨']
+    },
+    "ENERGY": {
+        "label": "Motivation / Momentum / Wins",
+        "description": "Progress celebration, motivation, momentum, and morale.",
+        "emojis": ['🚀', '🔥', '💥', '💫', '🌟', '🏆', '💎', '🌱']
+    }
 }

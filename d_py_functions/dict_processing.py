@@ -142,5 +142,5 @@ def flatten_clean_dict(dict_,
         if high_low_list_fix:
              final_df.rename(columns={x:x.replace('[0]','_low').replace('[1]','_high') for x in final_df.columns},inplace=True)
         
-        final_df = final_df.reset_index().rename(columns={'index':index_name})
+        #final_df = final_df.reset_index().rename(columns={'index':index_name})
         return final_df

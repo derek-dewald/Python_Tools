@@ -108,3 +108,30 @@ def password_generator(minimum=8,maximum=10):
     random.shuffle(p_list)  # shuffle in place
     return "".join(p_list)
 
+
+def view_entire_df_column(df,index_=0):
+    
+    '''
+    Function to Support with the visualization of a specific dataframe column within Jupyter Notebook. Prints the Entire column (Transposed).
+
+    Parameters:
+        df(df): Dataframe
+        index_ (int): Index Row Position of record you would like to be printed in Notebook, default is 0.
+
+    Returns:
+        None
+
+    date_created:01-Feb-26
+    date_last_modified: 01-Feb-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        view_entire_df_column(df)
+    
+    '''
+    with pd.option_context('display.max_columns',None,
+                           'display.max_rows',None,
+                           'display.width',None):
+        
+        display(df.iloc[index_])
+

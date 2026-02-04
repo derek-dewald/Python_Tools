@@ -54,3 +54,62 @@ def historical_month_end_list(end_dt=None,
         month_list = month_list[::-1]
     
     return list(month_list)
+
+
+def convert_df_date(df,
+                    column_name,
+                    new_column_name="",
+                    normalize=0):
+    '''
+    Function to Convert Str to Datetime for Dataframe Column
+    
+    Parameters:
+        column_name (str): Name of Column to Convert
+        new_column_name (str): If populated, it will create a new column Name, otherwise it will replace column_name
+        normalize (int): Binary Flag, to Normalize Time to 00:00:00
+                         If 0 then no normalization, if 1 then normalize.
+    
+    Returns:
+        Creates New Column In Dataframe. If new_column_name is blank, it overrides exists column_name, else it creates a new
+
+        
+    date_created: 01-Jan-24
+    date_last_modified: 01-Jan-24
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        convert_df_date(df,'DATE')
+    
+    
+    '''
+    
+    if new_column_name =="":
+        new_column_name = column_name
+    
+    if normalize==1:
+        df[new_column_name] = pd.to_datetime(df[column_name],errors='coerce').dt.normalize()
+    else:
+        df[new_column_name] = pd.to_datetime(df[column_name],errors='coerce')
+
+
+def print_current_time():
+    '''
+    Function to Print the Current Time.
+    
+    Parameters:
+        None
+
+    Returns:
+        None.
+
+        
+    date_created: 01-Jan-25
+    date_last_modified: 01-Jan-25
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        print_current_time()
+    
+    
+    '''
+    print(f"Current Time: {datetime.datetime.now().strftime('%H:%M:%S')}")

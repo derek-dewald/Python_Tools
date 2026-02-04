@@ -101,3 +101,52 @@ def compare_function(func1,func2,additional_records=20,strip_docstring=True):
             break
 
     print('Reconcilation Complete')
+
+
+def word_counts_from_column(df,
+                            column_name,
+                            lower= True,
+                            pattern= r"[A-Za-z']+",
+                            min_len= 1,
+                            dropna=True):
+    """
+    Vectorized word counting over a DataFrame column.
+    
+    Parameters:
+        df (df): DataFrame
+        column_name(str): Column containing text to iterate through.
+        lower(bool): Apply Lowercasing for consistency before counting.
+        pattern(re): r"[A-Za-z']+". Regex for tokens (words). Adjust for unicode if needed.
+        min_len(int): Minimum token length to keep.
+        dropna(bool): Whether to drop empty tokens.
+        
+    Returns:
+        pd.Series. Word counts indexed by token (sorted desc).
+
+    date_created:01-Feb-26
+    date_last_modified: 01-Feb-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        Example Function Call
+
+    """
+    s = df[column_name]
+
+    # Convert everything to string safely; keep NaN out of the way
+    # Using astype(str) turns NaN into 'nan', so instead fillna('') first.
+    s = s.fillna("").astype(str)
+
+    if lower:
+        s = s.str.lower()
+
+    # Find all tokens per row (vectorized)
+    tokens = s.str.findall(pattern).explode()
+
+    if dropna:
+        tokens = tokens.dropna()
+
+    if min_len > 1:
+        tokens = tokens[tokens.str.len() >= min_len]
+
+    return tokens.value_counts()

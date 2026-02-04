@@ -1,0 +1,449 @@
+Process,Categorization,Word,Process_Count,CAT_Count,Word_Count,ProcessCAT_Count
+Data Preparation,Definition,Baseline,31.0,88.0,1.0,8.0
+Data Preparation,Definition,Dimension,31.0,88.0,1.0,8.0
+Data Preparation,Definition,Implementation,31.0,88.0,1.0,8.0
+Data Preparation,Definition,Momentum,31.0,88.0,2.0,8.0
+Data Preparation,Definition,Parameter,31.0,88.0,1.0,8.0
+Data Preparation,Definition,Volatility,31.0,88.0,1.0,8.0
+Data Preparation,Regularization,ElasticNet,31.0,3.0,1.0,3.0
+Data Preparation,Regularization,Lasso,31.0,3.0,1.0,3.0
+Data Preparation,Regularization,Ridge,31.0,3.0,1.0,3.0
+Model Evaluation,Feature Selection,Area Under the Curve,8.0,8.0,1.0,8.0
+Model Evaluation,Feature Selection,Bias,8.0,8.0,1.0,8.0
+Model Evaluation,Feature Selection,Bias - Variance Trade Off,8.0,8.0,1.0,8.0
+Model Evaluation,Feature Selection,Variance,8.0,8.0,1.0,8.0
+ML Model,General Principles,Machine Learning,250.0,4.0,1.0,3.0
+ML Model,General Principles,Optimization,250.0,4.0,1.0,3.0
+ML Model,Pipeline Stage,Model Summarization / Model Interpretability,250.0,13.0,1.0,5.0
+ML Model,Pipeline Stage,Monitoring,250.0,13.0,2.0,5.0
+Mathematics,Concept,Homoscedasticity,23.0,4.0,1.0,4.0
+Mathematics,Concept,Independence,23.0,4.0,1.0,4.0
+Mathematics,Concept,Linearity,23.0,4.0,1.0,4.0
+Mathematics,Concept,Normality,23.0,4.0,1.0,4.0
+Mathematics,Definition,Constraint,23.0,88.0,2.0,16.0
+Mathematics,Definition,Function,23.0,88.0,1.0,16.0
+Mathematics,Property,Colinearity,23.0,1.0,1.0,1.0
+Mathematics,Theorem,Best Linear Unbiased Estimator,23.0,3.0,1.0,2.0
+Mathematics,Theorem,Algorithm,23.0,3.0,1.0,2.0
+ML Model,Algorithm,Ada,250.0,207.0,1.0,207.0
+ML Model,Algorithm,AdaBoostClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,AdaBoostRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,AffinityPropagation,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Agentic AI,250.0,207.0,1.0,207.0
+ML Model,Algorithm,AgglomerativeClustering,250.0,207.0,1.0,207.0
+ML Model,Algorithm,ARDRegression,250.0,207.0,1.0,207.0
+ML Model,Algorithm,BaggingClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,BaggingRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,BayesianGaussianMixture,250.0,207.0,1.0,207.0
+ML Model,Algorithm,BayesianRidge,250.0,207.0,1.0,207.0
+ML Model,Algorithm,BernoulliNB,250.0,207.0,1.0,207.0
+ML Model,Algorithm,BernoulliRBM,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Bidirectional Encoder Representations from Transformers (BERT),250.0,207.0,1.0,207.0
+ML Model,Algorithm,Binarizer,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Birch,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Bisecting K-Means,250.0,207.0,1.0,207.0
+ML Model,Algorithm,CalibratedClassifierCV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,CategoricalNB,250.0,207.0,1.0,207.0
+ML Model,Algorithm,CCA,250.0,207.0,1.0,207.0
+ML Model,Algorithm,ClassifierChain,250.0,207.0,1.0,207.0
+ML Model,Algorithm,ComplementNB,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Convolutional Neural Network,250.0,207.0,1.0,207.0
+ML Model,Algorithm,CountVectorizer,250.0,207.0,1.0,207.0
+ML Model,Algorithm,DBSCAN,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Decision Trees,250.0,207.0,1.0,207.0
+ML Model,Algorithm,DecisionTreeClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,DecisionTreeRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,DictionaryLearning,250.0,207.0,1.0,207.0
+ML Model,Algorithm,DictVectorizer,250.0,207.0,1.0,207.0
+ML Model,Algorithm,DummyClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,DummyRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,ElasticNetCV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,EllipticEnvelope,250.0,207.0,1.0,207.0
+ML Model,Algorithm,EmpiricalCovariance,250.0,207.0,1.0,207.0
+ML Model,Algorithm,ExtraTreeClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,ExtraTreeRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,ExtraTreesClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,ExtraTreesRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,FactorAnalysis,250.0,207.0,1.0,207.0
+ML Model,Algorithm,FastICA,250.0,207.0,1.0,207.0
+ML Model,Algorithm,FeatureAgglomeration,250.0,207.0,1.0,207.0
+ML Model,Algorithm,FeatureHasher,250.0,207.0,1.0,207.0
+ML Model,Algorithm,FeatureUnion,250.0,207.0,1.0,207.0
+ML Model,Algorithm,FixedThresholdClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,FrozenEstimator,250.0,207.0,1.0,207.0
+ML Model,Algorithm,GammaRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,GaussianMixture,250.0,207.0,1.0,207.0
+ML Model,Algorithm,GaussianNB,250.0,207.0,1.0,207.0
+ML Model,Algorithm,GaussianProcessClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,GaussianProcessRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,GaussianRandomProjection,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Generalaized Liner Model,250.0,207.0,1.0,207.0
+ML Model,Algorithm,GenericUnivariateSelect,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Gradient Descent,250.0,207.0,1.0,207.0
+ML Model,Algorithm,GradientBoostingClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,GradientBoostingRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,GraphicalLasso,250.0,207.0,1.0,207.0
+ML Model,Algorithm,GraphicalLassoCV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,GridSearchCV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,HashingVectorizer,250.0,207.0,1.0,207.0
+ML Model,Algorithm,HDBSCAN,250.0,207.0,2.0,207.0
+ML Model,Algorithm,HistGradientBoostingClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,HistGradientBoostingRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,HuberRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,IncrementalPCA,250.0,207.0,1.0,207.0
+ML Model,Algorithm,IsolationForest,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Isomap,250.0,207.0,1.0,207.0
+ML Model,Algorithm,IsotonicRegression,250.0,207.0,1.0,207.0
+ML Model,Algorithm,KBinsDiscretizer,250.0,207.0,1.0,207.0
+ML Model,Algorithm,KernelCenterer,250.0,207.0,1.0,207.0
+ML Model,Algorithm,KernelDensity,250.0,207.0,1.0,207.0
+ML Model,Algorithm,KernelPCA,250.0,207.0,1.0,207.0
+ML Model,Algorithm,KernelRidge,250.0,207.0,1.0,207.0
+ML Model,Algorithm,KMeans,250.0,207.0,2.0,207.0
+ML Model,Algorithm,KNeighborsClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,KNeighborsRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,KNN,250.0,207.0,1.0,207.0
+ML Model,Algorithm,KNNImputer,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LabelBinarizer,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LabelPropagation,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LabelSpreading,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Large Language Model (LLM),250.0,207.0,1.0,207.0
+ML Model,Algorithm,Lars,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LarsCV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LassoCV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LassoLars,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LassoLarsCV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LassoLarsIC,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LatentDirichletAllocation,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LedoitWolf,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Linear Regression,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LinearDiscriminantAnalysis,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LinearSVC,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LinearSVR,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LocallyLinearEmbedding,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LocalOutlierFactor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Logistic Regression,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LogisticRegression,250.0,207.0,1.0,207.0
+ML Model,Algorithm,LogisticRegressionCV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MDS,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MeanShift,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MinCovDet,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MiniBatchDictionaryLearning,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MiniBatchKMeans,250.0,207.0,2.0,207.0
+ML Model,Algorithm,MiniBatchNMF,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MiniBatchSparsePCA,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MissingIndicator,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MLPClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MLPRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MultiLabelBinarizer,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MultinomialNB,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MultiOutputClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MultiOutputRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MultiTaskElasticNet,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MultiTaskElasticNetCV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MultiTaskLasso,250.0,207.0,1.0,207.0
+ML Model,Algorithm,MultiTaskLassoCV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,NearestCentroid,250.0,207.0,1.0,207.0
+ML Model,Algorithm,NearestNeighbors,250.0,207.0,1.0,207.0
+ML Model,Algorithm,NeighborhoodComponentsAnalysis,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Neural Network,250.0,207.0,1.0,207.0
+ML Model,Algorithm,NMF,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Normalizer,250.0,207.0,1.0,207.0
+ML Model,Algorithm,NuSVC,250.0,207.0,1.0,207.0
+ML Model,Algorithm,NuSVR,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Nystroem,250.0,207.0,1.0,207.0
+ML Model,Algorithm,OAS,250.0,207.0,1.0,207.0
+ML Model,Algorithm,OneClassSVM,250.0,207.0,1.0,207.0
+ML Model,Algorithm,OneVsOneClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,OneVsRestClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,OPTICS,250.0,207.0,1.0,207.0
+ML Model,Algorithm,OrthogonalMatchingPursuit,250.0,207.0,1.0,207.0
+ML Model,Algorithm,OrthogonalMatchingPursuitCV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,OutputCodeClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,PassiveAggressiveClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,PassiveAggressiveRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,PatchExtractor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,PCA,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Perceptron,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Pipeline,250.0,207.0,1.0,207.0
+ML Model,Algorithm,PLSCanonical,250.0,207.0,1.0,207.0
+ML Model,Algorithm,PLSRegression,250.0,207.0,1.0,207.0
+ML Model,Algorithm,PLSSVD,250.0,207.0,1.0,207.0
+ML Model,Algorithm,PoissonRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,PolynomialCountSketch,250.0,207.0,1.0,207.0
+ML Model,Algorithm,PolynomialFeatures,250.0,207.0,1.0,207.0
+ML Model,Algorithm,QuadraticDiscriminantAnalysis,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Quantile Random Forest,250.0,207.0,1.0,207.0
+ML Model,Algorithm,QuantileRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,RadiusNeighborsClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,RadiusNeighborsRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,RandomForestClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,RandomForestRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,RandomizedSearchCV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,RandomTreesEmbedding,250.0,207.0,1.0,207.0
+ML Model,Algorithm,RANSACRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Recurrent Neural Network,250.0,207.0,1.0,207.0
+ML Model,Algorithm,RegressorChain,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Recursive Feature Elimination,250.0,207.0,1.0,207.0
+ML Model,Algorithm,RFECV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,RidgeClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,RidgeClassifierCV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,RidgeCV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SelectFdr,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SelectFpr,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SelectFromModel,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SelectFwe,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SelectKBest,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SelectPercentile,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SelfTrainingClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SequentialFeatureSelector,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SGDClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SGDOneClassSVM,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SGDRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,ShrunkCovariance,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SimpleImputer,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SparseCoder,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SparsePCA,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SparseRandomProjection,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SpectralBiclustering,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SpectralClustering,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SpectralCoclustering,250.0,207.0,1.0,207.0
+ML Model,Algorithm,SpectralEmbedding,250.0,207.0,1.0,207.0
+ML Model,Algorithm,StackingClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,StackingRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Support Vector Machines,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Support Vector Regression,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Support Vector Classifier (SVC),250.0,207.0,1.0,207.0
+ML Model,Algorithm,SVR,250.0,207.0,1.0,207.0
+ML Model,Algorithm,TfidfVectorizer,250.0,207.0,1.0,207.0
+ML Model,Algorithm,TheilSenRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,TruncatedSVD,250.0,207.0,1.0,207.0
+ML Model,Algorithm,TSNE,250.0,207.0,1.0,207.0
+ML Model,Algorithm,TunedThresholdClassifierCV,250.0,207.0,1.0,207.0
+ML Model,Algorithm,TweedieRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,VarianceThreshold,250.0,207.0,1.0,207.0
+ML Model,Algorithm,VotingClassifier,250.0,207.0,1.0,207.0
+ML Model,Algorithm,VotingRegressor,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Word2Vec,250.0,207.0,1.0,207.0
+ML Model,Algorithm,XGBoost,250.0,207.0,1.0,207.0
+ML Model,Centroid-based clustering,Centroid-based clustering,250.0,3.0,1.0,3.0
+ML Model,Centroid-based clustering,KMeans,250.0,3.0,2.0,3.0
+ML Model,Centroid-based clustering,MiniBatchKMeans,250.0,3.0,2.0,3.0
+ML Model,Function,AdditiveChi2Sampler,250.0,4.0,1.0,1.0
+ML Model,General Principles,Deep Learning,250.0,4.0,1.0,3.0
+ML Model,Model Type,Reinforcement Learning,250.0,4.0,1.0,4.0
+ML Model,Model Type,Semisupervised Learning,250.0,4.0,1.0,4.0
+ML Model,Model Type,Supervised Learning,250.0,4.0,1.0,4.0
+ML Model,Model Type,Unsupervised Learning,250.0,4.0,1.0,4.0
+ML Model,Definition,Activation Function,250.0,88.0,1.0,5.0
+ML Model,Definition,Loss Function,250.0,88.0,1.0,5.0
+ML Model,Definition,Model,250.0,88.0,1.0,5.0
+ML Model,Definition,Optimizer,250.0,88.0,1.0,5.0
+ML Model,Definition,Regularization,250.0,88.0,1.0,5.0
+ML Model,Pipeline Stage,Problem Definition,250.0,13.0,1.0,5.0
+ML Model,Pipeline Stage,Training,250.0,13.0,1.0,5.0
+ML Model,Pipeline Stage,Validation,250.0,13.0,1.0,5.0
+ML Model,Procedure,ColumnTransformer,250.0,22.0,1.0,19.0
+ML Model,Procedure,FunctionTransformer,250.0,22.0,1.0,19.0
+ML Model,Procedure,KNeighborsTransformer,250.0,22.0,1.0,19.0
+ML Model,Procedure,LabelEncoder,250.0,22.0,1.0,19.0
+ML Model,Procedure,MaxAbsScaler,250.0,22.0,1.0,19.0
+ML Model,Procedure,MinMaxScaler,250.0,22.0,1.0,19.0
+ML Model,Procedure,OneHotEncoder,250.0,22.0,1.0,19.0
+ML Model,Procedure,OrdinalEncoder,250.0,22.0,1.0,19.0
+ML Model,Procedure,PowerTransformer,250.0,22.0,1.0,19.0
+ML Model,Procedure,QuantileTransformer,250.0,22.0,1.0,19.0
+ML Model,Procedure,RadiusNeighborsTransformer,250.0,22.0,1.0,19.0
+ML Model,Procedure,RBFSampler,250.0,22.0,1.0,19.0
+ML Model,Procedure,RobustScaler,250.0,22.0,1.0,19.0
+ML Model,Procedure,SkewedChi2Sampler,250.0,22.0,1.0,19.0
+ML Model,Procedure,SplineTransformer,250.0,22.0,1.0,19.0
+ML Model,Procedure,StandardScaler,250.0,22.0,1.0,19.0
+ML Model,Procedure,TargetEncoder,250.0,22.0,1.0,19.0
+ML Model,Procedure,TfidfTransformer,250.0,22.0,1.0,19.0
+ML Model,Procedure,TransformedTargetRegressor,250.0,22.0,1.0,19.0
+ML Project,Pipeline Stage,"Bias, Fairness and Ethics",8.0,13.0,1.0,8.0
+ML Project,Pipeline Stage,Data Collection,8.0,13.0,1.0,8.0
+ML Project,Pipeline Stage,Data Preparation,8.0,13.0,1.0,8.0
+ML Project,Pipeline Stage,Deployment,8.0,13.0,1.0,8.0
+ML Project,Pipeline Stage,Evaluation,8.0,13.0,1.0,8.0
+ML Project,Pipeline Stage,Feature Engineering,8.0,13.0,1.0,8.0
+ML Project,Pipeline Stage,Feature Selection,8.0,13.0,2.0,8.0
+ML Project,Pipeline Stage,Hyperparameter Tuning,8.0,13.0,1.0,8.0
+ML Model,Model Architecture,Autoregressive,250.0,2.0,1.0,1.0
+ML Model,Theorem,Curse of Dimensionality,250.0,3.0,1.0,1.0
+Organization,Definition,Categorization,10.0,88.0,1.0,10.0
+Organization,Definition,Definition,10.0,88.0,1.0,10.0
+Organization,Definition,Process,10.0,88.0,2.0,10.0
+Organization,Definition,Word,10.0,88.0,1.0,10.0
+Tool,Definition,Pytorch,2.0,88.0,1.0,2.0
+Tool,Definition,Tensor Flow,2.0,88.0,1.0,2.0
+Training,Function,Hinge Loss,10.0,4.0,1.0,2.0
+Training,Function,Huber Loss,10.0,4.0,1.0,2.0
+Training,Model Architecture,Cross Validation,10.0,2.0,1.0,1.0
+Training,Optimizer,Adadelta,10.0,7.0,1.0,7.0
+Training,Optimizer,Adagrad,10.0,7.0,1.0,7.0
+Training,Optimizer,Adam,10.0,7.0,1.0,7.0
+Training,Optimizer,AdamW,10.0,7.0,1.0,7.0
+Training,Optimizer,Momentum,10.0,7.0,2.0,7.0
+Training,Optimizer,Nadam,10.0,7.0,1.0,7.0
+Training,Optimizer,RMSprop,10.0,7.0,1.0,7.0
+Validation,Function,Accuracy,4.0,4.0,1.0,1.0
+Validation,Procedure,Confusion Matrix,4.0,22.0,1.0,3.0
+Validation,Procedure,K Fold Cross Validation,4.0,22.0,1.0,3.0
+Validation,Procedure,Startified Cross Validation,4.0,22.0,1.0,3.0
+ML Model,Evaluation,Silhouette Score,250.0,1.0,1.0,1.0
+Data Preparation,Semantic Type,State,31.0,16.0,1.0,16.0
+Data Preparation,Semantic Type,Descriptive,31.0,16.0,1.0,16.0
+Data Preparation,Semantic Type,Diagnostic ,31.0,16.0,1.0,16.0
+Data Preparation,Semantic Type,Structural,31.0,16.0,1.0,16.0
+Data Preparation,Semantic Type,Contextual,31.0,16.0,1.0,16.0
+Data Preparation,Semantic Type,Demographic,31.0,16.0,1.0,16.0
+Data Preparation,Semantic Type,Constraint,31.0,16.0,2.0,16.0
+Data Preparation,Functional Role,Core Variables,31.0,4.0,1.0,4.0
+Data Preparation,Functional Role,Supporting,31.0,4.0,1.0,4.0
+Data Preparation,Functional Role,Explanatory,31.0,4.0,1.0,4.0
+Data Preparation,Functional Role,Monitoring,31.0,4.0,2.0,4.0
+Data Preparation,Definition,Semantic Type,31.0,88.0,1.0,8.0
+Data Preparation,Definition,Functional Role,31.0,88.0,1.0,8.0
+Mathematics,Definition,Euclidean distance ,23.0,88.0,1.0,16.0
+Mathematics,Definition,Density-based clustering,23.0,88.0,1.0,16.0
+ML Model,Algorithm,HDBSCAN,250.0,207.0,2.0,207.0
+Mathematics,Definition,Probabilistic clustering,23.0,88.0,1.0,16.0
+ML Model,Algorithm,Gaussian Mixture Model (GMM),250.0,207.0,1.0,207.0
+ML Model,Algorithm,Graph-based clustering,250.0,207.0,1.0,207.0
+ML Model,Algorithm,kNN graph clustering,250.0,207.0,1.0,207.0
+Mathematics,Definition,Instance Based Learning,23.0,88.0,1.0,16.0
+Organization,Definition,Policy ,10.0,88.0,1.0,10.0
+Organization,Definition,Process,10.0,88.0,2.0,10.0
+Organization,Definition,Procedure,10.0,88.0,1.0,10.0
+Organization,Definition,RASCI,10.0,88.0,1.0,10.0
+Organization,Definition,Ownership,10.0,88.0,1.0,10.0
+Organization,Definition,Stewardship,10.0,88.0,1.0,10.0
+ML Definitions,Definition,Multimodal AI,5.0,88.0,1.0,4.0
+Tooling,Spark,Action,14.0,8.0,1.0,8.0
+Mathematics,Definition,Acyclic Graph,23.0,88.0,1.0,16.0
+Behavioural Economics,Definition,Anchoring Effect,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Base Rate Fallacy,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Beaucratic Politics,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Biased Assimilation,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Blind spot bias,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Confirmation Bias,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Fact Believability,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Facts Vs Statistics,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Fast statistics ,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Slow statistics,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Truth-default theory ,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Illusion of Asymmetric Insights,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Intertemporal choice,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Motivated reasoning,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Naive realism,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Ostrich Effect,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Unitended Consequences KPIs,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,What Meaning Does a KPI actually have?,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Organizations,20.0,88.0,1.0,20.0
+Behavioural Economics,Definition,Think about the Medium,20.0,88.0,1.0,20.0
+Tooling,Spark,Narrow Transformation,14.0,8.0,1.0,8.0
+Tooling,Spark,Resilient Distributed Dataset (RDD),14.0,8.0,1.0,8.0
+Tooling,Spark,SparkConf,14.0,8.0,1.0,8.0
+Tooling,Spark,SparkContext,14.0,8.0,1.0,8.0
+Tooling,Spark,Transformations,14.0,8.0,1.0,8.0
+Theorem,Definition,Occam's Razor,4.0,88.0,1.0,4.0
+Mathematics,Definition,Mean Absolute Error,23.0,88.0,1.0,16.0
+Mathematics,Definition,Mean Absolute Error (MAE),23.0,88.0,1.0,16.0
+Mathematics,Definition,Mean Absolute Percentage Error (MAPE),23.0,88.0,1.0,16.0
+Mathematics,Definition,Margin of Error,23.0,88.0,1.0,16.0
+Mathematics,Definition,Manifold Hypothesis,23.0,88.0,1.0,16.0
+ML Definitions,General Principles,XOR,5.0,4.0,1.0,1.0
+Theorem,Definition,Pareto Principle,4.0,88.0,1.0,4.0
+Tooling,Definition,Spark,14.0,88.0,1.0,4.0
+Tooling,Spark,Pyspark,14.0,8.0,1.0,8.0
+Tooling,Spark,SparkSQL,14.0,8.0,1.0,8.0
+Theorem,Definition,Parkinson's law of triviality,4.0,88.0,1.0,4.0
+Theorem,Definition,Parkinson's' Law,4.0,88.0,1.0,4.0
+Tooling,Hadoop,HDFS,14.0,1.0,1.0,1.0
+Tooling,Paradigm,Distributed Computing,14.0,1.0,1.0,1.0
+Data Engineering,Definition,Cache,11.0,88.0,1.0,8.0
+Graph Theory,Definition,Centrality,5.0,88.0,1.0,5.0
+Graph Theory,Definition,Edge Weght,5.0,88.0,1.0,5.0
+Graph Theory,Definition,Edges,5.0,88.0,1.0,5.0
+Mathematics,Definition,Grapth Theory,23.0,88.0,1.0,16.0
+Graph Theory,Definition,Nodes,5.0,88.0,1.0,5.0
+Graph Theory,Definition,Page Rank,5.0,88.0,1.0,5.0
+Tooling,Definition,Azure Synapse Analytics,14.0,88.0,1.0,4.0
+Data Engineering,Definition,API Processing,11.0,88.0,1.0,8.0
+Data Engineering,Definition,Batch Processing,11.0,88.0,1.0,8.0
+Tooling,Definition,FastAPI,14.0,88.0,1.0,4.0
+Tooling,Definition,Pydantic,14.0,88.0,1.0,4.0
+Data Engineering,Definition,Wrapper,11.0,88.0,1.0,8.0
+Data Engineering,Definition,Shebang,11.0,88.0,1.0,8.0
+Data Engineering,Automating Python,Creating Shell,11.0,3.0,1.0,3.0
+Data Engineering,Automating Python,Creating Automated Task,11.0,3.0,1.0,3.0
+Data Engineering,Automating Python,Testing Shell,11.0,3.0,1.0,3.0
+Machine Learning Operations,Definition,MLOps,1.0,88.0,1.0,1.0
+Model Evaluation,Feature Selection,Receiver Operating Characteristic (ROC),8.0,8.0,1.0,8.0
+ML Model,Algorithm,Hard Voting,250.0,207.0,1.0,207.0
+ML Model,Algorithm,Soft Voting,250.0,207.0,1.0,207.0
+Data Engineering,Definition,Latency,11.0,88.0,1.0,8.0
+Data Engineering,Definition,Service Oriented Architecture,11.0,88.0,1.0,8.0
+Data Engineering,Definition,Microservies Architecture,11.0,88.0,1.0,8.0
+Algorithm Class,Definition,Decision Strategy,1.0,88.0,2.0,1.0
+Mathematics,Definition,Heteroskedasticity,23.0,88.0,1.0,16.0
+Mathematics,Definition,Non-Gaussian,23.0,88.0,1.0,16.0
+Mathematics,Definition,Multicollinearity,23.0,88.0,1.0,16.0
+ML Definitions,Definition,Learning Type,5.0,88.0,1.0,4.0
+ML Definitions,Definition,Algorithm Classification ,5.0,88.0,1.0,4.0
+ML Definitions,Definition,Model Type,5.0,88.0,1.0,4.0
+Model Type,Parameter,Linear Models,10.0,20.0,1.0,10.0
+Model Type,Parameter,Nonlinear Models,10.0,20.0,1.0,10.0
+Model Type,Parameter,Tree-Based Models,10.0,20.0,1.0,10.0
+Model Type,Parameter,Ensemble Models,10.0,20.0,1.0,10.0
+Model Type,Parameter,Instance Based Models,10.0,20.0,1.0,10.0
+Model Type,Parameter,Probabilistic Models,10.0,20.0,1.0,10.0
+Model Type,Parameter,Neural Models,10.0,20.0,1.0,10.0
+Model Type,Parameter,Kernel-based Models,10.0,20.0,1.0,10.0
+Model Type,Parameter,Rule-base Models,10.0,20.0,1.0,10.0
+Model Type,Parameter,Meta Models,10.0,20.0,1.0,10.0
+Algorthim Classification,Parameter,Anomaly Detection,10.0,20.0,1.0,10.0
+Algorthim Classification,Parameter,Classification,10.0,20.0,1.0,10.0
+Algorthim Classification,Parameter,Clustering,10.0,20.0,1.0,10.0
+Algorthim Classification,Parameter,Decision Strategy,10.0,20.0,2.0,10.0
+Algorthim Classification,Parameter,Density Estimation,10.0,20.0,1.0,10.0
+Algorthim Classification,Parameter,Dimensionality Reduction,10.0,20.0,1.0,10.0
+Algorthim Classification,Parameter,Feature Transformation,10.0,20.0,1.0,10.0
+Algorthim Classification,Parameter,Feature Selection,10.0,20.0,2.0,10.0
+Algorthim Classification,Parameter,Ranking / Recommendation,10.0,20.0,1.0,10.0
+Algorthim Classification,Parameter,Regression,10.0,20.0,1.0,10.0
+,,Assessment,,,1.0,
+Model Evaluation,Feature Selection,F1 Score,8.0,8.0,1.0,8.0
+Model Evaluation,Feature Selection,Precision,8.0,8.0,1.0,8.0
+Model Evaluation,Feature Selection,Recall,8.0,8.0,1.0,8.0
+Data Preparation,Semantic Type,Constraint: Capacity,31.0,16.0,1.0,16.0
+Data Preparation,Semantic Type,Constraint: Stability & Fragility,31.0,16.0,1.0,16.0
+Data Preparation,Semantic Type,Constraint: Access & Configuration,31.0,16.0,1.0,16.0
+Data Preparation,Semantic Type,Constraint: Stress & Load,31.0,16.0,1.0,16.0
+Data Preparation,Semantic Type,Constraint: Time & Commitment,31.0,16.0,1.0,16.0
+Data Preparation,Semantic Type,Diagnostic - Change,31.0,16.0,1.0,16.0
+Data Preparation,Semantic Type,Diagnostic - Trend,31.0,16.0,1.0,16.0
+Data Preparation,Semantic Type,Diagnostic - Volatility,31.0,16.0,1.0,16.0
+Data Preparation,Semantic Type,Diagnostic - Momentum,31.0,16.0,1.0,16.0
+Generative AI,,Prompt Engineering,8.0,,1.0,
+Generative AI,,In Context Learning,8.0,,1.0,
+Generative AI,,Zero-shot prompting,8.0,,1.0,
+Generative AI,,One-shot prompting,8.0,,1.0,
+Generative AI,,Few-shot prompting,8.0,,1.0,
+Generative AI,,Chain-of-thought (CoT) prompting,8.0,,1.0,
+Generative AI,,Self-consistency,8.0,,1.0,
+Generative AI,Tooling,LangChain,8.0,1.0,1.0,1.0
+,,Prompt templates,,,1.0,
+,,,,,,
+,,Python Function Naming Convention,,,1.0,
+,,Data Set Column Naming,,,1.0,
+,,Weighted Bipartite Graph,,,1.0,
+,,Deterministic,,,1.0,
+,,Stochastic,,,1.0,
+,,Deterministic stochastic process,,,1.0,
+,,Variance Inflation Factor,,,1.0,
+,,inertia,,,1.0,
+,,Davies–Bouldin Index,,,1.0,
+,,Calinski–Harabasz Index,,,1.0,
