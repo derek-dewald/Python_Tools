@@ -206,31 +206,15 @@ st.markdown(
 
 @st.cache_data(show_spinner=False)
 def load_data():
-    function_list_url = (
-        "https://raw.githubusercontent.com/"
-        "derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_list.csv"
-    )
-
-    parameter_list_url = (
-        "https://raw.githubusercontent.com/"
-        "derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_parameters.csv"
-    )
-
-    folder_toc_url = (
-        "https://raw.githubusercontent.com/"
-        "derek-dewald/Python_Tools/main/Streamlit/DataDictionary/folder_listing.csv"
-    )
-
-    d_learning_notes_url = (
-        "https://raw.githubusercontent.com/"
-        "derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_learning_notes.csv"
-    )
-
+    function_list_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_list.csv"
+    parameter_list_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_parameters.csv"
+    folder_toc_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/folder_listing.csv"
+    d_learning_notes_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_learning_notes.csv"
     google_note_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv'
     google_definition_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv'
     google_word_quote = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=1117793378&single=true&output=csv'
     google_daily_activities = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=472900611&single=true&output=csv'
-
+    technical_notes = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv'
     data_dict = {}
 
     data_dict['google_notes_df'] = pd.read_csv(google_note_csv)
@@ -242,6 +226,7 @@ def load_data():
     data_dict['d_learning_notes'] = data_dict['d_learning_notes'][['Process','Categorization','Word','Definition']]
     data_dict['d_word_quote'] = pd.read_csv(google_word_quote)
     data_dict['daily_activities'] = pd.read_csv(google_daily_activities)
+    data_dict['technical_notes'] = pd.read_csv(technical_notes)
 
     # ✅ Folder first, then Function
     data_dict['function_list_df1']  = data_dict['function_list_df'][["Folder", "Function", "Purpose"]].copy()
@@ -262,7 +247,8 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ 'Words and Quotes','Daily Activities', "Function List", "Function Parameters", 'D Notes', 'D Definitions', 'Folder Table of Content', "D Notes Outline",'Project Template']
+    [ 'Words and Quotes','Daily Activities', "Function List", "Function Parameters", 'D Notes', 'D Definitions', 'Folder Table of Content', 
+     "D Notes Outline",'Project Template','Technical Notes']
 )
 
 # -------------------------
@@ -841,7 +827,7 @@ elif page == "D Definitions":
     grid_resp = AgGrid(
         grid_df,
         gridOptions=gb.build(),
-        height=320,
+        height=500,
         fit_columns_on_grid_load=True,
         allow_unsafe_jscode=True,
         update_mode=GridUpdateMode.SELECTION_CHANGED,
@@ -909,4 +895,62 @@ elif page == "D Definitions":
                         st.markdown(f"**{field}:**")
                         st.write(v)
 
+elif page == "Technical Notes":
+    st.title("Technical Notes")
 
+    df_base = data_dict['technical_notes'].copy()
+
+    c1_word = "Program"
+    c2_word = "Description"
+    c3_word = "Classification"
+
+    c1, c2, c3 = st.columns([1, 1, 1])
+
+    with c1:
+        opts1 = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
+        sel1 = st.selectbox(c1_word, opts1, index=0)
+
+    df1 = df_base if sel1 == "(All)" else df_base[df_base[c1_word] == sel1]
+
+    with c2:
+        opts2 = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
+        sel2 = st.selectbox(c2_word, opts2, index=0)
+
+    df2 = df1 if sel2 == "(All)" else df1[df1[c2_word] == sel2]
+
+    with c3:
+        opts3 = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
+        sel3 = st.selectbox(c3_word, opts3, index=0)
+
+    df_view = df2 if sel3 == "(All)" else df2[df2[c3_word] == sel3]
+
+    st.caption(f"Rows: {len(df_view)}")
+
+    gb = GridOptionsBuilder.from_dataframe(df_view)
+    gb.configure_column('Program', width=50, wrapText=True,autoHeight=True)
+    gb.configure_column('Classification', width=50, wrapText=True,autoHeight=True)
+    gb.configure_column('Command_Code', width=80, wrapText=True,autoHeight=True)
+    gb.configure_column('Comments', width=80, wrapText=True,autoHeight=True)
+
+    
+    gb.configure_column(
+        'Description',
+        width=200,
+        wrapText=True,
+        autoHeight=True,  # makes row height expand to fit wrapped text
+        cellStyle={
+            "whiteSpace": "normal",
+            "lineHeight": "1.2",
+        },
+    )
+    gb.configure_default_column(resizable=True, sortable=True, filter=True)
+    gb.configure_grid_options(domLayout="normal")
+    grid_options = gb.build()
+
+    AgGrid(
+        df_view,
+        gridOptions=grid_options,
+        fit_columns_on_grid_load=True,
+        height=800,
+        theme="streamlit",
+    )

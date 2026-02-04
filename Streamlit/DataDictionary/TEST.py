@@ -1,129 +1,167 @@
-# --- Minimal Data Dictionary App ---
+# streamlit_app.py
+# Run: streamlit run streamlit_app.py
+#
+# What this does:
+# - Loads your Google Sheet (published as CSV)
+# - Lets you filter by Process and/or Categorization (single or multi-select)
+# - Lets you choose which columns to GROUP BY (e.g., Process, Categorization, Learning Type, Model Type, etc.)
+# - Shows a clean grouped count table (+ optional %)
+# - (Optional) shows a bar chart of the grouped result
 
-import streamlit as st
-st.set_page_config(page_title="Data Dictionary", layout="wide")
-
-from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode
 import pandas as pd
-import numpy as np
+import streamlit as st
+import matplotlib.pyplot as plt
 
-# 🔗 Your Google Sheet (CSV export)
-SHEET_CSV_URL = (
-    "https://docs.google.com/spreadsheets/d/e/"
-    "2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/"
-    "pub?gid=0&single=true&output=csv"
-)
+CSV_URL = "https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv"
 
-# ---- Helpers ----
+# Columns you said are categorical / semi-standard
+DEFAULT_GROUP_COLS = ["Process", "Categorization", "Learning Type", "Algorithm Classification", "Model Type"]
+DEFAULT_FILTER_COLS = ["Process", "Categorization"]
+
+st.set_page_config(page_title="ML Definitions – Grouped Counts", layout="wide")
+st.title("ML Definitions – Grouped Counts (Process / Categorization Washboard)")
+
 @st.cache_data(show_spinner=False)
-def read_csv_clean(url: str) -> pd.DataFrame:
+def load_df(url: str) -> pd.DataFrame:
     df = pd.read_csv(url)
-    # Normalize headers (strip + collapse spaces)
-    df.columns = (
-        pd.Index(df.columns)
-        .str.strip()
-        .str.replace(r"\s+", " ", regex=True)
-    )
+
+    # Basic cleanup: strip strings, normalize blanks -> NA
+    for c in df.columns:
+        if df[c].dtype == object:
+            df[c] = (
+                df[c]
+                .astype("string")
+                .str.replace(r"\s+", " ", regex=True)
+                .str.strip()
+                .replace({"": pd.NA, "nan": pd.NA, "None": pd.NA, "N/A": pd.NA})
+            )
     return df
 
-def ensure_cols(df: pd.DataFrame, cols: list[str]) -> pd.DataFrame:
-    """Add any missing columns as empty strings so the UI never crashes."""
-    out = df.copy()
-    for c in cols:
-        if c not in out.columns:
-            out[c] = ""
-    return out
+df = load_df(CSV_URL)
 
-# ---- UI ----
-with st.sidebar.expander("⚙️ Options", expanded=False):
-    if st.button("Clear cache"):
-        st.cache_data.clear()
-        st.success("Cache cleared – reload the page.")
-    st.caption("Tip: if columns change in the Google Sheet, clear cache.")
+with st.sidebar:
+    st.header("Filters")
 
-st.title("🔍 Data Dictionary")
+    # Confirm available columns
+    cols = df.columns.tolist()
+    proc_col = "Process" if "Process" in cols else None
+    cat_col  = "Categorization" if "Categorization" in cols else None
 
-# Load and sanitize
-df = read_csv_clean(SHEET_CSV_URL)
+    if proc_col:
+        proc_vals = sorted([x for x in df[proc_col].dropna().unique()])
+        sel_proc = st.multiselect("Process", proc_vals, default=[])
+    else:
+        sel_proc = []
+        st.warning("Column 'Process' not found in the dataset.")
 
-# Columns the app expects to show in the top grid
-EXPECTED_LIST_COLS = ["Word", "Category", "Sub Categorization"]
-df = ensure_cols(df, EXPECTED_LIST_COLS + ["Link", "Image", "Markdown"])
+    if cat_col:
+        cat_vals = sorted([x for x in df[cat_col].dropna().unique()])
+        sel_cat = st.multiselect("Categorization", cat_vals, default=[])
+    else:
+        sel_cat = []
+        st.warning("Column 'Categorization' not found in the dataset.")
 
-# Top search
-st.subheader("Key Word / Phrase Search")
-search_query = st.text_input("Search:", placeholder="Type to search...")
+    st.divider()
+    st.header("Group By")
 
-# Apply text search across all columns (case-insensitive)
-if search_query:
-    mask = df.apply(lambda r: r.astype(str).str.contains(search_query, case=False, na=False).any(), axis=1)
-    list_df = df.loc[mask, EXPECTED_LIST_COLS].copy()
+    # Let you pick exactly which dimensions to group by
+    candidate_group_cols = [c for c in DEFAULT_GROUP_COLS if c in cols]
+    # Also allow Word if you want it (often huge; optional)
+    if "Word" in cols:
+        candidate_group_cols = candidate_group_cols + ["Word"]
+
+    group_cols = st.multiselect(
+        "Choose columns to group by",
+        options=candidate_group_cols,
+        default=[c for c in ["Process", "Categorization"] if c in candidate_group_cols],
+        help="Pick 1–3 columns for the clearest output.",
+    )
+
+    show_percent = st.checkbox("Show percent of filtered rows", value=True)
+    include_na = st.checkbox("Include <NA> groups", value=False)
+
+    st.divider()
+    st.header("Chart (optional)")
+    show_chart = st.checkbox("Show bar chart for grouped result", value=True)
+    top_n = st.slider("Top N bars", 5, 50, 20, 5)
+
+# Apply filters
+df_f = df.copy()
+
+if proc_col and sel_proc:
+    df_f = df_f[df_f[proc_col].isin(sel_proc)]
+
+if cat_col and sel_cat:
+    df_f = df_f[df_f[cat_col].isin(sel_cat)]
+
+st.caption(f"Rows (after filters): **{len(df_f):,}**  |  Total rows: **{len(df):,}**")
+
+# Guardrails
+if not group_cols:
+    st.info("Pick at least one **Group By** column in the sidebar.")
+    st.stop()
+
+# Grouped counts
+gb = df_f[group_cols].copy()
+
+if not include_na:
+    # Drop rows where ANY group-by column is NA
+    gb = gb.dropna(subset=group_cols, how="any")
 else:
-    list_df = df[EXPECTED_LIST_COLS].copy()
+    # Fill NA labels so they appear explicitly
+    for c in group_cols:
+        gb[c] = gb[c].fillna("<NA>")
 
-# Reset index so we can hide it in AgGrid cleanly
-list_df = list_df.reset_index(drop=False)
+if gb.empty:
+    st.warning("No rows left after applying filters and NA-handling. Try including <NA> or loosening filters.")
+    st.stop()
 
-# Configure AgGrid
-builder = GridOptionsBuilder.from_dataframe(list_df)
-builder.configure_default_column(wrapText=True, autoHeight=True, cellStyle={'textAlign': 'center'})
-builder.configure_selection("single", use_checkbox=False)
-builder.configure_column("index", hide=True)
-grid_options = builder.build()
-
-st.subheader("📋 Key Terms and Classification")
-grid_response = AgGrid(
-    list_df,
-    gridOptions=grid_options,
-    height=320,
-    fit_columns_on_grid_load=True,
-    allow_unsafe_jscode=True,
-    update_mode=GridUpdateMode.SELECTION_CHANGED,
+result = (
+    gb
+    .groupby(group_cols, dropna=False)
+    .size()
+    .reset_index(name="Count")
+    .sort_values("Count", ascending=False)
+    .reset_index(drop=True)
 )
 
-selected_rows = grid_response.get("selected_rows", [])
-if not selected_rows:
-    st.info("Select a row above to view details.")
-else:
-    # st_aggrid returns list[dict] for selected rows
-    selected_df = pd.DataFrame(selected_rows)
-    # Guard: make sure 'Word' exists (sheet/header changes won’t crash the app)
-    if "Word" not in selected_df.columns:
-        st.warning("Selection payload is missing the 'Word' column. Raw selection shown below:")
-        st.dataframe(selected_df)
+if show_percent:
+    denom = result["Count"].sum()
+    result["Percent"] = (result["Count"] / denom * 100).round(2)
+
+st.subheader("Grouped Counts")
+st.dataframe(result, use_container_width=True)
+
+# Optional bar chart (works best when grouping by 1–2 cols)
+if show_chart:
+    st.subheader("Bar Chart (Top Groups)")
+
+    chart_df = result.head(top_n).copy()
+
+    # Create a label for multi-column grouping
+    if len(group_cols) == 1:
+        chart_df["Label"] = chart_df[group_cols[0]].astype(str)
     else:
-        # Join to get the full record for the selected word
-        details = df.merge(selected_df[["Word"]], on="Word", how="inner")
-        if details.empty:
-            st.info("No matching details found for the selected word.")
-        else:
-            row0 = details.iloc[0].copy()
-            transposed = row0.reset_index()
-            transposed.columns = ["Field", "Value"]
-            transposed["Value"] = transposed["Value"].fillna("")
+        chart_df["Label"] = chart_df[group_cols].astype(str).agg(" | ".join, axis=1)
 
-            # Pretty-print details
-            st.subheader("📑 Key Term Reference Details")
-            for _, r in transposed.iterrows():
-                field = str(r["Field"])
-                value = r["Value"]
+    # Plot
+    fig = plt.figure(figsize=(10, max(3, 0.35 * len(chart_df) + 1)))
+    ax = fig.add_subplot(111)
 
-                if field == "Link":
-                    if isinstance(value, str) and value.strip():
-                        st.markdown(f"**{field}:** [Open Link]({value})")
-                    else:
-                        st.write(f"**{field}:**")
-                elif field == "Image":
-                    if isinstance(value, str) and value.strip():
-                        st.image(value, caption="Image Reference", width=320)
-                    else:
-                        st.caption("No image available.")
-                elif field == "Markdown":
-                    # Treat as Markdown, not LaTeX (safer)
-                    st.markdown(value or "")
-                else:
-                    st.write(f"**{field}:**\n{value}")
+    # Reverse for top-to-bottom readability
+    chart_df = chart_df.iloc[::-1]
+    ax.barh(chart_df["Label"], chart_df["Count"])
+    ax.set_xlabel("Count")
+    ax.set_ylabel("")
+    ax.set_title(f"Top {len(chart_df)} grouped values")
 
-st.markdown("---")
-st.markdown("🔗 [Open Raw Data in Google Sheets]"
-            "(https://docs.google.com/spreadsheets/d/1tZ-_5Vv99_bm9CCEdDDN0KkmsFNcjWeKM86237yrCTQ/edit?gid=0#gid=0)")
+    plt.tight_layout()
+    st.pyplot(fig, clear_figure=True)
+
+with st.expander("Download grouped result"):
+    st.download_button(
+        "Download CSV",
+        data=result.to_csv(index=False).encode("utf-8"),
+        file_name="grouped_counts.csv",
+        mime="text/csv",
+    )
