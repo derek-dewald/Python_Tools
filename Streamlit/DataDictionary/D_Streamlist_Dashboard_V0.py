@@ -210,11 +210,14 @@ def load_data():
     parameter_list_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_parameters.csv"
     folder_toc_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/folder_listing.csv"
     d_learning_notes_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_learning_notes.csv"
+    definition_summary_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/Streamlit_DefinitionSummary.csv"
     google_note_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv'
     google_definition_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv'
     google_word_quote = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=1117793378&single=true&output=csv'
     google_daily_activities = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=472900611&single=true&output=csv'
     technical_notes = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv'
+    
+    
     data_dict = {}
 
     data_dict['google_notes_df'] = pd.read_csv(google_note_csv)
@@ -223,10 +226,12 @@ def load_data():
     data_dict['parameter_list_df'] = pd.read_csv(parameter_list_url)
     data_dict['folder_toc_df'] = pd.read_csv(folder_toc_url)
     data_dict['d_learning_notes'] = pd.read_csv(d_learning_notes_url)
+    data_dict['definition_summary'] = pd.read_csv(definition_summary_url)
     data_dict['d_learning_notes'] = data_dict['d_learning_notes'][['Process','Categorization','Word','Definition']]
     data_dict['d_word_quote'] = pd.read_csv(google_word_quote)
     data_dict['daily_activities'] = pd.read_csv(google_daily_activities)
     data_dict['technical_notes'] = pd.read_csv(technical_notes)
+    
 
     # ✅ Folder first, then Function
     data_dict['function_list_df1']  = data_dict['function_list_df'][["Folder", "Function", "Purpose"]].copy()
@@ -248,7 +253,7 @@ st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
     [ 'Words and Quotes','Daily Activities', "Function List", "Function Parameters", 'D Notes', 'D Definitions', 'Folder Table of Content', 
-     "D Notes Outline",'Project Template','Technical Notes']
+     "D Notes Outline",'Project Template','Technical Notes',"Definition Summary"]
 )
 
 # -------------------------
@@ -943,6 +948,130 @@ elif page == "Technical Notes":
             "lineHeight": "1.2",
         },
     )
+    gb.configure_default_column(resizable=True, sortable=True, filter=True)
+    gb.configure_grid_options(domLayout="normal")
+    grid_options = gb.build()
+
+    AgGrid(
+        df_view,
+        gridOptions=grid_options,
+        fit_columns_on_grid_load=True,
+        height=800,
+        theme="streamlit",
+    )
+
+
+
+
+# -----------------------------------
+# Definition Summary
+# -----------------------------------
+
+elif page == "Definition Summary":
+    st.title("Definition Summary")
+
+    # ---- Dimension toggles ----
+    show_process = st.checkbox("Include Process", value=True)
+    show_category = st.checkbox("Include Categorization", value=True)
+    show_word = st.checkbox("Include Word", value=True)
+
+    # ---- Base data (immutable) ----
+    df_base = data_dict["definition_summary"].copy()
+
+    # Keep rows with a valid Word (Word is the atomic concept in your sheet)
+    df_base = df_base[
+        df_base["Word"].notna() &
+        (df_base["Word"].astype(str).str.strip() != "")
+    ].copy()
+
+    # Column names
+    COL_PROCESS = "Process"
+    COL_CAT = "Categorization"
+    COL_WORD = "Word"
+
+    # ---- Filter UI (only for included dimensions) ----
+    filter_cols = []
+    if show_process:
+        filter_cols.append(COL_PROCESS)
+    if show_category:
+        filter_cols.append(COL_CAT)
+    if show_word:
+        filter_cols.append(COL_WORD)
+
+    filter_containers = st.columns(len(filter_cols)) if filter_cols else []
+
+    df_filtered = df_base.copy()
+
+    for col, container in zip(filter_cols, filter_containers):
+        with container:
+            opts = ["(All)"] + sorted(
+                [x for x in df_filtered[col].dropna().astype(str).unique() if x.strip()]
+            )
+            sel = st.selectbox(col, opts, index=0, key=f"filter_{col}")
+
+        if sel != "(All)":
+            df_filtered = df_filtered[df_filtered[col].astype(str) == sel]
+
+    # ---- Build view dataframe ----
+    df_view = df_filtered.copy()
+
+    # ---- Determine deduplication grain ----
+    # Visible semantic dimensions define uniqueness
+    dedupe_cols = []
+    if show_process:
+        dedupe_cols.append(COL_PROCESS)
+    if show_category:
+        dedupe_cols.append(COL_CAT)
+    if show_word:
+        dedupe_cols.append(COL_WORD)
+
+    # Deduplicate ONLY if we are rolling up (i.e., not all dims shown)
+    if len(dedupe_cols) < 3:
+        df_view = df_view.drop_duplicates(subset=dedupe_cols).reset_index(drop=True)
+    else:
+        df_view = df_view.reset_index(drop=True)
+
+    # ---- Drop hidden columns from the grid ----
+    cols_to_drop = []
+    if not show_process and COL_PROCESS in df_view.columns:
+        cols_to_drop.append(COL_PROCESS)
+    if not show_category and COL_CAT in df_view.columns:
+        cols_to_drop.append(COL_CAT)
+    if not show_word and COL_WORD in df_view.columns:
+        cols_to_drop.append(COL_WORD)
+        if "Word_Count" in df_view.columns:
+            cols_to_drop.append("Word_Count")
+
+    if cols_to_drop:
+        df_view = df_view.drop(columns=cols_to_drop)
+
+    st.caption(
+        f"Rows: {len(df_view)} | Grain: "
+        + " + ".join(dedupe_cols)
+    )
+
+    # ---- AgGrid ----
+    gb = GridOptionsBuilder.from_dataframe(df_view)
+
+    if show_process and COL_PROCESS in df_view.columns:
+        gb.configure_column(COL_PROCESS, width=140, wrapText=True, autoHeight=True)
+
+    if show_category and COL_CAT in df_view.columns:
+        gb.configure_column(COL_CAT, width=160, wrapText=True, autoHeight=True)
+
+    if show_word and COL_WORD in df_view.columns:
+        gb.configure_column(COL_WORD, width=180, wrapText=True, autoHeight=True)
+
+    # Count / metric columns (if present)
+    for col, w in [
+        ("Process_Count", 120),
+        ("CAT_Count", 120),
+        ("Word_Count", 120),
+        ("ProcessCAT_Count", 160),
+    ]:
+        if col in df_view.columns:
+            gb.configure_column(col, width=w, wrapText=True, autoHeight=True)
+
     gb.configure_default_column(resizable=True, sortable=True, filter=True)
     gb.configure_grid_options(domLayout="normal")
     grid_options = gb.build()
