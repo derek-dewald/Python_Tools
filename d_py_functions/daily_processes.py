@@ -11,6 +11,7 @@ import data_d_dicts,data_d_lists,data_d_strings
 from data_d_dicts import function_table_dictionary,links
 from dict_processing import dict_to_dataframe
 from list_processing import list_to_dataframe
+from data_validation import column_segmenter
 
 def generate_dictionary(notes_df=None,
                         definition_df=None,
@@ -384,8 +385,7 @@ def daily_test(observations=5,
     return final_df
 
 
-def review_test_results(
-    file_location='/Users/derekdewald/Documents/Python/Github_Repo/Data/daily_test_results.csv'):
+def review_test_results(file_location=None,sample_records=8):
 
     '''
     Function to Facilitate a Daily Review of Historically Created Words. 
@@ -395,6 +395,9 @@ def review_test_results(
 
     
     '''
+
+    if not file_location:
+        file_location= '/Users/derekdewald/Documents/Python/Github_Repo/Data/daily_test_results.csv'
     
     primary_key = ['Process','Categorization','Word']
     
@@ -405,14 +408,22 @@ def review_test_results(
     
     # Generate Data Set to Test. 
     # Test Everything where Review_Score is 0.
-    review_df = results_df[(results_df['Historical_Score']<0)]
+    review_df = results_df[(results_df['Historical_Score']<0)].copy()
+    passing_concepts = results_df[(results_df['Historical_Score']>=0)].copy()
+    
+    column_segmenter(results_df[['Historical_Score']].copy(),'Historical_Score',"",bin_list=[-10,-5,-3,0,3,5])
+    
+    sample_records = min(sample_records,len(review_df))
+    additional_records = max(0,10-sample_records)
 
     # If Less than 10 Items to review then sample historical items 
-    if len(review_df)<10:
+    if len(review_df)<sample_records:
         review_df = pd.concat([
-            review_df,
-            results_df[(results_df['Historical_Score']>0)].sample(10-len(review_df))
+            review_df.sample(sample_records),
+            passing_concepts.sample(additional_records)
         ])
+    else:
+        review_df = review_df.sample(sample_records)
         
     review_df = review_df.reset_index(drop=True)
 
@@ -421,11 +432,14 @@ def review_test_results(
         cat,cat1,word = review_df[primary_key].iloc[count]    
         print(f"Process: {cat}\nClassification: {cat1}\nWord: {word}\n")
         print("#############################################################################################################################")
-        result = input('Did you Pass or Fail?')
-        results_dict[word] = [1 if result.lower() =='p' else -2][0] 
+        result = input('Press Enter for Answer.')
         df, nt,lk,md,ds, lt,ac = review_df.iloc[count][['Definition','Notes','Link','Markdown Equation','Dataset Size','Learning Type',"Algorithm Class"]]
         print(f"Definition: {df}\nNotes: {nt}\nLink: {lk}\nMarkdown: {md}\nDataset Size: {ds}\nLearning Type: {lt}\nAlogrithm Class: {ac}\n")
-
+        
+        # Record Result
+        result = input('Did you Pass or Fail?')
+        results_dict[word] = [1 if result.lower() =='p' else -2][0] 
+        
     results_df['Temp_Score'] = results_df['Word'].map(results_dict).fillna(0)
     results_df['Historical_Score'] = results_df['Historical_Score'] + results_df['Temp_Score'] 
     results_df['Temp_Score'] = 0

@@ -24,10 +24,13 @@ inspect_function,Function which Reads the Document String of a Python Function,[
 InspectFunction(InspectFunction)",utility_functions.py
 view_df,Function which helps to set default Visualization View in Pandads. Can be applied to a dataframe specifically or the current Session,"['df', 'update_decimal']",Object Type,15-Dec-25,15-Dec-25,TBD,TBD,ViewDf(df),utility_functions.py
 password_generator,Function to Create a Randomly Generated Password.,"['minimum', 'maximum']",Object Type,15-Dec-25,15-Dec-25,TBD,TBD,password_generator(),utility_functions.py
+view_entire_df_column,Function to Support with the visualization of a specific dataframe column within Jupyter Notebook. Prints the Entire column (Transposed).,"['df', 'index_']",None,01-Feb-26,01-Feb-26,TBD,TBD,view_entire_df_column(df),utility_functions.py
 dict_to_dataframe,Function to Simplify the creation of a Dictionary into a Dataframe into a single Command.,"['dict_', 'key_name', 'value_name']",Dataframe,4-Dec-25,4-Dec-25,TBD,TBD,temp_df = dict_to_dataframe(dict),dict_processing.py
 flatten_clean_dict,"Function which takes a Nested Dictionary (Dictionary, which references dictionary, and converts it into a DataFrame, works best when
 Dictionary ultimate Values are List.","['dict_', 'index_name', 'clean', 'apply_new_lvl', 'high_low_list_fix']",DataFrame,30-Dec-25,30-Dec-25,TBD,TBD,"from synthetic_member import mbr_profile_dict
 flatten_clean_dict (mbr_profile_dict)",dict_processing.py
+calculate_relationship_edge_score,,"['df', 'primary_id', 'secondary_id', 'weight']",,,,,,,graph_theory.py
+calculate_relationship_score,,"['pair_score_df', 'entity_1', 'entity_2', 'relationship_score', 'group_id_name', 'relationship_threshold']",,,,,,,graph_theory.py
 read_directory,Function which reads reads a directory and returns a list of files included within,"['location', 'file_type', 'match_str']",Dataframe containing a listing of selected files.,3-Dec-25,3-Dec-25,TBD,TBD,"d_py_function =  '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/'
 read_directory(d_py_function)",shared_folder.py
 text_file_import,Function Used to Import .txt or .py File into Python.,"['file_name', 'encoding']",Str,3-Dec-25,3-Dec-25,TBD,TBD,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/DFProcessing.py'
@@ -91,6 +94,8 @@ flatten_clean_dict,"Function which takes a Nested Dictionary (Dictionary, which 
 Dictionary ultimate Values are List.","['dict_', 'index_name', 'clean', 'apply_new_lvl', 'high_low_list_fix']",DataFrame,30-Dec-25,30-Dec-25,TBD,TBD,"from synthetic_member import mbr_profile_dict
 flatten_clean_dict (mbr_profile_dict)",synthetic_member.py
 Heatmap,Function Which Generates a Heatmap,"['df', 'correlation', 'column_list', 'title', 'cmap', 'annotate', 'x_rotate', 'y_rotate', 'cbar', 'set_center', 'figsize']",matlplot plot.,,,,,,visualization.py
+visualize_hex_color,"Purpose: Visualize a list of hex colors (or any matplotlib-compatible colors)
+as a grid of swatches with labels.","['hex_color_list', 'columns', 'rows', 'title_fontsize']",None (shows a matplotlib figure),,,,,,visualization.py
 FunctionToSTR,"Function which Converts the Documentation of a Python Function into a List, breaking on White Space. For purposes of development of
 CompareFunction, which looks for differences.",['func'],list,17-Dec-25,17-Dec-25,TBD,TBD,"from data_d_strings import template_doc_string_print
 FunctionToSTR(template_doc_string_print)",string_processing.py
@@ -98,6 +103,7 @@ compare_function,"Function which compares the Text of 2 python function objectio
 Used to reduce impact of manual validation and creation of function in multiple environments without a consistent tool such as Git.
 Once adopting better practices, this will no longer be necessary.
 Function Utilizes the Input Function FunctionToSTR() as a Base. Currently it Does","['func1', 'func2', 'additional_records', 'strip_docstring']","Object Type Function which Compares 2 Functions and determines if they are different. Specifically, it can help to easily Manage Version control of Functions outside of a More robust environment such as GIT.",17-Dec-25,17-Dec-25,TBD,TBD,Example Function Call,string_processing.py
+word_counts_from_column,Vectorized word counting over a DataFrame column.,"['df', 'column_name', 'lower', 'pattern', 'min_len', 'dropna']",pd.Series. Word counts indexed by token (sorted desc).,01-Feb-26,01-Feb-26,TBD,TBD,Example Function Call,string_processing.py
 df_column_compare,"Function to Compare Column Values contained within 2 Dataframes, Identifying Equivalency and Variance.","['df', 'df1', 'return_df']",Multiple Dataframes,18-Aug-25,18-Aug-25,TBD,TBD,Example Function Call,data_validation.py
 merge_identical_df,"Function Designed to Simplify the Joining of Two Identical Dataframes.
 Created for the purposes of DQ Validaiton, where taking 2 identical Dataframes with similar records and near identical
@@ -110,6 +116,22 @@ get_segments,"Function Designed to seperate a Dataframe Column into N Segments.
 Note that it simply looks for the Position of the respective column in the Dataframe, it will return duplication, which can be a
 problem for many functions, including NP.CUT
 Input Function into: column_segment","['df', 'column_name', 'number_segments']",List,19-Jan-26,19-Jan-26,TBD,TBD,"bin_list = get_segments(df1,column_name='DIFFERENCE',number_segments=10)",data_validation.py
+round_up_power10,"Function which takes a Series (or Array) and determines the base 10 value of the Logrithm.
+This function is meant to support with EDA/Visualization/ Validation tasks, but trying to help standardize and
+simplify how Segments are Presented.","['series', 'infer_neg_vals']",List,20-Jan-26,20-Jan-26,TBD,TBD,,data_validation.py
+column_comparison,"Function which takes a dataframe with 2 Columns which are identical and compare the values for equivalency.
+In addition to comparing, it attempts to calculate the value differences and report on statistical properties
+of the differences. Uses a number of input functions, including:
+Binary Complex Equivalency, column_segmenter,","['df', 'column_name', 'column_name1', 'metric_name', 'bin_list', 'retain_columns', 'number_segments', 'force_segmentation']",,20-Jan-26,20-Jan-26,TBD,TBD,,data_validation.py
+df_column_comparison,"Function which applies column_comparison across an Entire Dataframe.
+It expands the original in 2 distinct ways,
+1) It looks to iterate across the entire Dataframe.
+2) It looks to consolidate on the Group By Level, although it only applies the calculation of EQ,GT,LT, once to improve
+process and reduce duplication.
+##############
+what happens when a column doesn't have a corresponding Value?
+# Need to Use Bin Segments. But How?
+##############","['df', 'column_list', 'column_distinction', 'retain_columns', 'bin_list', 'number_segments', 'force_segmentation']",Something,20-Jan-26,20-Jan-26,TBD,TBD,,data_validation.py
 column_segmenter,"Function which Takes a SINGLE column in a DataFrame and calculates the segments as designed by the appropriate size of
 the dataframe by number of segments, as an example, a Decile Analysis would include 10 Segments.
 NOTE: This is not a PERFECT EQUAL Segment Funcition. When segments Share Edges it is Problematic, specifically, in Dataframes which have a
@@ -119,31 +141,19 @@ The issue with this is that Uniform datasets, or those which have a material num
 edges. As an example, Binary Data sets will have 2 records, Loan Balance will have a material number of 0 balances,
 so if you look for 10 Edges, 5 of the 10 are likely to be 0. This causes issue when using the np and pd options.
 Some assumptions and work arounds have been implemented, primary related to force_number_edges, you can force and it will
-remove duplicates, guaranteeing a minimum number of edges, but as a result you will lose equality in segment size.","['df', 'column_name', 'new_column_name', 'bin_list', 'number_segments', 'force_segmentation', 'right_edge_is_min', 'left_edge_is_max', 'leading_text', 'format_', 'return_value']",,,,,,,data_validation.py
-segment_to_text,"Function which takes a Dataframe Column, which takes a Column Segment or Bin List and converts this to a text based
-definition, which can be more easily applied and read in Visualizations.","['df', 'bin_list', 'column_name', 'new_column_name', 'leading_text', 'format_']",,,,,,,data_validation.py
-round_up_power10,"Function which takes a Series (or Array) and determines the base 10 value of the Logrithm.
-This function is meant to support with EDA/Visualization/ Validation tasks, but trying to help standardize and
-simplify how Segments are Presented.","['series', 'infer_neg_vals']",List,,,,,,data_validation.py
-column_comparison,"Function which takes a dataframe with 2 Columns which are identical and compare the values for equivalency.
-In addition to comparing, it attempts to calculate the value differences and report on statistical properties
-of the differences. Uses a number of input functions, including:
-Binary Complex Equivalency, column_segmenter,","['df', 'column_name', 'column_name1', 'metric_name', 'bin_list', 'retain_columns', 'number_segments', 'force_segmentation']",,,,,,,data_validation.py
-df_column_comparison,"Function which applies column_comparison across an Entire Dataframe.
-It expands the original in 2 distinct ways,
-1) It looks to iterate across the entire Dataframe.
-2) It looks to consolidate on the Group By Level, although it only applies the calculation of EQ,GT,LT, once to improve
-process and reduce duplication.
-##############
-what happens when a column doesn't have a corresponding Value?
-# Need to Use Bin Segments. But How?
-##############","['df', 'column_list', 'column_distinction', 'retain_columns', 'bin_list', 'number_segments', 'force_segmentation']",,,,,,,data_validation.py
+remove duplicates, guaranteeing a minimum number of edges, but as a result you will lose equality in segment size.","['df', 'column_name', 'new_column_name', 'bin_list', 'number_segments', 'force_segmentation', 'leading_text', 'format_', 'print_', 'return_value']","Contingent on Return Value. If """" then it updates df and returns nothing if return_value == 'bin_list', it returns a List of the Bin Position if return_value == 'segment_dict', it returns a dict of the index name and bin value, with creating a column in DF TO BE DEVELOPED impute_blanks=False, remove_zeros=False, Incoporated Changes from WorkFile, which removed counting of Min/Max and applied better logic.",20-Jan-26,01-Feb-26,TBD,TBD,,data_validation.py
+segment_to_text,"Function to Create a Text Based Segmentation in a dataframe, based off of column_segmntation, which creates the
+index. Input is a Dictionary, to insure consistency, as there where some logic based issues.","['df', 'segment_dict', 'value_col', 'index_col', 'new_column_name', 'leading_text', 'format_', 'print_']",Inputs Column into existing DataFrame,20-Jan-26,01-Feb-26,TBD,TBD,,data_validation.py
+historical_month_end_list,Function which Creates a list of Month End Dates.,"['end_dt', 'total_months', 'sort_ascending', 'format_']",List,19-Dec-25,19-Dec-25,TBD,TBD,df = historical_month_end_list(),date_functions.py
+convert_df_date,Function to Convert Str to Datetime for Dataframe Column,"['df', 'column_name', 'new_column_name', 'normalize']","Creates New Column In Dataframe. If new_column_name is blank, it overrides exists column_name, else it creates a new",01-Jan-24,01-Jan-24,TBD,TBD,"convert_df_date(df,'DATE')",date_functions.py
+print_current_time,Function to Print the Current Time.,[],None.,01-Jan-25,01-Jan-25,TBD,TBD,print_current_time(),date_functions.py
+top_x_records,,"['data', 'column_name', 'top_n', 'dropna']",,,,,,,eda_dq.py
 column_statistical_review,"Function to compute statistical properities of a particular column, function approaches Numeric and Non Numberic Differntly, non numeric
 calculations, Total Records, Unique Records, Null Records and the Mode.
 For Numreic Calculations, can also return, Mean, Mode, Standard Deviation, Max, Min, Mode, Number of Nulls, Zeroes, Non Zeros.
 Additionally, there are 4 Additional Components, which can include a top Value count of the most frequent records, the decile positions o
-the records, the Cummulative Sum of the Records, and the Percentage of Cummulative POsition at each decile.","['df', 'column_name', 'partitions', 'top_records_to_include', 'cummulative_sum', 'cummulative_percent', 'remove_null_from_decile', 'remove_zero_from_decile']",Dataframe,24-Jan-26,24-Jan-26,TBD,TBD,"df = column_statistical_review(final_mbr_df,'AGE')",data_validation.py
-historical_month_end_list,Function which Creates a list of Month End Dates.,"['end_dt', 'total_months', 'sort_ascending', 'format_']",List,19-Dec-25,19-Dec-25,TBD,TBD,df = historical_month_end_list(),date_functions.py
+the records, the Cummulative Sum of the Records, and the Percentage of Cummulative POsition at each decile.","['df', 'column_name', 'partitions', 'top_records_to_include', 'cummulative_sum', 'cummulative_percent', 'remove_null_from_decile', 'remove_zero_from_decile']",Dataframe,24-Jan-26,24-Jan-26,TBD,TBD,"df = column_statistical_review(final_mbr_df,'AGE')",eda_dq.py
+ReviewEntireDataframe,,"['df', 'file_name']",,,,,,,eda_dq.py
 generate_dictionary,"Function Used to Generate D Learning Notes, which is a consolidated view of D Notes and D Definitions.
 Used as a crtical input to D Streamlit Dashboard.
 CSV Generated from this process saved to Github and Used for Streamlit Dashboard.
@@ -169,7 +179,7 @@ daily_test,,"['observations', 'file_location']",,,,,,,daily_processes.py
 review_test_results,"Function to Facilitate a Daily Review of Historically Created Words.
 Function has a scoring Component, a Correct Answer (Pass is worth 1 Point), A Incorrect Answer (Fail is worth -2 points), if cummulative score is not postive
 then user is expected to Answer, with expectation of making score positive, if less than 10 examples with a negative score, it randomly samples from
-positive scores.",['file_location'],,,,,,,daily_processes.py
+positive scores.","['file_location', 'sample_records']",,,,,,,daily_processes.py
 input1,"Originally Named convert_dict_to_parameters
 Convert a .py file containing Dict into a Dataframe which can is used to populate Function Parameters",['module'],Dataframe,4-Dec-25,4-Dec-25,TBD,TBD,"import d_dictionaries
 temp = convertlisttoparameters(d_dictionaries)",input_functions_ignore.py
@@ -185,6 +195,25 @@ generate_create_table_sql,"Function to create a SQL Statement to Create a New Ta
 Function Utilizes a review of the DataFrame to recommend Column Names, Formating and appropriate Column Sizing.
 Function is NOT BEYOND REPROACH, requires some manual review and should not be automated.","['df', 'table_name', 'schema', 'db']",- str: SQL CREATE TABLE statement,,,,,,sql_.py
 TableRecordCountByDate,Generate a SQL Server query to count records by day for each table and pivot them.,"['table_dict', 'end_date', 'total_days']",str: A full SQL query string.,,,,,,sql_.py
+data_preparation_checklist,,"['df', 'word_list']",,,,,,,data_sets.py
+create_baseball_stats,"Toy dataset for explanatory/EDA/examples.
+Generates one row per player per game, with basic batting outcomes and derived rates.
+Parameters
+----------
+years : iterable[int]
+Seasons to generate.
+games_per_year : int
+Games per year.
+teams : list[str] | None
+Team/opponent list. If None, uses defaults.
+players : list[dict] | None
+Player definitions (name + profile). If None, uses built-in fictional roster.
+Each dict: {""name"": str, ""contact"": float, ""power"": float, ""discipline"": float, ""speed"": float}
+seed : int | None
+Random seed for reproducibility. Use None for non-deterministic output.
+Returns
+-------
+pd.DataFrame","['years', 'games_per_year', 'teams', 'players', 'seed']",,,,,,,data_sets.py
 gpt_question,,"['list_', 'word_list']",,,,,,,data_d_strings.py
 template_doc_string_print,Function to Return the Printed Value of the Doc String template_doc_string. Easier to Copy and Paste in this format opposed ot raw text.,['text_'],string,17-Dec-25,17-Dec-25,TBD,TBD,template_doc_string_print(),data_d_strings.py
 notebook_break,,[],,,,,,,data_d_strings.py

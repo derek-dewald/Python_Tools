@@ -66,6 +66,8 @@ view_df,df,dataframe,Any Dataframe,utility_functions.py
 view_df,update_decimal,int,Number of Default Decimal Places to Show in Notebook,utility_functions.py
 password_generator,minimum,int,Minimum Number of Required Characters,utility_functions.py
 password_generator,maximum,int,Maximum Number of Required Characters,utility_functions.py
+view_entire_df_column,df,df,Dataframe,utility_functions.py
+view_entire_df_column,index_,int,"Index Row Position of record you would like to be printed in Notebook, default is 0.",utility_functions.py
 dict_to_dataframe,dict_,,,dict_processing.py
 dict_to_dataframe,key_name,str,Name of Column which will include values from Key (Default is KEY),dict_processing.py
 dict_to_dataframe,value_name,str,Name of Column which will include values from Values (Default is Value),dict_processing.py
@@ -74,6 +76,16 @@ flatten_clean_dict,index_name,str,Default Name of Column to be applied to First 
 flatten_clean_dict,clean,bool,"Used to convert a single flat DF to a Matrix, which each new column",dict_processing.py
 flatten_clean_dict,apply_new_lvl,,,dict_processing.py
 flatten_clean_dict,high_low_list_fix,bool,"Optional Arguement, used for resolution of list [0,1] dict extraction.",dict_processing.py
+calculate_relationship_edge_score,df,,,graph_theory.py
+calculate_relationship_edge_score,primary_id,,,graph_theory.py
+calculate_relationship_edge_score,secondary_id,,,graph_theory.py
+calculate_relationship_edge_score,weight,,,graph_theory.py
+calculate_relationship_score,pair_score_df,,,graph_theory.py
+calculate_relationship_score,entity_1,,,graph_theory.py
+calculate_relationship_score,entity_2,,,graph_theory.py
+calculate_relationship_score,relationship_score,,,graph_theory.py
+calculate_relationship_score,group_id_name,,,graph_theory.py
+calculate_relationship_score,relationship_threshold,,,graph_theory.py
 read_directory,location,str,The path to the directory. Defaults to the current working directory if not provided.,shared_folder.py
 read_directory,file_type,str,"The file extension or type to filter by (e.g., '.ipynb'). If empty, returns all files.",shared_folder.py
 read_directory,match_str,str,,shared_folder.py
@@ -184,11 +196,21 @@ Heatmap,y_rotate,,,visualization.py
 Heatmap,cbar,,,visualization.py
 Heatmap,set_center,,,visualization.py
 Heatmap,figsize,,,visualization.py
+visualize_hex_color,hex_color_list,list[str],"List of colors (e.g., [""#FF0000"", ""#00FF00""]).",visualization.py
+visualize_hex_color,columns,int,Number of columns in the grid.,visualization.py
+visualize_hex_color,rows,int,Number of rows in the grid.,visualization.py
+visualize_hex_color,title_fontsize,int,Font size for hex labels.,visualization.py
 FunctionToSTR,func,function,Python Function,string_processing.py
 compare_function,func1,function,Python Function,string_processing.py
 compare_function,func2,function,Python Function,string_processing.py
 compare_function,additional_records,int,Number of String Characters for each function which will be displayed after the point of identifying difference.,string_processing.py
 compare_function,strip_docstring,bool,Boolean to determine whether you wish to compare the Doc String aswell as the function.,string_processing.py
+word_counts_from_column,df,df,DataFrame,string_processing.py
+word_counts_from_column,column_name,str,Column containing text to iterate through.,string_processing.py
+word_counts_from_column,lower,bool,Apply Lowercasing for consistency before counting.,string_processing.py
+word_counts_from_column,pattern,re,"r""[A-Za-z']+"". Regex for tokens (words). Adjust for unicode if needed.",string_processing.py
+word_counts_from_column,min_len,int,Minimum token length to keep.,string_processing.py
+word_counts_from_column,dropna,bool,Whether to drop empty tokens.,string_processing.py
 df_column_compare,df,dataframe,Dataframe,data_validation.py
 df_column_compare,df1,dataframe,DataFrame,data_validation.py
 df_column_compare,return_df,,,data_validation.py
@@ -203,23 +225,6 @@ get_decile,n,,,data_validation.py
 get_segments,df,df,Any Dataframe,data_validation.py
 get_segments,column_name,str,Name of Column,data_validation.py
 get_segments,number_segments,int,Number of Segments to be Calculated. Note that to cut segments it is required to calculate N+1,data_validation.py
-column_segmenter,df,df,DataFrame,data_validation.py
-column_segmenter,column_name,str,Name of Column to be Analyzed.,data_validation.py
-column_segmenter,new_column_name,str,Name of column to be created in DF if a list of edges is not selected,data_validation.py
-column_segmenter,bin_list,,,data_validation.py
-column_segmenter,number_segments,,,data_validation.py
-column_segmenter,force_segmentation,bool,Item to force the return of edges as defined in function by removing duplication in DF,data_validation.py
-column_segmenter,right_edge_is_min,bool,"When Using Custom Edges, whether values in Column exist which are less than defined Minimum.",data_validation.py
-column_segmenter,left_edge_is_max,bool,"When Using Custom Edges, whether values in Column exist which are greated than defined Maximum",data_validation.py
-column_segmenter,leading_text,str,Desired Format of Value to be returned when using segment_name,data_validation.py
-column_segmenter,format_,,,data_validation.py
-column_segmenter,return_value,str,"Indication of what user would like in return. df_column: New Column with Index Position of Segment/Edge segment_name: New Column with Text Description of Segment, for Visualization segments: List of Edge Positions TO BE DEVELOPED impute_blanks=False, remove_zeros=False,",data_validation.py
-segment_to_text,df,,,data_validation.py
-segment_to_text,bin_list,,,data_validation.py
-segment_to_text,column_name,,,data_validation.py
-segment_to_text,new_column_name,,,data_validation.py
-segment_to_text,leading_text,,,data_validation.py
-segment_to_text,format_,,,data_validation.py
 round_up_power10,series,pd.Series,Series or Array.,data_validation.py
 round_up_power10,infer_neg_vals,bool,Logical condition to determine whether values of 0 or,data_validation.py
 column_comparison,df,,,data_validation.py
@@ -230,25 +235,53 @@ column_comparison,bin_list,,,data_validation.py
 column_comparison,retain_columns,,,data_validation.py
 column_comparison,number_segments,,,data_validation.py
 column_comparison,force_segmentation,,,data_validation.py
-df_column_comparison,df,,,data_validation.py
+df_column_comparison,df,df,Dataframe,data_validation.py
 df_column_comparison,column_list,,,data_validation.py
 df_column_comparison,column_distinction,,,data_validation.py
 df_column_comparison,retain_columns,,,data_validation.py
 df_column_comparison,bin_list,,,data_validation.py
 df_column_comparison,number_segments,,,data_validation.py
 df_column_comparison,force_segmentation,,,data_validation.py
-column_statistical_review,df,df,Any DataFrame.,data_validation.py
-column_statistical_review,column_name,str,Name of particular column to where function will be applied.,data_validation.py
-column_statistical_review,partitions,int,"Number of Partitions to be applied in returned DF (default is 10, if 0 nothing returned.)",data_validation.py
-column_statistical_review,top_records_to_include,int,"Number of Top Records to be returned in DF (default is 5, if 0 nothing returned.)",data_validation.py
-column_statistical_review,cummulative_sum,bool,"Boolean, if True, will add the Cummulative Sum Value into the Return DF",data_validation.py
-column_statistical_review,cummulative_percent,bool,"Boolean, if True, will add the Cummulative Sum Percent  into the Return DF",data_validation.py
-column_statistical_review,remove_null_from_decile,bool,"Boolean, if true, it will remove Null and NA values from Caluclation of Decile",data_validation.py
-column_statistical_review,remove_zero_from_decile,bool,"Boolean, if true, it will remove Zero values from Caluclation of Decile",data_validation.py
+column_segmenter,df,df,DataFrame,data_validation.py
+column_segmenter,column_name,str,Name of Column to be Analyzed.,data_validation.py
+column_segmenter,new_column_name,str,Name of column to be created in DF if a list of edges is not selected,data_validation.py
+column_segmenter,bin_list,list,LIst of predetermined Bins where User wants to define themselves.,data_validation.py
+column_segmenter,number_segments,list,Predetermined and requested listing from User.,data_validation.py
+column_segmenter,force_segmentation,bool,Item to force the return of edges as defined in function by removing duplication in DF,data_validation.py
+column_segmenter,leading_text,str,Optional Text to be added into Text Segment before Number is presented,data_validation.py
+column_segmenter,format_,str,Optional f-string based formating to apply to number,data_validation.py
+column_segmenter,print_,bool,Optional Print statement so you can easily see the brackets in print as created.,data_validation.py
+column_segmenter,return_value,str,"Indication of what user would like in return. ("""",bin_list,segment_dict)",data_validation.py
+segment_to_text,df,df,,data_validation.py
+segment_to_text,segment_dict,dict,,data_validation.py
+segment_to_text,value_col,,,data_validation.py
+segment_to_text,index_col,,,data_validation.py
+segment_to_text,new_column_name,,,data_validation.py
+segment_to_text,leading_text,str,Optional Text to be added into Text Segment before Number is presented,data_validation.py
+segment_to_text,format_,str,Optional f-string based formating to apply to number,data_validation.py
+segment_to_text,print_,bool,Optional Print statement so you can easily see the brackets in print as created.,data_validation.py
 historical_month_end_list,end_dt,datetime,"Last date in period. Remember it is month end, so technically it will not return this month unless it is a month end date",date_functions.py
 historical_month_end_list,total_months,int,"Total number of records in list, by default it will be 12.",date_functions.py
 historical_month_end_list,sort_ascending,bool,"True/False to Determine whether end_dt will be the First, or Last value in list. By default (True) it is the Last",date_functions.py
 historical_month_end_list,format_,str,"Optional Argument to change the format of the values in list, 5 options incude (if valid option not selected, datetime returned). Valid options include: '%d-%b-%y', '%b-%y', timestamp, dt_date.",date_functions.py
+convert_df_date,df,,,date_functions.py
+convert_df_date,column_name,str,Name of Column to Convert,date_functions.py
+convert_df_date,new_column_name,str,"If populated, it will create a new column Name, otherwise it will replace column_name",date_functions.py
+convert_df_date,normalize,int,"Binary Flag, to Normalize Time to 00:00:00 If 0 then no normalization, if 1 then normalize.",date_functions.py
+top_x_records,data,,,eda_dq.py
+top_x_records,column_name,,,eda_dq.py
+top_x_records,top_n,,,eda_dq.py
+top_x_records,dropna,,,eda_dq.py
+column_statistical_review,df,df,Any DataFrame.,eda_dq.py
+column_statistical_review,column_name,str,Name of particular column to where function will be applied.,eda_dq.py
+column_statistical_review,partitions,int,"Number of Partitions to be applied in returned DF (default is 10, if 0 nothing returned.)",eda_dq.py
+column_statistical_review,top_records_to_include,int,"Number of Top Records to be returned in DF (default is 5, if 0 nothing returned.)",eda_dq.py
+column_statistical_review,cummulative_sum,bool,"Boolean, if True, will add the Cummulative Sum Value into the Return DF",eda_dq.py
+column_statistical_review,cummulative_percent,bool,"Boolean, if True, will add the Cummulative Sum Percent  into the Return DF",eda_dq.py
+column_statistical_review,remove_null_from_decile,bool,"Boolean, if true, it will remove Null and NA values from Caluclation of Decile",eda_dq.py
+column_statistical_review,remove_zero_from_decile,bool,"Boolean, if true, it will remove Zero values from Caluclation of Decile",eda_dq.py
+ReviewEntireDataframe,df,,,eda_dq.py
+ReviewEntireDataframe,file_name,,,eda_dq.py
 generate_dictionary,notes_df,df,"If Blank, then Function will generate call",daily_processes.py
 generate_dictionary,definition_df,,,daily_processes.py
 generate_dictionary,export_location,,,daily_processes.py
@@ -259,6 +292,7 @@ parse_dot_py_folder,export_location,str,"Location to where CSV file is to be exp
 daily_test,observations,,,daily_processes.py
 daily_test,file_location,,,daily_processes.py
 review_test_results,file_location,,,daily_processes.py
+review_test_results,sample_records,,,daily_processes.py
 input1,module,module,Py file containing Dict.,input_functions_ignore.py
 input2,module,module,Py file containing Lists.,input_functions_ignore.py
 input3,module,module,Py file containing Strings.,input_functions_ignore.py
@@ -273,6 +307,13 @@ generate_create_table_sql,db,str,"Database Name (function designed for Analytics
 TableRecordCountByDate,table_dict,"Dict[str, str]",Mapping of table name -> date column name.,sql_.py
 TableRecordCountByDate,end_date,,,sql_.py
 TableRecordCountByDate,total_days,,,sql_.py
+data_preparation_checklist,df,,,data_sets.py
+data_preparation_checklist,word_list,,,data_sets.py
+create_baseball_stats,years,,,data_sets.py
+create_baseball_stats,games_per_year,,,data_sets.py
+create_baseball_stats,teams,,,data_sets.py
+create_baseball_stats,players,,,data_sets.py
+create_baseball_stats,seed,,,data_sets.py
 gpt_question,list_,,,data_d_strings.py
 gpt_question,word_list,,,data_d_strings.py
 template_doc_string_print,text_,,,data_d_strings.py
@@ -311,7 +352,7 @@ export_to_excel,long_max_width,int,Max width for long_columns,df_processing.py
 transpose_df,df,DataFrame,The input pandas DataFrame.,df_processing.py
 transpose_df,index,list,Columns to retain as identifiers (will remain unchanged).,df_processing.py
 transpose_df,columns,list,Columns to unpivot into key-value pairs.,df_processing.py
-Reference String,today,str,26-Jan-26,data_d_strings.py
+Reference String,today,str,07-Feb-26,data_d_strings.py
 Reference String,template_doc_string,str,"
 
     Definition of Function
@@ -322,8 +363,8 @@ Reference String,template_doc_string,str,"
     Returns:
         Object Type
 
-    date_created:26-Jan-26
-    date_last_modified: 26-Jan-26
+    date_created:07-Feb-26
+    date_last_modified: 07-Feb-26
     classification:TBD
     sub_classification:TBD
     usage:
@@ -357,6 +398,21 @@ links,function_list_url,dict,https://raw.githubusercontent.com/derek-dewald/Pyth
 links,parameter_list_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_parameters.csv,data_d_lists.py
 links,folder_toc_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/folder_listing.csv,data_d_lists.py
 links,d_learning_notes_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_learning_notes.csv,data_d_lists.py
+links,technical_notes,dict,https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv,data_d_lists.py
+emoji_dict,STATUS,dict,"{'label': 'Status / Progress / Outcome', 'description': 'Execution state, progress tracking, completion, and flow of work.', 'emojis': ['✅', '✔️', '⏸️', '🟢', '🟡', '🔴', '⏳', '🕐', '📤', '📥', '🗂️']}",data_d_lists.py
+emoji_dict,DATA,dict,"{'label': 'Data / Analytics / Artifacts', 'description': 'Raw data, analytical outputs, reports, documentation, and structured artifacts.', 'emojis': ['📊', '📈', '📉', '📋', '📝', '📚', '🔢', '📦', '🧾']}",data_d_lists.py
+emoji_dict,QUALITY,dict,"{'label': 'Data Quality / Validity / Trust', 'description': 'Data cleanliness, assumptions, validation, lineage, and reliability checks.', 'emojis': ['🧼', '🔍', '🧪', '🧾', '🧯', '🪪']}",data_d_lists.py
+emoji_dict,ANALYSIS,dict,"{'label': 'Analysis / Statistics / Reasoning', 'description': 'Measurement, statistical thinking, mathematical rigor, and analytical reasoning.', 'emojis': ['🧠', '🧮', '📐', '📏', '🎲', '🔔', '🌡️', '⚖️']}",data_d_lists.py
+emoji_dict,MODEL,dict,"{'label': 'Modeling / Machine Learning', 'description': 'Feature engineering, model construction, training, tuning, and pipelines.', 'emojis': ['🤖', '🧩', '🧱', '🏗️', '🎛️', '🪜', '🪝', '🔄']}",data_d_lists.py
+emoji_dict,EVAL,dict,"{'label': 'Evaluation / Performance / Testing', 'description': 'Model assessment, metrics, validation, experimentation, and testing outcomes.', 'emojis': ['🧪', '🎯', '📉', '📈', '🔁']}",data_d_lists.py
+emoji_dict,INSIGHT,dict,"{'label': 'Insight / Discovery / Understanding', 'description': 'Pattern discovery, interpretation, understanding, and sense-making.', 'emojis': ['💡', '💭', '🤔', '🧐', '🧭']}",data_d_lists.py
+emoji_dict,DECISION,dict,"{'label': 'Decision / Optimization / Strategy', 'description': 'Judgment, trade-offs, prioritization, optimization, and final recommendations.', 'emojis': ['⚖️', '🎯', '🚦', '🏁', '🧠']}",data_d_lists.py
+emoji_dict,ACTION,dict,"{'label': 'Tools / Engineering / Execution', 'description': 'Implementation, engineering work, tooling, and operational execution.', 'emojis': ['🛠️', '🔧', '🧰', '⚙️', '🗜️']}",data_d_lists.py
+emoji_dict,TIME,dict,"{'label': 'Time / Change / Drift', 'description': 'Trends over time, decay, refresh cycles, and model or data drift.', 'emojis': ['🕰️', '🌊', '📉', '🔄', '🧊']}",data_d_lists.py
+emoji_dict,CAUSAL,dict,"{'label': 'Causality / Impact / Inference', 'description': 'Cause-effect reasoning, inference, treatments, and impact assessment.', 'emojis': ['🔗', '🧪', '🎯', '🧠', '🧯']}",data_d_lists.py
+emoji_dict,RISK,dict,"{'label': 'Risk / Alerts / Flags', 'description': 'Warnings, failures, blockers, risks, and critical issues.', 'emojis': ['⚠️', '❌', '🚨', '🚩', '🛑', '❗', '❓', '⛔']}",data_d_lists.py
+emoji_dict,COLLAB,dict,"{'label': 'Collaboration / Communication', 'description': 'Sharing, alignment, discussion, and coordination with others.', 'emojis': ['📣', '🗣️', '👥', '🤝', '📨']}",data_d_lists.py
+emoji_dict,ENERGY,dict,"{'label': 'Motivation / Momentum / Wins', 'description': 'Progress celebration, motivation, momentum, and morale.', 'emojis': ['🚀', '🔥', '💥', '💫', '🌟', '🏆', '💎', '🌱']}",data_d_lists.py
 function_fields,date_created,str,,data_d_lists.py
 function_fields,date_last_modified,str,,data_d_lists.py
 function_fields,classification,str,,data_d_lists.py
@@ -370,3 +426,880 @@ notes_default,Algorithm,str,,data_d_lists.py
 notes_default,Function,str,,data_d_lists.py
 notes_default,Constraint,str,,data_d_lists.py
 notes_default,Procedure,str,,data_d_lists.py
+hex_color_list,#808080,str,,data_d_lists.py
+hex_color_list,#efc050,str,,data_d_lists.py
+hex_color_list,#0000cd,str,,data_d_lists.py
+hex_color_list,#060,str,,data_d_lists.py
+hex_color_list,#ff4040,str,,data_d_lists.py
+hex_color_list,#FFC0CB,str,,data_d_lists.py
+hex_color_list,#EEDFCC,str,,data_d_lists.py
+hex_color_list,#0ff,str,,data_d_lists.py
+hex_color_list,#8a3324,str,,data_d_lists.py
+hex_color_list,#6495ed,str,,data_d_lists.py
+hex_color_list,#ff7f00,str,,data_d_lists.py
+hex_color_list,#8a2be2,str,,data_d_lists.py
+hex_color_list,#050505,str,,data_d_lists.py
+hex_color_list,#841b2d,str,,data_d_lists.py
+hex_color_list,#a4c639,str,,data_d_lists.py
+hex_color_list,#cd9575,str,,data_d_lists.py
+hex_color_list,#ffbf00,str,,data_d_lists.py
+hex_color_list,#c46210,str,,data_d_lists.py
+hex_color_list,#E3CF57,str,,data_d_lists.py
+hex_color_list,#f4c2c2,str,,data_d_lists.py
+hex_color_list,#fae7b5,str,,data_d_lists.py
+hex_color_list,#ffe4c4,str,,data_d_lists.py
+hex_color_list,#fe6f5e,str,,data_d_lists.py
+hex_color_list,#bf4f51,str,,data_d_lists.py
+hex_color_list,#a57164,str,,data_d_lists.py
+hex_color_list,#ace5ee,str,,data_d_lists.py
+hex_color_list,#5d8aa8,str,,data_d_lists.py
+hex_color_list,#00308f,str,,data_d_lists.py
+hex_color_list,#72a0c1,str,,data_d_lists.py
+hex_color_list,#a32638,str,,data_d_lists.py
+hex_color_list,#f0f8ff,str,,data_d_lists.py
+hex_color_list,#e32636,str,,data_d_lists.py
+hex_color_list,#efdecd,str,,data_d_lists.py
+hex_color_list,#e52b50,str,,data_d_lists.py
+hex_color_list,#ff7e00,str,,data_d_lists.py
+hex_color_list,#ff033e,str,,data_d_lists.py
+hex_color_list,#96c,str,,data_d_lists.py
+hex_color_list,#f2f3f4,str,,data_d_lists.py
+hex_color_list,#915c83,str,,data_d_lists.py
+hex_color_list,#faebd7,str,,data_d_lists.py
+hex_color_list,#008000,str,,data_d_lists.py
+hex_color_list,#8db600,str,,data_d_lists.py
+hex_color_list,#fbceb1,str,,data_d_lists.py
+hex_color_list,#7fffd4,str,,data_d_lists.py
+hex_color_list,#4b5320,str,,data_d_lists.py
+hex_color_list,#3b444b,str,,data_d_lists.py
+hex_color_list,#e9d66b,str,,data_d_lists.py
+hex_color_list,#b2beb5,str,,data_d_lists.py
+hex_color_list,#87a96b,str,,data_d_lists.py
+hex_color_list,#f96,str,,data_d_lists.py
+hex_color_list,#a52a2a,str,,data_d_lists.py
+hex_color_list,#fdee00,str,,data_d_lists.py
+hex_color_list,#6e7f80,str,,data_d_lists.py
+hex_color_list,#568203,str,,data_d_lists.py
+hex_color_list,#007fff,str,,data_d_lists.py
+hex_color_list,#f0ffff,str,,data_d_lists.py
+hex_color_list,#89cff0,str,,data_d_lists.py
+hex_color_list,#a1caf1,str,,data_d_lists.py
+hex_color_list,#21abcd,str,,data_d_lists.py
+hex_color_list,#ffe135,str,,data_d_lists.py
+hex_color_list,#7c0a02,str,,data_d_lists.py
+hex_color_list,#848482,str,,data_d_lists.py
+hex_color_list,#98777b,str,,data_d_lists.py
+hex_color_list,#bcd4e6,str,,data_d_lists.py
+hex_color_list,#9f8170,str,,data_d_lists.py
+hex_color_list,#f5f5dc,str,,data_d_lists.py
+hex_color_list,#9c2542,str,,data_d_lists.py
+hex_color_list,#3d2b1f,str,,data_d_lists.py
+hex_color_list,#000,str,,data_d_lists.py
+hex_color_list,#3d0c02,str,,data_d_lists.py
+hex_color_list,#253529,str,,data_d_lists.py
+hex_color_list,#3b3c36,str,,data_d_lists.py
+hex_color_list,#ffebcd,str,,data_d_lists.py
+hex_color_list,#318ce7,str,,data_d_lists.py
+hex_color_list,#faf0be,str,,data_d_lists.py
+hex_color_list,#00f,str,,data_d_lists.py
+hex_color_list,#a2a2d0,str,,data_d_lists.py
+hex_color_list,#1f75fe,str,,data_d_lists.py
+hex_color_list,#69c,str,,data_d_lists.py
+hex_color_list,#0d98ba,str,,data_d_lists.py
+hex_color_list,#0093af,str,,data_d_lists.py
+hex_color_list,#0087bd,str,,data_d_lists.py
+hex_color_list,#339,str,,data_d_lists.py
+hex_color_list,#0247fe,str,,data_d_lists.py
+hex_color_list,#126180,str,,data_d_lists.py
+hex_color_list,#de5d83,str,,data_d_lists.py
+hex_color_list,#79443b,str,,data_d_lists.py
+hex_color_list,#0095b6,str,,data_d_lists.py
+hex_color_list,#e3dac9,str,,data_d_lists.py
+hex_color_list,#c00,str,,data_d_lists.py
+hex_color_list,#006a4e,str,,data_d_lists.py
+hex_color_list,#873260,str,,data_d_lists.py
+hex_color_list,#0070ff,str,,data_d_lists.py
+hex_color_list,#b5a642,str,,data_d_lists.py
+hex_color_list,#cb4154,str,,data_d_lists.py
+hex_color_list,#1dacd6,str,,data_d_lists.py
+hex_color_list,#6f0,str,,data_d_lists.py
+hex_color_list,#bf94e4,str,,data_d_lists.py
+hex_color_list,#c32148,str,,data_d_lists.py
+hex_color_list,#ff007f,str,,data_d_lists.py
+hex_color_list,#08e8de,str,,data_d_lists.py
+hex_color_list,#d19fe8,str,,data_d_lists.py
+hex_color_list,#f4bbff,str,,data_d_lists.py
+hex_color_list,#ff55a3,str,,data_d_lists.py
+hex_color_list,#fb607f,str,,data_d_lists.py
+hex_color_list,#004225,str,,data_d_lists.py
+hex_color_list,#cd7f32,str,,data_d_lists.py
+hex_color_list,#964b00,str,,data_d_lists.py
+hex_color_list,#a52a2a,str,,data_d_lists.py
+hex_color_list,#ffc1cc,str,,data_d_lists.py
+hex_color_list,#e7feff,str,,data_d_lists.py
+hex_color_list,#f0dc82,str,,data_d_lists.py
+hex_color_list,#480607,str,,data_d_lists.py
+hex_color_list,#800020,str,,data_d_lists.py
+hex_color_list,#deb887,str,,data_d_lists.py
+hex_color_list,#c50,str,,data_d_lists.py
+hex_color_list,#e97451,str,,data_d_lists.py
+hex_color_list,#808080,str,,data_d_lists.py
+hex_color_list,#bd33a4,str,,data_d_lists.py
+hex_color_list,#702963,str,,data_d_lists.py
+hex_color_list,#536872,str,,data_d_lists.py
+hex_color_list,#5f9ea0,str,,data_d_lists.py
+hex_color_list,#91a3b0,str,,data_d_lists.py
+hex_color_list,#006b3c,str,,data_d_lists.py
+hex_color_list,#ed872d,str,,data_d_lists.py
+hex_color_list,#e30022,str,,data_d_lists.py
+hex_color_list,#fff600,str,,data_d_lists.py
+hex_color_list,#a67b5b,str,,data_d_lists.py
+hex_color_list,#4b3621,str,,data_d_lists.py
+hex_color_list,#1e4d2b,str,,data_d_lists.py
+hex_color_list,#a3c1ad,str,,data_d_lists.py
+hex_color_list,#c19a6b,str,,data_d_lists.py
+hex_color_list,#efbbcc,str,,data_d_lists.py
+hex_color_list,#78866b,str,,data_d_lists.py
+hex_color_list,#ffef00,str,,data_d_lists.py
+hex_color_list,#ff0800,str,,data_d_lists.py
+hex_color_list,#e4717a,str,,data_d_lists.py
+hex_color_list,#00bfff,str,,data_d_lists.py
+hex_color_list,#592720,str,,data_d_lists.py
+hex_color_list,#c41e3a,str,,data_d_lists.py
+hex_color_list,#0c9,str,,data_d_lists.py
+hex_color_list,#960018,str,,data_d_lists.py
+hex_color_list,#d70040,str,,data_d_lists.py
+hex_color_list,#eb4c42,str,,data_d_lists.py
+hex_color_list,#ff0038,str,,data_d_lists.py
+hex_color_list,#ffa6c9,str,,data_d_lists.py
+hex_color_list,#b31b1b,str,,data_d_lists.py
+hex_color_list,#99badd,str,,data_d_lists.py
+hex_color_list,#ed9121,str,,data_d_lists.py
+hex_color_list,#062a78,str,,data_d_lists.py
+hex_color_list,#92a1cf,str,,data_d_lists.py
+hex_color_list,#ace1af,str,,data_d_lists.py
+hex_color_list,#007ba7,str,,data_d_lists.py
+hex_color_list,#2f847c,str,,data_d_lists.py
+hex_color_list,#b2ffff,str,,data_d_lists.py
+hex_color_list,#4997d0,str,,data_d_lists.py
+hex_color_list,#de3163,str,,data_d_lists.py
+hex_color_list,#ec3b83,str,,data_d_lists.py
+hex_color_list,#007ba7,str,,data_d_lists.py
+hex_color_list,#2a52be,str,,data_d_lists.py
+hex_color_list,#6d9bc3,str,,data_d_lists.py
+hex_color_list,#007aa5,str,,data_d_lists.py
+hex_color_list,#e03c31,str,,data_d_lists.py
+hex_color_list,#a0785a,str,,data_d_lists.py
+hex_color_list,#fad6a5,str,,data_d_lists.py
+hex_color_list,#36454f,str,,data_d_lists.py
+hex_color_list,#e68fac,str,,data_d_lists.py
+hex_color_list,#dfff00,str,,data_d_lists.py
+hex_color_list,#7fff00,str,,data_d_lists.py
+hex_color_list,#de3163,str,,data_d_lists.py
+hex_color_list,#ffb7c5,str,,data_d_lists.py
+hex_color_list,#cd5c5c,str,,data_d_lists.py
+hex_color_list,#de6fa1,str,,data_d_lists.py
+hex_color_list,#a8516e,str,,data_d_lists.py
+hex_color_list,#aa381e,str,,data_d_lists.py
+hex_color_list,#7b3f00,str,,data_d_lists.py
+hex_color_list,#d2691e,str,,data_d_lists.py
+hex_color_list,#ffa700,str,,data_d_lists.py
+hex_color_list,#98817b,str,,data_d_lists.py
+hex_color_list,#e34234,str,,data_d_lists.py
+hex_color_list,#d2691e,str,,data_d_lists.py
+hex_color_list,#e4d00a,str,,data_d_lists.py
+hex_color_list,#fbcce7,str,,data_d_lists.py
+hex_color_list,#0047ab,str,,data_d_lists.py
+hex_color_list,#d2691e,str,,data_d_lists.py
+hex_color_list,#6f4e37,str,,data_d_lists.py
+hex_color_list,#9bddff,str,,data_d_lists.py
+hex_color_list,#f88379,str,,data_d_lists.py
+hex_color_list,#002e63,str,,data_d_lists.py
+hex_color_list,#8c92ac,str,,data_d_lists.py
+hex_color_list,#b87333,str,,data_d_lists.py
+hex_color_list,#da8a67,str,,data_d_lists.py
+hex_color_list,#ad6f69,str,,data_d_lists.py
+hex_color_list,#cb6d51,str,,data_d_lists.py
+hex_color_list,#966,str,,data_d_lists.py
+hex_color_list,#ff3800,str,,data_d_lists.py
+hex_color_list,#ff7f50,str,,data_d_lists.py
+hex_color_list,#f88379,str,,data_d_lists.py
+hex_color_list,#808080,str,,data_d_lists.py
+hex_color_list,#893f45,str,,data_d_lists.py
+hex_color_list,#fbec5d,str,,data_d_lists.py
+hex_color_list,#b31b1b,str,,data_d_lists.py
+hex_color_list,#fff8dc,str,,data_d_lists.py
+hex_color_list,#fff8e7,str,,data_d_lists.py
+hex_color_list,#ffbcd9,str,,data_d_lists.py
+hex_color_list,#fffdd0,str,,data_d_lists.py
+hex_color_list,#dc143c,str,,data_d_lists.py
+hex_color_list,#be0032,str,,data_d_lists.py
+hex_color_list,#0ff,str,,data_d_lists.py
+hex_color_list,#00b7eb,str,,data_d_lists.py
+hex_color_list,#ffff31,str,,data_d_lists.py
+hex_color_list,#f0e130,str,,data_d_lists.py
+hex_color_list,#00008b,str,,data_d_lists.py
+hex_color_list,#654321,str,,data_d_lists.py
+hex_color_list,#5d3954,str,,data_d_lists.py
+hex_color_list,#a40000,str,,data_d_lists.py
+hex_color_list,#08457e,str,,data_d_lists.py
+hex_color_list,#986960,str,,data_d_lists.py
+hex_color_list,#cd5b45,str,,data_d_lists.py
+hex_color_list,#008b8b,str,,data_d_lists.py
+hex_color_list,#536878,str,,data_d_lists.py
+hex_color_list,#b8860b,str,,data_d_lists.py
+hex_color_list,#a9a9a9,str,,data_d_lists.py
+hex_color_list,#013220,str,,data_d_lists.py
+hex_color_list,#00416a,str,,data_d_lists.py
+hex_color_list,#1a2421,str,,data_d_lists.py
+hex_color_list,#bdb76b,str,,data_d_lists.py
+hex_color_list,#483c32,str,,data_d_lists.py
+hex_color_list,#734f96,str,,data_d_lists.py
+hex_color_list,#8b008b,str,,data_d_lists.py
+hex_color_list,#036,str,,data_d_lists.py
+hex_color_list,#556b2f,str,,data_d_lists.py
+hex_color_list,#ff8c00,str,,data_d_lists.py
+hex_color_list,#9932cc,str,,data_d_lists.py
+hex_color_list,#779ecb,str,,data_d_lists.py
+hex_color_list,#03c03c,str,,data_d_lists.py
+hex_color_list,#966fd6,str,,data_d_lists.py
+hex_color_list,#c23b22,str,,data_d_lists.py
+hex_color_list,#e75480,str,,data_d_lists.py
+hex_color_list,#039,str,,data_d_lists.py
+hex_color_list,#872657,str,,data_d_lists.py
+hex_color_list,#8b0000,str,,data_d_lists.py
+hex_color_list,#e9967a,str,,data_d_lists.py
+hex_color_list,#560319,str,,data_d_lists.py
+hex_color_list,#8fbc8f,str,,data_d_lists.py
+hex_color_list,#3c1414,str,,data_d_lists.py
+hex_color_list,#483d8b,str,,data_d_lists.py
+hex_color_list,#2f4f4f,str,,data_d_lists.py
+hex_color_list,#177245,str,,data_d_lists.py
+hex_color_list,#918151,str,,data_d_lists.py
+hex_color_list,#ffa812,str,,data_d_lists.py
+hex_color_list,#483c32,str,,data_d_lists.py
+hex_color_list,#cc4e5c,str,,data_d_lists.py
+hex_color_list,#00ced1,str,,data_d_lists.py
+hex_color_list,#9400d3,str,,data_d_lists.py
+hex_color_list,#9b870c,str,,data_d_lists.py
+hex_color_list,#00703c,str,,data_d_lists.py
+hex_color_list,#555,str,,data_d_lists.py
+hex_color_list,#d70a53,str,,data_d_lists.py
+hex_color_list,#a9203e,str,,data_d_lists.py
+hex_color_list,#ef3038,str,,data_d_lists.py
+hex_color_list,#e9692c,str,,data_d_lists.py
+hex_color_list,#da3287,str,,data_d_lists.py
+hex_color_list,#fad6a5,str,,data_d_lists.py
+hex_color_list,#b94e48,str,,data_d_lists.py
+hex_color_list,#704241,str,,data_d_lists.py
+hex_color_list,#c154c1,str,,data_d_lists.py
+hex_color_list,#004b49,str,,data_d_lists.py
+hex_color_list,#95b,str,,data_d_lists.py
+hex_color_list,#c0c,str,,data_d_lists.py
+hex_color_list,#ffcba4,str,,data_d_lists.py
+hex_color_list,#ff1493,str,,data_d_lists.py
+hex_color_list,#843f5b,str,,data_d_lists.py
+hex_color_list,#f93,str,,data_d_lists.py
+hex_color_list,#00bfff,str,,data_d_lists.py
+hex_color_list,#66424d,str,,data_d_lists.py
+hex_color_list,#1560bd,str,,data_d_lists.py
+hex_color_list,#c19a6b,str,,data_d_lists.py
+hex_color_list,#edc9af,str,,data_d_lists.py
+hex_color_list,#696969,str,,data_d_lists.py
+hex_color_list,#1e90ff,str,,data_d_lists.py
+hex_color_list,#d71868,str,,data_d_lists.py
+hex_color_list,#85bb65,str,,data_d_lists.py
+hex_color_list,#967117,str,,data_d_lists.py
+hex_color_list,#00009c,str,,data_d_lists.py
+hex_color_list,#e1a95f,str,,data_d_lists.py
+hex_color_list,#555d50,str,,data_d_lists.py
+hex_color_list,#c2b280,str,,data_d_lists.py
+hex_color_list,#614051,str,,data_d_lists.py
+hex_color_list,#f0ead6,str,,data_d_lists.py
+hex_color_list,#1cac78,str,,data_d_lists.py
+hex_color_list,#1034a6,str,,data_d_lists.py
+hex_color_list,#7df9ff,str,,data_d_lists.py
+hex_color_list,#ff003f,str,,data_d_lists.py
+hex_color_list,#0ff,str,,data_d_lists.py
+hex_color_list,#0f0,str,,data_d_lists.py
+hex_color_list,#6f00ff,str,,data_d_lists.py
+hex_color_list,#f4bbff,str,,data_d_lists.py
+hex_color_list,#cf0,str,,data_d_lists.py
+hex_color_list,#bf00ff,str,,data_d_lists.py
+hex_color_list,#3f00ff,str,,data_d_lists.py
+hex_color_list,#8f00ff,str,,data_d_lists.py
+hex_color_list,#ff0,str,,data_d_lists.py
+hex_color_list,#50c878,str,,data_d_lists.py
+hex_color_list,#b48395,str,,data_d_lists.py
+hex_color_list,#96c8a2,str,,data_d_lists.py
+hex_color_list,#c19a6b,str,,data_d_lists.py
+hex_color_list,#801818,str,,data_d_lists.py
+hex_color_list,#b53389,str,,data_d_lists.py
+hex_color_list,#2c1608,str,,data_d_lists.py
+hex_color_list,#00FF00,str,,data_d_lists.py
+hex_color_list,#f400a1,str,,data_d_lists.py
+hex_color_list,#e5aa70,str,,data_d_lists.py
+hex_color_list,#4d5d53,str,,data_d_lists.py
+hex_color_list,#4f7942,str,,data_d_lists.py
+hex_color_list,#ff2800,str,,data_d_lists.py
+hex_color_list,#6c541e,str,,data_d_lists.py
+hex_color_list,#ce2029,str,,data_d_lists.py
+hex_color_list,#b22222,str,,data_d_lists.py
+hex_color_list,#ff0,str,,data_d_lists.py
+hex_color_list,#9acd32,str,,data_d_lists.py
+hex_color_list,#e25822,str,,data_d_lists.py
+hex_color_list,#fc8eac,str,,data_d_lists.py
+hex_color_list,#f7e98e,str,,data_d_lists.py
+hex_color_list,#eedc82,str,,data_d_lists.py
+hex_color_list,#fffaf0,str,,data_d_lists.py
+hex_color_list,#ffbf00,str,,data_d_lists.py
+hex_color_list,#ff1493,str,,data_d_lists.py
+hex_color_list,#cf0,str,,data_d_lists.py
+hex_color_list,#efcc00,str,,data_d_lists.py
+hex_color_list,#ffd300,str,,data_d_lists.py
+hex_color_list,#ff004f,str,,data_d_lists.py
+hex_color_list,#014421,str,,data_d_lists.py
+hex_color_list,#228b22,str,,data_d_lists.py
+hex_color_list,#a67b5b,str,,data_d_lists.py
+hex_color_list,#0072bb,str,,data_d_lists.py
+hex_color_list,#86608e,str,,data_d_lists.py
+hex_color_list,#cf0,str,,data_d_lists.py
+hex_color_list,#c72c48,str,,data_d_lists.py
+hex_color_list,#009f6b,str,,data_d_lists.py
+hex_color_list,#00a550,str,,data_d_lists.py
+hex_color_list,#f64a8a,str,,data_d_lists.py
+hex_color_list,#f0f,str,,data_d_lists.py
+hex_color_list,#c154c1,str,,data_d_lists.py
+hex_color_list,#f7f,str,,data_d_lists.py
+hex_color_list,#c74375,str,,data_d_lists.py
+hex_color_list,#e48400,str,,data_d_lists.py
+hex_color_list,#c66,str,,data_d_lists.py
+hex_color_list,#fefe33,str,,data_d_lists.py
+hex_color_list,#0014a8,str,,data_d_lists.py
+hex_color_list,#66b032,str,,data_d_lists.py
+hex_color_list,#adff2f,str,,data_d_lists.py
+hex_color_list,#dcdcdc,str,,data_d_lists.py
+hex_color_list,#e49b0f,str,,data_d_lists.py
+hex_color_list,#f8f8ff,str,,data_d_lists.py
+hex_color_list,#b06500,str,,data_d_lists.py
+hex_color_list,#6082b6,str,,data_d_lists.py
+hex_color_list,#e6e8fa,str,,data_d_lists.py
+hex_color_list,#d4af37,str,,data_d_lists.py
+hex_color_list,#ffd700,str,,data_d_lists.py
+hex_color_list,#bebebe,str,,data_d_lists.py
+hex_color_list,#0f0,str,,data_d_lists.py
+hex_color_list,#a99a86,str,,data_d_lists.py
+hex_color_list,#00ff7f,str,,data_d_lists.py
+hex_color_list,#663854,str,,data_d_lists.py
+hex_color_list,#446ccf,str,,data_d_lists.py
+hex_color_list,#5218fa,str,,data_d_lists.py
+hex_color_list,#e9d66b,str,,data_d_lists.py
+hex_color_list,#3fff00,str,,data_d_lists.py
+hex_color_list,#c90016,str,,data_d_lists.py
+hex_color_list,#008000,str,,data_d_lists.py
+hex_color_list,#00a877,str,,data_d_lists.py
+hex_color_list,#da9100,str,,data_d_lists.py
+hex_color_list,#808000,str,,data_d_lists.py
+hex_color_list,#df73ff,str,,data_d_lists.py
+hex_color_list,#f400a1,str,,data_d_lists.py
+hex_color_list,#f0fff0,str,,data_d_lists.py
+hex_color_list,#007fbf,str,,data_d_lists.py
+hex_color_list,#49796b,str,,data_d_lists.py
+hex_color_list,#ff1dce,str,,data_d_lists.py
+hex_color_list,#ff69b4,str,,data_d_lists.py
+hex_color_list,#355e3b,str,,data_d_lists.py
+hex_color_list,#71a6d2,str,,data_d_lists.py
+hex_color_list,#fcf75e,str,,data_d_lists.py
+hex_color_list,#002395,str,,data_d_lists.py
+hex_color_list,#b2ec5d,str,,data_d_lists.py
+hex_color_list,#138808,str,,data_d_lists.py
+hex_color_list,#cd5c5c,str,,data_d_lists.py
+hex_color_list,#e3a857,str,,data_d_lists.py
+hex_color_list,#6f00ff,str,,data_d_lists.py
+hex_color_list,#00416a,str,,data_d_lists.py
+hex_color_list,#4b0082,str,,data_d_lists.py
+hex_color_list,#002fa7,str,,data_d_lists.py
+hex_color_list,#ff4f00,str,,data_d_lists.py
+hex_color_list,#ba160c,str,,data_d_lists.py
+hex_color_list,#c0362c,str,,data_d_lists.py
+hex_color_list,#5a4fcf,str,,data_d_lists.py
+hex_color_list,#a8e4a0,str,,data_d_lists.py
+hex_color_list,#465945,str,,data_d_lists.py
+hex_color_list,#f4f0ec,str,,data_d_lists.py
+hex_color_list,#009000,str,,data_d_lists.py
+hex_color_list,#fffff0,str,,data_d_lists.py
+hex_color_list,#00a86b,str,,data_d_lists.py
+hex_color_list,#f8de7e,str,,data_d_lists.py
+hex_color_list,#d73b3e,str,,data_d_lists.py
+hex_color_list,#a50b5e,str,,data_d_lists.py
+hex_color_list,#343434,str,,data_d_lists.py
+hex_color_list,#ffdf00,str,,data_d_lists.py
+hex_color_list,#daa520,str,,data_d_lists.py
+hex_color_list,#fada5e,str,,data_d_lists.py
+hex_color_list,#bdda57,str,,data_d_lists.py
+hex_color_list,#29ab87,str,,data_d_lists.py
+hex_color_list,#4cbb17,str,,data_d_lists.py
+hex_color_list,#7c1c05,str,,data_d_lists.py
+hex_color_list,#c3b091,str,,data_d_lists.py
+hex_color_list,#f0e68c,str,,data_d_lists.py
+hex_color_list,#e8000d,str,,data_d_lists.py
+hex_color_list,#996515,str,,data_d_lists.py
+hex_color_list,#fcc200,str,,data_d_lists.py
+hex_color_list,#b57edc,str,,data_d_lists.py
+hex_color_list,#c4c3d0,str,,data_d_lists.py
+hex_color_list,#9457eb,str,,data_d_lists.py
+hex_color_list,#ee82ee,str,,data_d_lists.py
+hex_color_list,#e6e6fa,str,,data_d_lists.py
+hex_color_list,#fbaed2,str,,data_d_lists.py
+hex_color_list,#967bb6,str,,data_d_lists.py
+hex_color_list,#fba0e3,str,,data_d_lists.py
+hex_color_list,#ccf,str,,data_d_lists.py
+hex_color_list,#fff0f5,str,,data_d_lists.py
+hex_color_list,#e6e6fa,str,,data_d_lists.py
+hex_color_list,#7cfc00,str,,data_d_lists.py
+hex_color_list,#fff700,str,,data_d_lists.py
+hex_color_list,#fffacd,str,,data_d_lists.py
+hex_color_list,#e3ff00,str,,data_d_lists.py
+hex_color_list,#1a1110,str,,data_d_lists.py
+hex_color_list,#fdd5b1,str,,data_d_lists.py
+hex_color_list,#add8e6,str,,data_d_lists.py
+hex_color_list,#a9ba9d,str,,data_d_lists.py
+hex_color_list,#cf1020,str,,data_d_lists.py
+hex_color_list,#b5651d,str,,data_d_lists.py
+hex_color_list,#e66771,str,,data_d_lists.py
+hex_color_list,#f08080,str,,data_d_lists.py
+hex_color_list,#93ccea,str,,data_d_lists.py
+hex_color_list,#f56991,str,,data_d_lists.py
+hex_color_list,#e0ffff,str,,data_d_lists.py
+hex_color_list,#f984ef,str,,data_d_lists.py
+hex_color_list,#fafad2,str,,data_d_lists.py
+hex_color_list,#26619c,str,,data_d_lists.py
+hex_color_list,#fefe22,str,,data_d_lists.py
+hex_color_list,#d3d3d3,str,,data_d_lists.py
+hex_color_list,#90ee90,str,,data_d_lists.py
+hex_color_list,#f0e68c,str,,data_d_lists.py
+hex_color_list,#b19cd9,str,,data_d_lists.py
+hex_color_list,#ffb6c1,str,,data_d_lists.py
+hex_color_list,#e97451,str,,data_d_lists.py
+hex_color_list,#ffa07a,str,,data_d_lists.py
+hex_color_list,#f99,str,,data_d_lists.py
+hex_color_list,#087830,str,,data_d_lists.py
+hex_color_list,#d6cadd,str,,data_d_lists.py
+hex_color_list,#20b2aa,str,,data_d_lists.py
+hex_color_list,#87cefa,str,,data_d_lists.py
+hex_color_list,#789,str,,data_d_lists.py
+hex_color_list,#b38b6d,str,,data_d_lists.py
+hex_color_list,#e68fac,str,,data_d_lists.py
+hex_color_list,#ffffe0,str,,data_d_lists.py
+hex_color_list,#c8a2c8,str,,data_d_lists.py
+hex_color_list,#bfff00,str,,data_d_lists.py
+hex_color_list,#BFD0CA,str,,data_d_lists.py
+hex_color_list,#32cd32,str,,data_d_lists.py
+hex_color_list,#0f0,str,,data_d_lists.py
+hex_color_list,#9dc209,str,,data_d_lists.py
+hex_color_list,#195905,str,,data_d_lists.py
+hex_color_list,#faf0e6,str,,data_d_lists.py
+hex_color_list,#c19a6b,str,,data_d_lists.py
+hex_color_list,#6ca0dc,str,,data_d_lists.py
+hex_color_list,#534b4f,str,,data_d_lists.py
+hex_color_list,#e62020,str,,data_d_lists.py
+hex_color_list,#f0f,str,,data_d_lists.py
+hex_color_list,#ca1f7b,str,,data_d_lists.py
+hex_color_list,#ff0090,str,,data_d_lists.py
+hex_color_list,#aaf0d1,str,,data_d_lists.py
+hex_color_list,#f8f4ff,str,,data_d_lists.py
+hex_color_list,#c04000,str,,data_d_lists.py
+hex_color_list,#fbec5d,str,,data_d_lists.py
+hex_color_list,#6050dc,str,,data_d_lists.py
+hex_color_list,#0bda51,str,,data_d_lists.py
+hex_color_list,#979aaa,str,,data_d_lists.py
+hex_color_list,#ff8243,str,,data_d_lists.py
+hex_color_list,#74c365,str,,data_d_lists.py
+hex_color_list,#880085,str,,data_d_lists.py
+hex_color_list,#c32148,str,,data_d_lists.py
+hex_color_list,#800000,str,,data_d_lists.py
+hex_color_list,#b03060,str,,data_d_lists.py
+hex_color_list,#e0b0ff,str,,data_d_lists.py
+hex_color_list,#915f6d,str,,data_d_lists.py
+hex_color_list,#ef98aa,str,,data_d_lists.py
+hex_color_list,#73c2fb,str,,data_d_lists.py
+hex_color_list,#e5b73b,str,,data_d_lists.py
+hex_color_list,#6da,str,,data_d_lists.py
+hex_color_list,#e2062c,str,,data_d_lists.py
+hex_color_list,#af4035,str,,data_d_lists.py
+hex_color_list,#f3e5ab,str,,data_d_lists.py
+hex_color_list,#035096,str,,data_d_lists.py
+hex_color_list,#1c352d,str,,data_d_lists.py
+hex_color_list,#dda0dd,str,,data_d_lists.py
+hex_color_list,#ba55d3,str,,data_d_lists.py
+hex_color_list,#0067a5,str,,data_d_lists.py
+hex_color_list,#9370db,str,,data_d_lists.py
+hex_color_list,#bb3385,str,,data_d_lists.py
+hex_color_list,#aa4069,str,,data_d_lists.py
+hex_color_list,#3cb371,str,,data_d_lists.py
+hex_color_list,#7b68ee,str,,data_d_lists.py
+hex_color_list,#c9dc87,str,,data_d_lists.py
+hex_color_list,#00fa9a,str,,data_d_lists.py
+hex_color_list,#674c47,str,,data_d_lists.py
+hex_color_list,#48d1cc,str,,data_d_lists.py
+hex_color_list,#79443b,str,,data_d_lists.py
+hex_color_list,#d9603b,str,,data_d_lists.py
+hex_color_list,#c71585,str,,data_d_lists.py
+hex_color_list,#f8b878,str,,data_d_lists.py
+hex_color_list,#f8de7e,str,,data_d_lists.py
+hex_color_list,#fdbcb4,str,,data_d_lists.py
+hex_color_list,#191970,str,,data_d_lists.py
+hex_color_list,#004953,str,,data_d_lists.py
+hex_color_list,#ffc40c,str,,data_d_lists.py
+hex_color_list,#3eb489,str,,data_d_lists.py
+hex_color_list,#f5fffa,str,,data_d_lists.py
+hex_color_list,#98ff98,str,,data_d_lists.py
+hex_color_list,#ffe4e1,str,,data_d_lists.py
+hex_color_list,#faebd7,str,,data_d_lists.py
+hex_color_list,#967117,str,,data_d_lists.py
+hex_color_list,#73a9c2,str,,data_d_lists.py
+hex_color_list,#ae0c00,str,,data_d_lists.py
+hex_color_list,#addfad,str,,data_d_lists.py
+hex_color_list,#30ba8f,str,,data_d_lists.py
+hex_color_list,#997a8d,str,,data_d_lists.py
+hex_color_list,#18453b,str,,data_d_lists.py
+hex_color_list,#c54b8c,str,,data_d_lists.py
+hex_color_list,#ffdb58,str,,data_d_lists.py
+hex_color_list,#21421e,str,,data_d_lists.py
+hex_color_list,#f6adc6,str,,data_d_lists.py
+hex_color_list,#2a8000,str,,data_d_lists.py
+hex_color_list,#fada5e,str,,data_d_lists.py
+hex_color_list,#ffdead,str,,data_d_lists.py
+hex_color_list,#000080,str,,data_d_lists.py
+hex_color_list,#ffa343,str,,data_d_lists.py
+hex_color_list,#fe4164,str,,data_d_lists.py
+hex_color_list,#39ff14,str,,data_d_lists.py
+hex_color_list,#d7837f,str,,data_d_lists.py
+hex_color_list,#a4dded,str,,data_d_lists.py
+hex_color_list,#059033,str,,data_d_lists.py
+hex_color_list,#0077be,str,,data_d_lists.py
+hex_color_list,#c72,str,,data_d_lists.py
+hex_color_list,#008000,str,,data_d_lists.py
+hex_color_list,#cfb53b,str,,data_d_lists.py
+hex_color_list,#fdf5e6,str,,data_d_lists.py
+hex_color_list,#796878,str,,data_d_lists.py
+hex_color_list,#673147,str,,data_d_lists.py
+hex_color_list,#c08081,str,,data_d_lists.py
+hex_color_list,#808000,str,,data_d_lists.py
+hex_color_list,#3c341f,str,,data_d_lists.py
+hex_color_list,#6b8e23,str,,data_d_lists.py
+hex_color_list,#9ab973,str,,data_d_lists.py
+hex_color_list,#353839,str,,data_d_lists.py
+hex_color_list,#b784a7,str,,data_d_lists.py
+hex_color_list,#A5B2B5,str,,data_d_lists.py
+hex_color_list,#ff9f00,str,,data_d_lists.py
+hex_color_list,#ff4500,str,,data_d_lists.py
+hex_color_list,#fb9902,str,,data_d_lists.py
+hex_color_list,#ffa500,str,,data_d_lists.py
+hex_color_list,#da70d6,str,,data_d_lists.py
+hex_color_list,#654321,str,,data_d_lists.py
+hex_color_list,#900,str,,data_d_lists.py
+hex_color_list,#414a4c,str,,data_d_lists.py
+hex_color_list,#ffae42,str,,data_d_lists.py
+hex_color_list,#ffef00,str,,data_d_lists.py
+hex_color_list,#ff6e4a,str,,data_d_lists.py
+hex_color_list,#002147,str,,data_d_lists.py
+hex_color_list,#273be2,str,,data_d_lists.py
+hex_color_list,#682860,str,,data_d_lists.py
+hex_color_list,#bcd4e6,str,,data_d_lists.py
+hex_color_list,#afeeee,str,,data_d_lists.py
+hex_color_list,#987654,str,,data_d_lists.py
+hex_color_list,#af4035,str,,data_d_lists.py
+hex_color_list,#9bc4e2,str,,data_d_lists.py
+hex_color_list,#ddadaf,str,,data_d_lists.py
+hex_color_list,#da8a67,str,,data_d_lists.py
+hex_color_list,#abcdef,str,,data_d_lists.py
+hex_color_list,#e6be8a,str,,data_d_lists.py
+hex_color_list,#eee8aa,str,,data_d_lists.py
+hex_color_list,#98fb98,str,,data_d_lists.py
+hex_color_list,#dcd0ff,str,,data_d_lists.py
+hex_color_list,#f984e5,str,,data_d_lists.py
+hex_color_list,#fadadd,str,,data_d_lists.py
+hex_color_list,#dda0dd,str,,data_d_lists.py
+hex_color_list,#db7093,str,,data_d_lists.py
+hex_color_list,#96ded1,str,,data_d_lists.py
+hex_color_list,#c9c0bb,str,,data_d_lists.py
+hex_color_list,#ecebbd,str,,data_d_lists.py
+hex_color_list,#bc987e,str,,data_d_lists.py
+hex_color_list,#db7093,str,,data_d_lists.py
+hex_color_list,#78184a,str,,data_d_lists.py
+hex_color_list,#ffefd5,str,,data_d_lists.py
+hex_color_list,#50c878,str,,data_d_lists.py
+hex_color_list,#aec6cf,str,,data_d_lists.py
+hex_color_list,#836953,str,,data_d_lists.py
+hex_color_list,#cfcfc4,str,,data_d_lists.py
+hex_color_list,#7d7,str,,data_d_lists.py
+hex_color_list,#f49ac2,str,,data_d_lists.py
+hex_color_list,#ffb347,str,,data_d_lists.py
+hex_color_list,#dea5a4,str,,data_d_lists.py
+hex_color_list,#b39eb5,str,,data_d_lists.py
+hex_color_list,#ff6961,str,,data_d_lists.py
+hex_color_list,#cb99c9,str,,data_d_lists.py
+hex_color_list,#fdfd96,str,,data_d_lists.py
+hex_color_list,#800080,str,,data_d_lists.py
+hex_color_list,#536878,str,,data_d_lists.py
+hex_color_list,#ffe5b4,str,,data_d_lists.py
+hex_color_list,#ffcba4,str,,data_d_lists.py
+hex_color_list,#fc9,str,,data_d_lists.py
+hex_color_list,#ffdab9,str,,data_d_lists.py
+hex_color_list,#fadfad,str,,data_d_lists.py
+hex_color_list,#d1e231,str,,data_d_lists.py
+hex_color_list,#eae0c8,str,,data_d_lists.py
+hex_color_list,#88d8c0,str,,data_d_lists.py
+hex_color_list,#b768a2,str,,data_d_lists.py
+hex_color_list,#e6e200,str,,data_d_lists.py
+hex_color_list,#ccf,str,,data_d_lists.py
+hex_color_list,#1c39bb,str,,data_d_lists.py
+hex_color_list,#00a693,str,,data_d_lists.py
+hex_color_list,#32127a,str,,data_d_lists.py
+hex_color_list,#d99058,str,,data_d_lists.py
+hex_color_list,#f77fbe,str,,data_d_lists.py
+hex_color_list,#701c1c,str,,data_d_lists.py
+hex_color_list,#c33,str,,data_d_lists.py
+hex_color_list,#fe28a2,str,,data_d_lists.py
+hex_color_list,#ec5800,str,,data_d_lists.py
+hex_color_list,#cd853f,str,,data_d_lists.py
+hex_color_list,#df00ff,str,,data_d_lists.py
+hex_color_list,#000f89,str,,data_d_lists.py
+hex_color_list,#123524,str,,data_d_lists.py
+hex_color_list,#fddde6,str,,data_d_lists.py
+hex_color_list,#01796f,str,,data_d_lists.py
+hex_color_list,#ffddf4,str,,data_d_lists.py
+hex_color_list,#f96,str,,data_d_lists.py
+hex_color_list,#e7accf,str,,data_d_lists.py
+hex_color_list,#f78fa7,str,,data_d_lists.py
+hex_color_list,#93c572,str,,data_d_lists.py
+hex_color_list,#e5e4e2,str,,data_d_lists.py
+hex_color_list,#8e4585,str,,data_d_lists.py
+hex_color_list,#dda0dd,str,,data_d_lists.py
+hex_color_list,#ff5a36,str,,data_d_lists.py
+hex_color_list,#b0e0e6,str,,data_d_lists.py
+hex_color_list,#ff8f00,str,,data_d_lists.py
+hex_color_list,#701c1c,str,,data_d_lists.py
+hex_color_list,#003153,str,,data_d_lists.py
+hex_color_list,#df00ff,str,,data_d_lists.py
+hex_color_list,#c89,str,,data_d_lists.py
+hex_color_list,#ff7518,str,,data_d_lists.py
+hex_color_list,#69359c,str,,data_d_lists.py
+hex_color_list,#800080,str,,data_d_lists.py
+hex_color_list,#9678b6,str,,data_d_lists.py
+hex_color_list,#9f00c5,str,,data_d_lists.py
+hex_color_list,#fe4eda,str,,data_d_lists.py
+hex_color_list,#50404d,str,,data_d_lists.py
+hex_color_list,#a020f0,str,,data_d_lists.py
+hex_color_list,#51484f,str,,data_d_lists.py
+hex_color_list,#5d8aa8,str,,data_d_lists.py
+hex_color_list,#ff355e,str,,data_d_lists.py
+hex_color_list,#fbab60,str,,data_d_lists.py
+hex_color_list,#e30b5d,str,,data_d_lists.py
+hex_color_list,#915f6d,str,,data_d_lists.py
+hex_color_list,#e25098,str,,data_d_lists.py
+hex_color_list,#b3446c,str,,data_d_lists.py
+hex_color_list,#826644,str,,data_d_lists.py
+hex_color_list,#f3c,str,,data_d_lists.py
+hex_color_list,#e3256b,str,,data_d_lists.py
+hex_color_list,#f00,str,,data_d_lists.py
+hex_color_list,#a52a2a,str,,data_d_lists.py
+hex_color_list,#860111,str,,data_d_lists.py
+hex_color_list,#f2003c,str,,data_d_lists.py
+hex_color_list,#c40233,str,,data_d_lists.py
+hex_color_list,#ff5349,str,,data_d_lists.py
+hex_color_list,#ed1c24,str,,data_d_lists.py
+hex_color_list,#fe2712,str,,data_d_lists.py
+hex_color_list,#c71585,str,,data_d_lists.py
+hex_color_list,#ab4e52,str,,data_d_lists.py
+hex_color_list,#522d80,str,,data_d_lists.py
+hex_color_list,#002387,str,,data_d_lists.py
+hex_color_list,#004040,str,,data_d_lists.py
+hex_color_list,#f1a7fe,str,,data_d_lists.py
+hex_color_list,#d70040,str,,data_d_lists.py
+hex_color_list,#0892d0,str,,data_d_lists.py
+hex_color_list,#a76bcf,str,,data_d_lists.py
+hex_color_list,#b666d2,str,,data_d_lists.py
+hex_color_list,#b03060,str,,data_d_lists.py
+hex_color_list,#414833,str,,data_d_lists.py
+hex_color_list,#0cc,str,,data_d_lists.py
+hex_color_list,#ff007f,str,,data_d_lists.py
+hex_color_list,#f9429e,str,,data_d_lists.py
+hex_color_list,#674846,str,,data_d_lists.py
+hex_color_list,#b76e79,str,,data_d_lists.py
+hex_color_list,#e32636,str,,data_d_lists.py
+hex_color_list,#f6c,str,,data_d_lists.py
+hex_color_list,#aa98a9,str,,data_d_lists.py
+hex_color_list,#905d5d,str,,data_d_lists.py
+hex_color_list,#ab4e52,str,,data_d_lists.py
+hex_color_list,#65000b,str,,data_d_lists.py
+hex_color_list,#d40000,str,,data_d_lists.py
+hex_color_list,#bc8f8f,str,,data_d_lists.py
+hex_color_list,#0038a8,str,,data_d_lists.py
+hex_color_list,#002366,str,,data_d_lists.py
+hex_color_list,#4169e1,str,,data_d_lists.py
+hex_color_list,#ca2c92,str,,data_d_lists.py
+hex_color_list,#7851a9,str,,data_d_lists.py
+hex_color_list,#fada5e,str,,data_d_lists.py
+hex_color_list,#d10056,str,,data_d_lists.py
+hex_color_list,#e0115f,str,,data_d_lists.py
+hex_color_list,#9b111e,str,,data_d_lists.py
+hex_color_list,#ff0028,str,,data_d_lists.py
+hex_color_list,#bb6528,str,,data_d_lists.py
+hex_color_list,#e18e96,str,,data_d_lists.py
+hex_color_list,#a81c07,str,,data_d_lists.py
+hex_color_list,#80461b,str,,data_d_lists.py
+hex_color_list,#b7410e,str,,data_d_lists.py
+hex_color_list,#da2c43,str,,data_d_lists.py
+hex_color_list,#00563f,str,,data_d_lists.py
+hex_color_list,#8b4513,str,,data_d_lists.py
+hex_color_list,#ff6700,str,,data_d_lists.py
+hex_color_list,#f4c430,str,,data_d_lists.py
+hex_color_list,#F535AA,str,,data_d_lists.py
+hex_color_list,#808000,str,,data_d_lists.py
+hex_color_list,#ff8c69,str,,data_d_lists.py
+hex_color_list,#ff91a4,str,,data_d_lists.py
+hex_color_list,#c2b280,str,,data_d_lists.py
+hex_color_list,#967117,str,,data_d_lists.py
+hex_color_list,#ecd540,str,,data_d_lists.py
+hex_color_list,#f4a460,str,,data_d_lists.py
+hex_color_list,#967117,str,,data_d_lists.py
+hex_color_list,#92000a,str,,data_d_lists.py
+hex_color_list,#507d2a,str,,data_d_lists.py
+hex_color_list,#0f52ba,str,,data_d_lists.py
+hex_color_list,#0067a5,str,,data_d_lists.py
+hex_color_list,#cba135,str,,data_d_lists.py
+hex_color_list,#ff2400,str,,data_d_lists.py
+hex_color_list,#fd0e35,str,,data_d_lists.py
+hex_color_list,#ffd800,str,,data_d_lists.py
+hex_color_list,#76ff7a,str,,data_d_lists.py
+hex_color_list,#9D00FF,str,,data_d_lists.py
+hex_color_list,#8E7618,str,,data_d_lists.py
+hex_color_list,#006994,str,,data_d_lists.py
+hex_color_list,#2e8b57,str,,data_d_lists.py
+hex_color_list,#321414,str,,data_d_lists.py
+hex_color_list,#fff5ee,str,,data_d_lists.py
+hex_color_list,#ffba00,str,,data_d_lists.py
+hex_color_list,#704214,str,,data_d_lists.py
+hex_color_list,#8a795d,str,,data_d_lists.py
+hex_color_list,#009e60,str,,data_d_lists.py
+hex_color_list,#fc0fc0,str,,data_d_lists.py
+hex_color_list,#ff6fff,str,,data_d_lists.py
+hex_color_list,#882d17,str,,data_d_lists.py
+hex_color_list,#c0c0c0,str,,data_d_lists.py
+hex_color_list,#cb410b,str,,data_d_lists.py
+hex_color_list,#007474,str,,data_d_lists.py
+hex_color_list,#87ceeb,str,,data_d_lists.py
+hex_color_list,#cf71af,str,,data_d_lists.py
+hex_color_list,#6a5acd,str,,data_d_lists.py
+hex_color_list,#708090,str,,data_d_lists.py
+hex_color_list,#039,str,,data_d_lists.py
+hex_color_list,#933d41,str,,data_d_lists.py
+hex_color_list,#100c08,str,,data_d_lists.py
+hex_color_list,#fffafa,str,,data_d_lists.py
+hex_color_list,#0fc0fc,str,,data_d_lists.py
+hex_color_list,#a7fc00,str,,data_d_lists.py
+hex_color_list,#00ff7f,str,,data_d_lists.py
+hex_color_list,#23297a,str,,data_d_lists.py
+hex_color_list,#4682b4,str,,data_d_lists.py
+hex_color_list,#fada5e,str,,data_d_lists.py
+hex_color_list,#900,str,,data_d_lists.py
+hex_color_list,#4f666a,str,,data_d_lists.py
+hex_color_list,#e4d96f,str,,data_d_lists.py
+hex_color_list,#fc3,str,,data_d_lists.py
+hex_color_list,#fad6a5,str,,data_d_lists.py
+hex_color_list,#d2b48c,str,,data_d_lists.py
+hex_color_list,#f94d00,str,,data_d_lists.py
+hex_color_list,#f28500,str,,data_d_lists.py
+hex_color_list,#fc0,str,,data_d_lists.py
+hex_color_list,#e4717a,str,,data_d_lists.py
+hex_color_list,#483c32,str,,data_d_lists.py
+hex_color_list,#8b8589,str,,data_d_lists.py
+hex_color_list,#d0f0c0,str,,data_d_lists.py
+hex_color_list,#f88379,str,,data_d_lists.py
+hex_color_list,#f4c2c2,str,,data_d_lists.py
+hex_color_list,#008080,str,,data_d_lists.py
+hex_color_list,#367588,str,,data_d_lists.py
+hex_color_list,#00827f,str,,data_d_lists.py
+hex_color_list,#cf3476,str,,data_d_lists.py
+hex_color_list,#cd5700,str,,data_d_lists.py
+hex_color_list,#e2725b,str,,data_d_lists.py
+hex_color_list,#d8bfd8,str,,data_d_lists.py
+hex_color_list,#de6fa1,str,,data_d_lists.py
+hex_color_list,#fc89ac,str,,data_d_lists.py
+hex_color_list,#0abab5,str,,data_d_lists.py
+hex_color_list,#e08d3c,str,,data_d_lists.py
+hex_color_list,#dbd7d2,str,,data_d_lists.py
+hex_color_list,#eee600,str,,data_d_lists.py
+hex_color_list,#ff6347,str,,data_d_lists.py
+hex_color_list,#746cc0,str,,data_d_lists.py
+hex_color_list,#ffc87c,str,,data_d_lists.py
+hex_color_list,#fd0e35,str,,data_d_lists.py
+hex_color_list,#00755e,str,,data_d_lists.py
+hex_color_list,#0073cf,str,,data_d_lists.py
+hex_color_list,#417dc1,str,,data_d_lists.py
+hex_color_list,#deaa88,str,,data_d_lists.py
+hex_color_list,#b57281,str,,data_d_lists.py
+hex_color_list,#30d5c8,str,,data_d_lists.py
+hex_color_list,#00ffef,str,,data_d_lists.py
+hex_color_list,#a0d6b4,str,,data_d_lists.py
+hex_color_list,#7c4848,str,,data_d_lists.py
+hex_color_list,#8a496b,str,,data_d_lists.py
+hex_color_list,#66023c,str,,data_d_lists.py
+hex_color_list,#03a,str,,data_d_lists.py
+hex_color_list,#d9004c,str,,data_d_lists.py
+hex_color_list,#8878c3,str,,data_d_lists.py
+hex_color_list,#536895,str,,data_d_lists.py
+hex_color_list,#ffb300,str,,data_d_lists.py
+hex_color_list,#3cd070,str,,data_d_lists.py
+hex_color_list,#ff6fff,str,,data_d_lists.py
+hex_color_list,#120a8f,str,,data_d_lists.py
+hex_color_list,#4166f5,str,,data_d_lists.py
+hex_color_list,#635147,str,,data_d_lists.py
+hex_color_list,#ffddca,str,,data_d_lists.py
+hex_color_list,#5b92e5,str,,data_d_lists.py
+hex_color_list,#b78727,str,,data_d_lists.py
+hex_color_list,#ff6,str,,data_d_lists.py
+hex_color_list,#014421,str,,data_d_lists.py
+hex_color_list,#7b1113,str,,data_d_lists.py
+hex_color_list,#ae2029,str,,data_d_lists.py
+hex_color_list,#e1ad21,str,,data_d_lists.py
+hex_color_list,#004f98,str,,data_d_lists.py
+hex_color_list,#900,str,,data_d_lists.py
+hex_color_list,#fc0,str,,data_d_lists.py
+hex_color_list,#d3003f,str,,data_d_lists.py
+hex_color_list,#f3e5ab,str,,data_d_lists.py
+hex_color_list,#c5b358,str,,data_d_lists.py
+hex_color_list,#c80815,str,,data_d_lists.py
+hex_color_list,#43b3ae,str,,data_d_lists.py
+hex_color_list,#e34234,str,,data_d_lists.py
+hex_color_list,#d9603b,str,,data_d_lists.py
+hex_color_list,#a020f0,str,,data_d_lists.py
+hex_color_list,#8f00ff,str,,data_d_lists.py
+hex_color_list,#324ab2,str,,data_d_lists.py
+hex_color_list,#7f00ff,str,,data_d_lists.py
+hex_color_list,#8601af,str,,data_d_lists.py
+hex_color_list,#ee82ee,str,,data_d_lists.py
+hex_color_list,#40826d,str,,data_d_lists.py
+hex_color_list,#922724,str,,data_d_lists.py
+hex_color_list,#9f1d35,str,,data_d_lists.py
+hex_color_list,#da1d81,str,,data_d_lists.py
+hex_color_list,#ffa089,str,,data_d_lists.py
+hex_color_list,#9f00ff,str,,data_d_lists.py
+hex_color_list,#004242,str,,data_d_lists.py
+hex_color_list,#a4f4f9,str,,data_d_lists.py
+hex_color_list,#645452,str,,data_d_lists.py
+hex_color_list,#f5deb3,str,,data_d_lists.py
+hex_color_list,#fff,str,,data_d_lists.py
+hex_color_list,#f5f5f5,str,,data_d_lists.py
+hex_color_list,#a2add0,str,,data_d_lists.py
+hex_color_list,#9BCD9B,str,,data_d_lists.py
+hex_color_list,#ff43a4,str,,data_d_lists.py
+hex_color_list,#fc6c85,str,,data_d_lists.py
+hex_color_list,#722f37,str,,data_d_lists.py
+hex_color_list,#673147,str,,data_d_lists.py
+hex_color_list,#c9a0dc,str,,data_d_lists.py
+hex_color_list,#c19a6b,str,,data_d_lists.py
+hex_color_list,#738678,str,,data_d_lists.py
+hex_color_list,#0f4d92,str,,data_d_lists.py

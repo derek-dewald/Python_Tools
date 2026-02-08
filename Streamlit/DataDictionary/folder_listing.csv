@@ -10,7 +10,9 @@ data_validation.py,PY File,data_validation,,
 date_functions.py,PY File,date_functions,,
 df_processing.py,PY File,df_processing,"Functions related to dataframe Transformations, including; Filtering, Slicing, Parsing, Transposing. Individual Column Level Transformations Primarily in FeatureEngineering",Definition
 dict_processing.py,PY File,dict_processing,"Functions related to Manipulating, Transforming and Altering Dictionaries",Definition
+eda_dq.py,PY File,eda_dq,,
 feature_engineering.py,PY File,feature_engineering,,
+graph_theory.py,PY File,graph_theory,,
 input_functions_ignore.py,PY File,input_functions_ignore,"Functions which are Created for Single Use, or I can not reconcile their purpose, but they are used as Input for previosuly created functions",Definition
 list_processing.py,PY File,list_processing,"Functions related to Manipulating, Transforming and Altering Lists",Definition
 shared_folder.py,PY File,shared_folder,"Functions related to Management, Maintenance and Upkeep of Windows and Mac OS File Folders",Definition
