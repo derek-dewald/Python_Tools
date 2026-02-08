@@ -352,7 +352,7 @@ export_to_excel,long_max_width,int,Max width for long_columns,df_processing.py
 transpose_df,df,DataFrame,The input pandas DataFrame.,df_processing.py
 transpose_df,index,list,Columns to retain as identifiers (will remain unchanged).,df_processing.py
 transpose_df,columns,list,Columns to unpivot into key-value pairs.,df_processing.py
-Reference String,today,str,07-Feb-26,data_d_strings.py
+Reference String,today,str,08-Feb-26,data_d_strings.py
 Reference String,template_doc_string,str,"
 
     Definition of Function
@@ -363,8 +363,8 @@ Reference String,template_doc_string,str,"
     Returns:
         Object Type
 
-    date_created:07-Feb-26
-    date_last_modified: 07-Feb-26
+    date_created:08-Feb-26
+    date_last_modified: 08-Feb-26
     classification:TBD
     sub_classification:TBD
     usage:
@@ -399,6 +399,7 @@ links,parameter_list_url,dict,https://raw.githubusercontent.com/derek-dewald/Pyt
 links,folder_toc_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/folder_listing.csv,data_d_lists.py
 links,d_learning_notes_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_learning_notes.csv,data_d_lists.py
 links,technical_notes,dict,https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv,data_d_lists.py
+links,d_daily_test_score,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/daily_test_results.csv,data_d_lists.py
 emoji_dict,STATUS,dict,"{'label': 'Status / Progress / Outcome', 'description': 'Execution state, progress tracking, completion, and flow of work.', 'emojis': ['✅', '✔️', '⏸️', '🟢', '🟡', '🔴', '⏳', '🕐', '📤', '📥', '🗂️']}",data_d_lists.py
 emoji_dict,DATA,dict,"{'label': 'Data / Analytics / Artifacts', 'description': 'Raw data, analytical outputs, reports, documentation, and structured artifacts.', 'emojis': ['📊', '📈', '📉', '📋', '📝', '📚', '🔢', '📦', '🧾']}",data_d_lists.py
 emoji_dict,QUALITY,dict,"{'label': 'Data Quality / Validity / Trust', 'description': 'Data cleanliness, assumptions, validation, lineage, and reliability checks.', 'emojis': ['🧼', '🔍', '🧪', '🧾', '🧯', '🪪']}",data_d_lists.py

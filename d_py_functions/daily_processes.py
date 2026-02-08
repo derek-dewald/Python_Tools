@@ -331,8 +331,7 @@ def parse_dot_py_folder(location=None,
 
     return function_list,function_parameters
 
-def daily_test(observations=5,
-               file_location='/Users/derekdewald/Documents/Python/Github_Repo/Data/daily_test_results.csv'):
+def daily_test(observations=5,file_location='/Users/derekdewald/Documents/Python/Github_Repo/Data/daily_test_results.csv'):
     '''
     
     '''
@@ -343,23 +342,26 @@ def daily_test(observations=5,
     
     # Definitions from Google
     definitions = pd.read_csv(links['google_definition_csv'])
+    historical_results = pd.read_csv(links['d_daily_test_score'])
+
+    historical_results["Date"] = pd.to_datetime(historical_results["Date"], format='%Y-%m-%d')
+    historical_results["Date"] = historical_results["Date"].apply(lambda x:x.date())
+
+    test_base = definitions.merge(historical_results[primary_key],on=primary_key, how='outer')
     
     # Import Daily Results Tracker 
-    results_df = pd.read_csv(file_location)
-    results_df["Date"] = pd.to_datetime(results_df["Date"], format='%Y-%m-%d')
-    results_df["Date"] = results_df["Date"].apply(lambda x:x.date())
 
     # Update Results DF to Include Newest Information
-    final_df = results_df[['Date','Temp_Score','Historical_Score','Word']].merge(definitions,on='Word',how='left')
+    final_df = historical_results[['Date','Historical_Score','Word','Process','Categorization']].merge(definitions,on=primary_key,how='left')
     
     # Sample New Results and Test on Historical Learning Opportunities.
-    today_test = definitions[~definitions['Word'].isin(final_df['Word'])].sample(observations)
-    today_test = today_test.reset_index(drop=True)
+    today_test = test_base.sample(observations)
+    today_test['Date'] = datetime.datetime.now().date()
+    today_test.reset_index(drop=True,inplace=True)
     today_test = today_test.fillna('')
     
-    today_test['Date'] = datetime.datetime.now().date()
-
     result_dict = {}
+    
     for count in range(len(today_test)):
         cat,cat1,word = today_test[primary_key].iloc[count]
         print(f'Word {count+1}')
@@ -376,16 +378,19 @@ def daily_test(observations=5,
             result_dict[word] = [1 if result.lower() =='p' else -3][0]
 
     today_test['Historical_Score'] = today_test['Word'].map(result_dict)
-    today_test['Temp_Score']= 0
     
     # Score Data
     final_df = pd.concat([final_df,today_test]).reset_index(drop=True)
-    #final_df.to_csv(file_location,index=False)
+    
+    try:
+        final_df.to_csv(file_location,index=False)
+    except:
+        pass
 
     return final_df
 
-
-def review_test_results(file_location=None,sample_records=8):
+def review_test_results(file_location=None,
+                        sample_records=8):
 
     '''
     Function to Facilitate a Daily Review of Historically Created Words. 
@@ -395,11 +400,11 @@ def review_test_results(file_location=None,sample_records=8):
 
     
     '''
-
+    # Pull from Here so we don't include todays file.
     if not file_location:
         file_location= '/Users/derekdewald/Documents/Python/Github_Repo/Data/daily_test_results.csv'
     
-    primary_key = ['Process','Categorization','Word']
+    primary_key = ['Process','Categorization','Word','Historical_Score']
     
     results_df = pd.read_csv(file_location)
     
@@ -429,21 +434,46 @@ def review_test_results(file_location=None,sample_records=8):
 
     results_dict = {}
     for count in range(len(review_df)):
-        cat,cat1,word = review_df[primary_key].iloc[count]    
+        cat,cat1,word,score_ = review_df[primary_key].iloc[count]    
         print(f"Process: {cat}\nClassification: {cat1}\nWord: {word}\n")
         print("#############################################################################################################################")
         result = input('Press Enter for Answer.')
-        df, nt,lk,md,ds, lt,ac = review_df.iloc[count][['Definition','Notes','Link','Markdown Equation','Dataset Size','Learning Type',"Algorithm Class"]]
+        df, nt,lk,md,ds, lt,ac = review_df.iloc[count][['Definition','Notes','Link','Markdown Equation','Dataset Size','Learning Type',"Algorithm Classification"]]
         print(f"Definition: {df}\nNotes: {nt}\nLink: {lk}\nMarkdown: {md}\nDataset Size: {ds}\nLearning Type: {lt}\nAlogrithm Class: {ac}\n")
         
         # Record Result
         result = input('Did you Pass or Fail?')
-        results_dict[word] = [1 if result.lower() =='p' else -2][0] 
+        results_df.loc[results_df['Word']==word, "Historical_Score"] +=  + [1 if result.lower() =='p' else -2][0] 
         
-    results_df['Temp_Score'] = results_df['Word'].map(results_dict).fillna(0)
-    results_df['Historical_Score'] = results_df['Historical_Score'] + results_df['Temp_Score'] 
-    results_df['Temp_Score'] = 0
-
     results_df.to_csv(file_location,index=False)
     
     return results_df
+
+def generate_streamlit_definition_summary():
+    
+    '''
+    
+    Generate a series of Group By Statements for visualization of the use of D Google Definitions.
+    Generates a CSV file which is saved in shared folder.
+
+    Parameters:
+        None
+
+    Returns:
+        None
+
+    date_created:08-Feb-26
+    date_last_modified: 08-Feb-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        Example Function Call
+
+    '''
+    df = pd.read_csv(links['google_definition_csv'])
+    df = df[['Process','Categorization','Word','Definition']].copy() 
+    df["Process_Count"] = df.groupby("Process")["Process"].transform("count")
+    df["CAT_Count"] = df.groupby("Categorization")["Categorization"].transform("count")
+    df["Word_Count"] = df.groupby("Word")["Word"].transform("count")
+    df['ProcessCAT_Count'] = df.groupby(['Process','Categorization'])["Word"].transform("count")
+    df.to_csv('/Users/derekdewald/Documents/Python/Github_Repo/Data/Streamlit_DefinitionSummary.csv',index=False)

@@ -180,6 +180,8 @@ review_test_results,"Function to Facilitate a Daily Review of Historically Creat
 Function has a scoring Component, a Correct Answer (Pass is worth 1 Point), A Incorrect Answer (Fail is worth -2 points), if cummulative score is not postive
 then user is expected to Answer, with expectation of making score positive, if less than 10 examples with a negative score, it randomly samples from
 positive scores.","['file_location', 'sample_records']",,,,,,,daily_processes.py
+generate_streamlit_definition_summary,"Generate a series of Group By Statements for visualization of the use of D Google Definitions.
+Generates a CSV file which is saved in shared folder.",[],None,08-Feb-26,08-Feb-26,TBD,TBD,Example Function Call,daily_processes.py
 input1,"Originally Named convert_dict_to_parameters
 Convert a .py file containing Dict into a Dataframe which can is used to populate Function Parameters",['module'],Dataframe,4-Dec-25,4-Dec-25,TBD,TBD,"import d_dictionaries
 temp = convertlisttoparameters(d_dictionaries)",input_functions_ignore.py
