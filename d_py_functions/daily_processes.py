@@ -72,7 +72,7 @@ def generate_dictionary(export_location='/Users/derekdewald/Documents/Python/Git
     final_df = final_df.sort_values(['PRO_ORDER','CAT_ORDER'])
 
     if export_location:
-        notes_df.to_csv(export_location,index=False)
+        final_df.to_csv(export_location,index=False)
 
     return final_df
 
