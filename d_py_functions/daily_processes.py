@@ -62,12 +62,6 @@ def generate_dictionary(notes_df=None,
     
     '''
 
-    d_notes_categorization_order = ['Definition',
-                                    'Guiding Principle',
-                                    'Algorithm',
-                                    'Consideration',
-                                    'Process Step']
-
     def notes_word_equals_word_definition_categorization(df,notes_df):
         df = df.copy()
         # Create Definition where Definition Categorization Equals Word.
@@ -206,6 +200,22 @@ def generate_dictionary(notes_df=None,
         notes_df,
         insert_records
     ])
+
+    # Want to have a definitive Order for Classification, however as it's an evolving process, not interested in hardcoding everything. Have list to Hard Code specific desired columns, 
+    # then use default order for residual, with option to update freely.
+
+    d_notes_categorization_order = ['Definition',
+                                    'Guiding Principle',
+                                    'Consideration',
+                                    'Process Step',
+                                    'Procedure',
+                                    'Expected Outcomes',
+                                    'Parameter',
+                                    'Algorithm',                                
+                                    ]
+    
+    residual_list = [x for x in notes_df['Categorization'].unique() if (x not in d_notes_categorization_order) & (pd.notna(x))]
+    d_notes_categorization_order.extend(residual_list)
 
     # Determine COL2 Sort Order, which is based on Mapping and Can be done once when consolidated.
     col2_order_dict = {d_notes_categorization_order[x]:x+1 for x in range(len(d_notes_categorization_order))}

@@ -1,6 +1,6 @@
 Process,Categorization,Word,Definition,Source
 ML Definitions,Model Type,Types of ML,"Within the machine learning paradigm, models are commonly categorized into distinct model types that define how learning occurs. The appropriate model type is selected based on the problem context, data availability and quality, time constraints, business objectives, and resource limitations.",Notes DF
-ML Definitions,General Principles,XOR,"Logical operation that outputs true when exactly one of its inputs is true, but not both. It originates from Boolean algebra and early digital logic design. XOR is important in machine learning because it represents a classic example of a non-linearly separable problem. This made it historically significant in exposing the limitations of single-layer perceptrons. XOR is widely used in cryptography, digital circuits, and as a teaching example for neural networks and feature interactions.",Examine Further
+ML Definitions,Guiding Principle,XOR,"Logical operation that outputs true when exactly one of its inputs is true, but not both. It originates from Boolean algebra and early digital logic design. XOR is important in machine learning because it represents a classic example of a non-linearly separable problem. This made it historically significant in exposing the limitations of single-layer perceptrons. XOR is widely used in cryptography, digital circuits, and as a teaching example for neural networks and feature interactions.",Examine Further
 ML Model,Definition,Definition,Self Explanatory,Insert Records
 ML Model,Definition,Definition,"Decision Strategy: A Decision Strategy is a method used to determine a final outcome by applying rules or aggregation logic to one or more intermediate model outputs, scores, or signals. It originates from decision theory and ensemble methods, where the focus is on how decisions are made rather than how predictions are generated. Decision strategies are important because they separate prediction from decision-making, allowing the same models to support different operational or business objectives. They operate downstream of models and do not learn feature representations or decision boundaries themselves. Common applications include ensemble voting, thresholding, ranking, arbitration between systems, and policy-driven decision logic.",Insert Records2
 ML Model,Definition,Definition,"Anchoring Effect: A cognitive bias where people rely too heavily on the first piece of information (the “anchor”) when making decisions. Once an anchor is set, it influences subsequent judgments, even if it’s arbitrary or unrelated. For example, when asked whether the Eiffel Tower is taller or shorter than 500 feet, people’s estimates will cluster around that number. This bias can affect pricing, negotiations, and even forecasting.",Insert Records2
@@ -123,6 +123,28 @@ Apache Spark is an open-source, distributed computing system designed for fast p
 ML Model,Definition,Definition,"Tensor Flow: TensorFlow is an open-source machine learning framework designed to support building, training, and deploying models across a wide range of platforms. It provides high-level APIs that simplify model creation while also offering tools for large-scale, production-grade deployment. TensorFlow’s ecosystem includes specialized solutions for serving, mobile, and web environments, making it suitable for enterprise and embedded use cases. Its complexity and abstraction layers can introduce a steeper learning curve for low-level customization.",Insert Records2
 ML Model,Definition,Definition,"Vector Database: Specialized data storage system designed to store and search high-dimensional vector representations (embeddings) of data such as text, images, audio, or other unstructured content. These vectors are typically produced by machine learning models and capture the semantic meaning or similarity between items, enabling searches based on meaning rather than exact matches. Vector databases became prominent with the rise of deep learning and large language models, which rely on embeddings for tasks like recommendation, semantic search, and retrieval-augmented generation (RAG). Their importance lies in enabling fast similarity searches across millions or billions of vectors, which is essential for modern AI applications. Unlike traditional databases that use exact matches or structured queries (e.g., SQL), vector databases use approximate nearest neighbor (ANN) algorithms to find the most similar items based on distance metrics such as cosine similarity or Euclidean distance.",Insert Records2
 ML Model,Process,Definition,ML Models is a process designed to store records for all of the models.,Notes DF
+ML Model,Guiding Principle,Deep Learning,"Deep learning is a subset of machine learning that uses multi-layer neural networks to automatically learn hierarchical representations from data, reducing the need for manual feature engineering. By stacking simple processing units called layers—each acting as a filter that transforms inputs into higher-level representations—deep learning models can capture complex patterns through composition. Early challenges such as vanishing gradients, where learning signals faded through many layers, were largely addressed through improved activation functions, optimization methods, and weight initialization strategies. In practice, building a deep learning model involves defining the network architecture (number of layers, connections, and activations) and then specifying how it learns by choosing an optimizer, loss function, and evaluation metrics during compilation.",Examine Further
+ML Model,Guiding Principle,Machine Learning,"Using a process to enable computers to iteratively learn from the data and improve analysis, outcomes or understanding. Intersection of statistics, artificial intelligence and computer science. Machine's don't learn, they find optimal mathematical formulas based on the data it is presented. There is an assumption that this data set is both representative of other data sets,  and possess similiar statistical distributions', You can argue this is not learning, because slight variances can result in materially different responses and output, Term synonymous with machines doing tasks without explicitly being programmed. Building a statistical model, based on a dataset",Examine Further
+ML Model,Guiding Principle,Optimization,"Optimization is the process of finding the best possible solution to a problem by systematically adjusting inputs or decisions to maximize or minimize a defined objective, subject to given constraints. In machine learning and analytics, optimization involves selecting model parameters that minimize error or maximize performance according to a chosen loss function. Importantly, what is considered “best” depends entirely on how the objective and constraints are defined.",Examine Further
+ML Model,Procedure,ColumnTransformer,,Examine Further
+ML Model,Procedure,FunctionTransformer,,Examine Further
+ML Model,Procedure,KNeighborsTransformer,,Examine Further
+ML Model,Procedure,LabelEncoder,,Examine Further
+ML Model,Procedure,MaxAbsScaler,,Examine Further
+ML Model,Procedure,MinMaxScaler,,Examine Further
+ML Model,Procedure,OneHotEncoder,,Examine Further
+ML Model,Procedure,OrdinalEncoder,,Examine Further
+ML Model,Procedure,PowerTransformer,,Examine Further
+ML Model,Procedure,QuantileTransformer,,Examine Further
+ML Model,Procedure,RBFSampler,,Examine Further
+ML Model,Procedure,RadiusNeighborsTransformer,,Examine Further
+ML Model,Procedure,RobustScaler,,Examine Further
+ML Model,Procedure,SkewedChi2Sampler,,Examine Further
+ML Model,Procedure,SplineTransformer,,Examine Further
+ML Model,Procedure,StandardScaler,,Examine Further
+ML Model,Procedure,TargetEncoder,,Examine Further
+ML Model,Procedure,TfidfTransformer,,Examine Further
+ML Model,Procedure,TransformedTargetRegressor,,Examine Further
 ML Model,Algorithm,ARDRegression,,Examine Further
 ML Model,Algorithm,Ada,"Boosting technique that combines multiple weak learners (usually decision stumps) into a strong learner. ModelStrengths: Handles weak learners well, reduces overfitting. Model Weaknesses: Sensitive to noisy data, requires careful tuning of learning rate.",Examine Further
 ML Model,Algorithm,AdaBoostClassifier,"AdaBoostClassifier is an ensemble boosting algorithm that builds a strong classifier by sequentially combining many weak learners, typically decision stumps. It is important because it focuses learning on previously misclassified examples, often achieving high accuracy with simple base models. AdaBoost is commonly used when data is moderately sized and relatively clean. It can be sensitive to noise and outliers due to its reweighting mechanism.",Examine Further
@@ -143,6 +165,7 @@ ML Model,Algorithm,Bisecting K-Means,"Hierarchical clustering algorithm that ite
 ML Model,Algorithm,CCA,,Examine Further
 ML Model,Algorithm,CalibratedClassifierCV,,Examine Further
 ML Model,Algorithm,CategoricalNB,,Examine Further
+ML Model,Algorithm,Centroid-based clustering,"Centroid-based clustering groups data points by assigning each point to the nearest representative center (centroid). It answers the question: “What are the main archetypal behavior patterns in the data?” Its strengths are scalability, stability, and interpretability, making it well suited for large datasets and business-facing segmentation. Its main weakness is that it assumes roughly spherical clusters and requires the number of clusters (K) to be chosen in advance.",Examine Further
 ML Model,Algorithm,ClassifierChain,,Examine Further
 ML Model,Algorithm,ComplementNB,"Variant of the Naive Bayes classifier designed specifically to perform better on imbalanced datasets, particularly in text classification problems. It was introduced by Rennie et al. in 2003 as an improvement over Multinomial Naive Bayes by estimating parameters from the complement of each class rather than the class itself. This adjustment helps reduce the bias that standard Naive Bayes models often show toward majority classes. ComplementNB is especially effective in document classification tasks such as spam detection or topic categorization where word frequencies are used as features. It is valued for its speed, simplicity, and strong performance on high-dimensional sparse data.",Examine Further
 ML Model,Algorithm,Convolutional Neural Network,,Examine Further
@@ -215,6 +238,7 @@ ML Model,Algorithm,Isomap,,Examine Further
 ML Model,Algorithm,IsotonicRegression,,Examine Further
 ML Model,Algorithm,KBinsDiscretizer,,Examine Further
 ML Model,Algorithm,KMeans,,Examine Further
+ML Model,Algorithm,KMeans,"KMeans is a centroid-based clustering algorithm that iteratively updates cluster centers to minimize within-cluster variance. It produces a single cluster label per observation, making it easy to summarize and communicate results. KMeans is fast, widely understood, and works well when clusters are well-separated and similarly sized. However, it is sensitive to feature scaling, outliers, and the choice of K.",Examine Further
 ML Model,Algorithm,KNN,"k-Nearest Neighbors is a non-parametric, instance-based method that measures similarity between observations using a distance metric in feature space. It answers the question: “Which existing observations are most similar to this one?”rather than learning global patterns or groups. Its strengths are simplicity, transparency, and usefulness for validation, comparison, and recommendation-style problems. Its weaknesses are lack of global structure, sensitivity to feature scaling and noise, and limited interpretability for broad segmentation or storytelling",Examine Further
 ML Model,Algorithm,KNNImputer,,Examine Further
 ML Model,Algorithm,KNeighborsClassifier,"KNeighborsClassifier is a non-parametric classification algorithm that assigns a class based on the majority label among the k nearest data points in feature space. It originates from early pattern recognition and instance-based learning research. Its importance lies in its simplicity and interpretability, requiring no explicit training phase. The model is commonly applied in recommendation systems, pattern recognition, and baseline classification tasks. Its performance depends heavily on distance metrics and feature scaling.",Examine Further
@@ -256,6 +280,7 @@ ML Model,Algorithm,MeanShift,,Examine Further
 ML Model,Algorithm,MinCovDet,,Examine Further
 ML Model,Algorithm,MiniBatchDictionaryLearning,,Examine Further
 ML Model,Algorithm,MiniBatchKMeans,,Examine Further
+ML Model,Algorithm,MiniBatchKMeans,MiniBatchKMeans is a scalable variant of KMeans that updates centroids using small random subsets of data. It answers the same questions as KMeans but is designed for large datasets where full batch updates are expensive. Its strengths are speed and memory efficiency with minimal loss in cluster quality. The trade-off is slightly higher variability and less precise centroids compared to full KMeans.,Examine Further
 ML Model,Algorithm,MiniBatchNMF,,Examine Further
 ML Model,Algorithm,MiniBatchSparsePCA,,Examine Further
 ML Model,Algorithm,MissingIndicator,,Examine Further
@@ -355,44 +380,19 @@ ML Model,Algorithm,VotingRegressor,,Examine Further
 ML Model,Algorithm,Word2Vec,"Word2Vec is a neural-network–based method that learns dense vector embeddings for words, capturing semantic and syntactic relationships. Unlike Bag of Words, which only counts word occurrences and ignores meaning, Word2Vec represents words in a continuous vector space where similarity between vectors reflects semantic closeness",Examine Further
 ML Model,Algorithm,XGBoost,,Examine Further
 ML Model,Algorithm,kNN graph clustering,kNN graph clustering builds a graph by connecting each observation to its nearest neighbors and then finds communities within that graph. It is useful for discovering local structure and non-obvious groupings in complex data. Its strength is flexibility and sensitivity to fine-grained patterns. Its weakness is computational cost and dependence on similarity definitions and neighborhood size.,Examine Further
-ML Model,Centroid-based clustering,Centroid-based clustering,"Centroid-based clustering groups data points by assigning each point to the nearest representative center (centroid). It answers the question: “What are the main archetypal behavior patterns in the data?” Its strengths are scalability, stability, and interpretability, making it well suited for large datasets and business-facing segmentation. Its main weakness is that it assumes roughly spherical clusters and requires the number of clusters (K) to be chosen in advance.",Examine Further
-ML Model,Centroid-based clustering,KMeans,"KMeans is a centroid-based clustering algorithm that iteratively updates cluster centers to minimize within-cluster variance. It produces a single cluster label per observation, making it easy to summarize and communicate results. KMeans is fast, widely understood, and works well when clusters are well-separated and similarly sized. However, it is sensitive to feature scaling, outliers, and the choice of K.",Examine Further
-ML Model,Centroid-based clustering,MiniBatchKMeans,MiniBatchKMeans is a scalable variant of KMeans that updates centroids using small random subsets of data. It answers the same questions as KMeans but is designed for large datasets where full batch updates are expensive. Its strengths are speed and memory efficiency with minimal loss in cluster quality. The trade-off is slightly higher variability and less precise centroids compared to full KMeans.,Examine Further
-ML Model,Evaluation,Silhouette Score,"Measures how well each data point fits within its assigned cluster compared to the nearest alternative cluster. It compares the average distance to points in the same cluster (cohesion) against the average distance to points in the closest neighboring cluster (separation). Scores range from −1 to 1, where higher values indicate tighter and more clearly separated clusters. The overall Silhouette Score is the average of these values across all data points and is best used to compare clustering configurations rather than as an absolute measure of quality.
-
-> 0.5: Strong clustering
-0.3–0.5: Reasonable structure
-< 0.3: Weak separation / noisy clusters",Examine Further
-ML Model,Function,AdditiveChi2Sampler,,Examine Further
-ML Model,General Principles,Deep Learning,"Deep learning is a subset of machine learning that uses multi-layer neural networks to automatically learn hierarchical representations from data, reducing the need for manual feature engineering. By stacking simple processing units called layers—each acting as a filter that transforms inputs into higher-level representations—deep learning models can capture complex patterns through composition. Early challenges such as vanishing gradients, where learning signals faded through many layers, were largely addressed through improved activation functions, optimization methods, and weight initialization strategies. In practice, building a deep learning model involves defining the network architecture (number of layers, connections, and activations) and then specifying how it learns by choosing an optimizer, loss function, and evaluation metrics during compilation.",Examine Further
-ML Model,General Principles,Machine Learning,"Using a process to enable computers to iteratively learn from the data and improve analysis, outcomes or understanding. Intersection of statistics, artificial intelligence and computer science. Machine's don't learn, they find optimal mathematical formulas based on the data it is presented. There is an assumption that this data set is both representative of other data sets,  and possess similiar statistical distributions', You can argue this is not learning, because slight variances can result in materially different responses and output, Term synonymous with machines doing tasks without explicitly being programmed. Building a statistical model, based on a dataset",Examine Further
-ML Model,General Principles,Optimization,"Optimization is the process of finding the best possible solution to a problem by systematically adjusting inputs or decisions to maximize or minimize a defined objective, subject to given constraints. In machine learning and analytics, optimization involves selecting model parameters that minimize error or maximize performance according to a chosen loss function. Importantly, what is considered “best” depends entirely on how the objective and constraints are defined.",Examine Further
-ML Model,Model Architecture,Autoregressive,"Autoregressive models generate outputs one step at a time, where each prediction depends on the previously generated outputs. This sequential dependency allows the model to capture context and coherence, making it powerful for tasks like language modeling and time-series forecasting. However, because predictions are made step by step, autoregressive methods can be slower at inference compared to parallel approaches.",Examine Further
 ML Model,Model Type,Assessment,"Assessment refers to techniques that do not learn patterns from data but instead evaluate, diagnose, or measure the behavior, performance, or reliability of models or data. These methods operate on model outputs, predictions, or residuals rather than updating model parameters. Assessment is essential for understanding model quality, robustness, and fitness for purpose, but it does not produce a trained model. This learning type characterizes analytical or evaluative tools rather than learning algorithms.",Examine Further
 ML Model,Model Type,Reinforcement Learning,"Reinforcement learning trains an agent to make decisions by interacting with an environment and receiving rewards or penalties. The agent learns a policy that maximizes cumulative reward over time through trial and error. It is commonly used in robotics, game playing, and control systems.",Examine Further
 ML Model,Model Type,Semisupervised Learning,Semi-supervised learning combines a small amount of labeled data with a large amount of unlabeled data to improve learning performance. The model leverages the structure in the unlabeled data to generalize better than supervised learning alone. This approach is useful when labeling data is expensive or time-consuming.,Examine Further
 ML Model,Model Type,Supervised Learning,"Supervised learning trains a model using labeled data, where the correct answer is known in advance. The model learns a mapping from inputs to outputs by minimizing the difference between its predictions and the true labels. Common examples include classification and regression problems.",Examine Further
 ML Model,Model Type,Unsupervised Learning,"Unsupervised learning works with unlabeled data and aims to discover hidden patterns or structure. The model groups, compresses, or summarizes the data without being told what the correct outcome is. Typical use cases include clustering, dimensionality reduction, and anomaly detection.",Examine Further
+ML Model,Function,AdditiveChi2Sampler,,Examine Further
+ML Model,Model Architecture,Autoregressive,"Autoregressive models generate outputs one step at a time, where each prediction depends on the previously generated outputs. This sequential dependency allows the model to capture context and coherence, making it powerful for tasks like language modeling and time-series forecasting. However, because predictions are made step by step, autoregressive methods can be slower at inference compared to parallel approaches.",Examine Further
+ML Model,Evaluation,Silhouette Score,"Measures how well each data point fits within its assigned cluster compared to the nearest alternative cluster. It compares the average distance to points in the same cluster (cohesion) against the average distance to points in the closest neighboring cluster (separation). Scores range from −1 to 1, where higher values indicate tighter and more clearly separated clusters. The overall Silhouette Score is the average of these values across all data points and is best used to compare clustering configurations rather than as an absolute measure of quality.
+
+> 0.5: Strong clustering
+0.3–0.5: Reasonable structure
+< 0.3: Weak separation / noisy clusters",Examine Further
 ML Model,Pipeline Stage,Model Summarization / Model Interpretability,"Model summarization and interpretability aim to explain how the model makes decisions. This may include feature importance, partial dependence plots, SHAP values, or rule extraction. Interpretability builds trust with stakeholders and supports debugging, governance, and compliance. It is especially critical in high-stakes or regulated domains.",Examine Further
-ML Model,Procedure,ColumnTransformer,,Examine Further
-ML Model,Procedure,FunctionTransformer,,Examine Further
-ML Model,Procedure,KNeighborsTransformer,,Examine Further
-ML Model,Procedure,LabelEncoder,,Examine Further
-ML Model,Procedure,MaxAbsScaler,,Examine Further
-ML Model,Procedure,MinMaxScaler,,Examine Further
-ML Model,Procedure,OneHotEncoder,,Examine Further
-ML Model,Procedure,OrdinalEncoder,,Examine Further
-ML Model,Procedure,PowerTransformer,,Examine Further
-ML Model,Procedure,QuantileTransformer,,Examine Further
-ML Model,Procedure,RBFSampler,,Examine Further
-ML Model,Procedure,RadiusNeighborsTransformer,,Examine Further
-ML Model,Procedure,RobustScaler,,Examine Further
-ML Model,Procedure,SkewedChi2Sampler,,Examine Further
-ML Model,Procedure,SplineTransformer,,Examine Further
-ML Model,Procedure,StandardScaler,,Examine Further
-ML Model,Procedure,TargetEncoder,,Examine Further
-ML Model,Procedure,TfidfTransformer,,Examine Further
-ML Model,Procedure,TransformedTargetRegressor,,Examine Further
 ML Model,Theorem,Curse of Dimensionality,"As dimensionality grows, data points become increasingly sparse, distances lose meaning, and models require exponentially more data to learn reliable patterns. This makes learning, generalization, and computation more difficult, often degrading model performance rather than improving it. In high-dimensional spaces, the optimization landscape also becomes far more complex, with many local minima and saddle points, making it harder to identify or converge toward a meaningful global minimum.",Examine Further
 ML Project,Process Step,Goals,"It is imperative to have clear goals, specifically as it relates to outcomes.",Notes DF
 ML Project,Process Step,Goals,"Goals of a ML Project Differ from Goals of BI or Analytics Project and it is important to understand these at the outset. Specifically, when looking at Data in multiple dimensions, do we want to visually see it, or technically understand it. If we seek to truly understand it, we need to look at a ML Project, not a Dashboard, where trends are misleading.",Notes DF
@@ -512,10 +512,10 @@ Variance Inflation Factor  a numerical measure of how much multicollinearity (li
 ML Project,Process Step,Model Evaluation,NNNNNNNEEEEEWWWWWWW .Needs comments.,Notes DF
 ML Project,Definition,Validation,"Process which evaluates a trained machine-learning model on data that was not used during training to assess how well it generalizes to unseen data. It is used to tune model choices and hyperparameters, detect overfitting or underfitting, and guide model selection before final testing or deployment. Validation acts as a feedback loop before final evaluation or deployment decisions are made.",Insert Records
 ML Project,Process Step,Validation,"Run hold back data after all decisions have been made, before approval. Need to COMMUNICATE this to people to avoid confusion. It is important as this should not bias or be done before the model is created, part of healthy Business Decisions.",Notes DF
-ML Project,Function,Validation,Accuracy: Number of correctly classified examples divided by the total number of classified examples.,Insert Records3
 ML Project,Procedure,Validation,"Confusion Matrix: Table used to evaluate the performance of a classification model by comparing predicted labels to actual labels. It summarizes the counts of true positives, true negatives, false positives, and false negatives, providing a detailed view of where the model makes correct and incorrect predictions. This breakdown supports the calculation of metrics such as accuracy, precision, recall, and F1 score.",Insert Records3
 ML Project,Procedure,Validation,"K Fold Cross Validation: Application of Cross Validation. Method for increasing ability to generlize results by segregating Training Data into K folds, such that the model never predicts on data it has seen. As an example, if Folds = 10 and x=100, each of the iterations would hold out 10 examples (such that all examples were held out in a iteration) and when the data was held out the model would predict. To reiterate, it helps with generalization, it does not increase performance, does not average and does not boost. It does materially increase training time. Primarily useful when data limitation exist, you're early on in development and want to prevent leakage or get cursory results. Also can provide a truer indication of performance based Metrics.",Insert Records3
 ML Project,Procedure,Validation,"Startified Cross Validation: Increasing the Principle of Cross Validation and ensuring that the data is split into statistically represented folds, which when data is not IID could be considered valuable to ensure that inference is accurate and representative.",Insert Records3
+ML Project,Function,Validation,Accuracy: Number of correctly classified examples divided by the total number of classified examples.,Insert Records3
 ML Project,Definition,"Bias, Fairness and Ethics","This step examines whether the model produces systematically unfair or harmful outcomes across different groups. It includes analyzing data representation, outcome disparities, and unintended correlations. Ethical considerations may involve transparency, consent, explainability, and regulatory compliance. Addressing bias and fairness is essential for responsible, trustworthy, and legally compliant ML systems.",Insert Records
 ML Project,Process Step,"Bias, Fairness and Ethics",Comment Needed,Notes DF
 ML Project,Process Step,Model Summarization/ Model Interpretability,NNNNNNNEEEEEWWWWWWW .Needs comments.,Notes DF
@@ -555,18 +555,49 @@ Best Linear Unbiased Estimator,Requirement,Independence,Observations should be i
 Best Linear Unbiased Estimator,Requirement,Linearity,Relationship between Independent and Dependent should be Linear. With finite variance,Notes DF
 Best Linear Unbiased Estimator,Requirement,No Perfect Collinearity,,Notes DF
 Best Linear Unbiased Estimator,Requirement,Normality of Residuals,,Notes DF
-Clustering Implementation,Process Step,Model Selection,Stability over Uniqueness,Notes DF
-Clustering Implementation,Process Step,Model Selection,Interpretability over novelty,Notes DF
-Clustering Implementation,Process Step,Model Selection,Repeatability over perfection.,Notes DF
-Clustering Implementation,Process Step,Feature Selection,"Must Clarify this clearly, specifically the distinction between Behavior and Attributes, clustering should focus primarily on behavior. Specifically Demographics can dominate distiance differences relative to behavior without adding value.",Notes DF
-Clustering Implementation,Process Step,Feature Selection,"Small Number of Stable, Interpretable, Member Archetypes that summaize the global behavior and can be reused for ML and Analysis.",Notes DF
+Clustering,Guiding Principle,Behavioural Clustering Goal,"Must Clarify this clearly, specifically the distinction between Behavior and Attributes, clustering should focus primarily on behavior. Specifically Demographics can dominate distiance differences relative to behavior without adding value.",Notes DF
+Clustering,Guiding Principle,Behavioural Clustering Goal,"Small Number of Stable, Interpretable, Member Archetypes that summaize the global behavior and can be reused for ML and Analysis.",Notes DF
+Clustering,Guiding Principle,Expected Outcomes,Stability over Uniqueness,Notes DF
+Clustering,Guiding Principle,Expected Outcomes,Interpretability over novelty,Notes DF
+Clustering,Guiding Principle,Expected Outcomes,Repeatability over perfection.,Notes DF
+Clustering,Guiding Principle,Expected Outcomes,Consistent,Notes DF
+Clustering,Guiding Principle,Expected Outcomes,Repeatable,Notes DF
+Clustering,Guiding Principle,What is it?,"Calculation, utilizing mathematical precision to identify based on Numeric similarity, attributes, characteristics, properties and behaviours which are  not ambigious thresholds or complex static rules",Notes DF
+Clustering,Guiding Principle,How to Decide?,"Understand the impact of components, can prevent overweighting on traditionally dominant items, such as raw balances.",Notes DF
+Clustering,Guiding Principle,Benefit,Strategic Conversations become diagnostic not reactive,Notes DF
+Clustering,Guiding Principle,Benefit,Precision without Personalization,Notes DF
+Clustering,Guiding Principle,Benefit,Differenitation without Discrimination,Notes DF
+Clustering,Guiding Principle,Benefit,Optimization without cumbersome rules,Notes DF
+Clustering,Project Implementation,Step 1,Ensure Data is Labelled and Categorized.,Notes DF
+Clustering,Project Conceputalization,Step 1,"Identify and validate the behavioural attributes, transactions, and usage patterns that define similarity among members",Notes DF
+Clustering,Project Implementation,Step 2,"Review Semantic Classifications, insure sufficient and appropriate model coverage.",Notes DF
+Clustering,Project Conceputalization,Step 2,Understand the relative contribution and sensitivity of features in forming and separating clusters,Notes DF
+Clustering,Project Implementation,Step 3,Run Model,Notes DF
+Clustering,Project Conceputalization,Step 3,"Identify and define distinct, stable member archetypes based on observed behavioural patterns",Notes DF
+Clustering,Project Implementation,Step 4,"Correlation & Redundancy Analysis. If Greater than .9 then variables are redudanant, specifically within class. 
+As a rule of thumb, newest is better, but is based on decision.",Notes DF
+Clustering,Project Conceputalization,Step 4,"Characterize each archetype using clear, interpretable behavioural and financial characteristics",Notes DF
+Clustering,Project Implementation,Step 5,Variance & Stability Contribution: Variance Inflation Factor.,Notes DF
+Clustering,Project Conceputalization,Step 5,"Define the intended use, boundaries, and decision domains for archetype-based strategies",Notes DF
+Clustering,Project Implementation,Step 6,"Clustering Sensitivity / Stability Tests
+1. Testing Results of Model
+    2. Adjusted Rand Index (ARI)
+    3. Silhouette/ DB Index
+    4. Run Now and Overtime",Notes DF
+Clustering,Project Conceputalization,Step 6,Design and apply differentiated engagement strategies aligned to each archetype’s characteristics and needs,Notes DF
+Clustering,Project Implementation,Step 7,"4. Incremental Value via Feature Importance in Unsupervised Models
+    1. Reconstruction Error in Autoencoders
+    2. Mutual Information with Latent Cluster Assignment
+    3. Permutation for Clustering.",Notes DF
+Clustering,Project Conceputalization,Step 7,"Monitor archetype-level outcomes, migration, and engagement effectiveness over time",Notes DF
+Clustering,Expected Outcomes,Behavioural Clustering,"Identify explicit groups of members which posses explicit behavioral tendancies and patterns which the organiation understand and support through tailored strategies, plans and products.",Notes DF
 Mathematics,Process,Definition,"Process designed to store Formulas, guidance and help information related to Mathematical properities.",Notes DF
-Mathematics,Concept,Normality,Residuals should be normally distributed.,Examine Further
 Mathematics,Theorem,Algorithm,"An algorithm is a procedure that unfolds over time and depends on: previous states, iteration history and accumulated information.",Examine Further
 Mathematics,Theorem,Best Linear Unbiased Estimator,"The Best Linear Unbiased Estimator (BLUE) is an estimation method in statistics that produces parameter estimates that are linear in the observed data, unbiased, and have the smallest possible variance among all such estimators. It originates from the Gauss–Markov theorem, developed in the early 19th century in the context of least squares and error theory. Its importance lies in providing a theoretical benchmark: under specific assumptions about error structure, no other linear unbiased estimator can be more precise. In practice, BLUE underpins ordinary and generalized least squares, and is widely applied in econometrics, engineering, and data science when modeling relationships with correlated or heteroskedastic errors",Examine Further
 Mathematics,Theorem,Naive Bayes,"Principle in probability theory that describes how to update the probability of a hypothesis based on new evidence. It was first developed by Thomas Bayes, an 18th-century English statistician and theologian, and later formalized and popularized by Pierre-Simon Laplace. The theorem provides a mathematical relationship between prior probability (initial belief), likelihood (evidence), and posterior probability (updated belief). Its importance lies in its ability to support reasoning under uncertainty, making it a core concept in statistics, machine learning, medicine, finance, and decision science. In machine learning, it forms the foundation of the Naive Bayes algorithm, where it is used to estimate class probabilities based on observed features.
 
 Adding Naive Assumption assumes independence, which drastically simplifies the calculation.",Examine Further
+Mathematics,Concept,Normality,Residuals should be normally distributed.,Examine Further
 Tooling,Process,Definition,"Tooling contains notes, Information, maps and hints related to various Technologies. NEED TO UPDATE. How about the other.",Notes DF
 Tooling,,,"Streamlit and Gradio are both Python frameworks for building web interfaces, but they serve different purposes. Streamlit is designed for creating interactive data applications and dashboards, offering strong support for state, layouts, and multi-step analytical workflows. Gradio is optimized for quickly exposing machine-learning models through simple, function-based interfaces, making it ideal for demos and model inference. Streamlit emphasizes ongoing use and exploration by analysts or internal teams, while Gradio emphasizes ease of sharing and rapid experimentation. In practice, Streamlit is better suited for complex analytics tools, whereas Gradio excels at lightweight model demonstration interfaces.",Notes DF
 Tooling,Hadoop,HDFS,"It is the storage layer of the Apache Hadoop ecosystem, designed to store and manage large volumes of data across a distributed cluster of machines. Files are split into blocks (default: 128MB or 256MB).These blocks are distributed across multiple nodes in a cluster.Each block is replicated (default: 3 copies) across different machines. If one node fails, data is still accessible from other nodes.Files in HDFS are typically written once and read many times. Optimized for streaming reads of large files, not quick random access. Hadoop Distributed File System.",Examine Further
@@ -655,27 +686,25 @@ Machine Learning Operations,Consideration,Comparison to Traditional ML,ML Builds
 ,,,,Notes DF
 ,,,,Notes DF
 ,,,,Notes DF
+,,,,Notes DF
+,,,,Notes DF
 ,,,"LangChain and LlamaIndex are complementary but focus on different layers of LLM applications. LangChain is an orchestration framework, designed to manage prompts, chains, agents, tools, and multi-step workflows involving LLMs. LlamaIndex focuses on the data layer, providing utilities to ingest, index, and retrieve structured and unstructured data for use with LLMs. In practice, LlamaIndex is often used to prepare and query data, while LangChain coordinates how the LLM reasons, calls tools, and responds. Many real-world systems use LlamaIndex for retrieval and LangChain to orchestrate the overall application flow.",Notes DF
 ,,,"LangChain does not have a single, all-encompassing vector store class, and typically relies on integrations with external libraries to integrate a vector database. The only commonly used vector store defined within the LangChain core library is the InMemoryVectorStore which stores vectors in memory. LlamaIndex provides a powerful VectorStoreIndex class that stores vectors in memory by default but can be integrated with full-fledged vector databases such as Chroma DB or Faiss. Thus, LlamaIndex's VectorStoreIndex class ensures ease of use because the vector store backend can be swapped out without changing any of the downstream code.",Notes DF
-Clustering,TBD,TBD,Multidimensional,Notes DF
-Clustering,TBD,TBD,Non Linear,Notes DF
-Clustering,TBD,TBD,"Based on Numeric Similarity, not ambigious thresholds or complex static rules",Notes DF
-Clustering,TBD,TBD,"Understand the impact of components, can prevent overweighting on traditionally dominant items, such as raw balances.",Notes DF
-Clustering,TBD,TBD,Implementation of Tailored Strategy based on understanding of a Member,Notes DF
-Clustering,TBD,TBD,Decisions can be segment specific based on perceived understanding of how a member engages,Notes DF
-Clustering,TBD,TBD,Consistent,Notes DF
-Clustering,TBD,TBD,Repeatable,Notes DF
-Clustering,TBD,TBD,Insights into Results,Notes DF
-Clustering,TBD,TBD,Strategic Conversations become diagnostic not reactive,Notes DF
-Clustering,TBD,TBD,Precision without Personalization,Notes DF
-Clustering,TBD,TBD,Differenitation without Discrimination,Notes DF
-Clustering,TBD,TBD,Optimization without cumbersome rules,Notes DF
 Langchain,Process Step,TBD,,Notes DF
 Langchain,Process Step,TBD,Create a template with variables for dynamic content.,Notes DF
 Langchain,Process Step,TBD,Convert the template into a LangChain PromptTemplate.,Notes DF
 Langchain,Process Step,TBD," Build a chain using the pipe operator `|` to connect: 
 - Input variables -  The prompt template - The LLM - An output parser",Notes DF
 Langchain,Process Step,TBD,Invoke the chain with specific inputs to generate results.,Notes DF
+Python,Guiding Principle,Data Set Column Naming,"Dataset column naming should use ALL_CAPS_SNAKE_CASE and describe what the data represents, not how it was created. Column names should encode semantic meaning, time context, and measurement type so they remain interpretable without reference to code. Unlike functions, column names are noun-driven and stable, serving as part of the dataset’s contract across models, analyses, and stakeholders. Consistent naming supports reproducibility, governance, and correct modeling behavior.
+Examples
+DEPOSIT_BALANCE_CURR
+AVG_BALANCE_6M
+TXN_COUNT_1M
+BALANCE_VOLATILITY_6M
+INCOME_CONCENTRATION_RATIO",Examine Further
+Python,Guiding Principle,Python Function Naming Convention,"Pythonic function naming follows the snake_case convention and uses clear, action-oriented VERBS  to describe exactly what the function does. Function names should be explicit, readable, and predictable, prioritizing clarity over brevity. Functions that return values without side effects commonly use get_, while functions that return booleans should begin with is_, has_, or can_ to make intent unambiguous. This convention improves readability, maintainability, and composability in analytical and production codebases. Examples: 
+create, get, transform, calculate, ",Examine Further
 Algorthim Classification,Parameter,Anomaly Detection,"Algorithm which designed to identify observations that deviate significantly from expectedor normal patterns. Its importance lies in surfacing rare, unusual, or potentially harmful events that standard predictive models may overlook. It is applied in domains such as fraud detection, system monitoring, and quality control, where outliers themselves are the signal rather than noise.",Examine Further
 Algorthim Classification,Parameter,Classification,"Algorithm which assign observations to one of a finite set of discrete categories based on learned patterns in labeled data. The goal is to predict which class an observation belongs to, not how much or how many. Classification is foundational in tasks such as diagnosis, spam detection, and customer segmentation with predefined labels.",Examine Further
 Algorthim Classification,Parameter,Clustering,"Algorithm which group observations into clusters based on similarity without using labeled outcomes. The objective is to discover latent structure or natural groupings within data rather than to predict predefined categories. Clustering is commonly applied in exploratory analysis, segmentation, and pattern discovery.",Examine Further
@@ -686,10 +715,6 @@ Algorthim Classification,Parameter,Feature Transformation,"
 Methods which modify existing features into new representations to improve learning, scale, or interpretability. Unlike dimensionality reduction, transformed features often retain a direct relationship to original variables. This category includes normalization, encoding, and learned transformations used as preprocessing steps.",Examine Further
 Algorthim Classification,Parameter,Ranking / Recommendation,"Algorithm which order items or suggest relevant options based on predicted relevance, preference, or utility. The objective is not classification or regression, but relative prioritization among alternatives. These methods are central to search, personalization, and content discovery systems.",Examine Further
 Algorthim Classification,Parameter,Regression,"Algorithm which predict continuous numerical values by modeling relationships between input features and a target variable. The emphasis is on estimating magnitude and direction rather than categorical assignment. Regression is widely used in forecasting, risk estimation, and trend analysis.",Examine Further
-Generative AI,Tooling,LangChain,"Framework designed to simplify the development of applications powered by language models. Built to address the challenges of working with LLMs in practical settings, LangChain provides a standardized interface for connecting models with various data sources and application environments.
-
-LangChain serves as an abstraction layer, making it easier to build complex LLM applications without handling the low-level details of model interaction. This framework has become a standard tool in the LLM ecosystem, supporting a wide range of use cases from chatbots to document analysis systems.
-",Examine Further
 Model Type,Parameter,Ensemble Models,"Models which combine multiple base models to produce a single, usually more robust, prediction. The core idea is that diverse models can compensate for one another’s errors, improving generalization and stability. A model belongs here if multiple learners are explicitly trained and aggregated as part of the algorithm.",Examine Further
 Model Type,Parameter,Instance Based Models,Models which make predictions by directly comparing new observations to stored training examples rather than learning a global model. They defer learning until inference time and rely heavily on distance or similarity measures. A model belongs here if predictions are driven primarily by local neighborhood relationships.,Examine Further
 Model Type,Parameter,Kernel-based Models,"Models which  implicitly map data into high-dimensional feature spaces to make complex patterns linearly separable. They rely on similarity functions rather than explicit feature construction. A model belongs here if a kernel function is central to learning, not optional.",Examine Further
@@ -700,12 +725,7 @@ Model Type,Parameter,Nonlinear Models,"Models which capture relationships that c
 Model Type,Parameter,Probabilistic Models,"Models which explicitly represent uncertainty by modeling data as random variables governed by probability distributions. They produce likelihoods or posterior probabilities rather than only point estimates. A model belongs here if probability theory is central to its formulation, not merely an output option.",Examine Further
 Model Type,Parameter,Rule-base Models,Models which operate using explicit if–then logical rules that define decision boundaries. These rules may be learned from data or manually specified and prioritize transparency and control over flexibility. A model belongs here if decision logic is expressed directly as interpretable rules.,Examine Further
 Model Type,Parameter,Tree-Based Models,"Models which learn decision rules by recursively splitting the feature space into regions based on threshold conditions. They originate from decision theory and are prized for interpretability, handling mixed data types, and capturing nonlinear interactions without feature scaling. A model belongs here if its primary structure is a decision tree, regardless of whether it is used alone or in combination.",Examine Further
-Python,General Principles,Data Set Column Naming,"Dataset column naming should use ALL_CAPS_SNAKE_CASE and describe what the data represents, not how it was created. Column names should encode semantic meaning, time context, and measurement type so they remain interpretable without reference to code. Unlike functions, column names are noun-driven and stable, serving as part of the dataset’s contract across models, analyses, and stakeholders. Consistent naming supports reproducibility, governance, and correct modeling behavior.
-Examples
-DEPOSIT_BALANCE_CURR
-AVG_BALANCE_6M
-TXN_COUNT_1M
-BALANCE_VOLATILITY_6M
-INCOME_CONCENTRATION_RATIO",Examine Further
-Python,General Principles,Python Function Naming Convention,"Pythonic function naming follows the snake_case convention and uses clear, action-oriented VERBS  to describe exactly what the function does. Function names should be explicit, readable, and predictable, prioritizing clarity over brevity. Functions that return values without side effects commonly use get_, while functions that return booleans should begin with is_, has_, or can_ to make intent unambiguous. This convention improves readability, maintainability, and composability in analytical and production codebases. Examples: 
-create, get, transform, calculate, ",Examine Further
+Generative AI,Tooling,LangChain,"Framework designed to simplify the development of applications powered by language models. Built to address the challenges of working with LLMs in practical settings, LangChain provides a standardized interface for connecting models with various data sources and application environments.
+
+LangChain serves as an abstraction layer, making it easier to build complex LLM applications without handling the low-level details of model interaction. This framework has become a standard tool in the LLM ecosystem, supporting a wide range of use cases from chatbots to document analysis systems.
+",Examine Further
