@@ -350,7 +350,7 @@ export_to_excel,long_max_width,int,Max width for long_columns,df_processing.py
 transpose_df,df,DataFrame,The input pandas DataFrame.,df_processing.py
 transpose_df,index,list,Columns to retain as identifiers (will remain unchanged).,df_processing.py
 transpose_df,columns,list,Columns to unpivot into key-value pairs.,df_processing.py
-Reference String,today,str,08-Feb-26,data_d_strings.py
+Reference String,today,str,09-Feb-26,data_d_strings.py
 Reference String,template_doc_string,str,"
 
     Definition of Function
@@ -361,8 +361,8 @@ Reference String,template_doc_string,str,"
     Returns:
         Object Type
 
-    date_created:08-Feb-26
-    date_last_modified: 08-Feb-26
+    date_created:09-Feb-26
+    date_last_modified: 09-Feb-26
     classification:TBD
     sub_classification:TBD
     usage:

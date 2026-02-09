@@ -80,108 +80,108 @@ def df_to_excel_bytes(df,
 
 
 
-def notes_df_to_outline_html(
-    df: pd.DataFrame,
-    column_order=None):
+# def notes_df_to_outline_html(
+#     df: pd.DataFrame,
+#     column_order=None):
     
-    """
+#     """
 
-    Function to Take a Dataframe and convert it into A Structured Indented Point form Format. 
-    Used for Clear Visualization of Notes.
+#     Function to Take a Dataframe and convert it into A Structured Indented Point form Format. 
+#     Used for Clear Visualization of Notes.
     
-    Parameters:
-        df(df): Any DataFrame
-        column_order(list): List of Columns to Include, in Order. If not defined, all will be included.
-        print_(bool): Option as to whether you wish to directly Render a print out in the Python Session. Added because of Streamlit Error, need to suppress.
+#     Parameters:
+#         df(df): Any DataFrame
+#         column_order(list): List of Columns to Include, in Order. If not defined, all will be included.
+#         print_(bool): Option as to whether you wish to directly Render a print out in the Python Session. Added because of Streamlit Error, need to suppress.
 
-    Returns:
-        str
+#     Returns:
+#         str
 
-    date_created:12-Dec-25
-    date_last_modified: 18-Dec-25
-    classification:TBD
-    sub_classification:TBD
-    usage:
-        from connections import d_google_sheet_to_csv
-        df = import_d_google_sheet('Notes')
-        notes_df_to_outline_html(df)
+#     date_created:12-Dec-25
+#     date_last_modified: 18-Dec-25
+#     classification:TBD
+#     sub_classification:TBD
+#     usage:
+#         from connections import d_google_sheet_to_csv
+#         df = import_d_google_sheet('Notes')
+#         notes_df_to_outline_html(df)
 
-    Update: 
-        Added display parameter to support Streamlit Adoption.
+#     Update: 
+#         Added display parameter to support Streamlit Adoption.
 
-    """
-    if column_order is None:
-        column_order = df.columns.tolist()
+#     """
+#     if column_order is None:
+#         column_order = df.columns.tolist()
 
-    missing = [c for c in column_order if c not in df.columns]
-    if missing:
-        raise ValueError(f"Missing columns: {missing}")
+#     missing = [c for c in column_order if c not in df.columns]
+#     if missing:
+#         raise ValueError(f"Missing columns: {missing}")
 
-    df1 = df[column_order].copy()
+#     df1 = df[column_order].copy()
 
-    def clean(x):
-        if pd.isna(x):
-            return ""
-        return str(x).strip()
+#     def clean(x):
+#         if pd.isna(x):
+#             return ""
+#         return str(x).strip()
 
-    last = [""] * len(column_order)
+#     last = [""] * len(column_order)
 
-    html_ = """
-    <style>
-    .notes-container { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial; }
-    .notes-item { line-height: 1.45; margin: 2px 0; }
+#     html_ = """
+#     <style>
+#     .notes-container { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial; }
+#     .notes-item { line-height: 1.45; margin: 2px 0; }
 
-    .notes-l0 { font-size: 18px; font-weight: 600; margin-left: 0px; }
-    .notes-l1 { font-size: 16px; font-weight: 500; margin-left: 18px; }
-    .notes-l2 { font-size: 14px; font-weight: 400; margin-left: 36px; }
-    .notes-l3 { font-size: 13px; font-weight: 400; margin-left: 54px; opacity: 0.85; }
-    .notes-l4 { font-size: 12px; font-weight: 400; margin-left: 72px; opacity: 0.8; }
-    </style>
+#     .notes-l0 { font-size: 18px; font-weight: 600; margin-left: 0px; }
+#     .notes-l1 { font-size: 16px; font-weight: 500; margin-left: 18px; }
+#     .notes-l2 { font-size: 14px; font-weight: 400; margin-left: 36px; }
+#     .notes-l3 { font-size: 13px; font-weight: 400; margin-left: 54px; opacity: 0.85; }
+#     .notes-l4 { font-size: 12px; font-weight: 400; margin-left: 72px; opacity: 0.8; }
+#     </style>
 
-    <div class="notes-container">
-    """
+#     <div class="notes-container">
+#     """
 
-    for _, row in df1.iterrows():
-        vals = [clean(row[c]) for c in column_order]
-        if all(v == "" for v in vals):
-            continue
+#     for _, row in df1.iterrows():
+#         vals = [clean(row[c]) for c in column_order]
+#         if all(v == "" for v in vals):
+#             continue
 
-        # Find first level where value changes
-        change_level = None
-        for i, v in enumerate(vals):
-            if v and v != last[i]:
-                change_level = i
-                break
+#         # Find first level where value changes
+#         change_level = None
+#         for i, v in enumerate(vals):
+#             if v and v != last[i]:
+#                 change_level = i
+#                 break
 
-        # If nothing changes, show deepest non-blank value
-        if change_level is None:
-            for i in range(len(vals) - 1, -1, -1):
-                if vals[i]:
-                    change_level = i
-                    break
+#         # If nothing changes, show deepest non-blank value
+#         if change_level is None:
+#             for i in range(len(vals) - 1, -1, -1):
+#                 if vals[i]:
+#                     change_level = i
+#                     break
 
-        # Still nothing? (paranoia guard)
-        if change_level is None:
-            continue
+#         # Still nothing? (paranoia guard)
+#         if change_level is None:
+#             continue
 
-        # Reset deeper levels when higher level changes (deeper only)
-        for j in range(change_level + 1, len(last)):
-            last[j] = ""
+#         # Reset deeper levels when higher level changes (deeper only)
+#         for j in range(change_level + 1, len(last)):
+#             last[j] = ""
 
-        # Render new values from change_level downward
-        for i in range(change_level, len(vals)):
-            v = vals[i]
-            if not v:
-                continue
-            if v != last[i]:
-                level = min(i, 4)  # cap style depth
-                safe_v = html.escape(v) # Escape Function, not String.
-                html_ += f'<div class="notes-item notes-l{level}">{safe_v}</div>\n'
-                last[i] = v
+#         # Render new values from change_level downward
+#         for i in range(change_level, len(vals)):
+#             v = vals[i]
+#             if not v:
+#                 continue
+#             if v != last[i]:
+#                 level = min(i, 4)  # cap style depth
+#                 safe_v = html.escape(v) # Escape Function, not String.
+#                 html_ += f'<div class="notes-item notes-l{level}">{safe_v}</div>\n'
+#                 last[i] = v
 
-    html_ += "</div>"
-    html_ = textwrap.dedent(html_).lstrip()
-    return html_
+#     html_ += "</div>"
+#     html_ = textwrap.dedent(html_).lstrip()
+#     return html_
 
 # ✅ Must be first Streamlit command
 st.set_page_config(page_title="Python Function Catalog", layout="wide")
@@ -214,7 +214,7 @@ def load_data():
     google_note_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv'
     google_definition_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv'
     google_word_quote = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=1117793378&single=true&output=csv'
-    google_daily_activities = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=472900611&single=true&output=csv'
+    #google_daily_activities = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=472900611&single=true&output=csv'
     technical_notes = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv'
     
     
@@ -229,7 +229,7 @@ def load_data():
     data_dict['definition_summary'] = pd.read_csv(definition_summary_url)
     data_dict['d_learning_notes'] = data_dict['d_learning_notes'][['Process','Categorization','Word','Definition']]
     data_dict['d_word_quote'] = pd.read_csv(google_word_quote)
-    data_dict['daily_activities'] = pd.read_csv(google_daily_activities)
+    #data_dict['daily_activities'] = pd.read_csv(google_daily_activities)
     data_dict['technical_notes'] = pd.read_csv(technical_notes)
     
 
@@ -252,8 +252,9 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ 'Words and Quotes','Daily Activities', "Function List", "Function Parameters", 'D Notes', 'D Definitions', 'Folder Table of Content', 
-     "D Notes Outline",'Project Template','Technical Notes',"Definition Summary"]
+    [ 'D Notes', 'D Definitions',"Definition Summary",'Technical Notes','Words and Quotes','Project Template',
+     "Function List", "Function Parameters",  'Folder Table of Content', 
+     ] #'Daily Activities', "D Notes Outline",
 )
 
 # -------------------------
@@ -404,39 +405,39 @@ elif page == "Folder Table of Content":
 # -----------------------------------
 # D Notes Outline
 # -----------------------------------
-elif page == "D Notes Outline":
-    st.title("D Notes Outline")
-    df_base = data_dict["d_learning_notes"].copy()
+# elif page == "D Notes Outline":
+#     st.title("D Notes Outline")
+#     df_base = data_dict["d_learning_notes"].copy()
 
-    c1_word = "Process"
-    c2_word = "Word"
-    c3_word = "Categorization"
+#     c1_word = "Process"
+#     c2_word = "Word"
+#     c3_word = "Categorization"
 
-    c1, c2, c3 = st.columns([1, 1, 1])
+#     c1, c2, c3 = st.columns([1, 1, 1])
 
-    with c1:
-        opts1 = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
-        sel1 = st.selectbox(c1_word, opts1, index=0)
+#     with c1:
+#         opts1 = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
+#         sel1 = st.selectbox(c1_word, opts1, index=0)
 
-    df1 = df_base if sel1 == "(All)" else df_base[df_base[c1_word] == sel1]
+#     df1 = df_base if sel1 == "(All)" else df_base[df_base[c1_word] == sel1]
 
-    with c2:
-        opts2 = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
-        sel2 = st.selectbox(c2_word, opts2, index=0)
+#     with c2:
+#         opts2 = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
+#         sel2 = st.selectbox(c2_word, opts2, index=0)
 
-    df2 = df1 if sel2 == "(All)" else df1[df1[c2_word] == sel2]
+#     df2 = df1 if sel2 == "(All)" else df1[df1[c2_word] == sel2]
 
-    with c3:
-        opts3 = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
-        sel3 = st.selectbox(c3_word, opts3, index=0)
+#     with c3:
+#         opts3 = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
+#         sel3 = st.selectbox(c3_word, opts3, index=0)
 
-    df_view = df2 if sel3 == "(All)" else df2[df2[c3_word] == sel3]
+#     df_view = df2 if sel3 == "(All)" else df2[df2[c3_word] == sel3]
 
-    st.caption(f"Rows: {len(df_view)}")
+#     st.caption(f"Rows: {len(df_view)}")
 
-    import streamlit.components.v1 as components
-    html = notes_df_to_outline_html(df_view,column_order=['Process','Word','Categorization','Definition'])
-    components.html(html, height=1000, scrolling=True)
+#     import streamlit.components.v1 as components
+#     html = notes_df_to_outline_html(df_view,column_order=['Process','Word','Categorization','Definition'])
+#     components.html(html, height=1000, scrolling=True)
 
 # -----------------------------------
 # Words and Quotes
@@ -536,32 +537,32 @@ elif page == "Words and Quotes":
 # -----------------------------------
 # Daily Activities (UPDATED: correct window filtering via anchor date)
 # -----------------------------------
-elif page == "Daily Activities":
-    st.title("Daily Activities")
-    df = data_dict["daily_activities"].copy()
+# elif page == "Daily Activities":
+#     st.title("Daily Activities")
+#     df = data_dict["daily_activities"].copy()
 
-    # keep only rows with something in Bible (your prior guard)
-    if "Bible" in df.columns:
-        df = df[df['Bible'] != ""]
+#     # keep only rows with something in Bible (your prior guard)
+#     if "Bible" in df.columns:
+#         df = df[df['Bible'] != ""]
 
-    if "Date" not in df.columns:
-        st.error("daily_activities must include a 'Date' column.")
-        st.stop()
+#     if "Date" not in df.columns:
+#         st.error("daily_activities must include a 'Date' column.")
+#         st.stop()
 
-    # Robust date parsing: try expected format first, then fallback
-    dt1 = pd.to_datetime(df["Date"], format="%d-%b-%y", errors="coerce")
-    dt2 = pd.to_datetime(df["Date"], errors="coerce")
-    df["Date_dt"] = dt1.fillna(dt2)
+#     # Robust date parsing: try expected format first, then fallback
+#     dt1 = pd.to_datetime(df["Date"], format="%d-%b-%y", errors="coerce")
+#     dt2 = pd.to_datetime(df["Date"], errors="coerce")
+#     df["Date_dt"] = dt1.fillna(dt2)
 
-    df = df.dropna(subset=["Date_dt"]).sort_values("Date_dt")
-    if df.empty:
-        st.warning("No valid rows after parsing Date. Check your 'Date' column format/content.")
-        st.stop()
+#     df = df.dropna(subset=["Date_dt"]).sort_values("Date_dt")
+#     if df.empty:
+#         st.warning("No valid rows after parsing Date. Check your 'Date' column format/content.")
+#         st.stop()
 
-    act_cols = [c for c in df.columns if c not in ["Date", "Date_dt"]]
+#     act_cols = [c for c in df.columns if c not in ["Date", "Date_dt"]]
 
-    for c in act_cols:
-        df[c] = pd.to_numeric(df[c], errors="coerce").fillna(0).astype(int).clip(0, 1)
+#     for c in act_cols:
+#         df[c] = pd.to_numeric(df[c], errors="coerce").fillna(0).astype(int).clip(0, 1)
 
     # -------------------------
     # Controls
