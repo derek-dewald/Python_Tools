@@ -70,6 +70,7 @@ def generate_dictionary(export_location='/Users/derekdewald/Documents/Python/Git
     final_df['CAT_ORDER'] = final_df['Categorization'].map(categorization_map)
 
     final_df = final_df.sort_values(['PRO_ORDER','CAT_ORDER'])
+    final_df.drop(['PRO_ORDER','CAT_ORDER'],inplace=True)
 
     if export_location:
         final_df.to_csv(export_location,index=False)
