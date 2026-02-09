@@ -459,6 +459,7 @@ def review_test_results(file_location=None,
     
     return results_df
 
+
 def generate_streamlit_definition_summary():
     
     '''
@@ -486,4 +487,4 @@ def generate_streamlit_definition_summary():
     df["CAT_Count"] = df.groupby("Categorization")["Categorization"].transform("count")
     df["Word_Count"] = df.groupby("Word")["Word"].transform("count")
     df['ProcessCAT_Count'] = df.groupby(['Process','Categorization'])["Word"].transform("count")
-    df.to_csv('/Users/derekdewald/Documents/Python/Github_Repo/Data/Streamlit_DefinitionSummary.csv',index=False)
+    return df.sort_values(['Process_Count','CAT_Count','Word_Count','ProcessCAT_Count'],ascending=False).to_csv('/Users/derekdewald/Documents/Python/Github_Repo/Data/Streamlit_DefinitionSummary.csv',index=False)
