@@ -27,8 +27,6 @@ parse_dot_py_folder()
 # Updates Dashboard File Definition Summary.
 generate_streamlit_definition_summary()
 
-
-
 # Back Up Google Sheets and Git Files Once a Week (On Wednesday)
 # Github_Repo/CSV Backup Files/
 if datetime.datetime.now().weekday()==2:
