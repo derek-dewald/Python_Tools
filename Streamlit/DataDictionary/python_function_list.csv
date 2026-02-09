@@ -156,21 +156,9 @@ the records, the Cummulative Sum of the Records, and the Percentage of Cummulati
 ReviewEntireDataframe,,"['df', 'file_name']",,,,,,,eda_dq.py
 generate_dictionary,"Function Used to Generate D Learning Notes, which is a consolidated view of D Notes and D Definitions.
 Used as a crtical input to D Streamlit Dashboard.
-CSV Generated from this process saved to Github and Used for Streamlit Dashboard.
-Approach takes D Notes as the Primary Source and then merges in Definitions, based on a 4 step integration process.
-Approach uses some Filtering Logic
-Step1:
-When Word in Both Sheets is Identical, then utilize word as definition.
-If Word Does not have a Definition in the D Notes, then replace blank with the definition.
-If word has a definition, then add a new record.
-Step2:
-Utilzing Function notes_word_equals_word_definition_categorization, integration where notes.word=definitions.categorization
-It also begins to replace Word.
-Step3:
-Utilizing Function notes_word_equals_definition_process, integration where notes.word=definitions.process
-Step4:
-Merge all other Definitions into Notes Sheet.","['notes_df', 'definition_df', 'export_location']",Object Type,12-Jan-26,12-Jan-26,TBD,TBD,"notes_df,examine_further= generate_dictionary()
-notes_df,insert_records,insert_records2,insert_records3,examine_further= generate_dictionary()",daily_processes.py
+V2. Material Update. With cleaned Data Fields, can simplify this process.
+1) Create Unique list from all processes in Notes, if Value in definition is seen in notes, direclty merge.
+2)",['export_location'],Object Type,12-Jan-26,8-Feb-26,TBD,TBD,notes_df = generate_dictionary(),daily_processes.py
 create_py_table_dict,"Function which Generates a Dataframe representing a Function Dictionary, sourcing the Functions from a Shared Folder Location, and
 using the definitions sourced from a Python Dictionary","['base_location', 'export_location']",DataFrame,4-Dec-25,4-Dec-25,TBD,TBD,python_function_dict_df = create_py_table_dict(),daily_processes.py
 parse_dot_py_folder,"Function which Allows for the Quick Review of All Python Functions in a Particular Directory, using the functions

@@ -282,8 +282,6 @@ column_statistical_review,remove_null_from_decile,bool,"Boolean, if true, it wil
 column_statistical_review,remove_zero_from_decile,bool,"Boolean, if true, it will remove Zero values from Caluclation of Decile",eda_dq.py
 ReviewEntireDataframe,df,,,eda_dq.py
 ReviewEntireDataframe,file_name,,,eda_dq.py
-generate_dictionary,notes_df,df,"If Blank, then Function will generate call",daily_processes.py
-generate_dictionary,definition_df,,,daily_processes.py
 generate_dictionary,export_location,,,daily_processes.py
 create_py_table_dict,base_location,str,Location of Windows Directory containing .py Files.,daily_processes.py
 create_py_table_dict,export_location,,,daily_processes.py

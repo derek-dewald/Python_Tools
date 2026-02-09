@@ -62,7 +62,7 @@ def generate_dictionary(export_location='/Users/derekdewald/Documents/Python/Git
         'Definition','Guiding Principle','Consideration','Process Step','Procedure','Expected Outcomes','Parameter','Algorithm']
     
     categorization_list.extend([x for x in notes_df['Categorization'].unique() if (x not in categorization_list)&(pd.notna(x))])
-    categorization_list.extend([x for x in definition_df['Categorization'].unique() if (x not in classification_list)&(pd.notna(x))])
+    categorization_list.extend([x for x in definition_df['Categorization'].unique() if (x not in categorization_list)&(pd.notna(x))])
     categorization_map = {x:count+0 for count,x in enumerate(categorization_list)}
 
     final_df = pd.concat([notes_df,definition_df])
