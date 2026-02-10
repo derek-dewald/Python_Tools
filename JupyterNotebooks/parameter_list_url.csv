@@ -92,10 +92,6 @@ read_directory,match_str,str,,shared_folder.py
 text_file_import,file_name,,,shared_folder.py
 text_file_import,encoding,,,shared_folder.py
 parse_dot_py_file,file_text,str,Full text of a .py file.,shared_folder.py
-move_file_in_folder,folder1,str,Folder of First File,shared_folder.py
-move_file_in_folder,folder2,str,Folder of Second File,shared_folder.py
-move_file_in_folder,file_name,str,"Name of File to be moved, does not matter of file type)",shared_folder.py
-move_file_in_folder,overwrite_without_validation,bool,Optional Argument allowing user to automate by apply to default overwrite (also meant to help reduce risk of losting information due to inadvertent overwriting),shared_folder.py
 list_to_dataframe,list_,list,List of Values to be iterated into Row.,list_processing.py
 list_to_dataframe,column_name_list,list,"Name of Column to be added, add as List.",list_processing.py
 random_uniform_normalized_list,n,int,Number of Values to Return in list.,list_processing.py
@@ -106,6 +102,7 @@ random_choice_from_uniform_list,distinct_entities,int,"If populated, it will be 
 random_choice_from_uniform_list,list_distribution,list,Distribution to be used for random sampling.,list_processing.py
 random_choice_from_uniform_list,return_value,str,"Default to None, and will return a list. Can input 'df' to return a dataframe",list_processing.py
 random_choice_from_uniform_list,skew,float,Skew to include in random distribution.,list_processing.py
+import_d_google_sheet,definition,str,"Value to be Filtered from D Mapping Sheet, using Column Definition. Which is the name of the sheet.",connections.py
 read_git_folder,owner,str,As defined in Git Mapping Structure,connections.py
 read_git_folder,repo,str,As defined in Git Mapping Structure,connections.py
 read_git_folder,branch,str,As defined in Git Mapping Structure,connections.py

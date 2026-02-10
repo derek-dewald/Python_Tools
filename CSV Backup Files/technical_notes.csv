@@ -4,7 +4,7 @@ Anaconda,TBD,conda --version,Version of Program,
 Anaconda,TBD,conda update conda,Update Program,
 Anaconda,TBD,conda create -n py39 python=3.9,Create Environment,
 Anaconda,TBD,conda activate TimeSeries39,Activate Environment,
-Anaconda,TBD,conda install pandas=1.4.2 | conda install pandas,Install Package,
+Anaconda,TBD,x,Install Package,
 Anaconda,TBD,conda env remove -n py39,Delete Environment,
 Anaconda,TBD,conda create --name newpy39 --clone py39,Create Environment from Exising Env,
 Anaconda,TBD,conda env create -f BASE_REQUIREMENTS.yaml,Create Environment from YAML,
@@ -17,6 +17,8 @@ Azure,TBD,"Log into Azure - az login
 Set Subscription to Class - az account set --subscription=""0257ef73-2cbf-424a-af32-f3d41524e705""
 Authenticate to the AKS cluster - az aks get-credentials --name w255-aks --resource-group w255 --overwrite-existing
 az acr login --name w255mids",Signing in and Calibration Process,
+Colab,,"from google.colab import drive
+drive.mount('/content/drive')","!ls ""/content/drive/MyDrive""",
 Debian,TBD,,apt-get,Command-line-centric and might have a steeper learning curve for beginners.
 Debian,TBD,,apt,"User-friendly and intuitive, providing a simpler interface."
 Docker,TBD,docker run -it NAME /bin/sh,Run Image,
@@ -55,6 +57,7 @@ Git,TBD,config pull.rebase true,Apply Updates to Repo,Change default setting to 
 Git,TBD,git reset --hard HEAD,Restore state before previous Git Add,Deletes files on Computer. Be Careful.
 Git,TBD,"echo ""Clean Up Historical Work.ipynb"" >> .gitignore",Add A file to Ignore,
 Git,TBD,cat .gitignore,See Contents of GitIgnore,
+Git,TBD,git log -1,Last Git Update,
 Hadoop,TBD,!hadoop jar {JAR_FILE},,!hadoop jar {JAR_FILE}: This command submits a Hadoop job using the specified JAR file. Replace {JAR_FILE} with the actual path to your MapReduce JAR file.
 Hadoop,TBD,D mapreduce.job.output.key.comparator.class=org.apache.hadoop.mapreduce.lib.partition.KeyFieldBasedComparator,,"This sets the key comparator class to KeyFieldBasedComparator, which allows you to specify key-based sorting"
 Hadoop,TBD,"D mapreduce.partition.keycomparator.options=""-k1,2nr -k2,3nr",,"This sets the key comparator options, specifying the sorting criteria. In this case, it is sorting first on the first and second columns in reverse numerical order (nr), and then on the second and third columns in reverse numerical order."
@@ -141,7 +144,50 @@ Python,Information,os.cpu_count(),Identify Number of Cores CPU Has.,
 Python,Hack,".replace(hour=0, minute=0, second=0, microsecond=0)",Datetime Normalization,
 Python,Hack,pd.DataFrame(df[column_name].value_counts(dropna=False),Value Count Including Null,
 Python,Documentation,model_list['Estimator Class'].iloc[0].__doc__,Read Python Documentation,
-RE,TBD,"df[column].astype(str).str.replace(r'[^\d.]', """", regex=True)",Find Only Numbers,
+Python,Command,"df1.groupby('AvailableAmount_SEGMENT').agg(
+            SEG_COUNT=('AvailableAmount','count'),
+            SEG_SUM=('AvailableAmount','sum'),
+            SEG_MEAN=('AvailableAmount','mean'),
+            SEG_STD=('AvailableAmount','std'),
+            SEG_MAX=('AvailableAmount','max'),
+            SEG_MIN=('AvailableAmount','min')).reset_index()
+",Group By - Aggregation,
+Python,ITERTOOLS,,,
+Python,COMBO,,,
+Python,PERMU,,,
+Regular Expressions,TBD,[A-Za-z],Filter for Any Letters,"r""^003[A-Za-z']"""
+Regular Expressions,TBD,[0-9],Filter for Any Numbers,"r""^003[0-9']"""
+Regular Expressions,TBD,[a-z],Range: lowercase letters,
+Regular Expressions,TBD,$,End of string,
+Regular Expressions,TBD,[abc],Character set: a or b or c,
+Regular Expressions,TBD,[a-z],Range: lowercase letters,
+Regular Expressions,TBD,[^0-9],Negated set: any non-digit,"df[column].astype(str).str.replace(r'[^\d.]', """", regex=True)"
+Regular Expressions,TBD,\d,Digit (0–9),
+Regular Expressions,TBD,\D,Non-digit,
+Regular Expressions,TBD,\w,Word character,
+Regular Expressions,TBD,\W,Non-word character,
+Regular Expressions,TBD,\s,Whitespace,
+Regular Expressions,TBD,\S,Non-whitespace,
+Regular Expressions,TBD,*,0 or more repetitions,
+Regular Expressions,TBD,#ERROR!,1 or more repetitions,
+Regular Expressions,TBD,?,0 or 1 repetition,
+Regular Expressions,TBD,{n},Exactly n repetitions,
+Regular Expressions,TBD,"{n,}",n or more repetitions,
+Regular Expressions,TBD,"{n,m}",Between n and m repetitions,
+Regular Expressions,TBD,( ),Capturing group,
+Regular Expressions,TBD,(?: ),Non-capturing group,
+Regular Expressions,TBD,|,Alternation (OR),
+Regular Expressions,TBD,\b,Word boundary,
+Regular Expressions,TBD,\B,Non-word boundary,
+Regular Expressions,TBD,(?= ),Positive lookahead,
+Regular Expressions,TBD,(?! ),Negative lookahead,
+Regular Expressions,TBD,(?<= ),Positive lookbehind,
+Regular Expressions,TBD,(?<! ),Negative lookbehind,
+Regular Expressions,TBD,\.,Literal dot,
+Regular Expressions,TBD,re.I,Case-insensitive flag,
+Regular Expressions,TBD,re.M,Multiline flag,
+Regular Expressions,TBD,re.S,Dot matches newline flag,
+Regular Expressions,TBD,re.X,Verbose mode flag,
 Redis,TBD,brew install minikube,Install,Install Minikube
 Redis,TBD,redis-server --daemonize yes,,
 Redis,TBD,redis-server,,
@@ -151,8 +197,6 @@ Redis,TBD,kill process_id,Stop Redis,
 Redis,TBD,redis-server --daemonize yes,Start Redis,
 Redis,TBD,redis-cli monitor,Monitor Redis,
 Redis,TBD,redis-cli -h localhost -p 6379 monitor,,
-Regen,TBD,[A-Za-z],Filter for Any Letters,"r""^003[A-Za-z']"""
-Regen,TBD,[0-9],Filter for Any Numbers,"r""^003[0-9']"""
 Spark,TBD,"from pyspark.sql import SparkSession
 
 try:
@@ -229,6 +273,16 @@ SQL,TBD,"COALESCE(Column1,Column2,') is null then 1 else 0
 COALESCE(Column1,Column2,','Default')",COALESCE,Can Add a default condition 
 SQL,TBD,"nvl(column1,column2) as FieldName",nvl,"Oracle Specific , can only check 2 conditions."
 SQL,TBD,"DECLARE @CUTOFFDATE DATE = DATEADD(Day,-30,GETDATE())",Then use @DATE,
+SQL,,"CREATE TABLE #TEMP_TABLE_NAME (
+COLUMN_NAME TYPE PRIMARY_KEY
+COLUMN_NAME TYPE",Create Temp Table,
+SQL,,DROP TABLE IF EXISTS #TEMP_TABLE_NAME,Drop Temp Table,
+SQL,,"INSERT INTO #TEMP_TABLE (COLUMN_NAME)
+VALUES
+
+('VALUE""),
+('VALUE'),",Insert into Temp Table,
+SQL,,declare @date DATE = '2025-12-31',Declare Variabkle,
 Streamlit,TBD,"Repository: derek-dewald/Python_Tools
 Main File Path: Streamlit/DataDictionary/MarkdownNotes.py",Deploying Dashboard,
 Terminal,TBD,rm FILENAME,Delete File,
@@ -275,8 +329,14 @@ Uvicorn,TBD,uvicorn src.main:app --reload,sc.parallelize,
 Uvicorn,TBD,ps aux | grep uvicorn,Check Open Program,
 Uvicorn,TBD,kill process_id,Stop Open Programs,
 Uvicorn,TBD,http://localhost:8000,Access while on Docker,
-Colab,,"from google.colab import drive
-drive.mount('/content/drive')","!ls ""/content/drive/MyDrive""",
-Python,ITERTOOLS,,,
-Python,COMBO,,,
-Python,PERMU,,,
+,, % launchctl bootout gui/$(id -u) /Users/derekdewald/Library/LaunchAgents/com.derekdewald.daily_trigger_job.plist  ,,
+,,launchctl bootstrap gui/$(id -u) /Users/derekdewald/Library/LaunchAgents/com.derekdewald.daily_trigger_job.plist,,
+,,launchctl list | grep com.derekdewald.daily_trigger_job,,
+,,nano ~/Library/LaunchAgents/com.derekdewald.daily_trigger_job.plist,,
+,,cnxn.iscuconn(),,
+,,cur = cnxn.cursor(),,
+,,cur.execute(code),,
+,,"pd.read_sql(sql,cnxn)",,
+,,cnxn.close(),,
+Python,Engineering,time.process_time() ,Measure Processing Time,
+Python,Engineering,time.perf_counter(),Measure Performance Time,

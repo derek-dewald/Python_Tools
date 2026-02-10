@@ -217,7 +217,6 @@ def load_data():
     #google_daily_activities = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=472900611&single=true&output=csv'
     technical_notes = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv'
     
-    
     data_dict = {}
 
     data_dict['google_notes_df'] = pd.read_csv(google_note_csv)
@@ -226,8 +225,9 @@ def load_data():
     data_dict['parameter_list_df'] = pd.read_csv(parameter_list_url)
     data_dict['folder_toc_df'] = pd.read_csv(folder_toc_url)
     data_dict['d_learning_notes'] = pd.read_csv(d_learning_notes_url)
-    data_dict['definition_summary'] = pd.read_csv(definition_summary_url)
     data_dict['d_learning_notes'] = data_dict['d_learning_notes'][['Process','Categorization','Word','Definition']]
+    
+    data_dict['definition_summary'] = pd.read_csv(definition_summary_url)
     data_dict['d_word_quote'] = pd.read_csv(google_word_quote)
     #data_dict['daily_activities'] = pd.read_csv(google_daily_activities)
     data_dict['technical_notes'] = pd.read_csv(technical_notes)
@@ -252,7 +252,7 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ 'D Notes', 'D Definitions',"Definition Summary",'Technical Notes','Words and Quotes','Project Template',
+    [ "Consolidated Notes",'D Notes', 'D Definitions',"Definition Summary",'Technical Notes','Words and Quotes','Project Template',
      "Function List", "Function Parameters",  'Folder Table of Content', 
      ] #'Daily Activities', "D Notes Outline",
 )
@@ -405,39 +405,52 @@ elif page == "Folder Table of Content":
 # -----------------------------------
 # D Notes Outline
 # -----------------------------------
-# elif page == "D Notes Outline":
-#     st.title("D Notes Outline")
-#     df_base = data_dict["d_learning_notes"].copy()
+elif page == "Consolidated Notes":
+    st.title("D Consolidated Notes")
+    df_base = data_dict['d_learning_notes'].copy()
+    c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
 
-#     c1_word = "Process"
-#     c2_word = "Word"
-#     c3_word = "Categorization"
+    c1_word = 'Process'
+    c2_word = 'Categorization'
+    c3_word = 'Word'
+    search_word = 'Definition'
 
-#     c1, c2, c3 = st.columns([1, 1, 1])
+    with c1:
+        c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
+        c1_sel = st.selectbox(c1_word, c1_options, index=0)
 
-#     with c1:
-#         opts1 = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
-#         sel1 = st.selectbox(c1_word, opts1, index=0)
+    df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
 
-#     df1 = df_base if sel1 == "(All)" else df_base[df_base[c1_word] == sel1]
+    with c2:
+        c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
+        c2_sel = st.selectbox(c2_word, c2_options, index=0)
 
-#     with c2:
-#         opts2 = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
-#         sel2 = st.selectbox(c2_word, opts2, index=0)
+    df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
 
-#     df2 = df1 if sel2 == "(All)" else df1[df1[c2_word] == sel2]
+    with c3:
+        c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
+        c3_sel = st.selectbox(c3_word, c3_options, index=0)
 
-#     with c3:
-#         opts3 = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
-#         sel3 = st.selectbox(c3_word, opts3, index=0)
+    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
 
-#     df_view = df2 if sel3 == "(All)" else df2[df2[c3_word] == sel3]
+    with c4:
+        definition_search = st.text_input("Definition search", value="", placeholder="Type to search Description...")
 
-#     st.caption(f"Rows: {len(df_view)}")
+    df_view = df3
+    if definition_search.strip():
+        s = definition_search.strip().lower()
+        df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
 
-#     import streamlit.components.v1 as components
-#     html = notes_df_to_outline_html(df_view,column_order=['Process','Word','Categorization','Definition'])
-#     components.html(html, height=1000, scrolling=True)
+    st.caption(f"Rows: {len(df_view)}")
+
+    gb = GridOptionsBuilder.from_dataframe(df_view)
+    gb.configure_column(c1_word, width=100)
+    gb.configure_column(c2_word, width=100)
+    gb.configure_column(c3_word, width=150)
+    gb.configure_column(search_word, flex=1, wrapText=True, autoHeight=True)
+    gb.configure_default_column(resizable=True, sortable=True, filter=True)
+
+    AgGrid(df_view, gridOptions=gb.build(), height=800, fit_columns_on_grid_load=True)
 
 # -----------------------------------
 # Words and Quotes

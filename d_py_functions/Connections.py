@@ -3,39 +3,10 @@ import datetime
 import requests
 import os
 
-def import_d_google_sheet(definition=None):
+import sys
+sys.path.append("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions")
 
-    '''
-    Function Which Extracts a DataFrame from D's Google Sheets, using the Map as provided in Google Mapping Sheet
-
-    Parameters:
-        definition(str): Value to be Filtered from D Mapping Sheet, using Column Definition. Which is the name of the sheet.
-
-    Returns:
-        Dataframe (Dict is value is not try condition fails).
-
-    date_created:12-Dec-25
-    date_last_modified: 12-Dec-25
-    classification:TBD
-    sub_classification:TBD
-    usage:
-        Example Function Call
-
-    '''
-
-    from data_d_strings import google_mapping_sheet_csv
-    from dict_processing import df_to_dict
-
-    df = pd.read_csv(google_mapping_sheet_csv)
-    df= df[df['CSV'].notnull()].copy()
-
-    try:
-        csv_ = df[df['Definition']==definition]['CSV'].item()
-        return pd.read_csv(csv_)
-
-    except:
-        return df[['Definition','Description']]
-    
+from data_d_dicts import links
 
 def read_git_folder(owner='derek-dewald',repo='Python_Tools',branch='main',folder='d_py_functions'):
 
@@ -86,7 +57,7 @@ def read_git_file(git_url):
 
     """
 
-     Read the contents of a single public GitHub file.
+    Read the contents of a single public GitHub file.
 
     Parameters:
         git_url(str): Link of Git URL, can be populated using read_git_folder
@@ -178,19 +149,8 @@ def backup_google_worksheets(export_folder='/Users/derekdewald/Documents/Python/
     
     '''
 
-    from data_d_dicts import links
-
-    month_str = datetime.datetime.now().strftime('%b-%y')
-
-
-    df = pd.read_csv(links['google_mapping_sheet_csv'])
-    
-    google_df_dict = {}
-
-    for row in df[df['CSV'].notnull()].index:
-        link = df.iloc[row]['CSV']
-        name = df.iloc[row]['Definition']
-        google_df_dict[name] = pd.read_csv(link)
-
-        if export_folder:
-            google_df_dict[name].to_csv(f"{export_folder}/{name}_{month_str}.csv",index=False)
+    for key,value in links.items():
+        temp_df = pd.read_csv(value)
+        source = f"{export_folder}{key}.csv"
+        temp_df.to_csv(source,index=False)
+            

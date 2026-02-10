@@ -1,0 +1,156 @@
+Process,Categorization,Word,Definition
+ML Definitions,Model Type,Types of ML,"Within the machine learning paradigm, models are commonly categorized into distinct model types that define how learning occurs. The appropriate model type is selected based on the problem context, data availability and quality, time constraints, business objectives, and resource limitations."
+ML Project,Process Step,Goals,"It is imperative to have clear goals, specifically as it relates to outcomes."
+ML Project,Process Step,Goals,"Goals of a ML Project Differ from Goals of BI or Analytics Project and it is important to understand these at the outset. Specifically, when looking at Data in multiple dimensions, do we want to visually see it, or technically understand it. If we seek to truly understand it, we need to look at a ML Project, not a Dashboard, where trends are misleading."
+ML Project,Process Step,Problem Definition,"Define, Quantify and Articulate Problem."
+ML Project,Process Step,Problem Definition,"Project Goal Explicitly stated in 3-4 Sentences, can include exclusion items in addendum, not in original statement, which sould be positive, optimistic and include a value creating definition."
+ML Project,Process Step,Problem Definition,Explicilty Defined Business Delieverables
+ML Project,Process Step,Problem Definition,Explicilty Defined Expected Outcomes and KPIs
+ML Project,Process Step,Problem Definition,"Identify Model Baseline, or who is responsible for defining if not available."
+ML Project,Process Step,Data Collection,Need to Create Definition and Requirements
+ML Project,Process Step,Data Preparation,"Identify Data Elements which appear relevant (Can be either based on desired, or what is currently Available)."
+ML Project,Process Step,Data Preparation,"Label, and Document all data elements in Model (Semantic, Functional, Business Definitions and Theoretircal Inclusion)"
+ML Project,Process Step,Data Preparation,"Document data omissions, known data quality issues, or assumptions (including Imbalances)."
+ML Project,Process Step,Data Preparation,"Document all Imputation, Deletion, Standardization to be applied."
+ML Project,Process Step,Data Preparation,"Define Approach for Training, Testing and Validation. Create Final Dataset to proceed forward."
+ML Project,Process Step,Data Preparation,Complete EDA on Dataset.
+ML Project,Process Step,Exploratory Data Analysis,NNNNNNNEEEEEWWWWWWW .Needs comments.
+ML Project,Process Step,Feature Engineering,"Create Aggregation Data, Rations, PCA, etc. Note these should be identified and defined in Data Prepartion, this is simple technical execution and creation."
+ML Project,Process Step,Model Selection,"Define Models which will be included in Pipeline, include explanation as to explicitly what the Model does, why it is relevant for this problem and what it will solve as it relates to this problem. Where this differs across models, must explain and document the differences."
+ML Project,Process Step,Model Selection,"Define how model will be evaluated, what metrics will be minimized (or maximized) balance between training results versus ability to generalize, balancing overfitting and performance."
+ML Project,Process Step,Model Selection,"If certain models are not considered, explicitly state why, what would need ot change in order to review or reconsider this model and who in the business would be responsible for next steps where obvious omissions, data quality, process or procedure gaps exist."
+ML Project,Consideration,Model Selection,Is your Data Structured in a way that is conducive to your Model.
+ML Project,Consideration,Model Selection,"Any data set can be optimized, even when there is NO relation. It will generalize."
+ML Project,Consideration,Model Selection,"An Example of this would a classification model with Wolves and Dogs,  many wolf photos happened to be taken in snowy environments, while dog photos were often taken indoors or on grass. The model learned to detect snow, not animals."
+ML Project,Consideration,Model Selection,"Models will cheat and can solve problems which appear to be optimal, but they might not be solving what you expect or require, they might be finding patterns in the data which you do not see. An Example of this would a classification model with Wolves and Dogs,  many wolf photos happened to be taken in snowy environments, while dog photos were often taken indoors or on grass. The model learned to detect snow, not animals."
+ML Project,Process Step,Model Selection,"Define how feature evaluation will occur, explicitly state KPIs and document how they relate to project delieverables, business goals and expected outcomes."
+ML Project,Process Step,Feature Selection,"Create Pipeline which automates selection, or document where it will be manual for Cost/Benefit reasons."
+ML Project,Consideration,Feature Selection,"Avoid ambigious features. Is a Banana ripe, who says so?"
+ML Project,Consideration,Feature Selection,"Careful when something is truly random generated, Atmospheric Change, Earthquakes, Stocks. Very difficult, if not impossible to predict."
+ML Project,Consideration,Feature Selection,"MNIST performance when tilting Images, of adding noise."
+ML Project,Process Step,Training,Define Mock 0 Pipeline Once available. Insure to follow Standardized Amendment process once created. 
+ML Project,Process Step,Hyperparameter Tuning,"Identify Paramaters before implementing and running Mock 0. If results of Training change Hyperparameter tuning, document explicitly why."
+ML Project,Process Step,Hyperparameter Tuning,"Run through Hyperparameter tuning process, documenting all findings, assumptions."
+ML Project,Process Step,Hyperparameter Tuning,"Finding must be communicated at this point of time, via Dashboard. Make Explicit determination if business approval is required before proceeding forward."
+ML Project,Process Step,Model Evaluation,NNNNNNNEEEEEWWWWWWW .Needs comments.
+ML Project,Process Step,Model Selection,"Includes Determination of Final Model to be used, and parameters included within Model."
+ML Project,Process Step,Model Selection,"Must be formally documented, with all underlying results, documents and finding available in a clear and consistent documented process."
+ML Project,Process Step,Model Selection,"Decision should include an expected Performance Change, an deployment plan, and owners, in addition to agreement of go forward KPI monitoring."
+ML Project,Process Step,Validation,"Run hold back data after all decisions have been made, before approval. Need to COMMUNICATE this to people to avoid confusion. It is important as this should not bias or be done before the model is created, part of healthy Business Decisions."
+ML Project,Process Step,"Bias, Fairness and Ethics",Comment Needed
+ML Project,Process Step,Model Summarization/ Model Interpretability,NNNNNNNEEEEEWWWWWWW .Needs comments.
+ML Project,Process Step,Deployment,Need to Explain this as a step. If not order will not be restored necessary.
+ML Project,Process Step,Monitoring,
+Problem Solving,Process Step,Problem Definition,"Define problem, in a clear and explicit way such that it can be solved, tested or experiemented. Problem MUST be solvable and should be iterative, or have a series of iterative steps such that it can be effectively managed and solved"
+Problem Solving,Process Step,Problem Definition,"Define Problem Statement. Including clearly articulating why it matters, what is the impact of not having this solution."
+Problem Solving,Process Step,Problem Definition,"Define the desired end state, in such a way that the contribution of the ML Model or project can achieve granular progress through iteration"
+Problem Solving,Process Step,Problem Definition,"Define the current state, how does the end state look different. Should be Quantifiable via metrics, and montetary impact."
+Problem Solving,Process Step,Problem Definition,"Proceed Forward Decision. Who is responsible, how does it get made."
+Problem Solving,Process Step,Problem Definition,"How to effectively and clearly document objection, concern, risks and doubts."
+Problem Solving,Process Step,Problem Definition,Define EDA Process
+Process Development,Guiding Principle,Simple,Provide Defintion.
+Process Development,Guiding Principle,Clear,Provide Defintion.
+Process Development,Guiding Principle,Evident,Provide Defintion.
+Process Development,Guiding Principle,Obvious,Provide Defintion.
+Process Development,Guiding Principle,Accountability,"Are Roles and Responsbilities explicity stated? and Is it clear who is responsible for what. Are goals SMART (or atleast defined) or at a minimum, is our partcipation understood and documented.  "
+Communication,Guiding Principle,Engaging People,Simple things can make a huge differene.
+Communication,Guiding Principle,Engaging People,"Giving people meaningful and engaging work, utilizing their thoughts, intellegence and making them feel Good are important."
+Communication,Guiding Principle,Engaging People,Don’t try and rush change. It takes time and we need to learn and understand.
+Goals,Guiding Principle,Specific,
+Goals,Guiding Principle,Measurable,
+Goals,Guiding Principle,Achievable,
+Goals,Guiding Principle,Relevant,
+Goals,Guiding Principle,Time Bound,
+A|B Testing,Guiding Principle,TBD,
+Best Linear Unbiased Estimator,Requirement,Homoscedasticity,
+Best Linear Unbiased Estimator,Requirement,Independence,
+Best Linear Unbiased Estimator,Requirement,Linearity,
+Best Linear Unbiased Estimator,Requirement,No Perfect Collinearity,
+Best Linear Unbiased Estimator,Requirement,Normality of Residuals,
+Clustering,Guiding Principle,Behavioural Clustering Goal,"Must Clarify this clearly, specifically the distinction between Behavior and Attributes, clustering should focus primarily on behavior. Specifically Demographics can dominate distiance differences relative to behavior without adding value."
+Clustering,Guiding Principle,Behavioural Clustering Goal,"Small Number of Stable, Interpretable, Member Archetypes that summaize the global behavior and can be reused for ML and Analysis."
+Clustering,Guiding Principle,Expected Outcomes,Stability over Uniqueness
+Clustering,Guiding Principle,Expected Outcomes,Interpretability over novelty
+Clustering,Guiding Principle,Expected Outcomes,Repeatability over perfection.
+Mathematics,Process,Definition,"Process designed to store Formulas, guidance and help information related to Mathematical properities."
+Tooling,Process,Definition,"Tooling contains notes, Information, maps and hints related to various Technologies. NEED TO UPDATE. How about the other."
+ML Project,Consideration,Model Evaluation,"What does a metric even represent? It is easy to introduce a number, or a idea, but one should really understand the purpose behind it. As an example:  In February 2018, there were fourteen murders in New York City, but fifteen in London. But what should we conclude? Nothing. We should conclude nothing because that pair of numbers alone tells us very little. If we want to understand what’s happening, we need to step back and take in a broader perspective. Here are a few facts worth knowing about murders in London and New York. London had 184 murders in 1990, while New York suffered 2,262—more than ten times as many. It’s with that image in mind of New York as a murderous place that Londoners are alarmed at the idea that they might have become as rotten as the Big Apple. But London’s murder rate has fallen, not risen, since 1990. In 2017, there were 130 murders in London, including ten people killed in terrorist attacks. London was safe in 1990 and it’s a little bit safer today. As for New York, murders fell to 292 in 2017. That means New York is still more dangerous than London, but much, much safer than in 1990."
+Problem Solving,Consideration,Effective Estimation,"When one is approximating, it is important to have both references points and general heuristics with which to utilize.
+
+""The population of the United States is 325 million. The population of the United Kingdom is 65 million. The population of the world is 7.5 billion. Name any particular age (under the age of sixty). There are about 800,000 people of that age in the UK. If a policy involves all three-year-olds, for example, there are 800,000 of them. In the United States, there are about 4 million people of any particular age (under the age of sixty). Distance around the Earth: 40,000 kilometers, or 25,000 miles. It varies depending on whether you go around the poles or around the equator, but not much. The drive from Boston to Seattle: 3,000 miles.
+
+Length of a bed: 2 meters (or 7 feet). As Elliott points out, this helps you visualize the size of a room: How many beds is that? The gross domestic product of the United States: about $20 trillion (or $20,000 billion). It’s a lot of walls, if that’s really how you want to spend it. 100,000 words: the length of a medium-size novel. 1,454 feet: the height of the Empire State Building to its tip. (It’s also about 102 stories.)"""
+Data Engineering,Process Step,Think!,Is there a better way to do this. You can replace this eventually.
+Tree Based Models,Guiding Principle,Feature Selection,Feature importance in a tree based model is based on Information Gain. And the combined value of the features equal to one.
+Tree Based Models,Guiding Principle,Feature Selection,"Because a feature has a low feature importance as scored by the model does not mean that the feature is not important, could interact with the model in complex and unknown way."
+Tree Based Models,Guiding Principle,Feature Selection,"Standardized vs Non Standardized in interpreting values, .5 - High, .1.5 - Moderate, .1 Low"
+Transformers,Consideration,Property," This shift was possible because transformers process sequential data in parallel, enabling a deeper and more contextual understanding of language than was achievable with previous sequential models, like long short-term memory (LSTM) networks."
+Transformers,Consideration,Property,"Among the most exciting developments are reasoning models, which are advanced LLMs trained with reinforcement learning to perform complex, multi-step reasoning."
+Machine Learning Operations,Consideration,Lifecycle Structure,"Defines clear stages such as data ingestion, training, validation, deployment, monitoring, and retraining, with handoffs between them. This creates consistency and prevents “one-off” models that cannot be maintained."
+Machine Learning Operations,Consideration,Versioning & Reproducibility ,"Tracks versions of data, features, code, models, and hyperparameters so results can be reproduced and audited. This is critical for debugging, compliance, and rollback."
+Machine Learning Operations,Consideration, Automation & Pipelines," Automates training, testing, deployment, and retraining using pipelines (CI/CD for ML). Automation reduces human error and accelerates iteration"
+Machine Learning Operations,Consideration,Monitoring & Governance ,"Monitors model performance, data drift, bias, and system health in production. Governance ensures models remain ethical, compliant, and aligned with business goals."
+Machine Learning Operations,Consideration,How it Differs from ML Model,"It orchestrates and operationalizes ML Models, provides a framework to ensure that they continue to be relevant and meaningful."
+Machine Learning Operations,Consideration,Why It Exists?,Reproducibility
+Machine Learning Operations,Consideration,Why It Exists?,Model and Data Drift
+Machine Learning Operations,Consideration,Why It Exists?,Training vs Serving Skew
+Machine Learning Operations,Consideration,Why It Exists?,Offline vs Online Metrics
+Machine Learning Operations,Consideration,Why It Exists?,Model Lifecycle Management
+Machine Learning Operations,Consideration,Why It Exists?,"Causes you to think, what breaks when my models runs for 6 months?"
+Machine Learning Operations,Consideration,What it contains,CI/CD for ML
+Machine Learning Operations,Consideration,What it contains,Feature Stores
+Machine Learning Operations,Consideration,What it contains,Model Registries
+Machine Learning Operations,Consideration,What it contains,Monitoring Loops
+Machine Learning Operations,Consideration,Steps Included,Experiment Tracking: MLflow
+Machine Learning Operations,Consideration,Steps Included,Pipelines: Airflow / Prefect / Dagster
+Machine Learning Operations,Consideration,Steps Included,"Versioning: Git + data versioning concepts (e.g., DVC)"
+Machine Learning Operations,Consideration,Steps Included," Deployment: REST APIs, batch jobs, or simple cloud services"
+Machine Learning Operations,Consideration,Steps Included,Monitoring: performance + drift metrics
+Machine Learning Operations,Consideration,Comparison to Traditional ML,Model Accuracy vs System Reliability
+Machine Learning Operations,Consideration,Comparison to Traditional ML,One-Time Training vs Continuous Lifecycle
+Machine Learning Operations,Consideration,Comparison to Traditional ML,Notebook vs Pipeline Driven
+Machine Learning Operations,Consideration,Comparison to Traditional ML,Manual vs Automated Deployment
+Machine Learning Operations,Consideration,Comparison to Traditional ML,Static Evaluation vs Continuous Monitoring
+Machine Learning Operations,Consideration,Comparison to Traditional ML,ML Builds Models. MLOps builds system that keep models working.
+Clustering,Guiding Principle,What is it?,"Calculation, utilizing mathematical precision to identify based on Numeric similarity, attributes, characteristics, properties and behaviours which are  not ambigious thresholds or complex static rules"
+Clustering,Guiding Principle,How to Decide?,"Understand the impact of components, can prevent overweighting on traditionally dominant items, such as raw balances."
+Clustering,Guiding Principle,Expected Outcomes,Consistent
+Clustering,Guiding Principle,Expected Outcomes,Repeatable
+Clustering,Guiding Principle,Benefit,Strategic Conversations become diagnostic not reactive
+Clustering,Guiding Principle,Benefit,Precision without Personalization
+Clustering,Guiding Principle,Benefit,Differenitation without Discrimination
+Clustering,Guiding Principle,Benefit,Optimization without cumbersome rules
+Clustering,Project Implementation,Step 1,Ensure Data is Labelled and Categorized.
+Clustering,Project Implementation,Step 2,"Review Semantic Classifications, insure sufficient and appropriate model coverage."
+Clustering,Project Implementation,Step 3,Run Model
+Clustering,Project Implementation,Step 4,"Correlation & Redundancy Analysis. If Greater than .9 then variables are redudanant, specifically within class. 
+As a rule of thumb, newest is better, but is based on decision."
+Clustering,Project Implementation,Step 5,Variance & Stability Contribution: Variance Inflation Factor.
+Clustering,Project Implementation,Step 6,"Clustering Sensitivity / Stability Tests
+1. Testing Results of Model
+    2. Adjusted Rand Index (ARI)
+    3. Silhouette/ DB Index
+    4. Run Now and Overtime"
+Clustering,Project Implementation,Step 7,"4. Incremental Value via Feature Importance in Unsupervised Models
+    1. Reconstruction Error in Autoencoders
+    2. Mutual Information with Latent Cluster Assignment
+    3. Permutation for Clustering."
+Clustering,Project Conceputalization,Step 1,"Identify and validate the behavioural attributes, transactions, and usage patterns that define similarity among members"
+Clustering,Project Conceputalization,Step 2,Understand the relative contribution and sensitivity of features in forming and separating clusters
+Clustering,Project Conceputalization,Step 3,"Identify and define distinct, stable member archetypes based on observed behavioural patterns"
+Clustering,Project Conceputalization,Step 4,"Characterize each archetype using clear, interpretable behavioural and financial characteristics"
+Clustering,Project Conceputalization,Step 5,"Define the intended use, boundaries, and decision domains for archetype-based strategies"
+Clustering,Project Conceputalization,Step 6,Design and apply differentiated engagement strategies aligned to each archetype’s characteristics and needs
+Clustering,Project Conceputalization,Step 7,"Monitor archetype-level outcomes, migration, and engagement effectiveness over time"
+Clustering,Expected Outcomes,Behavioural Clustering,"Identify explicit groups of members which posses explicit behavioral tendancies and patterns which the organiation understand and support through tailored strategies, plans and products."
+Langchain,Process Step,TBD,
+Langchain,Process Step,TBD,Create a template with variables for dynamic content.
+Langchain,Process Step,TBD,Convert the template into a LangChain PromptTemplate.
+Langchain,Process Step,TBD," Build a chain using the pipe operator `|` to connect: 
+- Input variables -  The prompt template - The LLM - An output parser"
+Langchain,Process Step,TBD,Invoke the chain with specific inputs to generate results.
+Tooling,TBD,TBD,"Streamlit and Gradio are both Python frameworks for building web interfaces, but they serve different purposes. Streamlit is designed for creating interactive data applications and dashboards, offering strong support for state, layouts, and multi-step analytical workflows. Gradio is optimized for quickly exposing machine-learning models through simple, function-based interfaces, making it ideal for demos and model inference. Streamlit emphasizes ongoing use and exploration by analysts or internal teams, while Gradio emphasizes ease of sharing and rapid experimentation. In practice, Streamlit is better suited for complex analytics tools, whereas Gradio excels at lightweight model demonstration interfaces."
+Tooling,TBD,TBD,"LangChain and LlamaIndex are complementary but focus on different layers of LLM applications. LangChain is an orchestration framework, designed to manage prompts, chains, agents, tools, and multi-step workflows involving LLMs. LlamaIndex focuses on the data layer, providing utilities to ingest, index, and retrieve structured and unstructured data for use with LLMs. In practice, LlamaIndex is often used to prepare and query data, while LangChain coordinates how the LLM reasons, calls tools, and responds. Many real-world systems use LlamaIndex for retrieval and LangChain to orchestrate the overall application flow."
+Tooling,TBD,TBD,"LangChain does not have a single, all-encompassing vector store class, and typically relies on integrations with external libraries to integrate a vector database. The only commonly used vector store defined within the LangChain core library is the InMemoryVectorStore which stores vectors in memory. LlamaIndex provides a powerful VectorStoreIndex class that stores vectors in memory by default but can be integrated with full-fledged vector databases such as Chroma DB or Faiss. Thus, LlamaIndex's VectorStoreIndex class ensures ease of use because the vector store backend can be swapped out without changing any of the downstream code."
+ML Model,Definition,ML Model,Classification used to define all Machine Learning and AI Models in Definition Spreadsheet. Meant to represent the technical models that I am familiar with and have utilized.
+Data Engineering,Processing,Wall vs Process Time,"Must consider what you are actually attempting to mesuare, Wall Time helps to under from User Experience, Process Time moreso from a resource and cost."

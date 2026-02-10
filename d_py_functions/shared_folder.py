@@ -1,5 +1,7 @@
+from pathlib import Path
 import pandas as pd
 import numpy as np
+import shutil
 import ast
 import os
 import re
@@ -254,3 +256,76 @@ def parse_dot_py_file(file_text):
     return function_list, function_parameters
 
 
+
+def move_file_in_folder(folder1,
+                        folder2,
+                        file_name,
+                        overwrite_without_validation=False
+                       ):
+    
+    '''
+    Function Created to Help Move Files Between Folders Directly in Python.
+    Function will validate that the Folders both exist and there currently isn't a file of the same name, to reduce risk of overwriting
+    unexpectedly. (There is a manual override).
+
+    Parameters:
+        folder1(str): Folder of First File
+        folder2(str): Folder of Second File
+        file_name(str): Name of File to be moved, does not matter of file type)
+        overwrite_without_validation(bool): Optional Argument allowing user to automate by apply to default overwrite (also meant to help
+        reduce risk of losting information due to inadvertent overwriting)
+
+    Returns:
+        None
+
+    date_created:09-Feb-26
+    date_last_modified: 09-Feb-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        
+        folder1 = '/Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks'
+        folder2 = '/Users/derekdewald/Documents/Python/Github_Repo/Project Folder/Synthetic Member Dataset'
+
+        move_file_in_folder(folder1,folder2,'Sythentic Member V3.ipynb')
+
+     
+
+    
+    '''
+
+    # Check if Path 1 exists.
+    # Check if Path 2 Exists.
+    # Check if File Exists in Path 1
+    # Check if Files Exists in Path 2 (do not want to overwrite)
+
+
+    folder1 = Path(folder1)
+    folder2 = Path(folder2)
+
+    src_file = folder1 / file_name
+    dst_file = folder2 / file_name
+
+    # Check if source folder exists
+    if not folder1.exists():
+        return f"Source folder does not exist: {folder1}"
+
+    # Check if destination folder exists
+    if not folder2.exists():
+        return f"Destination folder does not exist: {folder2}"
+
+    # Check if file exists in source
+    if not src_file.exists():
+        return f"File not found in source folder: {src_file}"
+
+    # Check if file exists in destination
+    if dst_file.exists():
+        if overwrite_without_validation:
+            dst_file.unlink()  # remove existing file
+        else:
+            return f"File already exists in destination: {dst_file}"
+
+    # Move the file
+    shutil.move(str(src_file), str(dst_file))
+
+    return f"File moved successfully: {file_name}"
