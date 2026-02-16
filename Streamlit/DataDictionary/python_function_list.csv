@@ -29,6 +29,9 @@ dict_to_dataframe,Function to Simplify the creation of a Dictionary into a Dataf
 flatten_clean_dict,"Function which takes a Nested Dictionary (Dictionary, which references dictionary, and converts it into a DataFrame, works best when
 Dictionary ultimate Values are List.","['dict_', 'index_name', 'clean', 'apply_new_lvl', 'high_low_list_fix']",DataFrame,30-Dec-25,30-Dec-25,TBD,TBD,"from synthetic_member import mbr_profile_dict
 flatten_clean_dict (mbr_profile_dict)",dict_processing.py
+create_txt_from_dict,"Function which Generates a .TXT file from a single layer python dictionary, outputing each item as a new line. Technically it should
+work on multiple layer dictionary, output should be str. Not sure how it would responded, tested for single layer.
+Developed when Validating EFT Swift files and needed to validate Excess Information","['dict_', 'file_name']",.txt,15-Feb-26,15-Feb-26,TBD,TBD,Example Function Call,dict_processing.py
 calculate_relationship_edge_score,,"['df', 'primary_id', 'secondary_id', 'weight']",,,,,,,graph_theory.py
 calculate_relationship_score,,"['pair_score_df', 'entity_1', 'entity_2', 'relationship_score', 'group_id_name', 'relationship_threshold']",,,,,,,graph_theory.py
 read_directory,Function which reads reads a directory and returns a list of files included within,"['location', 'file_type', 'match_str']",Dataframe containing a listing of selected files.,3-Dec-25,3-Dec-25,TBD,TBD,"d_py_function =  '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/'
@@ -45,6 +48,8 @@ random_uniform_normalized_list,"Function to create a list of RNG numbers for the
 Values equal 1.","['n', 'skew']",list,29-Dec-25,29-Dec-25,TBD,TBD,create_distribution_weight(5),list_processing.py
 random_choice_from_uniform_list,"Create a random generate list from provided inputs. List is of length as defined in total records, the name of the records is defined in name.
 The distribution of values is conditionally determined by either distinct entities, or the distribution as provided in list_distribution.","['total_records', 'name', 'distinct_entities', 'list_distribution', 'return_value', 'skew']",list if return_value is 'df' then DataFrame,29-Dec-25,29-Dec-25,TBD,TBD,"random_choice_from_uniform_list(unique_records=40,name='BRANCHNAME',LEGACY=[.5,.15,.3,.05])",list_processing.py
+create_txt_from_list,"Function which Generates a .TXT file from a python List, outputing each item as a new line.
+Developed when Validating EFT Swift files and needed to validate Excess Information","['list_', 'file_name']",.txt,15-Feb-26,15-Feb-26,TBD,TBD,Example Function Call,list_processing.py
 read_git_folder,"Program to Extract .py files from a Git Directory.
 Parameters borrowed from Git Mapping Structure, https://github.com/owner/repo/tree/branch/folder","['owner', 'repo', 'branch', 'folder']",dictionary,15-Dec-25,15-Dec-25,TBD,TBD,py_files_in_git_folder = read_git_folder(),connections.py
 read_git_file,Read the contents of a single public GitHub file.,['git_url'],List,15-Dec-25,15-Dec-25,TBD,TBD,read_git_file('https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/d_py_functions/Connections.py'),connections.py
@@ -150,13 +155,14 @@ historical_month_end_list,Function which Creates a list of Month End Dates.,"['e
 convert_df_date,Function to Convert Str to Datetime for Dataframe Column,"['df', 'column_name', 'new_column_name', 'normalize']","Creates New Column In Dataframe. If new_column_name is blank, it overrides exists column_name, else it creates a new",01-Jan-24,01-Jan-24,TBD,TBD,"convert_df_date(df,'DATE')",date_functions.py
 print_current_time,Function to Print the Current Time.,[],None.,01-Jan-25,01-Jan-25,TBD,TBD,print_current_time(),date_functions.py
 top_x_records,,"['data', 'column_name', 'top_n', 'dropna']",,,,,,,eda_dq.py
-column_statistical_review,"Function to compute statistical properities of a particular column, function approaches Numeric and Non Numberic Differntly, non numeric
+statistical_review_column,"Function to compute statistical properities of a particular column, function approaches Numeric and Non Numberic Differntly, non numeric
 calculations, Total Records, Unique Records, Null Records and the Mode.
 For Numreic Calculations, can also return, Mean, Mode, Standard Deviation, Max, Min, Mode, Number of Nulls, Zeroes, Non Zeros.
 Additionally, there are 4 Additional Components, which can include a top Value count of the most frequent records, the decile positions o
-the records, the Cummulative Sum of the Records, and the Percentage of Cummulative POsition at each decile.","['df', 'column_name', 'partitions', 'top_records_to_include', 'cummulative_sum', 'cummulative_percent', 'remove_null_from_decile', 'remove_zero_from_decile']",Dataframe,24-Jan-26,24-Jan-26,TBD,TBD,"df = column_statistical_review(final_mbr_df,'AGE')",eda_dq.py
-ReviewEntireDataframe,,"['df', 'file_name']",,,,,,,eda_dq.py
-generate_dictionary,"Function Used to Generate D Learning Notes, which is a consolidated view of D Notes and D Definitions.
+the records, the Cummulative Sum of the Records, and the Percentage of Cummulative POsition at each decile.","['df', 'column_name', 'partitions', 'top_records_to_include', 'cummulative_sum', 'cummulative_percent', 'remove_null_from_decile', 'remove_zero_from_decile']",Dataframe,24-Jan-26,24-Jan-26,TBD,TBD,"df = statistical_review_column(final_mbr_df,'AGE')",eda_dq.py
+statisical_review_df,"Function to extend function statistical review column over a datafarame (portion of dataframe), to simplify, it takes default arguments of
+statistical_column_review.","['df', 'column_list', 'time_delay', 'time_out_warning']",Dataframe,13-Feb-26,13-Feb-26,TBD,TBD,review_summary_df = statisical_review_df(df),eda_dq.py
+generate_knowledge_base,"Function Used to Generate D Learning Notes, which is a consolidated view of D Notes and D Definitions.
 Used as a crtical input to D Streamlit Dashboard.
 V2. Material Update. With cleaned Data Fields, can simplify this process.
 1) Create Unique list from all processes in Notes, if Value in definition is seen in notes, direclty merge.
@@ -171,7 +177,9 @@ Function has a scoring Component, a Correct Answer (Pass is worth 1 Point), A In
 then user is expected to Answer, with expectation of making score positive, if less than 10 examples with a negative score, it randomly samples from
 positive scores.","['file_location', 'sample_records']",,,,,,,daily_processes.py
 generate_streamlit_definition_summary,"Generate a series of Group By Statements for visualization of the use of D Google Definitions.
-Generates a CSV file which is saved in shared folder.",[],None,08-Feb-26,08-Feb-26,TBD,TBD,Example Function Call,daily_processes.py
+Generates a CSV file which is saved in shared folder.",['file_name'],"None update: 15-Feb-16: Added file_name as parameter, enabling the generation of Notes, Definition or Learning Notes as combinations.",08-Feb-26,15-Feb-26,TBD,TBD,"generate_streamlit_definition_summary('google_definition_csv')
+generate_streamlit_definition_summary('d_knowledge_base_url')
+generate_streamlit_definition_summary('google_notes_csv')",daily_processes.py
 input1,"Originally Named convert_dict_to_parameters
 Convert a .py file containing Dict into a Dataframe which can is used to populate Function Parameters",['module'],Dataframe,4-Dec-25,4-Dec-25,TBD,TBD,"import d_dictionaries
 temp = convertlisttoparameters(d_dictionaries)",input_functions_ignore.py
@@ -239,12 +247,10 @@ df_to_dict(df,'Definition','CSV')",df_processing.py
 replicate_df_row,"Function which Replicates a single row DataFrame for the purposes of Multiplying it against a larger row.
 Function written using tile, which is a C based language, and considerably faster than straight using nunpy vectorized Calculations.","['df', 'records']",df,30-Dec-25,30-Dec-25,TBD,TBD,"df = pd.DataFrame([[1,2,3]],columns=['A','B','C'])
 replicate_row(df)",df_processing.py
-tranpose_df,"Transposes a non-time-series DataFrame from wide to long format by melting specified columns.
-This is especially useful for flattening columns into a single column to support tools
-like Power BI, where long format enables dynamic pivoting and aggregation.","['df', 'index', 'columns']",DataFrame: A long-format DataFrame with 'variable' and 'value' columns.,1-Jan-24,30-Dec-25,TBD,TBD,Example Function Call,df_processing.py
 export_to_excel,"Function Created to Export Data to Excel, with increased Control over the output, including adding a sheet name and attempting to
 format the columns, which would be the primary use over simple .to_excel.
 Given CSV format does not have explicit memory, there is no benefit when requirement dictate a CSV file.","['df', 'file_name', 'sheet_name', 'default_max_width', 'long_columns', 'long_max_width']",,,,,,,df_processing.py
-transpose_df,"Transposes a non-time-series DataFrame from wide to long format by melting specified columns.
+tranpose_df,"Transposes a non-time-series DataFrame from wide to long format by melting specified columns.
 This is especially useful for flattening columns into a single column to support tools
-like Power BI, where long format enables dynamic pivoting and aggregation.","['df', 'index', 'columns']",DataFrame: A long-format DataFrame with 'variable' and 'value' columns. Definition of Function,1-JUL-25,1-JUL-25,TBD,TBD,,df_processing.py
+like Power BI, where long format enables dynamic pivoting and aggregation.","['df', 'index', 'columns']",DataFrame: A long-format DataFrame with 'variable' and 'value' columns.,1-Jan-24,30-Dec-25,TBD,TBD,Example Function Call,df_processing.py
+declare_customer_column_sort_order,Function to declare manual column sort order. Help when natural asci order does not provided desired priority.,"['df', 'column_name', 'column_order_list']",nil,15-Feb-26,15-Feb-26,TBD,TBD,"declare_customer_column_sort_order(df,'Name',['derek','Derek','1) Derek'])",df_processing.py

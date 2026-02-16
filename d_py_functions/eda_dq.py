@@ -189,7 +189,7 @@ def statisical_review_df(df,
         start_time = time.perf_counter()
         temp_df = statical_review_column(df,column)
         processing_time = time.perf_counter()-start_time
-        if  (processing_time > time_delay)&(time_out_warning=True):
+        if  (processing_time > time_delay)&(time_out_warning==True):
             user_decision = input(f'Processing of {column} took {processing_time:.2f} second, current delay: {time_delay:.2f}, do you want to continue and increase delay(y/n)?')
             if user_decision.lower()=='y':
                 final_df = pd.concat([final_df,temp_df],axis=1)

@@ -76,6 +76,8 @@ flatten_clean_dict,index_name,str,Default Name of Column to be applied to First 
 flatten_clean_dict,clean,bool,"Used to convert a single flat DF to a Matrix, which each new column",dict_processing.py
 flatten_clean_dict,apply_new_lvl,,,dict_processing.py
 flatten_clean_dict,high_low_list_fix,bool,"Optional Arguement, used for resolution of list [0,1] dict extraction.",dict_processing.py
+create_txt_from_dict,dict_,dict,Python Dictionary,dict_processing.py
+create_txt_from_dict,file_name,str,Output Name of .txt File. Default text_file_from_python.txt,dict_processing.py
 calculate_relationship_edge_score,df,,,graph_theory.py
 calculate_relationship_edge_score,primary_id,,,graph_theory.py
 calculate_relationship_edge_score,secondary_id,,,graph_theory.py
@@ -106,6 +108,8 @@ random_choice_from_uniform_list,distinct_entities,int,"If populated, it will be 
 random_choice_from_uniform_list,list_distribution,list,Distribution to be used for random sampling.,list_processing.py
 random_choice_from_uniform_list,return_value,str,"Default to None, and will return a list. Can input 'df' to return a dataframe",list_processing.py
 random_choice_from_uniform_list,skew,float,Skew to include in random distribution.,list_processing.py
+create_txt_from_list,list_,list,Python List,list_processing.py
+create_txt_from_list,file_name,str,Output Name of .txt File. Default text_file_from_python.txt,list_processing.py
 read_git_folder,owner,str,As defined in Git Mapping Structure,connections.py
 read_git_folder,repo,str,As defined in Git Mapping Structure,connections.py
 read_git_folder,branch,str,As defined in Git Mapping Structure,connections.py
@@ -275,17 +279,19 @@ top_x_records,data,,,eda_dq.py
 top_x_records,column_name,,,eda_dq.py
 top_x_records,top_n,,,eda_dq.py
 top_x_records,dropna,,,eda_dq.py
-column_statistical_review,df,df,Any DataFrame.,eda_dq.py
-column_statistical_review,column_name,str,Name of particular column to where function will be applied.,eda_dq.py
-column_statistical_review,partitions,int,"Number of Partitions to be applied in returned DF (default is 10, if 0 nothing returned.)",eda_dq.py
-column_statistical_review,top_records_to_include,int,"Number of Top Records to be returned in DF (default is 5, if 0 nothing returned.)",eda_dq.py
-column_statistical_review,cummulative_sum,bool,"Boolean, if True, will add the Cummulative Sum Value into the Return DF",eda_dq.py
-column_statistical_review,cummulative_percent,bool,"Boolean, if True, will add the Cummulative Sum Percent  into the Return DF",eda_dq.py
-column_statistical_review,remove_null_from_decile,bool,"Boolean, if true, it will remove Null and NA values from Caluclation of Decile",eda_dq.py
-column_statistical_review,remove_zero_from_decile,bool,"Boolean, if true, it will remove Zero values from Caluclation of Decile",eda_dq.py
-ReviewEntireDataframe,df,,,eda_dq.py
-ReviewEntireDataframe,file_name,,,eda_dq.py
-generate_dictionary,export_location,,,daily_processes.py
+statistical_review_column,df,df,Any DataFrame.,eda_dq.py
+statistical_review_column,column_name,str,Name of particular column to where function will be applied.,eda_dq.py
+statistical_review_column,partitions,int,"Number of Partitions to be applied in returned DF (default is 10, if 0 nothing returned.)",eda_dq.py
+statistical_review_column,top_records_to_include,int,"Number of Top Records to be returned in DF (default is 5, if 0 nothing returned.)",eda_dq.py
+statistical_review_column,cummulative_sum,bool,"Boolean, if True, will add the Cummulative Sum Value into the Return DF",eda_dq.py
+statistical_review_column,cummulative_percent,bool,"Boolean, if True, will add the Cummulative Sum Percent  into the Return DF",eda_dq.py
+statistical_review_column,remove_null_from_decile,bool,"Boolean, if true, it will remove Null and NA values from Caluclation of Decile",eda_dq.py
+statistical_review_column,remove_zero_from_decile,bool,"Boolean, if true, it will remove Zero values from Caluclation of Decile",eda_dq.py
+statisical_review_df,df,df,Any DataFrame.,eda_dq.py
+statisical_review_df,column_list,list,Default Columns to Include,eda_dq.py
+statisical_review_df,time_delay,int,"Current Maximum threshold for processing time, not that if time is exceeded, user can exit, to prevent crashing of Python.",eda_dq.py
+statisical_review_df,time_out_warning,bool,Default option to turn on/off user opt out. Defaut On.,eda_dq.py
+generate_knowledge_base,export_location,,,daily_processes.py
 create_py_table_dict,base_location,str,Location of Windows Directory containing .py Files.,daily_processes.py
 create_py_table_dict,export_location,,,daily_processes.py
 parse_dot_py_folder,location,str,Windows or Mac OS Folder Directory (defaults to D's Mac Directory),daily_processes.py
@@ -294,6 +300,7 @@ daily_test,observations,,,daily_processes.py
 daily_test,file_location,,,daily_processes.py
 review_test_results,file_location,,,daily_processes.py
 review_test_results,sample_records,,,daily_processes.py
+generate_streamlit_definition_summary,file_name,str,"Specific Name from Dictionary Links, which has the link to 1 of 3 files as default, to provide summary analysis.",daily_processes.py
 input1,module,module,Py file containing Dict.,input_functions_ignore.py
 input2,module,module,Py file containing Lists.,input_functions_ignore.py
 input3,module,module,Py file containing Strings.,input_functions_ignore.py
@@ -341,19 +348,19 @@ df_to_dict,key,str,String representing Column Name for Dictionary Key,df_process
 df_to_dict,value,str,String representing Column Name for Value Key,df_processing.py
 replicate_df_row,df,dataframe,"DataFrame which you wish to extend, should be a Single Row, but techincally it will duplicate any size",df_processing.py
 replicate_df_row,records,int,"Number of times you wish DF to be duplicated, ideally it should be len(other_df) to which you want to multiply",df_processing.py
-tranpose_df,df,DataFrame,The input pandas DataFrame.,df_processing.py
-tranpose_df,index,list,Columns to retain as identifiers (will remain unchanged).,df_processing.py
-tranpose_df,columns,list,Columns to unpivot into key-value pairs.,df_processing.py
 export_to_excel,df,,,df_processing.py
 export_to_excel,file_name,,,df_processing.py
 export_to_excel,sheet_name,str,Name of Sheet to be utilized in Excel.,df_processing.py
 export_to_excel,default_max_width,int,Default Column Width,df_processing.py
 export_to_excel,long_columns,list,"Any column which would be requested to have a default column width beyond 30, include in thelist",df_processing.py
 export_to_excel,long_max_width,int,Max width for long_columns,df_processing.py
-transpose_df,df,DataFrame,The input pandas DataFrame.,df_processing.py
-transpose_df,index,list,Columns to retain as identifiers (will remain unchanged).,df_processing.py
-transpose_df,columns,list,Columns to unpivot into key-value pairs.,df_processing.py
-Reference String,today,str,09-Feb-26,data_d_strings.py
+tranpose_df,df,DataFrame,The input pandas DataFrame.,df_processing.py
+tranpose_df,index,list,Columns to retain as identifiers (will remain unchanged).,df_processing.py
+tranpose_df,columns,list,Columns to unpivot into key-value pairs.,df_processing.py
+declare_customer_column_sort_order,df,df,Dataframe,df_processing.py
+declare_customer_column_sort_order,column_name,str,Name of Column,df_processing.py
+declare_customer_column_sort_order,column_order_list,list_,Priority Desired.,df_processing.py
+Reference String,today,str,16-Feb-26,data_d_strings.py
 Reference String,template_doc_string,str,"
 
     Definition of Function
@@ -364,8 +371,8 @@ Reference String,template_doc_string,str,"
     Returns:
         Object Type
 
-    date_created:09-Feb-26
-    date_last_modified: 09-Feb-26
+    date_created:16-Feb-26
+    date_last_modified: 16-Feb-26
     classification:TBD
     sub_classification:TBD
     usage:
@@ -398,7 +405,7 @@ links,google_daily_activities,dict,https://docs.google.com/spreadsheets/d/e/2PAC
 links,function_list_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_list.csv,data_d_lists.py
 links,parameter_list_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_parameters.csv,data_d_lists.py
 links,folder_toc_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/folder_listing.csv,data_d_lists.py
-links,d_learning_notes_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_learning_notes.csv,data_d_lists.py
+links,d_knowledge_base_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_knowledge_base.csv,data_d_lists.py
 links,technical_notes,dict,https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv,data_d_lists.py
 links,d_daily_test_score,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/daily_test_results.csv,data_d_lists.py
 emoji_dict,STATUS,dict,"{'label': 'Status / Progress / Outcome', 'description': 'Execution state, progress tracking, completion, and flow of work.', 'emojis': ['✅', '✔️', '⏸️', '🟢', '🟡', '🔴', '⏳', '🕐', '📤', '📥', '🗂️']}",data_d_lists.py
