@@ -195,9 +195,9 @@ Strategic Conversations become diagnostic not reactive
 Precision without Personalization
 Differenitation without Discrimination
 Optimization without cumbersome rules"
-Clustering,Process Step,Implementation,"Goals of a clustering project can greatly differ, as such there is no universal approach, and in fact the type of clustering which one undertakes differs greatly depending upon goals, objectives, expected outcomes and availabiltiy of data.
+Clustering,Process Step,Goal Setting,"Goals of a clustering project can greatly differ, as such there is no universal approach, and in fact the type of clustering which one undertakes differs greatly depending upon goals, objectives, expected outcomes and availabiltiy of data.
 
-At the simplest, the type of Clustering (Supervised vs Unsupervised) is likely the first and easiest distinction, types after that depend on size of data, goals, implementation (real time vs batch), time frame (spot vs time series, member vs member, member vs self, etc).
+At the simplest, the type of Clustering (Supervised vs Unsupervised) is likely the first and easiest distinction, further questions include: size of data, goals, implementation (real time vs batch), time frame (spot vs time series, member vs member, member vs self, etc).
 
 Example of Behavior Goal: Small Number of Stable, Interpretable, Member Archetypes that summaize the global behavior and can be reused for ML and Analysis."
 Clustering,Process Step,Goal Setting,"A classification, via calculation utilizing mathematical precision to identify based on numeric similarity, attributes, characteristics, properties and behaviours across multidimensional space. Clustering has material advantages relative to more simplistic human derived techniques as it is not limited to ambigious thresholds or static rules (which can be time consuming, incorrect and subject to constant change).
@@ -244,47 +244,22 @@ Poetry,,,Create a .toml File.
 Poetry,,Install into Folder,poetry init
 Poetry,,Run to Activate,poetry install
 Poetry,,Check Environment,poetry env info
-,,Add Package,poetry add
-,,Show Packages,poetry show
-,,Use Specific Version,poetry env use python3.11
-,,Update TOML,poetry lock
-,,,poetry add --group dev jupyterlab ipykernel
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
-,,,
+Poetry,,Add Package,poetry add
+Poetry,,Show Packages,poetry show
+Poetry,,Use Specific Version,poetry env use python3.11
+Poetry,,Update TOML,poetry lock
+Project Folder Structure,,,Use Python src/ NAME_OF_FOLDER
 ,,,"O layer: input objects, output objects (schemas)"
 ,,,"Core steps: prompt(s), model call(s), parsing, validation"
 ,,,Memory/RAG (optional): retrieval + citations
 ,,,Tools (optional): functions the model can call
 ,,,"Orchestration: how steps chain, branch, retry"
 ,,,"Logging/trace: what happened, why, latency, failures"
-,,,
-,,,
-,,,
-,,,Data Layer
 ,,,Signal Extraction Layer
 ,,,Recommednation Layer
 ,,,Feedback + evaluation loop
-Project Folder Structure,,,Use Python src/ NAME_OF_FOLDER
+,,,Data Layer
+,,,Signal Extraction Layer
 ML Model,Definition,Activation Function,"A mathematical function applied to a neuron’s weighted input that introduces non-linearity into a neural network. This non-linearity enables the model to learn complex, non-linear relationships in the data. Activation functions are applied within layers during the forward pass of a neural network, transforming intermediate representations before passing them to the next layer. Activation choice affects gradient flow, training stability, and convergence speed. Poor choices can cause vanishing or exploding gradients, limiting the depth or effectiveness of the network"
 ML Model,Definition,Loss Function,"A loss function is a mathematical function that measures how far a model’s predictions are from the true target values, producing a single scalar value that represents prediction error and defines the objective to be minimized during training. The loss function is evaluated during training after the forward pass and is the starting point for backpropagation. Its gradients drive parameter updates via the optimizer. Different loss functions encode different assumptions about error, robustness, and business objectives. Choosing an inappropriate loss can lead to models that optimize the wrong behavior, even if training converges successfully."
 ML Model,Definition,Model,"The model is the mathematical or algorithmic structure used to map input features to predictions. This includes selecting the model family (e.g., linear models, tree-based models, neural networks) and defining its architecture. Model choice balances predictive power, interpretability, computational cost, and deployment constraints. The model defines howlearning occurs but does not yet involve learning itself."
