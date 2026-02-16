@@ -12,9 +12,14 @@ Clustering,Process Step,Feature Selection,"4. Incremental Value via Feature Impo
     2. Mutual Information with Latent Cluster Assignment
     3. Permutation for Clustering.",17.0,105.0,6.0,16.0
 Clustering,Process Step,Feature Selection,Understand the relative contribution and sensitivity of features in forming and separating clusters,17.0,105.0,6.0,16.0
+Clustering,Process Step,Goal Setting,"Goals of a clustering project can greatly differ, as such there is no universal approach, and in fact the type of clustering which one undertakes differs greatly depending upon goals, objectives, expected outcomes and availabiltiy of data.
+
+At the simplest, the type of Clustering (Supervised vs Unsupervised) is likely the first and easiest distinction, further questions include: size of data, goals, implementation (real time vs batch), time frame (spot vs time series, member vs member, member vs self, etc).
+
+Example of Behavior Goal: Small Number of Stable, Interpretable, Member Archetypes that summaize the global behavior and can be reused for ML and Analysis.",17.0,105.0,4.0,16.0
 Clustering,Process Step,Goal Setting,"A classification, via calculation utilizing mathematical precision to identify based on numeric similarity, attributes, characteristics, properties and behaviours across multidimensional space. Clustering has material advantages relative to more simplistic human derived techniques as it is not limited to ambigious thresholds or static rules (which can be time consuming, incorrect and subject to constant change).
 
-Identify explicit groups of members which posses explicit tendancies, characteistics and patterns which the organiation understand and support through tailored strategies, plans and products.",17.0,105.0,3.0,16.0
+Identify explicit groups of members which posses explicit tendancies, characteistics and patterns which the organiation understand and support through tailored strategies, plans and products.",17.0,105.0,4.0,16.0
 Clustering,Process Step,Problem Definition,"When choosing, need to have a explicit understanding of how and why your choice is being made. Trade Offs include; 
 Speed vs Accuracy
 Accuracy vs Repeatability
@@ -30,22 +35,17 @@ Clustering,Process Step,Model Summarization / Model Interpretability,Design and 
 Clustering,Process Step,Data Collection,"Identify and validate the behavioural attributes, transactions, and usage patterns that define similarity among members",17.0,105.0,2.0,16.0
 Clustering,Process Step,Validation/ Model Selection,"Identify and define distinct, stable member archetypes based on observed behavioural patterns",17.0,105.0,2.0,16.0
 Clustering,Process Step,Monitoring,"Monitor archetype-level outcomes, migration, and engagement effectiveness over time",17.0,105.0,2.0,16.0
-Clustering,Process Step,Implementation,"Goals of a clustering project can greatly differ, as such there is no universal approach, and in fact the type of clustering which one undertakes differs greatly depending upon goals, objectives, expected outcomes and availabiltiy of data.
-
-At the simplest, the type of Clustering (Supervised vs Unsupervised) is likely the first and easiest distinction, types after that depend on size of data, goals, implementation (real time vs batch), time frame (spot vs time series, member vs member, member vs self, etc).
-
-Example of Behavior Goal: Small Number of Stable, Interpretable, Member Archetypes that summaize the global behavior and can be reused for ML and Analysis.",17.0,105.0,1.0,16.0
 Clustering,Consideration,Goal Setting,"With clustering, the following strategic outcomes can be achieved: 
 Strategic Conversations become diagnostic not reactive
 Precision without Personalization
 Differenitation without Discrimination
-Optimization without cumbersome rules",17.0,1.0,3.0,1.0
+Optimization without cumbersome rules",17.0,1.0,4.0,1.0
 ML Project,Process Step,Feature Selection,"Process of identifying and retaining the most relevant variables for model training while removing redundant, noisy, or irrelevant features. This helps reduce overfitting, improve model performance, and increase interpretability. Feature selection techniques may be statistical, model-based, or embedded within the learning algorithm. The goal is to create a simpler, more robust feature set that generalizes well to new data.
 
 It is important to be in a position to Logically and Mathematically be in a position to defend inclusion and exclusion decisions. Although a highly technical step, it is critically important that stakeholders and partners are included and in references and terms which are appropriate for them.",16.0,105.0,6.0,16.0
 ML Project,Process Step,Goal Setting,"Establish a clear, concise and explicit goal for the project. While ideally the goal will be defined in terms of Key Performance Indicators, when the work is truly explorative or borne in the spirt of true experiementation, it is still critical to establish guardrails, and get everyone to agree. Additional, there needs to be a deliverable, again even if vague, a deliverable needs to be agreed upon and structured in some format to insure that all parties have appropriately managed expectations.
 
-There should be no more than 3 Goals (Flexible), the goals should be SMART and explicitly acknowledged and supported by the ",16.0,105.0,3.0,16.0
+There should be no more than 3 Goals (Flexible), the goals should be SMART and explicitly acknowledged and supported by the ",16.0,105.0,4.0,16.0
 ML Project,Process Step,Problem Definition,"A Clear, Concise and explicit definition of the problem at hand, or a ""Problem Statement"". A problem statement should be simple, and include at a minimum 5 items; a 1) current state analysis, 2) root cause assessment, 3) historical overview of what has been done, 4) metrics quantifying the current state (baseline), and 5) metrics quantifying (or providing insight into the desired state). 
 
 Proceed with extreme caution where the problem statement is incomplete, or ill-stated, as this is likely indicative that the problem is not truly understood or at a minimum defined. Where this is the case, the project will be at extreme risk the likelihood of change to project purpose, scope or priority likely.",16.0,105.0,3.0,16.0
@@ -97,6 +97,16 @@ Process Development,Process Step,Clear,"Communicates expectations, roles, and st
 Process Development,Process Step,Evident,"Makes the right actions and outcomes visible through straightforward steps, cues, or built-in checks. It allows people to quickly see whether the process is being followed correctly and whether it is producing the intended results. This is important because visibility helps teams detect issues early and maintain quality.",9.0,105.0,1.0,9.0
 Process Development,Process Step,Obvious,"Mmakes the correct next step intuitive, even for someone new or unfamiliar with the work. It reduces reliance on memory, interpretation, or specialized knowledge to complete tasks correctly. This is important because when the right action is obvious, compliance increases and variation decreases, leading to more reliable outcomes.",9.0,105.0,1.0,9.0
 Process Development,Process Step,Accountability,"Are Roles and Responsbilities explicity stated? and Is it clear who is responsible for what. Are goals SMART (or atleast defined) or at a minimum, is our partcipation understood and documented.  ",9.0,105.0,1.0,9.0
+Poetry,,Install into Folder,poetry init,9.0,,1.0,
+Poetry,,Run to Activate,poetry install,9.0,,1.0,
+Poetry,,Check Environment,poetry env info,9.0,,1.0,
+Poetry,,Add Package,poetry add,9.0,,1.0,
+Poetry,,Show Packages,poetry show,9.0,,1.0,
+Poetry,,Use Specific Version,poetry env use python3.11,9.0,,1.0,
+Poetry,,Update TOML,poetry lock,9.0,,1.0,
+Poetry,,,"poetry config virtualenvs.in-project true or poetry config virtualenvs.in-project true --local.
+Determines where Poetry will save the environment, --local means for 1 project, not local it holds for all projects.",9.0,,,
+Poetry,,,Create a .toml File.,9.0,,,
 Feature Selection,Process Step,Requirement,Generate feature importance or explanation outputs. Helps understand what drives model predictions.,7.0,105.0,44.0,7.0
 Feature Selection,Process Step,Requirement,Remove features with high missingness or low variance. Reduces noise and improves model stability.,7.0,105.0,44.0,7.0
 Feature Selection,Process Step,Requirement,Check for multicollinearity or redundant features. Helps prevent unstable models and improves interpretability.,7.0,105.0,44.0,7.0
@@ -117,12 +127,6 @@ Hyperparameter Tuning,Process Step,Requirement,Use cross-validation or a validat
 Hyperparameter Tuning,Process Step,Requirement,Record best parameters and associated performance. Allows reproducibility and comparison across experiments.,5.0,105.0,44.0,5.0
 Hyperparameter Tuning,Process Step,Requirement,"Define Parameters you will tune and approach to tuning before you commence tuning. Do not simply tune model to optimal parameters without considering what you are actually doing, and its ability to generalize.",5.0,105.0,44.0,5.0
 Hyperparameter Tuning,Process Step,Python Function,Process for this to be created from existing manual leaning processes.,5.0,105.0,2.0,5.0
-Poetry,,Install into Folder,poetry init,5.0,,1.0,
-Poetry,,Run to Activate,poetry install,5.0,,1.0,
-Poetry,,Check Environment,poetry env info,5.0,,1.0,
-Poetry,,,"poetry config virtualenvs.in-project true or poetry config virtualenvs.in-project true --local.
-Determines where Poetry will save the environment, --local means for 1 project, not local it holds for all projects.",5.0,,,
-Poetry,,,Create a .toml File.,5.0,,,
 Model Selection,Process Step,Requirement,"Define what the objective of the model work is, state what is being measured and why. Document all models which will be considered, including why they are appropriate and where models are excluded, insure rationale available. Compare multiple model types using the same validation approach. Ensures a fair comparison and better-informed model choice.",4.0,105.0,44.0,4.0
 Model Selection,Process Step,Requirement,"Create Simplified Baseline Model, use this are reference. Ensure that this is communicated to Stakeholders, so they understand both the benchmark and expectation, to determine relevance. Should align with Goals.",4.0,105.0,44.0,4.0
 Model Selection,Process Step,Requirement,"Consider interpretability, performance, and computational cost. Balances practical constraints with predictive accuracy.",4.0,105.0,44.0,4.0
@@ -161,43 +165,14 @@ Data Preparation,Process Step,Requirement,"Model Pipleine, including training, t
 Exploratory Data Analysis,Process Step,Python Function,Reference Process Here,2.0,105.0,2.0,2.0
 Exploratory Data Analysis,Process Step,Dashboard,Reference Process Here,2.0,105.0,1.0,2.0
 Project Folder Structure,,,Use Python src/ NAME_OF_FOLDER,1.0,,,
-,,Add Package,poetry add,,,1.0,
-,,Show Packages,poetry show,,,1.0,
-,,Use Specific Version,poetry env use python3.11,,,1.0,
-,,Update TOML,poetry lock,,,1.0,
-,,,poetry add --group dev jupyterlab ipykernel,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
 ,,,"O layer: input objects, output objects (schemas)",,,,
 ,,,"Core steps: prompt(s), model call(s), parsing, validation",,,,
 ,,,Memory/RAG (optional): retrieval + citations,,,,
 ,,,Tools (optional): functions the model can call,,,,
 ,,,"Orchestration: how steps chain, branch, retry",,,,
 ,,,"Logging/trace: what happened, why, latency, failures",,,,
-,,,,,,,
-,,,,,,,
-,,,,,,,
-,,,Data Layer,,,,
 ,,,Signal Extraction Layer,,,,
 ,,,Recommednation Layer,,,,
 ,,,Feedback + evaluation loop,,,,
+,,,Data Layer,,,,
+,,,Signal Extraction Layer,,,,
