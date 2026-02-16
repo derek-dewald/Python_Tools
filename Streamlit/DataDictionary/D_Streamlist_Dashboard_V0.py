@@ -89,6 +89,8 @@ st.markdown(
         max-width: 100% !important;
         padding-left: 1rem;
         padding-right: 1rem;
+        padding-top: 0.75rem;
+        padding-bottom: 0.5rem;
       }
     </style>
     """,
@@ -104,8 +106,11 @@ def load_data():
     function_list_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_list.csv"
     parameter_list_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_parameters.csv"
     folder_toc_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/folder_listing.csv"
-    d_learning_notes_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_learning_notes.csv"
-    definition_summary_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/Streamlit_DefinitionSummary.csv"
+    d_knowledge_base_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_knowledge_base.csv"
+    notes_def_summary_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/d_learning_notes_url_NUMERIC_SUMMARY.csv"
+    notes_summary_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/google_notes_csv_NUMERIC_SUMMARY.csv"
+    def_summary_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/google_definition_csv_NUMERIC_SUMMARY.csv"
+    
     google_note_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv'
     google_definition_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv'
     google_word_quote = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=1117793378&single=true&output=csv'
@@ -118,10 +123,11 @@ def load_data():
     data_dict['function_list_df'] = pd.read_csv(function_list_url)
     data_dict['parameter_list_df'] = pd.read_csv(parameter_list_url)
     data_dict['folder_toc_df'] = pd.read_csv(folder_toc_url)
-    data_dict['d_learning_notes'] = pd.read_csv(d_learning_notes_url)
-    data_dict['d_learning_notes'] = data_dict['d_learning_notes'][['Process','Categorization','Word','Definition']]
-    
-    data_dict['definition_summary'] = pd.read_csv(definition_summary_url)
+    data_dict['d_knowledge_base'] = pd.read_csv(d_knowledge_base_url)
+    data_dict['d_knowledge_base'] = data_dict['d_knowledge_base'][['Process','Categorization','Word','Definition']]
+    data_dict['notes_def_summary'] = pd.read_csv(notes_def_summary_url)
+    data_dict['notes_summary'] = pd.read_csv(notes_summary_url)
+    data_dict['def_summary'] = pd.read_csv(def_summary_url)
     data_dict['d_word_quote'] = pd.read_csv(google_word_quote)
     data_dict['technical_notes'] = pd.read_csv(technical_notes)
     
@@ -145,9 +151,9 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ "Consolidated Notes",'D Notes', 'D Definitions',"Definition Summary",'Technical Notes','Words and Quotes','Project Template',
+    [ "Knowledge Base",'D Notes', 'D Definitions',"Frequency Summarization",'Technical Notes','Words and Quotes','Project Template',
      "Function List", "Function Parameters",  'Folder Table of Content', 
-     ] #'Daily Activities', "D Notes Outline",
+     ]
 )
 
 # -------------------------
@@ -189,7 +195,7 @@ if page == "Function List":
     AgGrid(df_view, gridOptions=gb.build(), height=800, fit_columns_on_grid_load=True)
 
 
-    # -----------------------------------
+# -----------------------------------
 # Function Parameters
 # -----------------------------------
 elif page == "Function Parameters":
@@ -298,9 +304,9 @@ elif page == "Folder Table of Content":
 # -----------------------------------
 # D Notes Outline
 # -----------------------------------
-elif page == "Consolidated Notes":
-    st.title("D Consolidated Notes")
-    df_base = data_dict['d_learning_notes'].copy()
+elif page == "Knowledge Base":
+    st.title("Knowledge Base")
+    df_base = data_dict['d_knowledge_base'].copy()
     c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
 
     c1_word = 'Process'
@@ -438,62 +444,7 @@ elif page == "Words and Quotes":
     gb.configure_column("Verse(s)", flex=1, minWidth=70)
     gb.configure_column("Text", flex=6, minWidth=300, wrapText=True, autoHeight=True)
 
-    AgGrid(df_grid, gridOptions=gb.build(), height=800, fit_columns_on_grid_load=True)
-
-# -----------------------------------
-# Daily Activities (UPDATED: correct window filtering via anchor date)
-# -----------------------------------
-elif page == 'Project Template':
-    st.title("Project Template")
-    df = data_dict["d_learning_notes"].copy()
-
-    # update dataframe
-    df = df[df['Categorization']=='Process Step'].copy()
-    df_view = df.drop(['Process','Categorization'],axis=1)
-    df_view['Business Owner'] = ""
-    df_view['Analytics Owner'] = ""
-    df_view['Expected Due Date'] = ""
-    
-    gb = GridOptionsBuilder.from_dataframe(df_view)
-    gb.configure_column('Word', width=80)
-    gb.configure_column('Business Owner', width=50)
-    gb.configure_column('Analytics Owner', width=50)
-    gb.configure_column('Expected Due Date', width=50)
-    
-    gb.configure_column(
-        'Definition',
-        width=200,
-        wrapText=True,
-        autoHeight=True,  # makes row height expand to fit wrapped text
-        cellStyle={
-            "whiteSpace": "normal",
-            "lineHeight": "1.2",
-        },
-    )
-
-    # Optional: wrap everything (if you want more columns to wrap, add wrapText/autoHeight there too)
-    gb.configure_default_column(resizable=True, sortable=True, filter=True)
-
-    grid_options = gb.build()
-
-    excel_bytes = df_to_excel_bytes(df_view,long_columns=['Definition'])
-
-    st.download_button(
-        label="Download Excel",
-        data=excel_bytes,
-        file_name="Machine_Learning_Project_Template.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
-    )
-
-    AgGrid(
-        df_view,
-        gridOptions=grid_options,
-        height=800,
-        fit_columns_on_grid_load=True,
-        allow_unsafe_jscode=True,  # needed for some style behaviors in st_aggrid
-    )
-
-  
+    AgGrid(df_grid, gridOptions=gb.build(), height=800, fit_columns_on_grid_load=True)  
 # -----------------------------------
 # D Definitions
 # -----------------------------------
@@ -689,23 +640,35 @@ elif page == "Technical Notes":
     )
 
 
+elif page == "Frequency Summarization":
+    st.title("Frequency Summarization")
 
+    # ---- Source dropdown ----
+    source_label_to_key = {
+        "Consolidated File": "notes_def_summary",
+        "Notes Page": "notes_summary",
+        "Definition Page": "def_summary",
+    }
 
-# -----------------------------------
-# Definition Summary
-# -----------------------------------
-
-elif page == "Definition Summary":
-    st.title("Definition Summary")
+    source_label = st.selectbox(
+        "Source",
+        list(source_label_to_key.keys()),
+        index=0,
+        key="def_source_select",
+    )
+    source_key = source_label_to_key[source_label]
 
     # ---- Dimension toggles ----
     show_process = st.checkbox("Include Process", value=True)
     show_category = st.checkbox("Include Categorization", value=True)
-    show_word = st.checkbox("Include Word", value=True)
+    show_word = st.checkbox("Include Word", value=False)
 
     # ---- Base data (immutable) ----
-    df_base = data_dict["definition_summary"].copy()
-    df_base = df_base.drop('Definition',axis=1)
+    df_base = data_dict[source_key].copy()
+
+    # Safely drop Definition if present (won't error if missing)
+    if "Definition" in df_base.columns:
+        df_base = df_base.drop(columns=["Definition"])
 
     # Keep rows with a valid Word (Word is the atomic concept in your sheet)
     df_base = df_base[
@@ -736,7 +699,12 @@ elif page == "Definition Summary":
             opts = ["(All)"] + sorted(
                 [x for x in df_filtered[col].dropna().astype(str).unique() if x.strip()]
             )
-            sel = st.selectbox(col, opts, index=0, key=f"filter_{col}")
+            sel = st.selectbox(
+                col,
+                opts,
+                index=0,
+                key=f"{source_key}_filter_{col}",  # unique per source
+            )
 
         if sel != "(All)":
             df_filtered = df_filtered[df_filtered[col].astype(str) == sel]
@@ -745,7 +713,6 @@ elif page == "Definition Summary":
     df_view = df_filtered.copy()
 
     # ---- Determine deduplication grain ----
-    # Visible semantic dimensions define uniqueness
     dedupe_cols = []
     if show_process:
         dedupe_cols.append(COL_PROCESS)
@@ -754,11 +721,30 @@ elif page == "Definition Summary":
     if show_word:
         dedupe_cols.append(COL_WORD)
 
-    # Deduplicate ONLY if we are rolling up (i.e., not all dims shown)
-    if len(dedupe_cols) < 3:
+    # Deduplicate on the visible grain (prevents dupes when rolling up)
+    if dedupe_cols and len(dedupe_cols) < 3:
         df_view = df_view.drop_duplicates(subset=dedupe_cols).reset_index(drop=True)
     else:
         df_view = df_view.reset_index(drop=True)
+
+    # ---- Keep only count columns relevant to current grain ----
+    grain_to_counts = {
+        (COL_PROCESS,): {"Process_Count"},
+        (COL_CAT,): {"CAT_Count"},
+        (COL_WORD,): {"Word_Count"},
+        (COL_PROCESS, COL_CAT): {"Process_Count", "CAT_Count", "ProcessCAT_Count"},
+        (COL_PROCESS, COL_WORD): {"Process_Count", "Word_Count"},
+        (COL_CAT, COL_WORD): {"CAT_Count", "Word_Count"},
+        (COL_PROCESS, COL_CAT, COL_WORD): {"Process_Count", "CAT_Count", "Word_Count", "ProcessCAT_Count"},
+    }
+
+    all_count_cols = {"Process_Count", "CAT_Count", "Word_Count", "ProcessCAT_Count"}
+    grain_key = tuple(dedupe_cols)
+    keep_counts = grain_to_counts.get(grain_key, set())
+
+    drop_counts = [c for c in all_count_cols if (c in df_view.columns and c not in keep_counts)]
+    if drop_counts:
+        df_view = df_view.drop(columns=drop_counts)
 
     # ---- Drop hidden columns from the grid ----
     cols_to_drop = []
@@ -775,8 +761,8 @@ elif page == "Definition Summary":
         df_view = df_view.drop(columns=cols_to_drop)
 
     st.caption(
-        f"Rows: {len(df_view)} | Grain: "
-        + " + ".join(dedupe_cols)
+        f"Source: {source_label} | Rows: {len(df_view)} | Grain: " +
+        (" + ".join(dedupe_cols) if dedupe_cols else "(none)")
     )
 
     # ---- AgGrid ----
@@ -784,10 +770,8 @@ elif page == "Definition Summary":
 
     if show_process and COL_PROCESS in df_view.columns:
         gb.configure_column(COL_PROCESS, width=140, wrapText=True, autoHeight=True)
-
     if show_category and COL_CAT in df_view.columns:
         gb.configure_column(COL_CAT, width=160, wrapText=True, autoHeight=True)
-
     if show_word and COL_WORD in df_view.columns:
         gb.configure_column(COL_WORD, width=180, wrapText=True, autoHeight=True)
 

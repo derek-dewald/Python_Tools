@@ -13,7 +13,7 @@ from dict_processing import dict_to_dataframe
 from list_processing import list_to_dataframe
 from data_validation import column_segmenter
 
-def generate_dictionary(export_location='/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/DataDictionary/d_learning_notes.csv'):
+def generate_knowledge_base(export_location='/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/DataDictionary/d_knowledge_base.csv'):
 
     '''
     
@@ -321,7 +321,7 @@ def generate_streamlit_definition_summary(file_name):
     sub_classification:TBD
     usage:
         generate_streamlit_definition_summary('google_definition_csv')
-        generate_streamlit_definition_summary('d_learning_notes_url')
+        generate_streamlit_definition_summary('d_knowledge_base_url')
         generate_streamlit_definition_summary('google_notes_csv')
 
     update:
