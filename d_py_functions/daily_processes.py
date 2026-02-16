@@ -302,7 +302,7 @@ def review_test_results(file_location=None,
     return results_df
 
 
-def generate_streamlit_definition_summary():
+def generate_streamlit_definition_summary(file_name):
     
     '''
     
@@ -310,23 +310,40 @@ def generate_streamlit_definition_summary():
     Generates a CSV file which is saved in shared folder.
 
     Parameters:
-        None
+        file_name(str): Specific Name from Dictionary Links, which has the link to 1 of 3 files as default, to provide summary analysis.
 
     Returns:
         None
 
     date_created:08-Feb-26
-    date_last_modified: 08-Feb-26
+    date_last_modified: 15-Feb-26
     classification:TBD
     sub_classification:TBD
     usage:
-        Example Function Call
+        generate_streamlit_definition_summary('google_definition_csv')
+        generate_streamlit_definition_summary('d_learning_notes_url')
+        generate_streamlit_definition_summary('google_notes_csv')
+
+    update:
+        15-Feb-16: Added file_name as parameter, enabling the generation of Notes, Definition or Learning Notes as combinations.
 
     '''
-    df = pd.read_csv(links['google_definition_csv'])
-    df = df[['Process','Categorization','Word','Definition']].copy() 
-    df["Process_Count"] = df.groupby("Process")["Process"].transform("count")
-    df["CAT_Count"] = df.groupby("Categorization")["Categorization"].transform("count")
-    df["Word_Count"] = df.groupby("Word")["Word"].transform("count")
-    df['ProcessCAT_Count'] = df.groupby(['Process','Categorization'])["Word"].transform("count")
-    return df.sort_values(['Process_Count','CAT_Count','Word_Count','ProcessCAT_Count'],ascending=False).to_csv('/Users/derekdewald/Documents/Python/Github_Repo/Data/Streamlit_DefinitionSummary.csv',index=False)
+
+    output_file_name = f'{file_name}_NUMERIC_SUMMARY'
+    
+    try:
+        df = pd.read_csv(links[file_name])
+
+        df = df[['Process','Categorization','Word','Definition']].copy() 
+        df["Process_Count"] = df.groupby("Process")["Process"].transform("count")
+        df["CAT_Count"] = df.groupby("Categorization")["Categorization"].transform("count")
+        df["Word_Count"] = df.groupby("Word")["Word"].transform("count")
+        df['ProcessCAT_Count'] = df.groupby(['Process','Categorization'])["Word"].transform("count")
+    
+        final_df = df.sort_values(['Process_Count','CAT_Count','Word_Count','ProcessCAT_Count'],ascending=False)
+    
+        final_df.to_csv(f'/Users/derekdewald/Documents/Python/Github_Repo/Data/{output_file_name}.csv',index=False)
+    except:
+        pass
+    
+    return final_df

@@ -402,37 +402,6 @@ def replicate_df_row(df,records=5):
     data = np.tile(row, (records, 1))  # shape (N, len(row))
     return pd.DataFrame(data, columns=columns)
 
-def tranpose_df(df, index, columns=None):
-    '''
-
-    Transposes a non-time-series DataFrame from wide to long format by melting specified columns.
-
-    This is especially useful for flattening columns into a single column to support tools 
-    like Power BI, where long format enables dynamic pivoting and aggregation.
-
-
-    Parameters:
-        df (DataFrame): The input pandas DataFrame.
-        index (list): Columns to retain as identifiers (will remain unchanged).
-        columns (list): Columns to unpivot into key-value pairs.
-
-    Returns:
-        DataFrame: A long-format DataFrame with 'variable' and 'value' columns.
-
-    date_created:1-Jan-24
-    date_last_modified: 30-Dec-25
-    classification:TBD
-    sub_classification:TBD
-    usage:
-        Example Function Call
-
-    '''
-    if not columns:
-        columns = [col for col in df.columns if col not in index]
-    return df.melt(id_vars=index, value_vars=columns)   
-
-
-
 def export_to_excel(df,
                     file_name='python_excel_file.xlsx',
                     sheet_name= "Sheet1",
@@ -513,12 +482,14 @@ def export_to_excel(df,
         f.write(excel_bytes)
 
 
-def transpose_df(df, index, columns=None):
+def tranpose_df(df, index, columns=None):
     '''
+
     Transposes a non-time-series DataFrame from wide to long format by melting specified columns.
 
     This is especially useful for flattening columns into a single column to support tools 
     like Power BI, where long format enables dynamic pivoting and aggregation.
+
 
     Parameters:
         df (DataFrame): The input pandas DataFrame.
@@ -528,18 +499,40 @@ def transpose_df(df, index, columns=None):
     Returns:
         DataFrame: A long-format DataFrame with 'variable' and 'value' columns.
 
-        
-        Definition of Function
-
-    date_created: 1-JUL-25
-    date_last_modified: 1-JUL-25
+    date_created:1-Jan-24
+    date_last_modified: 30-Dec-25
     classification:TBD
     sub_classification:TBD
     usage:
-        
-        
+        Example Function Call
 
     '''
     if not columns:
         columns = [col for col in df.columns if col not in index]
     return df.melt(id_vars=index, value_vars=columns)   
+
+
+
+def declare_customer_column_sort_order(df,column_name,column_order_list):
+    
+    '''
+    Function to declare manual column sort order. Help when natural asci order does not provided desired priority.
+
+    Parameters:
+        df(df): Dataframe
+        column_name(str): Name of Column
+        column_order_list(list_): Priority Desired. 
+
+    Returns:
+        nil
+
+    date_created:15-Feb-26
+    date_last_modified: 15-Feb-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        declare_customer_column_sort_order(df,'Name',['derek','Derek','1) Derek'])
+    
+    '''
+    
+    df[column_name] = pd.Categorical(df[column_name], categories=column_order_list, ordered=True)

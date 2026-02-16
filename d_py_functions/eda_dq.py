@@ -23,7 +23,7 @@ def top_x_records(data, column_name=None, top_n=5, dropna=False):
     return out
 
 
-def column_statistical_review(
+def statistical_review_column(
     df,
     column_name,
     partitions=10,
@@ -60,7 +60,7 @@ def column_statistical_review(
     classification:TBD
     sub_classification:TBD
     usage:
-        df = column_statistical_review(final_mbr_df,'AGE')
+        df = statistical_review_column(final_mbr_df,'AGE')
     
     '''
     # Create a Series
@@ -150,18 +150,52 @@ def column_statistical_review(
         
     return temp_df
 
+def statisical_review_df(df,
+                         column_list,
+                         time_delay=10,
+                         time_out_warning=True):
+    
+    '''
+    Function to extend function statistical review column over a datafarame (portion of dataframe), to simplify, it takes default arguments of
+    statistical_column_review.
 
-def ReviewEntireDataframe(df,file_name=None):
+    
+
+    Parameters: 
+        df (df): Any DataFrame.
+        column_list (list): Default Columns to Include
+        time_delay(int): Current Maximum threshold for processing time, not that if time is exceeded, user can exit, to prevent crashing of Python.
+        time_out_warning(bool): Default option to turn on/off user opt out. Defaut On.
+
+    Returns:
+        Dataframe
+
+    date_created:13-Feb-26
+    date_last_modified: 13-Feb-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        review_summary_df = statisical_review_df(df)
+    
+    '''
+    
+    if not column_list:
+        column_list = df.columns
+    
     
     final_df = pd.DataFrame()
     
-    for column in df.columns:
-        start_time = timeit.default_timer()
-        temp_df = ColumnStatisticalReview(df,column)
-        print(f'Elapsed time to process {column}:{timeit.default_timer() - start_time:,.2f}')
-        final_df = pd.concat([final_df,temp_df],axis=1)
-    if file_name:
-        final_df.to_csv(f"{file_name}.csv")
-        
+    for column in column_list:
+        start_time = time.perf_counter()
+        temp_df = statical_review_column(df,column)
+        processing_time = time.perf_counter()-start_time
+        if  (processing_time > time_delay)&(time_out_warning=True):
+            user_decision = input(f'Processing of {column} took {processing_time:.2f} second, current delay: {time_delay:.2f}, do you want to continue and increase delay(y/n)?')
+            if user_decision.lower()=='y':
+                final_df = pd.concat([final_df,temp_df],axis=1)
+                time_delay+=5
+            else:
+                return final_df
+        else:
+            final_df = pd.concat([final_df,temp_df],axis=1)
     return final_df
-

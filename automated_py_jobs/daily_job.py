@@ -25,7 +25,9 @@ parse_dot_py_folder()
 
 
 # Updates Dashboard File Definition Summary.
-generate_streamlit_definition_summary()
+generate_streamlit_definition_summary('google_definition_csv')
+generate_streamlit_definition_summary('d_learning_notes_url')
+generate_streamlit_definition_summary('google_notes_csv')
 
 # Back Up Google Sheets and Git Files Once a Week (On Wednesday)
 # Github_Repo/CSV Backup Files/

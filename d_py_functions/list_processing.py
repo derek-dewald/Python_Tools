@@ -105,3 +105,32 @@ def random_choice_from_uniform_list(total_records,
         return pd.DataFrame(final_list,columns=[name])
     else:
         return final_list
+    
+
+def create_txt_from_list(list_,
+                         file_name='text_file_from_python.txt'):
+    '''
+
+    Function which Generates a .TXT file from a python List, outputing each item as a new line.
+
+    Developed when Validating EFT Swift files and needed to validate Excess Information
+
+    Parameters:
+        list_(list): Python List
+        file_name(str): Output Name of .txt File. Default text_file_from_python.txt
+
+    Returns:
+        .txt
+
+    date_created:15-Feb-26
+    date_last_modified: 15-Feb-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        Example Function Call
+    
+    
+    '''
+    with open(file_name, "w") as f:
+        for item in list_:
+            f.write(f"{item}\n")

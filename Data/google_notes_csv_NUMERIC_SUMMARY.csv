@@ -1,0 +1,203 @@
+Process,Categorization,Word,Definition,Process_Count,CAT_Count,Word_Count,ProcessCAT_Count
+Clustering,Process Step,Feature Selection,"Correlation & Redundancy Analysis. If Greater than .9 then variables are redudanant, specifically within class. 
+As a rule of thumb, newest is better, but is based on decision.",17.0,105.0,6.0,16.0
+Clustering,Process Step,Feature Selection,Variance & Stability Contribution: Variance Inflation Factor.,17.0,105.0,6.0,16.0
+Clustering,Process Step,Feature Selection,"Clustering Sensitivity / Stability Tests
+1. Testing Results of Model
+    2. Adjusted Rand Index (ARI)
+    3. Silhouette/ DB Index
+    4. Run Now and Overtime",17.0,105.0,6.0,16.0
+Clustering,Process Step,Feature Selection,"4. Incremental Value via Feature Importance in Unsupervised Models
+    1. Reconstruction Error in Autoencoders
+    2. Mutual Information with Latent Cluster Assignment
+    3. Permutation for Clustering.",17.0,105.0,6.0,16.0
+Clustering,Process Step,Feature Selection,Understand the relative contribution and sensitivity of features in forming and separating clusters,17.0,105.0,6.0,16.0
+Clustering,Process Step,Goal Setting,"A classification, via calculation utilizing mathematical precision to identify based on numeric similarity, attributes, characteristics, properties and behaviours across multidimensional space. Clustering has material advantages relative to more simplistic human derived techniques as it is not limited to ambigious thresholds or static rules (which can be time consuming, incorrect and subject to constant change).
+
+Identify explicit groups of members which posses explicit tendancies, characteistics and patterns which the organiation understand and support through tailored strategies, plans and products.",17.0,105.0,3.0,16.0
+Clustering,Process Step,Problem Definition,"When choosing, need to have a explicit understanding of how and why your choice is being made. Trade Offs include; 
+Speed vs Accuracy
+Accuracy vs Repeatability
+Correlation vs Causation
+Stability over Uniqueness
+Interpretability over novelty
+Repeatability over perfection.",17.0,105.0,3.0,16.0
+Clustering,Process Step,Problem Definition,"Define the intended use, boundaries, and decision domains for archetype-based strategies",17.0,105.0,3.0,16.0
+Clustering,Process Step,Data Preparation,Ensure Data is Labelled and Categorized.,17.0,105.0,3.0,16.0
+Clustering,Process Step,Data Preparation,"Review Semantic Classifications, insure sufficient and appropriate model coverage.",17.0,105.0,3.0,16.0
+Clustering,Process Step,Model Summarization / Model Interpretability,"Characterize each archetype using clear, interpretable behavioural and financial characteristics",17.0,105.0,3.0,16.0
+Clustering,Process Step,Model Summarization / Model Interpretability,Design and apply differentiated engagement strategies aligned to each archetype’s characteristics and needs,17.0,105.0,3.0,16.0
+Clustering,Process Step,Data Collection,"Identify and validate the behavioural attributes, transactions, and usage patterns that define similarity among members",17.0,105.0,2.0,16.0
+Clustering,Process Step,Validation/ Model Selection,"Identify and define distinct, stable member archetypes based on observed behavioural patterns",17.0,105.0,2.0,16.0
+Clustering,Process Step,Monitoring,"Monitor archetype-level outcomes, migration, and engagement effectiveness over time",17.0,105.0,2.0,16.0
+Clustering,Process Step,Implementation,"Goals of a clustering project can greatly differ, as such there is no universal approach, and in fact the type of clustering which one undertakes differs greatly depending upon goals, objectives, expected outcomes and availabiltiy of data.
+
+At the simplest, the type of Clustering (Supervised vs Unsupervised) is likely the first and easiest distinction, types after that depend on size of data, goals, implementation (real time vs batch), time frame (spot vs time series, member vs member, member vs self, etc).
+
+Example of Behavior Goal: Small Number of Stable, Interpretable, Member Archetypes that summaize the global behavior and can be reused for ML and Analysis.",17.0,105.0,1.0,16.0
+Clustering,Consideration,Goal Setting,"With clustering, the following strategic outcomes can be achieved: 
+Strategic Conversations become diagnostic not reactive
+Precision without Personalization
+Differenitation without Discrimination
+Optimization without cumbersome rules",17.0,1.0,3.0,1.0
+ML Project,Process Step,Feature Selection,"Process of identifying and retaining the most relevant variables for model training while removing redundant, noisy, or irrelevant features. This helps reduce overfitting, improve model performance, and increase interpretability. Feature selection techniques may be statistical, model-based, or embedded within the learning algorithm. The goal is to create a simpler, more robust feature set that generalizes well to new data.
+
+It is important to be in a position to Logically and Mathematically be in a position to defend inclusion and exclusion decisions. Although a highly technical step, it is critically important that stakeholders and partners are included and in references and terms which are appropriate for them.",16.0,105.0,6.0,16.0
+ML Project,Process Step,Goal Setting,"Establish a clear, concise and explicit goal for the project. While ideally the goal will be defined in terms of Key Performance Indicators, when the work is truly explorative or borne in the spirt of true experiementation, it is still critical to establish guardrails, and get everyone to agree. Additional, there needs to be a deliverable, again even if vague, a deliverable needs to be agreed upon and structured in some format to insure that all parties have appropriately managed expectations.
+
+There should be no more than 3 Goals (Flexible), the goals should be SMART and explicitly acknowledged and supported by the ",16.0,105.0,3.0,16.0
+ML Project,Process Step,Problem Definition,"A Clear, Concise and explicit definition of the problem at hand, or a ""Problem Statement"". A problem statement should be simple, and include at a minimum 5 items; a 1) current state analysis, 2) root cause assessment, 3) historical overview of what has been done, 4) metrics quantifying the current state (baseline), and 5) metrics quantifying (or providing insight into the desired state). 
+
+Proceed with extreme caution where the problem statement is incomplete, or ill-stated, as this is likely indicative that the problem is not truly understood or at a minimum defined. Where this is the case, the project will be at extreme risk the likelihood of change to project purpose, scope or priority likely.",16.0,105.0,3.0,16.0
+ML Project,Process Step,Data Preparation,"Data preparation focuses on cleaning and structuring raw data into a usable format for modeling. This includes handling missing values, correcting errors, standardizing formats, encoding categorical variables, and aligning labels with features. It also often involves train/validation/test splitting to prevent data leakage. This step is critical because most models assume clean, well-structured inputs and are highly sensitive to data issues.
+
+Need to establish up a consistent, robust and repeatable data ingestion process, which starts at the outset of the project. Where the infrastructure is not immediately available, need to clearly document the journey.  Need to call out requirements, expectations and limitations, and where resources are necessary, they should be identified at this point. 
+
+Where operational changes are necessary, or a prerequisite, need to understand how these will documented and escalated or addressed.",16.0,105.0,3.0,16.0
+ML Project,Process Step,Model Summarization / Model Interpretability,"Process of explaining how a model makes predictions and which features influence its decisions. This may involve feature importance, partial dependence plots, SHAP values, or simpler surrogate models. Interpretability helps stakeholders understand, trust, and validate the model’s behavior. It is especially important in regulated or high-impact decision environments.",16.0,105.0,3.0,16.0
+ML Project,Process Step,Data Collection,"Data collection involves identifying, sourcing, and acquiring the datasets required to solve the defined problem. This may include internal databases, APIs, logs, third-party data, or manually collected data. Key considerations include data availability, coverage, granularity, freshness, and legal or privacy constraints. The quality and relevance of collected data fundamentally limit the ceiling of model performance.
+
+Need to understand the data available to solve a problem, insure that it's documented, understood and trusted. Need to identify, not only information which is available, but information which is not available and should be.  This should be explicitly documented, referenced constantly and readily available (Semantic and Functional Definition).
+",16.0,105.0,2.0,16.0
+ML Project,Process Step,Validation/ Model Selection,"The process of choosing the most appropriate algorithm or model type for a given problem and dataset. This decision is based on factors such as data size, feature structure, interpretability needs, computational constraints, and performance requirements. Multiple candidate models are often tested and compared using consistent evaluation methods. The objective is to identify the model that provides the best balance between accuracy, stability, and practical usability.
+
+Similiar to the process of engagement and audit followed in Feature Selection, it is critically important that actions are documented, defensable and clearly and consistently articulated to stakeholders in a meaningful manner.",16.0,105.0,2.0,16.0
+ML Project,Process Step,Monitoring,"Ongoing process of tracking model performance and data quality after deployment. It helps detect issues such as data drift, concept drift, performance degradation, or system failures. Monitoring ensures the model continues to perform as expected over time. When problems are detected, retraining or model updates may be required.",16.0,105.0,2.0,16.0
+ML Project,Process Step,Exploratory Data Analysis,"Foundational step in ensuring the success of a machine learning model—and, by extension, the overall project. Its purpose is to confirm that the data is appropriately structured, consistent, and of sufficient quality to support reliable modeling.
+
+While every dataset and project is unique, applying a consistent EDA approach helps reduce the laborious and time-consuming nature of data preparation. A structured process enables quicker identification of data issues, improves understanding of key variables and relationships, and creates a more stable foundation for subsequent modeling decisions. ",16.0,105.0,1.0,16.0
+ML Project,Process Step,Feature Engineering,"Process of creating new input variables that better represent the underlying patterns in the data. It may include transformations (log, scaling), aggregations, interactions, temporal features, or domain-specific encodings. Effective feature engineering can significantly improve model performance even with simple algorithms. It embeds domain knowledge into the model and often provides more value than algorithmic complexity.  It is often one of the most impactful steps in the machine learning workflow.",16.0,105.0,1.0,16.0
+ML Project,Process Step,Training,"Process of fitting a machine learning model to data so it can learn the relationships between input features and the target variable. During training, the model adjusts its internal parameters to minimize a loss function. This step typically occurs on a designated training dataset. The quality of training directly affects the model’s ability to generalize to new, unseen data.",16.0,105.0,1.0,16.0
+ML Project,Process Step,Hyperparameter Tuning,"Optimizing the configuration settings that control how a model learns, rather than the parameters learned during training. These settings, such as tree depth or regularization strength, can significantly influence model performance and stability. Tuning is typically done using methods like grid search, random search, or Bayesian optimization. The goal is to identify the hyperparameter combination that produces the best validation performance.",16.0,105.0,1.0,16.0
+ML Project,Process Step,Model Evaluation,"Process of measuring how well a trained model performs using appropriate metrics and test data. This step assesses predictive accuracy, generalization, and robustness. Different metrics are used depending on the problem type, such as accuracy, F1 score, RMSE, or AUC. Evaluation ensures the model meets performance expectations before deployment, and results often determine whether a model is production-ready.",16.0,105.0,1.0,16.0
+ML Project,Process Step,Validation,"Validation is the process of assessing model performance on data that was not used during training. It is used to tune hyperparameters, compare models, and detect overfitting. Common approaches include hold-out validation and cross-validation techniques. The purpose is to estimate how well the model will perform on unseen data.",16.0,105.0,1.0,16.0
+ML Project,Process Step,Deployment,"Deployment is the process of integrating the trained model into a production environment where it can generate real-world predictions. This may involve APIs, batch pipelines, streaming systems, or embedded applications. Considerations include scalability, latency, reliability, and versioning. Deployment turns a model from an experiment into a usable product. The goal is to make the model usable and operational in real-world settings.",16.0,105.0,1.0,16.0
+ML Project,Process Step,"Bias, Fairness, and Ethics","This step examines whether the model produces systematically unfair or harmful outcomes across different groups. It includes analyzing data representation, outcome disparities, and unintended correlations. Ethical considerations may involve transparency, consent, explainability, and regulatory compliance. Addressing bias and fairness is essential for responsible, trustworthy, and legally compliant ML systems.",16.0,105.0,1.0,16.0
+Problem Definition,Process Step,Requirement,"Attempt to explicitly define outcomes and relevant KPIs for those outcomes. Where that can not happen, it is important to understand why that can not happen. What is happening if we dont have and follow metrics. IE. The Account Opening Process is not effiicient and needs to improve, The Internet Banking Experience is poor, and does not attract customers. How do you monitor this, how can you define this, how can you prove this,  how do you expect this to change and measure that change.
+
+How will the project and efforts be measured where success can not be objectively measured? How will resources be allocated when it remains unclear what benefit or risk exists.",9.0,105.0,44.0,9.0
+Problem Definition,Process Step,Requirement,"Must be careful at how problem is defined. Is it defined in the context of the already identifed solution, has it been validated and is the problem distinct from the analysis and potential solution, or have we leaked into the process.",9.0,105.0,44.0,9.0
+Problem Definition,Process Step,Consideration,"How Invested are stakeholders in defining the problem? What is their view of the process/ project, how invested, interested and engaged are they. What are their personal goals and motivation, speed, accuracy, validation of ideology?",9.0,105.0,7.0,9.0
+Problem Definition,Process Step,Consideration,"Proceed with extreme caution where the problem statement is incomplete, or ill-stated, as this is likely indicative that the problem is not truly understood or at a minimum defined. Where this is the case, the project will be at extreme risk and the likelihood of not meeting expectations, frustration, or material change to purpose, scope or priority is inevitable.",9.0,105.0,7.0,9.0
+Problem Definition,Process Step,Desired State Metrics,"Describe the target outcomes or performance levels that define success. They show what improvement looks like in measurable terms and help guide priorities and actions. This is important because clear targets create alignment, focus efforts, and allow teams to track progress toward meaningful results.",9.0,105.0,1.0,9.0
+Problem Definition,Process Step,Current State Analysis,"Describes how the process, system, or situation is functioning today. It provides a factual, objective picture of what is happening, without assumptions or solutions. This is important because it ensures everyone has a shared understanding of reality before trying to fix the problem.",9.0,105.0,1.0,9.0
+Problem Definition,Process Step,Root Cause Assessment,"Identifies the underlying reasons why the problem exists. Rather than focusing on symptoms, it explores the fundamental drivers using methods such as the “5 Whys” or cause-and-effect analysis. This is important because addressing root causes leads to sustainable improvements, while only treating symptoms often results in recurring issues.",9.0,105.0,1.0,9.0
+Problem Definition,Process Step,Historical Overview,"Summarizes what actions, initiatives, or attempts have already been made to address the problem. It explains what was tried, what worked, and what did not. This is important because it prevents repeating past mistakes and helps build on lessons learned.",9.0,105.0,1.0,9.0
+Problem Definition,Process Step,Baseline Metrics (Current State),"Quantify the current state of the problem using measurable data such as performance indicators, volumes, timelines, or quality measures. These metrics provide an objective reference point for understanding the scope and impact of the issue. This is important because improvement cannot be measured without a clear starting baseline.",9.0,105.0,1.0,9.0
+Process Development,Process Step,Documented,"Written down in a clear, accessible format that describes the steps, roles, and expectations. Documentation creates a single source of truth and reduces reliance on memory or informal knowledge. This is important because it ensures consistency, supports training, and allows the process to be sustained even when staff or circumstances change. 
+
+Documented is not sufficient, it must be accessible, available and known. Even when these conditions are met, one must acknowledge that the vast majoirty of people are likely not interested, or willing to read.",9.0,105.0,1.0,9.0
+Process Development,Process Step,Communicated,"Actively shared with all relevant stakeholders so they understand what the process is, why it matters, and how to follow it. Communication includes orientation, reminders, and opportunities for clarification. This is important because even the best-designed process will fail if people are unaware of it or misunderstand their roles, or forget.",9.0,105.0,1.0,9.0
+Process Development,Process Step,Supported,"Ancillary resources must be available to support implementation and perfection, which is critically important at the outset. This includes  training, coaching, tools, and ongoing guidance, and learning. Another critical compoent of this is monitoring and feedback which is necssary to ensure the process is being applied as intended and working as expected, as it is critical to acknowledge imperfections (or complete failure as appropriate).",9.0,105.0,1.0,9.0
+Process Development,Process Step,Measured,"Includes defined metrics that track whether the process is being followed and whether it is producing the intended results. Measurement provides objective evidence of performance, progress, and areas needing improvement. This is important because without measurement, it is difficult to know if the process is effective or where adjustments are required.
+
+Also, it is critical to remember that individuals without feedback, may honestly not understand whether they are following a process as designed and intended, depsite their best efforts.",9.0,105.0,1.0,9.0
+Process Development,Process Step,Simple,"Easy to understand, follow, and execute without unnecessary steps or complexity. Simplicity reduces errors, shortens training time, and makes the process more adaptable to change. The more complex a process is, the less likely it will truly generalize or obtain the support and adoption necessary to perfect and embed.",9.0,105.0,1.0,9.0
+Process Development,Process Step,Clear,"Communicates expectations, roles, and steps in a way that leaves little room for confusion or interpretation. It ensures that everyone involved understands what to do, when to do it, and how success is defined. Clarity is important because it promotes consistency, accountability, and smooth coordination across teams.",9.0,105.0,1.0,9.0
+Process Development,Process Step,Evident,"Makes the right actions and outcomes visible through straightforward steps, cues, or built-in checks. It allows people to quickly see whether the process is being followed correctly and whether it is producing the intended results. This is important because visibility helps teams detect issues early and maintain quality.",9.0,105.0,1.0,9.0
+Process Development,Process Step,Obvious,"Mmakes the correct next step intuitive, even for someone new or unfamiliar with the work. It reduces reliance on memory, interpretation, or specialized knowledge to complete tasks correctly. This is important because when the right action is obvious, compliance increases and variation decreases, leading to more reliable outcomes.",9.0,105.0,1.0,9.0
+Process Development,Process Step,Accountability,"Are Roles and Responsbilities explicity stated? and Is it clear who is responsible for what. Are goals SMART (or atleast defined) or at a minimum, is our partcipation understood and documented.  ",9.0,105.0,1.0,9.0
+Feature Selection,Process Step,Requirement,Generate feature importance or explanation outputs. Helps understand what drives model predictions.,7.0,105.0,44.0,7.0
+Feature Selection,Process Step,Requirement,Remove features with high missingness or low variance. Reduces noise and improves model stability.,7.0,105.0,44.0,7.0
+Feature Selection,Process Step,Requirement,Check for multicollinearity or redundant features. Helps prevent unstable models and improves interpretability.,7.0,105.0,44.0,7.0
+Feature Selection,Process Step,Requirement,Validate selected features using model or statistical methods. Ensures the retained features actually contribute to predictive performance.,7.0,105.0,44.0,7.0
+Feature Selection,Process Step,Consideration,"Avoid ambigious features. Is a Banana ripe, who says so?",7.0,105.0,7.0,7.0
+Feature Selection,Process Step,Consideration,"Careful when something is truly random generated, Atmospheric Change, Earthquakes, Stocks. Very difficult, if not impossible to predict.",7.0,105.0,7.0,7.0
+Feature Selection,Process Step,Consideration,"How robust is your model to change and what is it actually predict. 
+MNIST performance when tilting Images, of adding noise.",7.0,105.0,7.0,7.0
+Goal Setting,Process Step,Requirement,"Are Goals Documented. Are the Smart.
+If not, what does this imply and how do we proceed forward while mitigating risk.",6.0,105.0,44.0,6.0
+Goal Setting,Process Step,Specific,"Describes what will be accomplished and what success will look like. It answers the questions: What will I do? Who is involved? What area am I focusing on? The more precise the goal, the easier it is to plan actions and stay focused.",6.0,105.0,1.0,6.0
+Goal Setting,Process Step,Measurable,"Includes a clear way to track progress or determine success. This may involve numbers, percentages, milestones, deliverables, or observable outcomes. Measurement ensures accountability and helps you know when the goal has been achieved.",6.0,105.0,1.0,6.0
+Goal Setting,Process Step,Achievable,"Realistic given available time, resources, skills, and competing priorities. It should stretch performance but still be possible to accomplish with focused effort. Setting achievable goals helps maintain motivation and builds confidence through success.",6.0,105.0,1.0,6.0
+Goal Setting,Process Step,Relevant,"Aligns with broader priorities, such as team objectives, organizational strategy, or personal development plans. It should contribute meaningful value rather than being an isolated or low-impact task. Relevance ensures time and energy are spent on what matters most.",6.0,105.0,1.0,6.0
+Goal Setting,Process Step,Time Bound,"Includes a clear deadline or timeframe for completion. This creates urgency, supports planning, and prevents goals from being postponed indefinitely. Defined timelines also make it easier to monitor progress and adjust actions if needed.",6.0,105.0,1.0,6.0
+Hyperparameter Tuning,Process Step,Requirement,Define a clear search space for key hyperparameters. Ensures tuning focuses on meaningful configurations.,5.0,105.0,44.0,5.0
+Hyperparameter Tuning,Process Step,Requirement,Use cross-validation or a validation set for tuning. Prevents overfitting to the training data.,5.0,105.0,44.0,5.0
+Hyperparameter Tuning,Process Step,Requirement,Record best parameters and associated performance. Allows reproducibility and comparison across experiments.,5.0,105.0,44.0,5.0
+Hyperparameter Tuning,Process Step,Requirement,"Define Parameters you will tune and approach to tuning before you commence tuning. Do not simply tune model to optimal parameters without considering what you are actually doing, and its ability to generalize.",5.0,105.0,44.0,5.0
+Hyperparameter Tuning,Process Step,Python Function,Process for this to be created from existing manual leaning processes.,5.0,105.0,2.0,5.0
+Poetry,,Install into Folder,poetry init,5.0,,1.0,
+Poetry,,Run to Activate,poetry install,5.0,,1.0,
+Poetry,,Check Environment,poetry env info,5.0,,1.0,
+Poetry,,,"poetry config virtualenvs.in-project true or poetry config virtualenvs.in-project true --local.
+Determines where Poetry will save the environment, --local means for 1 project, not local it holds for all projects.",5.0,,,
+Poetry,,,Create a .toml File.,5.0,,,
+Model Selection,Process Step,Requirement,"Define what the objective of the model work is, state what is being measured and why. Document all models which will be considered, including why they are appropriate and where models are excluded, insure rationale available. Compare multiple model types using the same validation approach. Ensures a fair comparison and better-informed model choice.",4.0,105.0,44.0,4.0
+Model Selection,Process Step,Requirement,"Create Simplified Baseline Model, use this are reference. Ensure that this is communicated to Stakeholders, so they understand both the benchmark and expectation, to determine relevance. Should align with Goals.",4.0,105.0,44.0,4.0
+Model Selection,Process Step,Requirement,"Consider interpretability, performance, and computational cost. Balances practical constraints with predictive accuracy.",4.0,105.0,44.0,4.0
+Training,Process Step,Requirement,"Is split between Training, Testing and Validation appropriate, fair and responsable. Validate and document.",4.0,105.0,44.0,4.0
+Training,Process Step,Requirement,Verify model converges and loss decreases during training. Confirms the model is learning meaningful patterns.,4.0,105.0,44.0,4.0
+Training,Process Step,Requirement,"Log model parameters, features, training configuration and results. Supports reproducibility and troubleshooting.",4.0,105.0,44.0,4.0
+Validation/ Model Selection,Process Step,Requirement,"Ensure that final selection is documented and agreed by apporpiate stakeholders, who have been part of entire development journey, understand and are aware.",4.0,105.0,44.0,4.0
+Validation/ Model Selection,Process Step,Requirement,Use cross-validation or a structured validation approach. Provides a more reliable estimate of model performance.,4.0,105.0,44.0,4.0
+Validation/ Model Selection,Process Step,Requirement,Ensure no data leakage between training and validation sets. Prevents overly optimistic performance estimates.,4.0,105.0,44.0,4.0
+Validation/ Model Selection,Process Step,Requirement,Confirm performance stability across folds or time splits. Indicates the model is robust and generalizable.,4.0,105.0,44.0,4.0
+Model Selection,Process Step,Consideration,"Models will cheat and can solve problems which appear to be optimal, but they might not be solving what you expect or require, they might be finding patterns in the data which you do not see. An Example of this would a classification model with Wolves and Dogs,  many wolf photos happened to be taken in snowy environments, while dog photos were often taken indoors or on grass. The model learned to detect snow, not animals.",4.0,105.0,7.0,4.0
+Training,Process Step,Consideration,"Any data set can be optimized, even when there is NO relation it will generalize. Remember the goal, ability to generalize, not simply predict training.",4.0,105.0,7.0,4.0
+Data Collection,Process Step,Requirement,"What consessions have we made due to a lack of data availability, and how are those going to undermine the work we plan on doing. ",3.0,105.0,44.0,3.0
+Data Collection,Process Step,Requirement,"Who is the Data Steward, are they involved, and operationally do we have integrity, consistency and availability to include?",3.0,105.0,44.0,3.0
+Data Collection,Process Step,Requirement,"Review Semantic and Functional Definitions, ensuring there is sufficient and appropriate coverage. Testing and decisioning to occur during Feature Selection.",3.0,105.0,44.0,3.0
+Feature Engineering,Process Step,Requirement,"What ratios or proportions could better represent behavior than raw values? Many real-world patterns depend on relative size (e.g., debt-to-income, usage-to-capacity), so ratios often reveal signal that absolute values hide.",3.0,105.0,44.0,3.0
+Feature Engineering,Process Step,Requirement,"What combinations or interactions might reflect how factors work together? Some outcomes are driven by the interaction between variables (e.g., high balance and high transaction frequency), so combining features can expose relationships a model might miss.",3.0,105.0,44.0,3.0
+Feature Engineering,Process Step,Requirement,"What time-based changes or aggregates could capture trends or stability? Differences, growth rates, or rolling averages often reflect momentum or consistency, which are strong predictors of future behavior.",3.0,105.0,44.0,3.0
+Model Evaluation,Process Step,Requirement,Use metrics appropriate to the problem type and business goal. Ensures the model is evaluated in a way that reflects real-world impact.,3.0,105.0,44.0,3.0
+Model Evaluation,Process Step,Requirement,Evaluate performance on a hold-out test set. Provides an unbiased estimate of generalization performance.,3.0,105.0,44.0,3.0
+Model Evaluation,Process Step,Requirement,Check for overfitting by comparing training and test results. Identifies models that may not perform well in production.,3.0,105.0,44.0,3.0
+Model Interpretability,Process Step,Requirement,Utilize feature importance metrics to visualize and explain.,3.0,105.0,44.0,3.0
+Model Interpretability,Process Step,Requirement,"This should be a formal step as engagement along the way has predicted on this as a core tenant and principle. If people seem shocked, embed stronger components earlier in process. ",3.0,105.0,44.0,3.0
+Model Interpretability,Process Step,Requirement,Document model behavior and major drivers. Supports stakeholder understanding and auditability.,3.0,105.0,44.0,3.0
+Deployment,Process Step,Requirement,Package the model with all required preprocessing steps. Ensures predictions in production match training conditions.,3.0,105.0,44.0,3.0
+Deployment,Process Step,Requirement,Test the model in a staging or test environment. Utilize Dedicated Environment. Reduces risk of failures in production.,3.0,105.0,44.0,3.0
+Deployment,Process Step,Requirement,"Create a versioned and reproducible deployment artifact. Supports rollback, auditing, and maintenance.",3.0,105.0,44.0,3.0
+Monitoring,Process Step,Requirement,Track model performance metrics over time. Detects degradation or drift after deployment.,3.0,105.0,44.0,3.0
+Monitoring,Process Step,Requirement,Monitor input data distributions for drift. Identifies changes in data that could affect predictions.,3.0,105.0,44.0,3.0
+Monitoring,Process Step,Requirement,Define triggers for retraining or model review. Ensures timely corrective action when performance declines.,3.0,105.0,44.0,3.0
+"Bias, Fairness, and Ethics",Process Step,Requirement,Evaluate model performance across key demographic or operational groups. Identifies potential unfair or unequal outcomes.,3.0,105.0,44.0,3.0
+"Bias, Fairness, and Ethics",Process Step,Requirement,Review sensitive features and proxy variables. Prevents unintended discrimination.,3.0,105.0,44.0,3.0
+"Bias, Fairness, and Ethics",Process Step,Requirement,"Document fairness checks and mitigation steps. Supports transparency, accountability, and compliance.",3.0,105.0,44.0,3.0
+Data Preparation,Process Step,Requirement,"Define strategies around Imputation, Deletion, Standardization.",2.0,105.0,44.0,2.0
+Data Preparation,Process Step,Requirement,"Model Pipleine, including training, testing and validation strategies.",2.0,105.0,44.0,2.0
+Exploratory Data Analysis,Process Step,Python Function,Reference Process Here,2.0,105.0,2.0,2.0
+Exploratory Data Analysis,Process Step,Dashboard,Reference Process Here,2.0,105.0,1.0,2.0
+Project Folder Structure,,,Use Python src/ NAME_OF_FOLDER,1.0,,,
+,,Add Package,poetry add,,,1.0,
+,,Show Packages,poetry show,,,1.0,
+,,Use Specific Version,poetry env use python3.11,,,1.0,
+,,Update TOML,poetry lock,,,1.0,
+,,,poetry add --group dev jupyterlab ipykernel,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,"O layer: input objects, output objects (schemas)",,,,
+,,,"Core steps: prompt(s), model call(s), parsing, validation",,,,
+,,,Memory/RAG (optional): retrieval + citations,,,,
+,,,Tools (optional): functions the model can call,,,,
+,,,"Orchestration: how steps chain, branch, retry",,,,
+,,,"Logging/trace: what happened, why, latency, failures",,,,
+,,,,,,,
+,,,,,,,
+,,,,,,,
+,,,Data Layer,,,,
+,,,Signal Extraction Layer,,,,
+,,,Recommednation Layer,,,,
+,,,Feedback + evaluation loop,,,,

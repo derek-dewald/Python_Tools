@@ -144,3 +144,31 @@ def flatten_clean_dict(dict_,
         
         #final_df = final_df.reset_index().rename(columns={'index':index_name})
         return final_df
+    
+def create_txt_from_dict(dict_,
+                         file_name='text_file_from_python.txt'):
+
+    '''
+    Function which Generates a .TXT file from a single layer python dictionary, outputing each item as a new line. Technically it should
+    work on multiple layer dictionary, output should be str. Not sure how it would responded, tested for single layer.
+
+    Developed when Validating EFT Swift files and needed to validate Excess Information
+
+    Parameters:
+        dict_(dict): Python Dictionary
+        file_name(str): Output Name of .txt File. Default text_file_from_python.txt
+
+    Returns:
+        .txt
+
+    date_created:15-Feb-26
+    date_last_modified: 15-Feb-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        Example Function Call
+        
+    '''
+    with open(file_name, "w") as f:
+        for key, value in dict_.items():
+            f.write(f"{key}: {value}\n")
