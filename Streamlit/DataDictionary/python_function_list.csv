@@ -180,6 +180,9 @@ generate_streamlit_definition_summary,"Generate a series of Group By Statements 
 Generates a CSV file which is saved in shared folder.",['file_name'],"None update: 15-Feb-16: Added file_name as parameter, enabling the generation of Notes, Definition or Learning Notes as combinations.",08-Feb-26,15-Feb-26,TBD,TBD,"generate_streamlit_definition_summary('google_definition_csv')
 generate_streamlit_definition_summary('d_knowledge_base_url')
 generate_streamlit_definition_summary('google_notes_csv')",daily_processes.py
+generate_process_checklist_output,"Function to create final checklist, iterating through all required processes.
+Utilized as input in Streamlit Dashboard - Process Checklist","['df', 'process_list']","df (csv output, saved to folder which will be updated in Git)",09-Mar-26,09-Mar-26,TBD,TBD,Example Function Call,daily_processes.py
+generate_process_checklist,baseorder1: Count of De-duplicated Process - Word Order of Apperance.,"['df', 'process_name']",,,,,,,daily_processes.py
 input1,"Originally Named convert_dict_to_parameters
 Convert a .py file containing Dict into a Dataframe which can is used to populate Function Parameters",['module'],Dataframe,4-Dec-25,4-Dec-25,TBD,TBD,"import d_dictionaries
 temp = convertlisttoparameters(d_dictionaries)",input_functions_ignore.py

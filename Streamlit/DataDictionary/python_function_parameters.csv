@@ -301,6 +301,10 @@ daily_test,file_location,,,daily_processes.py
 review_test_results,file_location,,,daily_processes.py
 review_test_results,sample_records,,,daily_processes.py
 generate_streamlit_definition_summary,file_name,str,"Specific Name from Dictionary Links, which has the link to 1 of 3 files as default, to provide summary analysis.",daily_processes.py
+generate_process_checklist_output,df,dataframe,"If Blank, it will pull from Git Hub.",daily_processes.py
+generate_process_checklist_output,process_list,list,List of processes to compule,daily_processes.py
+generate_process_checklist,df,,,daily_processes.py
+generate_process_checklist,process_name,,,daily_processes.py
 input1,module,module,Py file containing Dict.,input_functions_ignore.py
 input2,module,module,Py file containing Lists.,input_functions_ignore.py
 input3,module,module,Py file containing Strings.,input_functions_ignore.py
@@ -360,7 +364,7 @@ tranpose_df,columns,list,Columns to unpivot into key-value pairs.,df_processing.
 declare_customer_column_sort_order,df,df,Dataframe,df_processing.py
 declare_customer_column_sort_order,column_name,str,Name of Column,df_processing.py
 declare_customer_column_sort_order,column_order_list,list_,Priority Desired.,df_processing.py
-Reference String,today,str,16-Feb-26,data_d_strings.py
+Reference String,today,str,09-Mar-26,data_d_strings.py
 Reference String,template_doc_string,str,"
 
     Definition of Function
@@ -371,8 +375,8 @@ Reference String,template_doc_string,str,"
     Returns:
         Object Type
 
-    date_created:16-Feb-26
-    date_last_modified: 16-Feb-26
+    date_created:09-Mar-26
+    date_last_modified: 09-Mar-26
     classification:TBD
     sub_classification:TBD
     usage:
@@ -408,6 +412,7 @@ links,folder_toc_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_
 links,d_knowledge_base_url,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_knowledge_base.csv,data_d_lists.py
 links,technical_notes,dict,https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv,data_d_lists.py
 links,d_daily_test_score,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/daily_test_results.csv,data_d_lists.py
+links,process_cl,dict,https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/d_knowledge_process_checklist.csv,data_d_lists.py
 emoji_dict,STATUS,dict,"{'label': 'Status / Progress / Outcome', 'description': 'Execution state, progress tracking, completion, and flow of work.', 'emojis': ['✅', '✔️', '⏸️', '🟢', '🟡', '🔴', '⏳', '🕐', '📤', '📥', '🗂️']}",data_d_lists.py
 emoji_dict,DATA,dict,"{'label': 'Data / Analytics / Artifacts', 'description': 'Raw data, analytical outputs, reports, documentation, and structured artifacts.', 'emojis': ['📊', '📈', '📉', '📋', '📝', '📚', '🔢', '📦', '🧾']}",data_d_lists.py
 emoji_dict,QUALITY,dict,"{'label': 'Data Quality / Validity / Trust', 'description': 'Data cleanliness, assumptions, validation, lineage, and reliability checks.', 'emojis': ['🧼', '🔍', '🧪', '🧾', '🧯', '🪪']}",data_d_lists.py

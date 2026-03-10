@@ -347,3 +347,82 @@ def generate_streamlit_definition_summary(file_name):
         pass
     
     return final_df
+
+def generate_process_checklist_output(df=pd.DataFrame(),process_list =['ML Project']):
+    
+    '''
+    
+    Function to create final checklist, iterating through all required processes. 
+
+    Utilized as input in Streamlit Dashboard - Process Checklist
+
+    Parameters:
+        df (dataframe): If Blank, it will pull from Git Hub.
+        process_list (list): List of processes to compule
+
+    Returns:
+        df (csv output, saved to folder which will be updated in Git)
+
+    date_created:09-Mar-26
+    date_last_modified: 09-Mar-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        Example Function Call
+    
+    
+    '''
+
+    if len(df)==0:
+        df = pd.read_csv(links['d_knowledge_base_url'])
+    else:
+        df = df.copy()
+
+    final_df = pd.DataFrame()
+    
+    for process in process_list:
+        final_df = pd.concat([
+            final_df,
+            generate_process_checklist(df,process)
+        ])
+
+    final_df.to_csv('/Users/derekdewald/Documents/Python/Github_Repo/Data/d_knowledge_process_checklist.csv',index=False)
+
+    return final_df
+
+
+def generate_process_checklist(df=None,process_name='ML Project'):
+    '''
+
+    baseorder1: Count of De-duplicated Process - Word Order of Apperance.
+
+    '''
+    
+    if len(df)==0:
+        df = pd.read_csv(links['d_knowledge_base_url'])
+    else:
+        df = df.copy()
+
+    # Base Order Mapping is to understand the Word Order for Process under consideration. As such needs to be a filtered DF, not the entire DF
+    # Can Apply it to the entire DF, because all records which are contained in final Dataset MUST have it included for filtering, and will
+    # Be dropped. 
+
+    baseorder1_map = df[df['Process']==process_name].reset_index(drop=True).reset_index().set_index('Word')['index'].to_dict()
+    df['baseorder1'] = df['Word'].map(baseorder1_map)
+    
+    # Start with Process. Merge In Components of Word
+    base_df = df[df['Process']==process_name].copy()
+    
+    process_extension = df[df['Process'].isin(base_df['Word'])].drop('baseorder1',axis=1).copy()
+    baseorder2_map = process_extension.reset_index(drop=True).reset_index().set_index('Word')['index'].to_dict()
+    process_extension['baseorder1'] = process_extension['Process'].map(baseorder1_map)
+    process_extension['baseorder2'] = process_extension['Word'].map(baseorder2_map)
+    process_extension['Categorization'] = process_extension['Process'].copy()
+    process_extension['Process'] = process_name
+
+    base_df = pd.concat([
+        base_df,
+        process_extension
+    ]).fillna(0).sort_values(['baseorder1','baseorder2'])  
+    
+    return base_df.drop(['baseorder1','baseorder2'],axis=1)
