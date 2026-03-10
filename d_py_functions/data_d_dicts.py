@@ -41,7 +41,8 @@ links = {
     'd_knowledge_base_url':"https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_knowledge_base.csv",
     #'d_learning_notes_url':"https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_learning_notes.csv",
     'technical_notes':'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv',
-    'd_daily_test_score':'https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/daily_test_results.csv'
+    'd_daily_test_score':'https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/daily_test_results.csv',
+    'process_cl':'https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/d_knowledge_process_checklist.csv'
 }
 
 emoji_dict = {

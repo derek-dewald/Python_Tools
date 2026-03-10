@@ -5,7 +5,7 @@ import datetime
 import sys
 sys.path.append("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions")
 
-from daily_processes import generate_knowledge_base,create_py_table_dict,parse_dot_py_folder, generate_streamlit_definition_summary
+from daily_processes import generate_knowledge_base,create_py_table_dict,parse_dot_py_folder, generate_streamlit_definition_summary,generate_process_checklist_output
 from connections import download_file_from_git,backup_google_worksheets
 
 # Updates saved //Github_Repo//Data//daily_test_results.csv which is Streamlit Input, Via Git.
@@ -28,6 +28,7 @@ parse_dot_py_folder()
 generate_streamlit_definition_summary('google_definition_csv')
 generate_streamlit_definition_summary('d_knowledge_base_url')
 generate_streamlit_definition_summary('google_notes_csv')
+generate_process_checklist_output()
 
 # Back Up Google Sheets and Git Files Once a Week (On Wednesday)
 # Github_Repo/CSV Backup Files/

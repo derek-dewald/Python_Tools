@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from st_aggrid import AgGrid, GridOptionsBuilder,GridUpdateMode
+from st_aggrid import AgGrid, GridOptionsBuilder,GridUpdateMode, DataReturnMode
 import streamlit.components.v1 as components
 import streamlit as st
 
@@ -12,7 +12,7 @@ import textwrap
 import html
 
 
-# To Download Project Template 
+# To Download Project Checklist 
 from openpyxl.utils import get_column_letter
 from openpyxl.styles import Alignment
 from typing import Iterable, Optional
@@ -115,7 +115,8 @@ def load_data():
     google_definition_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv'
     google_word_quote = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=1117793378&single=true&output=csv'
     technical_notes = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv'
-    
+    process_cl = 'https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/d_knowledge_process_checklist.csv'
+
     data_dict = {}
 
     data_dict['google_notes_df'] = pd.read_csv(google_note_csv)
@@ -130,6 +131,7 @@ def load_data():
     data_dict['def_summary'] = pd.read_csv(def_summary_url)
     data_dict['d_word_quote'] = pd.read_csv(google_word_quote)
     data_dict['technical_notes'] = pd.read_csv(technical_notes)
+    data_dict['process_cl'] = pd.read_csv(process_cl)
     
 
     # ✅ Folder first, then Function
@@ -151,7 +153,7 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ "Knowledge Base",'D Notes', 'D Definitions',"Frequency Summarization",'Technical Notes','Words and Quotes','Project Template',
+    [ "Knowledge Base",'D Notes', 'D Definitions',"Frequency Summarization",'Technical Notes','Words and Quotes','Process Checklist',
      "Function List", "Function Parameters",  'Folder Table of Content', 
      ]
 )
@@ -452,9 +454,6 @@ elif page == "Words and Quotes":
 elif page == "D Definitions":
     st.title("D Definitions")
 
-    import pandas as pd
-    from st_aggrid import AgGrid, GridOptionsBuilder, GridUpdateMode, DataReturnMode
-
     df_base = data_dict["google_definition_df"].copy()
 
     # Only convert actual NaN/None to ""
@@ -578,6 +577,10 @@ elif page == "D Definitions":
                     else:
                         st.markdown(f"**{field}:**")
                         st.write(v)
+
+# -----------------------------------
+# Technical Notes
+# -----------------------------------
 
 elif page == "Technical Notes":
     st.title("Technical Notes")
@@ -796,3 +799,104 @@ elif page == "Frequency Summarization":
         height=800,
         theme="streamlit",
     )
+
+
+
+# -----------------------------------
+# Process Check List
+# -----------------------------------
+
+elif page == "Process Checklist":
+    st.title("Process Checklist")
+
+    df_base = data_dict["process_cl"].copy()
+
+    # Only convert actual NaN/None to ""
+    df_base = df_base.fillna("")
+
+    required = ["Process", "Categorization", "Word", "Definition"]
+    missing = [c for c in required if c not in df_base.columns]
+    if missing:
+        st.error(f"google_definition_df is missing required columns: {missing}")
+        st.stop()
+
+    # ----------------------------
+    # 1) Slicers
+    # ----------------------------
+    c1, c2, c3 = st.columns([1, 1, 1])
+
+    with c1:
+        opts1 = ["(All)"] + sorted([x for x in df_base["Process"].astype(str).unique() if str(x).strip()])
+        sel1 = st.selectbox("Process", opts1, index=0)
+
+    df1 = df_base if sel1 == "(All)" else df_base[df_base["Process"].astype(str) == str(sel1)]
+
+    with c2:
+        opts2 = ["(All)"] + sorted([x for x in df1["Categorization"].astype(str).unique() if str(x).strip()])
+        sel2 = st.selectbox("Categorization", opts2, index=0)
+
+    df2 = df1 if sel2 == "(All)" else df1[df1["Categorization"].astype(str) == str(sel2)]
+
+    with c3:
+        opts3 = ["(All)"] + sorted([x for x in df2["Word"].astype(str).unique() if str(x).strip()])
+        sel3 = st.selectbox("Word", opts3, index=0)
+
+    df_view_full = df2 if sel3 == "(All)" else df2[df2["Word"].astype(str) == str(sel3)]
+    st.caption(f"Rows: {len(df_view_full)}")
+
+    # ----------------------------
+    # 2) Grid (4 visible cols) + hidden _row_id
+    # ----------------------------
+    df_view_full = df_view_full.copy().reset_index(drop=False).rename(columns={"index": "_row_id"})
+
+    st.caption(f"Rows: {len(df_view_full)}")
+
+    download_df = df_view_full.copy()
+
+    excel_bytes = df_to_excel_bytes(
+        download_df,
+        sheet_name="Process Checklist",
+        default_max_width=30,
+        long_columns=["Definition"],
+        long_max_width=80
+    )
+
+    st.download_button(
+        label="Download Process Checklist",
+        data=excel_bytes,
+        file_name="process_checklist.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+    )
+
+    visible_cols = ["Process", "Categorization", "Word", "Definition"]
+    grid_df = df_view_full[["_row_id"] + visible_cols].copy()
+
+    gb = GridOptionsBuilder.from_dataframe(grid_df)
+    gb.configure_default_column(resizable=True, sortable=True, filter=True, wrapText=True, autoHeight=True)
+    gb.configure_selection("single", use_checkbox=False)
+    gb.configure_column("_row_id", hide=True)
+
+    gb.configure_column("Process", width=120)
+    gb.configure_column("Categorization", width=160)
+    gb.configure_column("Word", width=160)
+    gb.configure_column("Definition", width=520)
+
+    grid_resp = AgGrid(
+        grid_df,
+        gridOptions=gb.build(),
+        height=500,
+        fit_columns_on_grid_load=True,
+        allow_unsafe_jscode=True,
+        update_mode=GridUpdateMode.SELECTION_CHANGED,
+        data_return_mode=DataReturnMode.FILTERED_AND_SORTED,
+    )
+
+    selected_rows = grid_resp.get("selected_rows", [])
+    if selected_rows is None:
+        selected_rows = []
+    elif isinstance(selected_rows, pd.DataFrame):
+        selected_rows = selected_rows.to_dict("records")
+
+
+
+    # ----------------
