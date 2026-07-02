@@ -153,10 +153,29 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ "Knowledge Base",'D Notes', 'D Definitions',"Frequency Summarization",'Technical Notes','Words and Quotes','Process Checklist',
+    [ "Home Page","Knowledge Base",'D Notes', 'D Definitions',"Frequency Summarization",'Technical Notes','Words and Quotes','Process Checklist',
      "Function List", "Function Parameters",  'Folder Table of Content', 
      ]
 )
+
+if page == "Home Page":
+    st.title("Home Page")
+    st.markdown("""
+    <ul>
+        <li>Welcome to my Data Science knowledge dashboard.
+            <ul>
+                <li>Definitions</li>
+                <li>Notes</li>
+                <li>Processes</li>
+                <li>Technical Notes</li>
+                <li>Python Functions</li>
+                <li>Daily Words and Quotes</li>
+                <li>Scikit Learn Parameters</li>
+            </ul>
+        </li>
+        <li>Another Main Item</li>
+    </ul>
+    """, unsafe_allow_html=True)
 
 # -------------------------
 # Function List

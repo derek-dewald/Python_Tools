@@ -1,0 +1,23 @@
+[tool.poetry]
+name = "test-env"
+version = "0.1.0"
+description = "Environment to Test Deployment of Items"
+authors = ["Derek Dewald <derekdewald@berkeley.edu>"]
+readme = "README.md"
+
+[tool.poetry.dependencies]
+python = ">=3.11,<3.15"
+pandas = "^3.0.3"
+numpy = ">=2.0,<2.5"
+langchain-community = ">=0.3.0,<0.4.0"
+jupyterlab = ">=4.4,<4.5"
+ipykernel = "^7.3.0"
+streamlit = "^1.58.0"
+streamlit-aggrid = "^1.2.1.post2"
+plotly = "^6.8.0"
+openpyxl = "^3.1.5"
+
+
+[build-system]
+requires = ["poetry-core"]
+build-backend = "poetry.core.masonry.api"

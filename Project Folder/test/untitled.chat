@@ -1,0 +1,29 @@
+{
+  "messages": [
+    {
+      "sender": "976968ec9fc8423e95d8c60a0349fc5e",
+      "deleted": true,
+      "body": "",
+      "time": 1782402965.183889,
+      "raw_time": false,
+      "type": "msg",
+      "id": "717bb23c-d86c-4910-810c-66eb01643e50"
+    }
+  ],
+  "users": {
+    "976968ec9fc8423e95d8c60a0349fc5e": {
+      "name": "Anonymous Taygete",
+      "color": "var(--jp-collaborator-color5)",
+      "initials": "AT",
+      "display_name": "Anonymous Taygete",
+      "bot": false,
+      "username": "976968ec9fc8423e95d8c60a0349fc5e",
+      "avatar_url": null,
+      "mention_name": "Anonymous-Taygete"
+    }
+  },
+  "attachments": {},
+  "metadata": {
+    "id": "fcf070f2-2972-4d5b-9d47-59be17101dd0"
+  }
+}
