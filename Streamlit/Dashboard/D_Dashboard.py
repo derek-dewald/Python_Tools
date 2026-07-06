@@ -133,7 +133,7 @@ def load_data():
     data_dict['google_definition_df'] = pd.read_csv(google_definition_csv)
     data_dict['knowledge_base_df'] = pd.read_excel(knowledge_base_xlsx)
     data_dict['technical_notes_df'] = pd.read_csv(technical_notes)
-    data_dict['processes_df'] = pd.read_csv(processes_xlsx)
+    data_dict['processes_df'] = pd.read_excel(processes_xlsx)
 
     # Normalize: keep your existing behavior (everything to string)
     for dict_key in data_dict.keys():
