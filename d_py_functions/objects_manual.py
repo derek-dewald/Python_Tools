@@ -23,7 +23,7 @@ object_dict['Example'] = {
 # Default Categorization Options for this Sheet. 
 
 object_dict['objects_manual_cat_list'] = {
-    'Process':"Documentation",
+    'Process':"Organziation",
     'Categorization':'Reference List',
     'Word':"Objects Categorization",
     'Definition':"Default Categorization List Options for Objects, which assigns taxonmy to my Organizational Structure",
@@ -42,6 +42,25 @@ object_dict['objects_manual_cat_list'] = {
 
 
 #############################
+
+object_dict['python_str_documentation'] = {
+    'Process':"Organziation",
+    'Categorization':'Reference List',
+    'Word':"Python String Documentation",
+    'Definition':"Default Columns to be included and labelled when documenting personally created functions in Python",
+    'publish':1,
+    'python_object':[
+        'Definition',
+        'Parameters',
+        'Returns',
+        'Date Created',
+        'Date Last Modified',
+        'Process',
+        'Categorization',
+        'Usage',
+        'Notes'
+        ]
+    }
 
 #############################
 
@@ -143,7 +162,7 @@ object_dict['blue_requirmements'] = {
 #############################
 
 object_dict['problem_framework_relative_order'] = {
-    'Process':"Notes",
+    'Process':"Organziation",
     'Categorization':'Filter Order',
     'Word':"Categorization Filter Order",
     'Definition':"Default Column Order to be applied while filtering Notes to D Knowledge Base or/and D Processes",
@@ -216,7 +235,7 @@ object_dict['machine_learning_process'] = {
             'Bias, Fairness, and Ethics']}
 
 object_dict['data_dictionary_columns'] = {
-    'Process':"Data Dictionary",
+    'Process':"Organziation",
     'Categorization':'Column List',
     'Word':"Data Dictionary Columns",
     'Definition':"List of Default Columns Used in Data Dictionary",
@@ -235,7 +254,7 @@ object_dict['data_dictionary_columns'] = {
         ]}
 
 object_dict['activity_notes'] = {
-    'Process':"D Organization",
+    'Process':"Organization",
     'Categorization':'Material Change Log',
     'Word':"activity_notes",
     'Definition':"List of Log Decisions, Material Updated and Changes to D Reporting Structure",
@@ -333,7 +352,7 @@ today = datetime.datetime.now().strftime('%d-%b-%y')
 
 
 object_dict['template_doc_string'] = {
-    'Process':"D Organziation",
+    'Process':"Organziation",
     'Categorization':'Reference String',
     'Word':"template_doc_string",
     'Definition':"Default Structure for Python Doc Strings",

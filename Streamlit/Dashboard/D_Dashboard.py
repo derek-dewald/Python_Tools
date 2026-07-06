@@ -126,7 +126,9 @@ def load_data():
     knowledge_base_xlsx = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/knowledge_base.xlsx"
     technical_notes = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv'
     processes_xlsx = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/defined_processes.xlsx"
-    
+    consolidated_xlsx = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/consolidated_dataset.xlsx"
+    function_list = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/python_function_list.csv"
+    parameter_list = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/cpython_function_parameters.csv"
 
     data_dict = {}
     data_dict['google_notes_df'] = pd.read_csv(google_note_csv)
@@ -134,7 +136,9 @@ def load_data():
     data_dict['knowledge_base_df'] = pd.read_excel(knowledge_base_xlsx)
     data_dict['technical_notes_df'] = pd.read_csv(technical_notes)
     data_dict['processes_df'] = pd.read_excel(processes_xlsx)
-
+    data_dict['processes_df'] = pd.read_excel(consolidated_xlsx)
+    data_dict['function_df'] = pd.read_excel(function_list)
+    data_dict['parameter_df'] = pd.read_excel(parameter_list)
     # Normalize: keep your existing behavior (everything to string)
     for dict_key in data_dict.keys():
         for column in data_dict[dict_key].columns:
@@ -156,7 +160,7 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ "Home Page", 'Definitions','Notes',"Knowledge Base","Technical Notes",'Processes']
+    [ "Home Page", 'Definitions','Notes',"Knowledge Base","Technical Notes",'Processes','Process and Categorization Utilization','Functions']
      #"Frequency Summarization",'Technical Notes','Words and Quotes','Process Checklist',"Function List", "Function Parameters",  'Folder Table of Content', ]
 )
 
@@ -607,6 +611,21 @@ elif page == 'Processes':
         df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
 
     st.caption(f"Rows: {len(df_view)}")
+
+    excel_bytes = df_to_excel_bytes(
+        df_view,
+        sheet_name="Processes",
+        long_columns=["Definition"],
+        default_max_width=30,
+        long_max_width=80
+    )
+
+    st.download_button(
+        label="Download filtered Processes as Excel",
+        data=excel_bytes,
+        file_name="filtered_processes.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+
     gb = GridOptionsBuilder.from_dataframe(df_view)
 
     gb.configure_default_column(
@@ -643,10 +662,174 @@ elif page == 'Processes':
         reload_data=True,
     )
 
+# -----------------------------------
+# Process and Categorization Utilization
+# -----------------------------------
 
 
-    # function_list_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_list.csv"
-    # parameter_list_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_parameters.csv"
+elif page == 'Process and Categorization Utilization':
+    st.title("Process and Categorization Utilization")
+    df_base = data_dict['processes_df'].copy()
+    c1, c2, c3, c4 = st.columns([1, 1, 1, 1])
+
+    c1_word = 'Process'
+    c2_word = 'Categorization'
+    c3_word = 'Location'
+
+    with c1:
+        c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
+        c1_sel = st.selectbox(c1_word, c1_options, index=0)
+
+    df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
+
+    with c2:
+        c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
+        c2_sel = st.selectbox(c2_word, c2_options, index=0)
+
+    df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
+
+    with c3:
+        c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
+        default_index = (c3_options.index("Knowledge Base") if "Knowledge Base" in c3_options else 0)
+        c3_sel = st.selectbox(c3_word,c3_options,index=default_index)
+
+    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
+
+    df_view = df3[['Process','Categorization','Word','Definition']].copy()
+    gb_df = df3[['Process','Categorization','Location']].groupby(['Process','Categorization','Location']).size().reset_index().rename(columns={0:'Record Count'})
+
+    st.caption(f"Rows: {len(gb_df)}")
+
+    gb = GridOptionsBuilder.from_dataframe(gb_df)
+
+    gb.configure_default_column(
+        resizable=True,
+        sortable=True,
+        filter=True,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gb.configure_column(c1_word, width=180, minWidth=220, maxWidth=260)
+    gb.configure_column(c2_word, width=140, minWidth=120, maxWidth=160)
+    gb.configure_column('Location', width=140, minWidth=120, maxWidth=160)
+    gb.configure_column('Record Count', width=100, minWidth=90, maxWidth=120)
+
+    gridOptions = gb.build()
+
+    gridOptions["onGridReady"] = on_grid_ready
+    gridOptions["onGridSizeChanged"] = on_grid_size_changed
+
+    table_col, blank_col = st.columns([5, 6])
+
+    with table_col:
+        AgGrid(
+            gb_df,
+            gridOptions=gridOptions,
+            height= min(400, max(120, 45 + len(gb_df) * 35)),
+            allow_unsafe_jscode=True,
+            fit_columns_on_grid_load=True,
+            reload_data=True,
+        )
+
+    gb1 = GridOptionsBuilder.from_dataframe(df_view)
+
+    gb1.configure_default_column(
+        resizable=True,
+        sortable=True,
+        filter=True,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gb1.configure_column(c1_word, width=100, minWidth=80, maxWidth=120)
+    gb1.configure_column(c2_word, width=100, minWidth=80, maxWidth=120)
+    gb1.configure_column('Word', width=150, minWidth=120, maxWidth=170)
+
+    gb1.configure_column(
+        "Definition",
+        flex=1,
+        minWidth=700,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gridOptions = gb1.build()
+
+    gridOptions["onGridReady"] = on_grid_ready
+    gridOptions["onGridSizeChanged"] = on_grid_size_changed
+
+    AgGrid(
+        df_view,
+        gridOptions=gridOptions,
+        height=800,
+        allow_unsafe_jscode=True,
+        fit_columns_on_grid_load=False,
+        reload_data=True,
+    )
+
+
+# -----------------------------------
+# Functions
+# -----------------------------------
+
+elif page == 'Functions':
+    st.title("Functions")
+    df_base = data_dict['function_df'].copy()
+    c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
+
+    c1_word = 'Process'
+    c2_word = 'Categorization'
+    c3_word = 'Function'
+
+    with c1:
+        c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
+        c1_sel = st.selectbox(c1_word, c1_options, index=0)
+
+    df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
+
+    with c2:
+        c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
+        c2_sel = st.selectbox(c2_word, c2_options, index=0)
+
+    df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
+
+    with c3:
+        c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
+        c3_sel = st.selectbox(c3_word, c3_options, index=0)
+
+    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
+
+    st.caption(f"Rows: {len(df_view)}")
+    gb = GridOptionsBuilder.from_dataframe(df_view)
+
+    gb.configure_default_column(
+        resizable=True,
+        sortable=True,
+        filter=True,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gridOptions = gb.build()
+
+    gridOptions["onGridReady"] = on_grid_ready
+    gridOptions["onGridSizeChanged"] = on_grid_size_changed
+
+    AgGrid(
+        df_view,
+        gridOptions=gridOptions,
+        height=800,
+        allow_unsafe_jscode=True,
+        fit_columns_on_grid_load=False,
+        reload_data=True,
+    )
+
+
+    data_dict['function_df'] = pd.read_excel(function_list)
+    data_dict['parameter_df'] = pd.read_excel(parameter_list)
+
+
     # folder_toc_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/folder_listing.csv"
     # d_knowledge_base_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/d_knowledge_base.csv"
     # notes_def_summary_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/d_learning_notes_url_NUMERIC_SUMMARY.csv"
@@ -659,10 +842,6 @@ elif page == 'Processes':
    
 
 
-    # data_dict['google_notes_df'] = pd.read_csv(google_note_csv)
-    # data_dict['google_definition_df'] = pd.read_csv(google_definition_csv)
-    # data_dict['function_list_df'] = pd.read_csv(function_list_url)
-    # data_dict['parameter_list_df'] = pd.read_csv(parameter_list_url)
     # data_dict['folder_toc_df'] = pd.read_csv(folder_toc_url)
     # data_dict['d_knowledge_base'] = pd.read_csv(d_knowledge_base_url)
     # data_dict['d_knowledge_base'] = data_dict['d_knowledge_base'][['Process','Categorization','Word','Definition']]

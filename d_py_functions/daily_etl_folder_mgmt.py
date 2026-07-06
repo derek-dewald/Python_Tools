@@ -6,6 +6,7 @@ default_structure: Python Function, Documented Consistent with Prevailing Guidan
 module_guidance: Functions which are used in here are to be Stand Alone, sole purpose for management of this daily/monthly/ad hoc periodic files. Can utilize generic functions outside.
 
 '''
+
 import pandas as pd
 import numpy as np
 
@@ -16,30 +17,32 @@ from objects_manual import object_dict
 def extract_consolidated_raw_dataset(df_dict,export_location=False):
     
     '''
-    Create a Consolidated Dataset of files in Dictionary, which are meant to be of the structure Process, Categorization, Word and Definition. Data set for the purposes, 
-    of aggregating totals and _____________. Used as a input for generate_objects_automated_py.
-    
-
+    Definition:
+        Create a Consolidated Dataset of files in Dictionary, which are meant to be of the structure Process, Categorization, Word and Definition. Data set for the purposes, of aggregating totals and _____________. Used as a input for generate_objects_automated_py.
     Parameters:
         df_dict(dict): Dictionary of files to be included. 
-
+        export_location(str): Location to where CSV file is to be exported. If left Blank, will not export a CSV.
     Returns:
-        Dataframe
-
-    date_created:03-Jul-26
-    date_last_modified: 03-Jul-26
-    classification:TBD
-    sub_classification:TBD
-    usage:
+        Excel File
+    Date Created:
+        06-Jul-26
+    Date Last Modified:
+        06-Jul-26
+    Process:
+        ETL
+    Categorization:
+        Excel File Creation
+    Usage:
         df_dict = {
-    'Notes':notes_df,
-    'Definitions':definition_df,
-    'Knowledge Base':knowledge_base_df,
-    'Manual Objects':manual_object_df
-    }
-    
-    extract_consolidated_raw_dataset(df_dict)
-    
+        'Notes':notes_df,
+        'Definitions':definition_df,
+        'Knowledge Base':knowledge_base_df,
+        'Manual Objects':manual_object_df
+        }
+        extract_consolidated_raw_dataset(df_dict)
+    Notes:
+        Definition
+
     '''
     df = pd.DataFrame()
     
@@ -61,22 +64,26 @@ def generate_objects_automated_py(
     consolidated_df=pd.DataFrame()):
     '''
 
-    Create objects_automated.py.
-
+    Definition:
+        Create Automated Python File
     Parameters:
-        links_df(df): Data from Google Sheets with Location of CSV and Links. If nothing included, will pull directly
-        consolidated_df (df): Dataset created from extract_consolidated_raw_dataset.py, 
-
+        links_df(df): Data from Google Sheets with Location of CSV and Links. If Nothing, it will pull from Google.
+        consolidated_df (df): Dataset created from extract_consolidated_raw_dataset.py. If nothing, it will pull from Local Source.
     Returns:
-        Object Type
-
-    date_created:29-Jun-26
-    date_last_modified: 29-Jun-26
-    classification:TBD
-    sub_classification:TBD
-    usage:
+        Dot Py File
+    Date Created:
+        29-Jun-26
+    Date Last Modified:
+        29-Jun-26
+    Process:
+        Documentation
+    Categorization:
+        Manual File Creator
+    Usage:
         generate_objects_automated_py(links_df,consolidated_df)
-        
+    Notes:
+        Definition
+       
     '''
     # Import Data
     if len(links_df)==0:
@@ -94,79 +101,32 @@ def generate_objects_automated_py(
     url_link_df = links_df[links_df['Link'].notnull()]
 
 
-    text_ = f"""
-
-'''
-module_name: objects_automated
-module_purpose: Created to serve as a repository for automatically created lists, dictionaries and strings from Google Notes, Dictionaries and other sources as appropriate.  File is created by _____. Whenever run it is automatically overwriden
-    
-'''
-object_dict = {{}}
-
-object_dict['cat_reference_list'] = {{
-    'Process':"Categorization Values Currently in Use",
-    'Categorization':'Reference List',
-    'Word':"Parameter",
-    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
-    'publish':1,
-    'python_object':{cat_list}
-    }}
-
-object_dict['process_reference_list'] = {{
-    'Process':"Process Values Currently in Use",
-    'Categorization':'Reference List',
-    'Word':"Parameter",
-    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
-    'publish':1,
-    'python_object':{process_list}
-    }}
-
-object_dict['csv_links'] = {{
-    'Process':"Organization",
-    'Categorization':'Reference Dictionary',
-    'Word':"CSV Links",
-    'Definition':"Dictionary of Links to Google Sheet, Git Hub and other pertinent datasource",
-    'publish':0,
-    'python_object':{csv_link_df.set_index('COLUMN')[['CSV']].to_dict()['CSV']}
-        }}
-        
-object_dict['url_links'] = {{
-    'Process':"Organization",
-    'Categorization':'Reference Dictionary',
-    'Word':"URL Links",
-    'Definition':"Dictionary of Links to Google Sheet, Git Hub and other pertinent datasource",
-    'publish':0,
-    'python_object':{url_link_df.set_index('COLUMN')[['Link']].to_dict()['Link']}
-        }}
-    """
-    
-    with open("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/objects_automated.py", "w") as f:
-        f.write(text_)
-
-
 def extract_object_dot_py(
     object_dict,
     export_location):
     
     '''
 
-    Generate an Excel file of all parameters which are manually stored and maintained. File which is generated is used a input component for generate_knowledgebase.
-    
+    Definition:
+        Generate an Excel file of all parameters which are manually stored and maintained. File which is generated is used a input component for generate_knowledgebase.
     Parameters:
         object_dict (dict): Dictionary Object from either objects_manual or objects_automated
         export_location(str): Location where .xlsx file will be saved. 
-
     Returns:
-        df
-
-    date_created:29-Jun-26
-    date_last_modified: 3-Jul-26
-    classification:TBD
-    sub_classification:TBD
-    usage:
+        DataFrame
+    Date Created:
+        29-Jun-26
+    Date Last Modified:
+        03-Jul-26
+    Process:
+        Documentation
+    Categorization:
+        Excel File Creator
+    Usage:
+        from objects_manual import object_dict as manual_object_df
         manual_object_df(object_dict_manual,'/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
-    update:
-        Added Definition as new record, added column definition.
+    Notes:
+        Jul Update. Added Definition as new record, added column definition.
         To support Automated Object included dict Argument in Required definitions, removed defauly string
     
     '''
@@ -212,26 +172,29 @@ def generate_knowledgebase(
     export_location=None):
 
     '''
-    Process Utilized to Combine Notes/ Definitions and Logic into Knowledge Base, which is utilized to Create, Processes, Parameters.
-
+    Definition:
+        Process Utilized to Combine Notes/ Definitions and Logic into Knowledge Base, which is utilized to Create, Processes, Parameters.
     Parameters:
         notes_df (dataframe): Dataframe containing Notes from Google. Default is none and it will pull directly from Google.
         definition_df (dataframe): Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.
         manual_object_df (dataframe): Dataframe containining Dataframe of Parameters, generated from Python Process _____, which converts lists in objects_manual.py.
         export_location(str): Name of File to export excel file to. If Blank, returns nothing
-
     Returns:
-        dataframe
-        excel_file
-
-    date_created:02-Jul-26
-    date_last_modified: 02-Jul-26
-    classification:TBD
-    sub_classification:TBD
-    usage:
+        Excel File
+    Date Created:
+        02-Jul-26
+    Date Last Modified:
+        02-Jul-26
+    Process:
+        Definition
+    Categorization:
+        Definition
+    Usage:
         d = generate_knowledgebase(notes_df,definition_df,manual_object_df)
         d = generate_knowledgebase()
- 
+    Notes:
+        None
+        
     '''
     if len(notes_df)==0:
         notes_df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv')
