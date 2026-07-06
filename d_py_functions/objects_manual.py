@@ -43,8 +43,104 @@ object_dict['objects_manual_cat_list'] = {
 
 #############################
 
+#############################
 
+#############################
 
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+
+#############################
+object_dict['blue_requirmements'] = {
+    'Process':"Best Linear Unbiased Estimator",
+    'Categorization':'Required',
+    'Word':"Best Linear Unbiased Estimator",
+    'Definition':"The Best Linear Unbiased Estimator (BLUE) is an estimation method in statistics that produces parameter estimates that are linear in the observed data, unbiased, and have the smallest possible variance among all such estimators. It originates from the Gauss–Markov theorem, developed in the early 19th century in the context of least squares and error theory. Its importance lies in providing a theoretical benchmark: under specific assumptions about error structure, no other linear unbiased estimator can be more precise. In practice, BLUE underpins ordinary and generalized least squares, and is widely applied in econometrics, engineering, and data science when modeling relationships with correlated or heteroskedastic errors",
+    'publish':1,
+    'python_object':[
+        'Homoscedasticity',
+        'Independence',
+        'Linearity',
+        'Normality'
+]}
+
+#############################
 
 object_dict['problem_framework_relative_order'] = {
     'Process':"Notes",

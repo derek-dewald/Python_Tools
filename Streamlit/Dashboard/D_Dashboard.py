@@ -20,21 +20,21 @@ from io import BytesIO
 
 
 # # Add to use Java to Auto adjust size of visuals.
-# on_grid_ready = JsCode("""
-# function(params) {
-#     setTimeout(function() {
-#         params.api.sizeColumnsToFit();
-#     }, 100);
-# }
-# """)
+on_grid_ready = JsCode("""
+function(params) {
+    setTimeout(function() {
+        params.api.sizeColumnsToFit();
+    }, 100);
+}
+""")
 
-# on_grid_size_changed = JsCode("""
-# function(params) {
-#     setTimeout(function() {
-#         params.api.sizeColumnsToFit();
-#     }, 100);
-# }
-# """)
+on_grid_size_changed = JsCode("""
+function(params) {
+    setTimeout(function() {
+        params.api.sizeColumnsToFit();
+    }, 100);
+}
+""")
 
 
 def df_to_excel_bytes(df,
@@ -123,12 +123,18 @@ st.markdown(
 def load_data():
     google_note_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv'
     google_definition_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv'
-
+    knowledge_base_xlsx = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/knowledge_base.xlsx"
+    technical_notes = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv'
+    processes_xlsx = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/defined_processes.xlsx"
+    
 
     data_dict = {}
     data_dict['google_notes_df'] = pd.read_csv(google_note_csv)
     data_dict['google_definition_df'] = pd.read_csv(google_definition_csv)
-    
+    data_dict['knowledge_base_df'] = pd.read_excel(knowledge_base_xlsx)
+    data_dict['technical_notes_df'] = pd.read_csv(technical_notes)
+    data_dict['processes_df'] = pd.read_csv(processes_xlsx)
+
     # Normalize: keep your existing behavior (everything to string)
     for dict_key in data_dict.keys():
         for column in data_dict[dict_key].columns:
@@ -150,9 +156,8 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ "Home Page", 'D Definitions',"Knowledge Base",'D Notes',"Frequency Summarization",'Technical Notes','Words and Quotes','Process Checklist',
-     "Function List", "Function Parameters",  'Folder Table of Content', 
-     ]
+    [ "Home Page", 'Definitions','Notes',"Knowledge Base","Technical Notes",'Processes']
+     #"Frequency Summarization",'Technical Notes','Words and Quotes','Process Checklist',"Function List", "Function Parameters",  'Folder Table of Content', ]
 )
 
 if page == "Home Page":
@@ -164,6 +169,7 @@ if page == "Home Page":
                 <li>Definitions</li>
                 <li>Notes</li>
                 <li>Processes</li>
+                <li>Knowledge Base</li>
                 <li>Technical Notes</li>
                 <li>Python Functions</li>
                 <li>Daily Words and Quotes</li>
@@ -175,11 +181,11 @@ if page == "Home Page":
     """, unsafe_allow_html=True)
 
 # # -----------------------------------
-# D Definitions
+# Definitions
 # -----------------------------------
 
-elif page == "D Definitions":
-    st.title("D Definitions")
+elif page == "Definitions":
+    st.title("Definitions")
 
     df_base = data_dict["google_definition_df"].copy()
 
@@ -239,14 +245,22 @@ elif page == "D Definitions":
     gb.configure_selection("single", use_checkbox=False)
     gb.configure_column("_row_id", hide=True)
 
-    gb.configure_column("Process", flex=.1, minWidth=25)
-    gb.configure_column("Categorization", flex=.1, minWidth=25)
-    gb.configure_column("Word", flex=.1, minWidth=25)
-    gb.configure_column("Definition", flex=5, minWidth=500,maxWidth=1100)
+    gb.configure_column("Process", width=100, minWidth=80, maxWidth=120)
+    gb.configure_column("Categorization", width=100, minWidth=80, maxWidth=120)
+    gb.configure_column("Word", width=100, minWidth=80, maxWidth=120)
+
+    gb.configure_column(
+        "Definition",
+        flex=1,
+        minWidth=700,
+        wrapText=True,
+        autoHeight=True
+    )
+
 
     gridOptions = gb.build()
-    #gridOptions["onGridReady"] = on_grid_ready
-    #gridOptions["onGridSizeChanged"] = on_grid_size_changed
+    gridOptions["onGridReady"] = on_grid_ready
+    gridOptions["onGridSizeChanged"] = on_grid_size_changed
     gridOptions["domLayout"] = "normal"
 
     grid_resp = AgGrid(
@@ -254,10 +268,13 @@ elif page == "D Definitions":
         gridOptions=gridOptions,
         height=500,
         fit_columns_on_grid_load=False,
+        reload_data=True,
         allow_unsafe_jscode=True,
         update_mode=GridUpdateMode.SELECTION_CHANGED,
         data_return_mode=DataReturnMode.FILTERED_AND_SORTED,
-)
+        )
+
+
 
     selected_rows = grid_resp.get("selected_rows", [])
     if selected_rows is None:
@@ -320,6 +337,312 @@ elif page == "D Definitions":
                         st.markdown(f"**{field}:**")
                         st.write(v)
 
+# -----------------------------------
+# Notes
+# -----------------------------------
+elif page == 'Notes':
+    st.title("Notes")
+    df_base = data_dict['google_notes_df'].copy()
+    c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
+
+    c1_word = 'Process'
+    c2_word = 'Categorization'
+    c3_word = 'Word'
+    search_word = 'Definition'
+
+    with c1:
+        c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
+        c1_sel = st.selectbox(c1_word, c1_options, index=0)
+
+    df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
+
+    with c2:
+        c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
+        c2_sel = st.selectbox(c2_word, c2_options, index=0)
+
+    df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
+
+    with c3:
+        c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
+        c3_sel = st.selectbox(c3_word, c3_options, index=0)
+
+    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
+
+    with c4:
+        definition_search = st.text_input("Definition search", value="", placeholder="Type to search Description...")
+
+    df_view = df3
+    if definition_search.strip():
+        s = definition_search.strip().lower()
+        df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
+
+    st.caption(f"Rows: {len(df_view)}")
+    gb = GridOptionsBuilder.from_dataframe(df_view)
+
+    gb.configure_default_column(
+        resizable=True,
+        sortable=True,
+        filter=True,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gb.configure_column(c1_word, width=100, minWidth=80, maxWidth=120)
+    gb.configure_column(c2_word, width=100, minWidth=80, maxWidth=120)
+    gb.configure_column(c3_word, width=150, minWidth=120, maxWidth=170)
+
+    gb.configure_column(
+        search_word,
+        flex=1,
+        minWidth=700,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gridOptions = gb.build()
+
+    gridOptions["onGridReady"] = on_grid_ready
+    gridOptions["onGridSizeChanged"] = on_grid_size_changed
+
+    AgGrid(
+        df_view,
+        gridOptions=gridOptions,
+        height=800,
+        allow_unsafe_jscode=True,
+        fit_columns_on_grid_load=False,
+        reload_data=True,
+    )
+
+# -----------------------------------
+# Knowledge Base
+# -----------------------------------
+elif page == 'Knowledge Base':
+    st.title("Knowledge Base")
+    df_base = data_dict['knowledge_base_df'].copy()
+    c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
+
+    c1_word = 'Process'
+    c2_word = 'Categorization'
+    c3_word = 'Word'
+    search_word = 'Definition'
+
+    with c1:
+        c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
+        c1_sel = st.selectbox(c1_word, c1_options, index=0)
+
+    df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
+
+    with c2:
+        c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
+        c2_sel = st.selectbox(c2_word, c2_options, index=0)
+
+    df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
+
+    with c3:
+        c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
+        c3_sel = st.selectbox(c3_word, c3_options, index=0)
+
+    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
+
+    with c4:
+        definition_search = st.text_input("Definition search", value="", placeholder="Type to search Description...")
+
+    df_view = df3
+    if definition_search.strip():
+        s = definition_search.strip().lower()
+        df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
+
+    st.caption(f"Rows: {len(df_view)}")
+    gb = GridOptionsBuilder.from_dataframe(df_view)
+
+    gb.configure_default_column(
+        resizable=True,
+        sortable=True,
+        filter=True,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gb.configure_column(c1_word, width=100, minWidth=80, maxWidth=120)
+    gb.configure_column(c2_word, width=100, minWidth=80, maxWidth=120)
+    gb.configure_column(c3_word, width=150, minWidth=120, maxWidth=170)
+
+    gb.configure_column(
+        search_word,
+        flex=1,
+        minWidth=700,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gridOptions = gb.build()
+
+    gridOptions["onGridReady"] = on_grid_ready
+    gridOptions["onGridSizeChanged"] = on_grid_size_changed
+
+    AgGrid(
+        df_view,
+        gridOptions=gridOptions,
+        height=800,
+        allow_unsafe_jscode=True,
+        fit_columns_on_grid_load=False,
+        reload_data=True,
+    )
+
+# -----------------------------------
+# Technical Notes
+# -----------------------------------
+
+elif page == 'Technical Notes':
+    st.title("Technical Notes")
+    df_base = data_dict['technical_notes_df'].copy()
+    c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
+
+    c1_word = 'Process'
+    c2_word = 'Categorization'
+    c3_word = 'Word'
+    search_word = 'Definition'
+
+    with c1:
+        c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
+        c1_sel = st.selectbox(c1_word, c1_options, index=0)
+
+    df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
+
+    with c2:
+        c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
+        c2_sel = st.selectbox(c2_word, c2_options, index=0)
+
+    df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
+
+    with c3:
+        c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
+        c3_sel = st.selectbox(c3_word, c3_options, index=0)
+
+    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
+
+    with c4:
+        definition_search = st.text_input("Definition search", value="", placeholder="Type to search Description...")
+
+    df_view = df3
+    if definition_search.strip():
+        s = definition_search.strip().lower()
+        df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
+
+    st.caption(f"Rows: {len(df_view)}")
+    gb = GridOptionsBuilder.from_dataframe(df_view)
+
+    gb.configure_default_column(
+        resizable=True,
+        sortable=True,
+        filter=True,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gb.configure_column(c1_word, width=100, minWidth=80, maxWidth=120)
+    gb.configure_column(c2_word, width=100, minWidth=80, maxWidth=120)
+    gb.configure_column(c3_word, width=150, minWidth=120, maxWidth=170)
+
+    gb.configure_column(
+        search_word,
+        flex=1,
+        minWidth=700,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gridOptions = gb.build()
+
+    gridOptions["onGridReady"] = on_grid_ready
+    gridOptions["onGridSizeChanged"] = on_grid_size_changed
+
+    AgGrid(
+        df_view,
+        gridOptions=gridOptions,
+        height=800,
+        allow_unsafe_jscode=True,
+        fit_columns_on_grid_load=False,
+        reload_data=True,
+    )
+
+# -----------------------------------
+# Processes
+# -----------------------------------
+
+elif page == 'Processes':
+    st.title("Processes")
+    df_base = data_dict['processes_df'].copy()
+    c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
+
+    c1_word = 'Process'
+    c2_word = 'Categorization'
+    c3_word = 'Word'
+    search_word = 'Definition'
+
+    with c1:
+        c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
+        c1_sel = st.selectbox(c1_word, c1_options, index=0)
+
+    df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
+
+    with c2:
+        c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
+        c2_sel = st.selectbox(c2_word, c2_options, index=0)
+
+    df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
+
+    with c3:
+        c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
+        c3_sel = st.selectbox(c3_word, c3_options, index=0)
+
+    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
+
+    with c4:
+        definition_search = st.text_input("Definition search", value="", placeholder="Type to search Description...")
+
+    df_view = df3
+    if definition_search.strip():
+        s = definition_search.strip().lower()
+        df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
+
+    st.caption(f"Rows: {len(df_view)}")
+    gb = GridOptionsBuilder.from_dataframe(df_view)
+
+    gb.configure_default_column(
+        resizable=True,
+        sortable=True,
+        filter=True,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gb.configure_column(c1_word, width=100, minWidth=80, maxWidth=120)
+    gb.configure_column(c2_word, width=100, minWidth=80, maxWidth=120)
+    gb.configure_column(c3_word, width=150, minWidth=120, maxWidth=170)
+
+    gb.configure_column(
+        search_word,
+        flex=1,
+        minWidth=700,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gridOptions = gb.build()
+
+    gridOptions["onGridReady"] = on_grid_ready
+    gridOptions["onGridSizeChanged"] = on_grid_size_changed
+
+    AgGrid(
+        df_view,
+        gridOptions=gridOptions,
+        height=800,
+        allow_unsafe_jscode=True,
+        fit_columns_on_grid_load=False,
+        reload_data=True,
+    )
+
 
 
     # function_list_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/DataDictionary/python_function_list.csv"
@@ -331,9 +654,9 @@ elif page == "D Definitions":
     # def_summary_url = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/google_definition_csv_NUMERIC_SUMMARY.csv"
     
     # google_word_quote = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=1117793378&single=true&output=csv'
-    # technical_notes = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv'
     # process_cl = 'https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Data/d_knowledge_process_checklist.csv'
 
+   
 
 
     # data_dict['google_notes_df'] = pd.read_csv(google_note_csv)
@@ -347,7 +670,6 @@ elif page == "D Definitions":
     # data_dict['notes_summary'] = pd.read_csv(notes_summary_url)
     # data_dict['def_summary'] = pd.read_csv(def_summary_url)
     # data_dict['d_word_quote'] = pd.read_csv(google_word_quote)
-    # data_dict['technical_notes'] = pd.read_csv(technical_notes)
     # data_dict['process_cl'] = pd.read_csv(process_cl)
     
 
@@ -529,56 +851,6 @@ elif page == "D Definitions":
 #     gb.configure_column("Function", width=220)
 #     gb.configure_column("Parameters", width=320)
 #     gb.configure_column("Definition", flex=1, wrapText=True, autoHeight=True)
-#     gb.configure_default_column(resizable=True, sortable=True, filter=True)
-
-#     AgGrid(df_view, gridOptions=gb.build(), height=800, fit_columns_on_grid_load=True)
-
-# # -----------------------------------
-# # D Notes
-# # -----------------------------------
-# elif page == 'D Notes':
-#     st.title("D Notes")
-#     df_base = data_dict['google_notes_df'].copy()
-#     c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
-
-#     c1_word = 'Process'
-#     c2_word = 'Categorization'
-#     c3_word = 'Word'
-#     search_word = 'Definition'
-
-#     with c1:
-#         c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
-#         c1_sel = st.selectbox(c1_word, c1_options, index=0)
-
-#     df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
-
-#     with c2:
-#         c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
-#         c2_sel = st.selectbox(c2_word, c2_options, index=0)
-
-#     df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
-
-#     with c3:
-#         c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
-#         c3_sel = st.selectbox(c3_word, c3_options, index=0)
-
-#     df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
-
-#     with c4:
-#         definition_search = st.text_input("Definition search", value="", placeholder="Type to search Description...")
-
-#     df_view = df3
-#     if definition_search.strip():
-#         s = definition_search.strip().lower()
-#         df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
-
-#     st.caption(f"Rows: {len(df_view)}")
-
-#     gb = GridOptionsBuilder.from_dataframe(df_view)
-#     gb.configure_column(c1_word, width=100)
-#     gb.configure_column(c2_word, width=100)
-#     gb.configure_column(c3_word, width=150)
-#     gb.configure_column(search_word, flex=1, wrapText=True, autoHeight=True)
 #     gb.configure_default_column(resizable=True, sortable=True, filter=True)
 
 #     AgGrid(df_view, gridOptions=gb.build(), height=800, fit_columns_on_grid_load=True)
