@@ -289,7 +289,7 @@ def parse_dot_py_file(
 
 
 def parse_dot_py_folder(location=None,
-                        export_location='/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/DataDictionary/'):
+                        export_location='/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/'):
     '''
     Definition:
     	Function which sacles parse_dot_py_file to folder from file.
@@ -308,7 +308,7 @@ def parse_dot_py_folder(location=None,
     Categorization:
     	Python String Documentation	
     Usage:
-    	parse_dot_py_folder()
+    	function_list,parameter_list = parse_dot_py_folder(export_location=False)
     Notes:
     	Definition
             
