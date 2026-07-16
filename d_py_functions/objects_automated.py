@@ -8,23 +8,41 @@ module_purpose: Created to serve as a repository for automatically created lists
 object_dict = {}
 
 object_dict['cat_reference_list'] = {
-    'Process':"Dot Py Categorization Reference List",
+    'Process':"Documentation Taxonomy Categorization",
     'Categorization':'Reference List',
-    'Word':"Dot Py Categorization Reference List",
+    'Word':"Documentation Taxonomy Categorization",
     'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
     'publish':1,
-    'python_object':['Information', 'Guidance', 'Requirement', 'Process Step', 'Concept', 'Definition', 'Regularization', 'Transformation', 'Feature Selection', 'Required', 'Reference List', 'Column List', 'Filter Order']
+    'python_object':['Information', 'Guidance', 'Requirement', 'Process Step', 'Concept', 'Definition', 'Regularization', 'Transformation', 'Feature Selection', 'Required', 'Filter Order', 'Reference List']
     }
 
 object_dict['process_reference_list'] = {
-    'Process':"Dot Py Parameter Reference List",
+    'Process':"Dot Py String Taxonomy Categorization",
     'Categorization':'Reference List',
-    'Word':"Dot Py Parameter Reference List",
+    'Word':"Dot Py String Taxonomy Process",
     'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
     'publish':1,
-    'python_object':['Behavioural Economics', 'Feature Engineering', 'Goal Setting', 'Problem Definition', 'Data Collection', 'General Definition', 'Data Preparation', 'Model Evaluation', 'Statistics', 'Best Linear Unbiased Estimator', 'Categorization Values Currently in Use', 'Data Dictionary', 'Documentation', 'Machine Learning Lifecycle', 'Notes', 'Problem Solving Framework', 'Process Values Currently in Use']
+    'python_object':['ETL', 'Documentation', 'Definition']
     }
 
+object_dict['cat_reference_list'] = {
+    'Process':"Dot Py String Taxonomy Categorization",
+    'Categorization':'Reference List',
+    'Word':"Dot Py String Taxonomy Categorization",
+    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
+    'publish':1,
+    'python_object':['File Manipulation/ Management', 'TBD', 'Python String Documentation', 'Excel File Creation', 'Definition', 'Manual File Creator']
+    }
+
+object_dict['process_reference_list'] = {
+    'Process':"Documentation Taxonomy Categorization",
+    'Categorization':'Reference List',
+    'Word':"Documentation Taxonomy Process",
+    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
+    'publish':1,
+    'python_object':['Behavioural Economics', 'Feature Engineering', 'Goal Setting', 'Problem Definition', 'Data Collection', 'General Definition', 'Data Preparation', 'Model Evaluation', 'Statistics', 'Dot Py String Classification', 'Best Linear Unbiased Estimator', 'Categorization Filter Order', 'Data Dictionary Columns', 'Default Python String Taxonomy', 'Dot Py Categorization Reference List', 'Dot Py Parameter Reference List', 'Machine Learning Lifecycle', 'Problem Solving Framework']
+    }
+    
 object_dict['csv_links'] = {
     'Process':"CSV Links",
     'Categorization':'Reference Dictionary',

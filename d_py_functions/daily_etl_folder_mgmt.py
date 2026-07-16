@@ -164,108 +164,6 @@ def generate_knowledgebase(
        
     return final_df
 
-
-def generate_objects_automated_py(
-    links_df=pd.DataFrame(),
-    consolidated_df=pd.DataFrame(),
-    dot_py_documentation=pd.DataFrame()
-):
-    '''
-
-    Definition:
-        Create Automated Python File
-    Parameters:
-        links_df(df): Data from Google Sheets with Location of CSV and Links. If Nothing, it will pull from Google.
-        consolidated_df (df): Dataset created from extract_consolidated_raw_dataset.py. If nothing, it will pull from Local Source.
-        dot_py_documentation (df): Dataset created from _______, representing Python String Documentation. If nothing, it will pull from local Source. 
-    Returns:
-        Dot Py File
-    Date Created:
-        29-Jun-26
-    Date Last Modified:
-        29-Jun-26
-    Process:
-        Documentation
-    Categorization:
-        Manual File Creator
-    Usage:
-        generate_objects_automated_py(links_df,consolidated_df)
-    Notes:
-        Definition
-       
-    '''
-    # Import Data
-    if len(links_df)==0:
-        links_df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=469651051&single=true&output=csv')
-    if len(consolidated_df)==0:
-        consolidated_df = pd.read_excel('https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/consolidated_dataset.xlsx')
-    if len(dot_py_documentation)==0:
-        dot_py_df = pd.read_csv('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/python_function_list.csv')
-
-    # Generate Information Required to Populate Automated Dot Py. 
-
-    # Generate Lists for Consolidated Dataframe - Process and Categorization
-    process_list = consolidated_df[consolidated_df['Process'].notnull()]['Process'].unique().tolist()
-    cat_list = consolidated_df[consolidated_df['Categorization'].notnull()]['Categorization'].unique().tolist()
-
-    # Generate Lists for Dot Py String Dataframe - Process and Categorization
-    dot_py_proc = dot_py_df[dot_py_df['Process'].notnull()]['Process'].unique().tolist()
-    dot_py_cat = dot_py_df[dot_py_df['Categorization'].notnull()]['Categorization'].unique().tolist()
-
-    # Generate df of CSV and URL
-    csv_link_df = links_df[links_df['CSV'].notnull()]
-    url_link_df = links_df[links_df['Link'].notnull()]
-
-    text_ = f"""
-
-'''
-module_name: objects_automated
-module_purpose: Created to serve as a repository for automatically created lists, dictionaries and strings from Google Notes, Dictionaries and other sources as appropriate.  File is created by _____. Whenever run it is automatically overwriden
-    
-'''
-object_dict = {{}}
-
-object_dict['cat_reference_list'] = {{
-    'Process':"Dot Py Categorization Reference List",
-    'Categorization':'Reference List',
-    'Word':"Dot Py Categorization Reference List",
-    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
-    'publish':1,
-    'python_object':{cat_list}
-    }}
-
-object_dict['process_reference_list'] = {{
-    'Process':"Dot Py Parameter Reference List",
-    'Categorization':'Reference List',
-    'Word':"Dot Py Parameter Reference List",
-    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
-    'publish':1,
-    'python_object':{process_list}
-    }}
-
-object_dict['csv_links'] = {{
-    'Process':"CSV Links",
-    'Categorization':'Reference Dictionary',
-    'Word':"CSV Links",
-    'Definition':"Dictionary of Links to Google Sheet, Git Hub and other pertinent datasource",
-    'publish':0,
-    'python_object':{csv_link_df.set_index('COLUMN')[['CSV']].to_dict()['CSV']}
-        }}
-        
-object_dict['url_links'] = {{
-    'Process':"URL Links",
-    'Categorization':'Reference Dictionary',
-    'Word':"URL Links",
-    'Definition':"Dictionary of Links to Google Sheet, Git Hub and other pertinent datasource",
-    'publish':0,
-    'python_object':{url_link_df.set_index('COLUMN')[['Link']].to_dict()['Link']}
-        }}
-"""
-
-    with open("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/objects_automated.py", "w") as f:
-        f.write(text_)
-
-
 def extract_object_dot_py(
     object_dict,
     export_location):
@@ -324,3 +222,206 @@ def extract_object_dot_py(
         final_df[['Process','Categorization','Word','Definition','Order']].to_excel(export_location,index=False)
     else:
         final_df[['Process','Categorization','Word','Definition']].to_excel(export_location,index=False)
+
+
+def generate_objects_automated_py(
+    links_df=pd.DataFrame(),
+    consolidated_df=pd.DataFrame(),
+    dot_py_documentation=pd.DataFrame()
+):
+    '''
+
+    Definition:
+        Create Automated Python File
+    Parameters:
+        links_df(df): Data from Google Sheets with Location of CSV and Links. If Nothing, it will pull from Google.
+        consolidated_df (df): Dataset created from extract_consolidated_raw_dataset.py. If nothing, it will pull from Local Source.
+        dot_py_documentation (df): Dataset created from _______, representing Python String Documentation. If nothing, it will pull from local Source. 
+    Returns:
+        Dot Py File
+    Date Created:
+        29-Jun-26
+    Date Last Modified:
+        16-Jul-26
+    Process:
+        Documentation
+    Categorization:
+        Manual File Creator
+    Usage:
+        generate_objects_automated_py(links_df,consolidated_df)
+    Notes:
+        Definition
+       
+    '''
+    # Import Data
+    if len(links_df)==0:
+        links_df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=469651051&single=true&output=csv')
+    if len(consolidated_df)==0:
+        consolidated_df = pd.read_excel('https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/consolidated_dataset.xlsx')
+    if len(dot_py_documentation)==0:
+        dot_py_df = pd.read_csv('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/python_function_list.csv')
+
+    # Generate Information Required to Populate Automated Dot Py. 
+
+    # Generate Lists for Consolidated Dataframe - Process and Categorization
+    process_list = consolidated_df[consolidated_df['Process'].notnull()]['Process'].unique().tolist()
+    cat_list = consolidated_df[consolidated_df['Categorization'].notnull()]['Categorization'].unique().tolist()
+
+    # Generate Lists for Dot Py String Dataframe - Process and Categorization
+    dot_py_proc = dot_py_df[dot_py_df['Process'].notnull()]['Process'].unique().tolist()
+    dot_py_cat = dot_py_df[dot_py_df['Categorization'].notnull()]['Categorization'].unique().tolist()
+
+    # Generate df of CSV and URL
+    csv_link_df = links_df[links_df['CSV'].notnull()]
+    url_link_df = links_df[links_df['Link'].notnull()]
+
+    text_ = f"""
+
+'''
+module_name: objects_automated
+module_purpose: Created to serve as a repository for automatically created lists, dictionaries and strings from Google Notes, Dictionaries and other sources as appropriate.  File is created by _____. Whenever run it is automatically overwriden
+    
+'''
+object_dict = {{}}
+
+object_dict['cat_reference_list'] = {{
+    'Process':"Documentation Taxonomy Categorization",
+    'Categorization':'Reference List',
+    'Word':"Documentation Taxonomy Categorization",
+    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
+    'publish':1,
+    'python_object':{cat_list}
+    }}
+
+object_dict['process_reference_list'] = {{
+    'Process':"Dot Py String Taxonomy Categorization",
+    'Categorization':'Reference List',
+    'Word':"Dot Py String Taxonomy Process",
+    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
+    'publish':1,
+    'python_object':{dot_py_proc}
+    }}
+
+object_dict['cat_reference_list'] = {{
+    'Process':"Dot Py String Taxonomy Categorization",
+    'Categorization':'Reference List',
+    'Word':"Dot Py String Taxonomy Categorization",
+    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
+    'publish':1,
+    'python_object':{dot_py_cat}
+    }}
+
+object_dict['process_reference_list'] = {{
+    'Process':"Documentation Taxonomy Categorization",
+    'Categorization':'Reference List',
+    'Word':"Documentation Taxonomy Process",
+    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
+    'publish':1,
+    'python_object':{process_list}
+    }}
+    
+object_dict['csv_links'] = {{
+    'Process':"CSV Links",
+    'Categorization':'Reference Dictionary',
+    'Word':"CSV Links",
+    'Definition':"Dictionary of Links to Google Sheet, Git Hub and other pertinent datasource",
+    'publish':0,
+    'python_object':{csv_link_df.set_index('COLUMN')[['CSV']].to_dict()['CSV']}
+        }}
+        
+object_dict['url_links'] = {{
+    'Process':"URL Links",
+    'Categorization':'Reference Dictionary',
+    'Word':"URL Links",
+    'Definition':"Dictionary of Links to Google Sheet, Git Hub and other pertinent datasource",
+    'publish':0,
+    'python_object':{url_link_df.set_index('COLUMN')[['Link']].to_dict()['Link']}
+        }}
+"""
+
+    with open("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/objects_automated.py", "w") as f:
+        f.write(text_)
+
+
+def ETL():
+    '''
+    Function which refreshes Organizational Processes and Files. 
+
+    Parameters:
+        None
+
+    Returns:
+        /Users/derekdewald/Documents/Python/Github_Repo/Streamlit/d_py_functions/objects_automated.py 
+        /Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx
+        /Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_auto_published.xlsx
+        /Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/knowledge_base.xlsx
+        /Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/defined_processes.xlsx
+        /Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/consolidated_dataset.xlsx
+        /Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/python_function_list.csv
+        /Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/python_function_parameters.csv
+    
+
+    date_created:16-Jul-26
+    date_last_modified: 16-Jul-26
+    classification:ETL
+    sub_classification: ETL
+    usage:
+        Example Function Call
+    '''
+
+    #Specifically Do Not Bulk Call Functions to Ensure Visability as to location and purpose.
+    
+    # Generate Github_Repo/d_py_functions/objects_automated.py
+    from daily_etl_folder_mgmt import generate_objects_automated_py
+    generate_objects_automated_py()
+    
+    # Export Excel Files for Github_Repo/Streamlit/Data/object_auto_published.xlsx / object_manaul_published.xlsx
+    # Function
+    from daily_etl_folder_mgmt import extract_object_dot_py
+    
+    # Data Dictionaries from respective .py Files.
+    from objects_automated import object_dict as object_dict_auto
+    from objects_manual import object_dict as object_dict_man
+    
+    extract_object_dot_py(object_dict_man,'/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
+    extract_object_dot_py(object_dict_auto,'/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_auto_published.xlsx')
+    
+    # Import Data from Google and Local Files.
+    notes_df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv')
+    definition_df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv')
+    manual_object_df = pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
+    auto_object_df =   pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_auto_published.xlsx')
+    
+    from daily_etl_folder_mgmt import generate_knowledgebase
+    
+    # Generate Updated Knowledge Base
+    knowledge_base_df = generate_knowledgebase(
+        notes_df=notes_df,
+        definition_df=definition_df,
+        manual_object_df= manual_object_df,
+        auto_object_df=auto_object_df,
+        export_location='/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/knowledge_base.xlsx')
+    
+    # Generate Defined Process Listing from Stream Lit from Knowledge Base.
+    knowledge_base_df[knowledge_base_df['Categorization']=='Process Step'].to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/defined_processes.xlsx',index=False)
+    
+    #########
+    # Does not Included Automated Objects Because Automated Objects already Included. 
+    #Test this theory.
+    ##########
+    
+    df_dict = {
+        'Notes':notes_df,
+        'Definitions':definition_df,
+        'Knowledge Base':knowledge_base_df,
+        'Manual Objects':manual_object_df
+    }
+    
+    from daily_etl_folder_mgmt import extract_consolidated_raw_dataset
+    
+    # Generates file to /Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/consolidated_dataset.xlsx
+    extract_consolidated_raw_dataset(df_dict,True)
+    
+    from filesystem_tools import parse_dot_py_folder
+    # Update Python Function and Parameter List  /Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/python_function_list and python_function_parameters
+    function_list,parameter_list = parse_dot_py_folder()
