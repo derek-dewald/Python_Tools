@@ -4,8 +4,11 @@ module_purpose: Created to serve as a repository for manually created lists, dic
 default_structure: object_dict['NAME'] = {'Process':"",'Categorization':'','Word':"Name",'Definition':"",'publish':0,'python_object':''}
 module_guidance: This is the Default Location for Lists, Templates and process order. Publish relates to automatic inclusion into Notes
 
-'''
 
+Process
+
+
+'''
 
 import datetime
 object_dict = {}
@@ -22,31 +25,12 @@ object_dict['Example'] = {
 #############################
 # Default Categorization Options for this Sheet. 
 
-object_dict['objects_manual_cat_list'] = {
-    'Process':"Organziation",
-    'Categorization':'Reference List',
-    'Word':"Objects Categorization",
-    'Definition':"Default Categorization List Options for Objects, which assigns taxonmy to my Organizational Structure",
-    'publish':1,
-    'python_object':[
-        'Process Step',
-        'Relative Order',
-        'Column List',
-        'Material Change Log',
-        'Reference List',
-        'Reference String',    
-        'Reference Dictionary'
-        ]
-    }
-
-
-
 #############################
 
 object_dict['python_str_documentation'] = {
-    'Process':"Organziation",
+    'Process':"Default Python String Taxonomy",
     'Categorization':'Reference List',
-    'Word':"Python String Documentation",
+    'Word':"Default Python String Taxonomy",
     'Definition':"Default Columns to be included and labelled when documenting personally created functions in Python",
     'publish':1,
     'python_object':[
@@ -162,7 +146,7 @@ object_dict['blue_requirmements'] = {
 #############################
 
 object_dict['problem_framework_relative_order'] = {
-    'Process':"Organziation",
+    'Process':"Categorization Filter Order",
     'Categorization':'Filter Order',
     'Word':"Categorization Filter Order",
     'Definition':"Default Column Order to be applied while filtering Notes to D Knowledge Base or/and D Processes",
@@ -235,8 +219,8 @@ object_dict['machine_learning_process'] = {
             'Bias, Fairness, and Ethics']}
 
 object_dict['data_dictionary_columns'] = {
-    'Process':"Organziation",
-    'Categorization':'Column List',
+    'Process':"Data Dictionary Columns",
+    'Categorization':'Reference List',
     'Word':"Data Dictionary Columns",
     'Definition':"List of Default Columns Used in Data Dictionary",
     'publish':1,
@@ -252,62 +236,6 @@ object_dict['data_dictionary_columns'] = {
         'RECORD_TYPE',
         'UPDATE_DATE'
         ]}
-
-object_dict['activity_notes'] = {
-    'Process':"Organization",
-    'Categorization':'Material Change Log',
-    'Word':"activity_notes",
-    'Definition':"List of Log Decisions, Material Updated and Changes to D Reporting Structure",
-    'publish':0,
-    'python_object':[
-
-    {
-        'DATE':'01-JAN-01',
-        'ACTIVITY':'Notes',
-        'NOTES':'',
-        'STATUS':'',
-        'PENDING_ACTION':'',  
-        'CLASSIFICATION':'',
-        'SUB_CLASSIFICATION':''
-    },
-    {
-        'DATE':'26-JUN-26',
-        'ACTIVITY':'Moved All .py files from Folder d_py_functions to   d_py_functions>>archive>>historical and made a Folder Delete. Purpose to streamline and implement consistent approach. Logic. Naming etc.',
-        'NOTES':'',
-        'STATUS':'',
-        'PENDING_ACTION':'',  
-        'CLASSIFICATION':'',
-        'SUB_CLASSIFICATION':''
-    },
-    {
-        'DATE':'26-JUN-26',
-        'ACTIVITY':'Deleted Process/Map Page/Daily Activities on Google Sheets. Process Page to be automated action from notes, Map moved to D Sheet.',
-        'NOTES':'If I have not done something for 20 years, is it resonable or likely that I will start. Change Action, not documentation',
-        'STATUS':'',
-        'PENDING_ACTION':'',  
-        'CLASSIFICATION':'',
-        'SUB_CLASSIFICATION':''
-        
-    },
-    {
-        'DATE':'26-JUN-26',
-        'ACTIVITY':'Created New .py files reference_data and manual_data',
-        'NOTES':'',
-        'STATUS':'',
-        'PENDING_ACTION':'',  
-        'CLASSIFICATION':'',
-        'SUB_CLASSIFICATION':''
-    },
-    {
-        'DATE':'26-JUN-26',
-        'ACTIVITY':'',
-        'NOTES':'',
-        'STATUS':'',
-        'PENDING_ACTION':'',  
-        'CLASSIFICATION':'',
-        'SUB_CLASSIFICATION':''
-    },]}
-
 
 object_dict['hex_color_list'] = {
     'Process':"Visualziation",

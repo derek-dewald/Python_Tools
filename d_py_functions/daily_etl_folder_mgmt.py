@@ -12,8 +12,6 @@ import numpy as np
 
 from objects_manual import object_dict
 
-
-
 def extract_consolidated_raw_dataset(df_dict,export_location=False):
     
     '''
@@ -58,111 +56,6 @@ def extract_consolidated_raw_dataset(df_dict,export_location=False):
         df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/consolidated_dataset.xlsx',index=False)
 
     return df
-
-def generate_objects_automated_py(
-    links_df=pd.DataFrame(),
-    consolidated_df=pd.DataFrame()):
-    '''
-
-    Definition:
-        Create Automated Python File
-    Parameters:
-        links_df(df): Data from Google Sheets with Location of CSV and Links. If Nothing, it will pull from Google.
-        consolidated_df (df): Dataset created from extract_consolidated_raw_dataset.py. If nothing, it will pull from Local Source.
-    Returns:
-        Dot Py File
-    Date Created:
-        29-Jun-26
-    Date Last Modified:
-        29-Jun-26
-    Process:
-        Documentation
-    Categorization:
-        Manual File Creator
-    Usage:
-        generate_objects_automated_py(links_df,consolidated_df)
-    Notes:
-        Definition
-       
-    '''
-    # Import Data
-    if len(links_df)==0:
-        links_df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=469651051&single=true&output=csv')
-    if len(consolidated_df)==0:
-        consolidated_df = pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/consolidated_dataset.xlsx')
-
-    # Generate Dataframes
-    # Generate Unique List of Processes and Categories
-    process_list = consolidated_df[consolidated_df['Process'].notnull()]['Process'].unique().tolist()
-    cat_list = consolidated_df[consolidated_df['Categorization'].notnull()]['Categorization'].unique().tolist()
-
-    # Generate df of CSV and URL
-    csv_link_df = links_df[links_df['CSV'].notnull()]
-    url_link_df = links_df[links_df['Link'].notnull()]
-
-
-def extract_object_dot_py(
-    object_dict,
-    export_location):
-    
-    '''
-
-    Definition:
-        Generate an Excel file of all parameters which are manually stored and maintained. File which is generated is used a input component for generate_knowledgebase.
-    Parameters:
-        object_dict (dict): Dictionary Object from either objects_manual or objects_automated
-        export_location(str): Location where .xlsx file will be saved. 
-    Returns:
-        DataFrame
-    Date Created:
-        29-Jun-26
-    Date Last Modified:
-        03-Jul-26
-    Process:
-        Documentation
-    Categorization:
-        Excel File Creator
-    Usage:
-        from objects_manual import object_dict as manual_object_df
-        manual_object_df(object_dict_manual,'/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
-    Notes:
-        Jul Update. Added Definition as new record, added column definition.
-        To support Automated Object included dict Argument in Required definitions, removed defauly string
-    
-    '''
-
-    df = pd.DataFrame(object_dict.values())
-    df['key'] = object_dict.keys()
-    
-    final_df = pd.DataFrame()
-    
-    for item in df[df['publish']==1]['key']:
-        temp = object_dict[item]
-        temp_df = pd.DataFrame(temp['python_object'],columns=['Word'])
-        temp_df['Categorization'] = temp['Categorization']
-        temp_df['Process'] = temp['Process']
-        temp_df['Definition'] = ""
-        temp_df.loc[len(temp_df)] = {
-            "Process": temp['Process'],
-            "Categorization": "Definition",
-            "Word": 'General Definition',
-            "Definition": temp['Definition']}
-        final_df = pd.concat([final_df,temp_df])    
-
-
-    #########
-    # Do I need to remove Order from Definitions
-    #########
-    
-    final_df['Order'] = final_df.groupby(['Process']).cumcount()+1
-    final_df['Categorization'] = np.where(final_df['Categorization']=='Process','Process Step',final_df['Categorization'])
-
-    # is Manual Published, Need Order
-    if export_location.find('object_manual_published')!=-1:
-        final_df[['Process','Categorization','Word','Definition','Order']].to_excel(export_location,index=False)
-    else:
-        final_df[['Process','Categorization','Word','Definition']].to_excel(export_location,index=False)
-
 
 def generate_knowledgebase(
     notes_df=pd.DataFrame(),
@@ -270,3 +163,164 @@ def generate_knowledgebase(
         final_df.to_excel(export_location,index=False)
        
     return final_df
+
+
+def generate_objects_automated_py(
+    links_df=pd.DataFrame(),
+    consolidated_df=pd.DataFrame(),
+    dot_py_documentation=pd.DataFrame()
+):
+    '''
+
+    Definition:
+        Create Automated Python File
+    Parameters:
+        links_df(df): Data from Google Sheets with Location of CSV and Links. If Nothing, it will pull from Google.
+        consolidated_df (df): Dataset created from extract_consolidated_raw_dataset.py. If nothing, it will pull from Local Source.
+        dot_py_documentation (df): Dataset created from _______, representing Python String Documentation. If nothing, it will pull from local Source. 
+    Returns:
+        Dot Py File
+    Date Created:
+        29-Jun-26
+    Date Last Modified:
+        29-Jun-26
+    Process:
+        Documentation
+    Categorization:
+        Manual File Creator
+    Usage:
+        generate_objects_automated_py(links_df,consolidated_df)
+    Notes:
+        Definition
+       
+    '''
+    # Import Data
+    if len(links_df)==0:
+        links_df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vTjXiFjpGgyqWDg9RImj1HR_BeriXs4c5-NSJVwQFn2eRKksitY46oJT0GvVX366LO-m1GM8znXDcBp/pub?gid=469651051&single=true&output=csv')
+    if len(consolidated_df)==0:
+        consolidated_df = pd.read_excel('https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/consolidated_dataset.xlsx')
+    if len(dot_py_documentation)==0:
+        dot_py_df = pd.read_csv('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/python_function_list.csv')
+
+    # Generate Information Required to Populate Automated Dot Py. 
+
+    # Generate Lists for Consolidated Dataframe - Process and Categorization
+    process_list = consolidated_df[consolidated_df['Process'].notnull()]['Process'].unique().tolist()
+    cat_list = consolidated_df[consolidated_df['Categorization'].notnull()]['Categorization'].unique().tolist()
+
+    # Generate Lists for Dot Py String Dataframe - Process and Categorization
+    dot_py_proc = dot_py_df[dot_py_df['Process'].notnull()]['Process'].unique().tolist()
+    dot_py_cat = dot_py_df[dot_py_df['Categorization'].notnull()]['Categorization'].unique().tolist()
+
+    # Generate df of CSV and URL
+    csv_link_df = links_df[links_df['CSV'].notnull()]
+    url_link_df = links_df[links_df['Link'].notnull()]
+
+    text_ = f"""
+
+'''
+module_name: objects_automated
+module_purpose: Created to serve as a repository for automatically created lists, dictionaries and strings from Google Notes, Dictionaries and other sources as appropriate.  File is created by _____. Whenever run it is automatically overwriden
+    
+'''
+object_dict = {{}}
+
+object_dict['cat_reference_list'] = {{
+    'Process':"Dot Py Categorization Reference List",
+    'Categorization':'Reference List',
+    'Word':"Dot Py Categorization Reference List",
+    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
+    'publish':1,
+    'python_object':{cat_list}
+    }}
+
+object_dict['process_reference_list'] = {{
+    'Process':"Dot Py Parameter Reference List",
+    'Categorization':'Reference List',
+    'Word':"Dot Py Parameter Reference List",
+    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
+    'publish':1,
+    'python_object':{process_list}
+    }}
+
+object_dict['csv_links'] = {{
+    'Process':"CSV Links",
+    'Categorization':'Reference Dictionary',
+    'Word':"CSV Links",
+    'Definition':"Dictionary of Links to Google Sheet, Git Hub and other pertinent datasource",
+    'publish':0,
+    'python_object':{csv_link_df.set_index('COLUMN')[['CSV']].to_dict()['CSV']}
+        }}
+        
+object_dict['url_links'] = {{
+    'Process':"URL Links",
+    'Categorization':'Reference Dictionary',
+    'Word':"URL Links",
+    'Definition':"Dictionary of Links to Google Sheet, Git Hub and other pertinent datasource",
+    'publish':0,
+    'python_object':{url_link_df.set_index('COLUMN')[['Link']].to_dict()['Link']}
+        }}
+"""
+
+    with open("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/objects_automated.py", "w") as f:
+        f.write(text_)
+
+
+def extract_object_dot_py(
+    object_dict,
+    export_location):
+    
+    '''
+
+    Generate an Excel file of all parameters which are manually stored and maintained. File which is generated is used a input component for generate_knowledgebase.
+    
+    Parameters:
+        object_dict (dict): Dictionary Object from either objects_manual or objects_automated
+        export_location(str): Location where .xlsx file will be saved. 
+
+    Returns:
+        df
+
+    date_created:29-Jun-26
+    date_last_modified: 3-Jul-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        manual_object_df(object_dict_manual,'/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
+    update:
+        Added Definition as new record, added column definition.
+        To support Automated Object included dict Argument in Required definitions, removed default string
+    
+    '''
+
+    df = pd.DataFrame(object_dict.values())
+    df['key'] = object_dict.keys()
+    
+    final_df = pd.DataFrame()
+    
+    for item in df[df['publish']==1]['key']:
+        temp = object_dict[item]
+        temp_df = pd.DataFrame(temp['python_object'],columns=['Word'])
+        temp_df['Categorization'] = temp['Categorization']
+        temp_df['Process'] = temp['Process']
+        temp_df['Definition'] = ""
+        temp_df.loc[len(temp_df)] = {
+            "Process": temp['Process'],
+            "Categorization": "Definition",
+            "Word": 'General Definition',
+            "Definition": temp['Definition']}
+        final_df = pd.concat([final_df,temp_df])    
+
+
+    #########
+    # Do I need to remove Order from Definitions
+    #########
+    
+    final_df['Order'] = final_df.groupby(['Process']).cumcount()+1
+    final_df['Categorization'] = np.where(final_df['Categorization']=='Process','Process Step',final_df['Categorization'])
+
+    # is Manual Published, Need Order
+    if export_location.find('object_manual_published')!=-1:
+        final_df[['Process','Categorization','Word','Definition','Order']].to_excel(export_location,index=False)
+    else:
+        final_df[['Process','Categorization','Word','Definition']].to_excel(export_location,index=False)

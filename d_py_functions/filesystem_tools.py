@@ -90,36 +90,6 @@ def txt_to_python(file_name,encoding="utf-8"):
     
     return data
 
-def print_python_str_template(object_dict=object_dict_manual):
-    
-    '''
-    Definition: 
-        Display default python documentation string in a easy to copy and paste format for creation of new functions.
-    Parameters: 
-        object_dict(list): List of Default Parameters to be iterated through. 
-    Returns: 
-        Console Text
-    Date Created:   
-        06-Jul-26
-    Date Last Modified:
-        06-Jul-26
-    Process: 
-        Documentation
-    Categorization: 
-        Python String Documentation
-    Usage: 
-        print_python_str_template()
-    Notes:
-    
-    '''
-
-    for x in object_dict['python_str_documentation']['python_object']:
-        if x in ['Date Created','Date Last Modified']:
-            print(f"{x}:\n\t{datetime.datetime.now().strftime('%d-%b-%y')}")
-        else:
-            print(f"{x}:\n\tDefinition")  
-
-
 def parse_dot_py_file(
     file_text, 
     function_columns=None

@@ -3,11 +3,10 @@ read_directory,Function which reads reads a directory and returns a list of file
 read_directory(d_py_function)",,filesystem_tools.py
 txt_to_python,Function Used to Import .txt or .py File into Python.,"['file_name', 'encoding']",Dataframe,3-Dec-25,3-Dec-25,ETL,File Manipulation/ Management,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/DFProcessing.py'
 file = TextFileImport(location)",,filesystem_tools.py
-print_python_str_template,Display default python documentation string in a easy to copy and paste format for creation of new functions.,['object_dict'],Console Text,06-Jul-26,06-Jul-26,Documentation,Python String Documentation,print_python_str_template(),,filesystem_tools.py
 parse_dot_py_file,Function which parses a .py file which has been read into python into a DataFrame categorizing function for ease of articulation and classification,"['file_text', 'function_columns']",Excel File(s),05-Aug-25,06-Jul-26,Documentation,TBD,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/'
 file_text = txt_to_python(f""{location}/filesystem_tools.py"")
 a,b = parse_dot_py_file(file_text)","Update on 6-Jul-26 included generalization of List, and Formation of Tab/Indent structure.",filesystem_tools.py
-parse_dot_py_folder,Function which sacles parse_dot_py_file to folder from file.,"['location', 'export_location']",DataFrame(s),4-Dec-25,06-Jul-26,Documentation,Python String Documentation,parse_dot_py_folder(),Definition,filesystem_tools.py
+parse_dot_py_folder,Function which sacles parse_dot_py_file to folder from file.,"['location', 'export_location']",DataFrame(s),4-Dec-25,06-Jul-26,Documentation,Python String Documentation,"function_list,parameter_list = parse_dot_py_folder(export_location=False)",Definition,filesystem_tools.py
 extract_consolidated_raw_dataset,"Create a Consolidated Dataset of files in Dictionary, which are meant to be of the structure Process, Categorization, Word and Definition. Data set for the purposes, of aggregating totals and _____________. Used as a input for generate_objects_automated_py.","['df_dict', 'export_location']",Excel File,06-Jul-26,06-Jul-26,ETL,Excel File Creation,"df_dict = {
 'Notes':notes_df,
 'Definitions':definition_df,
@@ -15,9 +14,10 @@ extract_consolidated_raw_dataset,"Create a Consolidated Dataset of files in Dict
 'Manual Objects':manual_object_df
 }
 extract_consolidated_raw_dataset(df_dict)",Definition,daily_etl_folder_mgmt.py
-generate_objects_automated_py,Create Automated Python File,"['links_df', 'consolidated_df']",Dot Py File,29-Jun-26,29-Jun-26,Documentation,Manual File Creator,"generate_objects_automated_py(links_df,consolidated_df)",Definition,daily_etl_folder_mgmt.py
-extract_object_dot_py,Generate an Excel file of all parameters which are manually stored and maintained. File which is generated is used a input component for generate_knowledgebase.,"['object_dict', 'export_location']",DataFrame,29-Jun-26,03-Jul-26,Documentation,Excel File Creator,"from objects_manual import object_dict as manual_object_df
-manual_object_df(object_dict_manual,'/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')","Jul Update. Added Definition as new record, added column definition.
-To support Automated Object included dict Argument in Required definitions, removed defauly string",daily_etl_folder_mgmt.py
 generate_knowledgebase,"Process Utilized to Combine Notes/ Definitions and Logic into Knowledge Base, which is utilized to Create, Processes, Parameters.","['notes_df', 'definition_df', 'manual_object_df', 'auto_object_df', 'export_location']",Excel File,02-Jul-26,02-Jul-26,Definition,Definition,"d = generate_knowledgebase(notes_df,definition_df,manual_object_df)
 d = generate_knowledgebase()",None,daily_etl_folder_mgmt.py
+generate_objects_automated_py,Create Automated Python File,"['links_df', 'consolidated_df', 'dot_py_documentation']",Dot Py File,29-Jun-26,29-Jun-26,Documentation,Manual File Creator,"generate_objects_automated_py(links_df,consolidated_df)",Definition,daily_etl_folder_mgmt.py
+extract_object_dot_py,,"['object_dict', 'export_location']",df date_created:29-Jun-26 date_last_modified: 3-Jul-26 classification:TBD sub_classification:TBD,,,,,"manual_object_df(object_dict_manual,'/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
+update:
+Added Definition as new record, added column definition.
+To support Automated Object included dict Argument in Required definitions, removed default string",,daily_etl_folder_mgmt.py

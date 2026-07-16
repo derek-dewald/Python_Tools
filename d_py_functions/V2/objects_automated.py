@@ -8,25 +8,25 @@ module_purpose: Created to serve as a repository for automatically created lists
 object_dict = {}
 
 object_dict['cat_reference_list'] = {
-    'Process':"Dot Py Categorization Reference List",
+    'Process':"Categorization Values Currently in Use",
     'Categorization':'Reference List',
-    'Word':"Dot Py Categorization Reference List",
+    'Word':"Parameter",
     'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
     'publish':1,
-    'python_object':['Information', 'Guidance', 'Requirement', 'Process Step', 'Concept', 'Definition', 'Regularization', 'Transformation', 'Feature Selection', 'Required', 'Reference List', 'Column List', 'Filter Order']
+    'python_object':['Information', 'Guidance', 'Requirement', 'Process Step', 'Concept', 'Definition', 'Regularization', 'Transformation', 'Feature Selection', 'Required', 'Column List', 'Reference List', 'Filter Order']
     }
 
 object_dict['process_reference_list'] = {
-    'Process':"Dot Py Parameter Reference List",
+    'Process':"Process Values Currently in Use",
     'Categorization':'Reference List',
-    'Word':"Dot Py Parameter Reference List",
+    'Word':"Parameter",
     'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
     'publish':1,
-    'python_object':['Behavioural Economics', 'Feature Engineering', 'Goal Setting', 'Problem Definition', 'Data Collection', 'General Definition', 'Data Preparation', 'Model Evaluation', 'Statistics', 'Best Linear Unbiased Estimator', 'Categorization Values Currently in Use', 'Data Dictionary', 'Documentation', 'Machine Learning Lifecycle', 'Notes', 'Problem Solving Framework', 'Process Values Currently in Use']
+    'python_object':['Behavioural Economics', 'Feature Engineering', 'Goal Setting', 'Problem Definition', 'Data Collection', 'General Definition', 'Data Preparation', 'Model Evaluation', 'Statistics', 'Best Linear Unbiased Estimator', 'Data Dictionary', 'Documentation', 'Machine Learning Lifecycle', 'Notes', 'Problem Solving Framework']
     }
 
 object_dict['csv_links'] = {
-    'Process':"CSV Links",
+    'Process':"Organization",
     'Categorization':'Reference Dictionary',
     'Word':"CSV Links",
     'Definition':"Dictionary of Links to Google Sheet, Git Hub and other pertinent datasource",
@@ -35,10 +35,11 @@ object_dict['csv_links'] = {
         }
         
 object_dict['url_links'] = {
-    'Process':"URL Links",
+    'Process':"Organization",
     'Categorization':'Reference Dictionary',
     'Word':"URL Links",
     'Definition':"Dictionary of Links to Google Sheet, Git Hub and other pertinent datasource",
     'publish':0,
-    'python_object':{'google_definition_csv': 'https://docs.google.com/spreadsheets/d/1tZ-_5Vv99_bm9CCEdDDN0KkmsFNcjWeKM86237yrCTQ/edit?gid=0#gid=0', 'google_notes_csv': 'https://docs.google.com/spreadsheets/d/1jddkkF5IWRr_eV1hTjB-T_IlmGJ-GpizYgeMgZQQxb4/edit?gid=0#gid=0', 'technical_notes': 'https://docs.google.com/spreadsheets/d/1FpYYq4LN6AZBaNRhnj1f76YNvnG-hTco40wJ1PUugto/edit?gid=0#gid=0', 'd_links': 'https://docs.google.com/spreadsheets/d/14CtNmNIajcY1mlEkRWw4ka93MQYGs2wN-kvL5qhvQX0/edit?gid=469651051#gid=469651051', 'Job Search': 'https://docs.google.com/spreadsheets/d/1sMdgmp80DXDojDl6uYS6INdoJxVDbhIwpwCtpxBjHVg/edit?gid=668067090#gid=668067090', 'OurWorldData': 'www.ourworlddata.org', 'KaggelDatasets': 'https://www.kaggle.com/datasets', 'StLouisFed': 'https://fred.stlouisfed.org', 'GoggleResearch': 'https://datasetsearch.research.google.com', 'UCI': 'https://archive.ics.uci.edu', 'AWS': 'https://registry.opendata.aws/', 'AWSDataExchange': 'https://aws.amazon.com/data-exchange/', 'AWSPublicData': 'https://aws.amazon.com/public-datasets/', 'SKlearn Model Parameters': 'https://docs.google.com/spreadsheets/d/1GhIiuEMY-A-SNtQOj5Z24wARLVGvEd10qVT3MpGtj2Y/edit?gid=175044227#gid=175044227', 'TensorFlow Playground': 'https://playground.tensorflow.org/', 'SQL Cheatsheet': 'https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/SQL_Cheatsheet.png'}
+    'python_object':{'google_definition_csv': 'https://docs.google.com/spreadsheets/d/1tZ-_5Vv99_bm9CCEdDDN0KkmsFNcjWeKM86237yrCTQ/edit?gid=0#gid=0', 'google_notes_csv': 'https://docs.google.com/spreadsheets/d/1jddkkF5IWRr_eV1hTjB-T_IlmGJ-GpizYgeMgZQQxb4/edit?gid=0#gid=0', 'technical_notes': 'https://docs.google.com/spreadsheets/d/1FpYYq4LN6AZBaNRhnj1f76YNvnG-hTco40wJ1PUugto/edit?gid=0#gid=0', 'd_links': 'https://docs.google.com/spreadsheets/d/14CtNmNIajcY1mlEkRWw4ka93MQYGs2wN-kvL5qhvQX0/edit?gid=469651051#gid=469651051', 'Job Search': 'https://docs.google.com/spreadsheets/d/1sMdgmp80DXDojDl6uYS6INdoJxVDbhIwpwCtpxBjHVg/edit?gid=668067090#gid=668067090', 'OurWorldData': 'www.ourworlddata.org', 'KaggelDatasets': 'https://www.kaggle.com/datasets', 'StLouisFed': 'https://fred.stlouisfed.org', 'GoggleResearch': 'https://datasetsearch.research.google.com', 'UCI': 'https://archive.ics.uci.edu', 'AWS': 'https://registry.opendata.aws/', 'AWSDataExchange': 'https://aws.amazon.com/data-exchange/', 'AWSPublicData': 'https://aws.amazon.com/public-datasets/', 'SKlearn Model Parameters': 'https://docs.google.com/spreadsheets/d/1GhIiuEMY-A-SNtQOj5Z24wARLVGvEd10qVT3MpGtj2Y/edit?gid=175044227#gid=175044227', 'TensorFlow Playground': 'https://playground.tensorflow.org/'}
         }
+    
