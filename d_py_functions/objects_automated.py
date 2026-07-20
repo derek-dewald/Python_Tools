@@ -7,40 +7,49 @@ module_purpose: Created to serve as a repository for automatically created lists
 '''
 object_dict = {}
 
-object_dict['cat_reference_list'] = {
-    'Process':"Documentation Taxonomy Categorization",
-    'Categorization':'Reference List',
-    'Word':"Documentation Taxonomy Categorization",
-    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
-    'publish':1,
-    'python_object':['Information', 'Guidance', 'Requirement', 'Process Step', 'Concept', 'Definition', 'Regularization', 'Transformation', 'Feature Selection', 'Required', 'Filter Order', 'Reference List']
-    }
-
-object_dict['process_reference_list'] = {
-    'Process':"Dot Py String Taxonomy Categorization",
-    'Categorization':'Reference List',
-    'Word':"Dot Py String Taxonomy Process",
-    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
-    'publish':1,
-    'python_object':['ETL', 'Documentation', 'Definition']
-    }
-
-object_dict['cat_reference_list'] = {
-    'Process':"Dot Py String Taxonomy Categorization",
-    'Categorization':'Reference List',
-    'Word':"Dot Py String Taxonomy Categorization",
-    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
-    'publish':1,
-    'python_object':['File Manipulation/ Management', 'TBD', 'Python String Documentation', 'Excel File Creation', 'Definition', 'Manual File Creator']
-    }
-
 object_dict['process_reference_list'] = {
     'Process':"Documentation Taxonomy Categorization",
     'Categorization':'Reference List',
     'Word':"Documentation Taxonomy Process",
     'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
     'publish':1,
-    'python_object':['Behavioural Economics', 'Feature Engineering', 'Goal Setting', 'Problem Definition', 'Data Collection', 'General Definition', 'Data Preparation', 'Model Evaluation', 'Statistics', 'Dot Py String Classification', 'Best Linear Unbiased Estimator', 'Categorization Filter Order', 'Data Dictionary Columns', 'Default Python String Taxonomy', 'Dot Py Categorization Reference List', 'Dot Py Parameter Reference List', 'Machine Learning Lifecycle', 'Problem Solving Framework']
+    'python_object':['Algorithm Categorization', 'Algorithm Taxonomy', 'Behavioural Economics', 'Best Linear Unbiased Estimator', 'Categorization Filter Order', 'Data Collection', 'Data Dictionary Columns', 'Data Preparation', 'Default Python String Taxonomy', 'Documentation Taxonomy Categorization', 'Dot Py String Classification', 'Dot Py String Taxonomy Categorization', 'Dot Py String Taxonomy Process', 'Feature Engineering', 'General Definition', 'Goal Setting', 'Machine Learning Lifecycle', 'Mathematics', 'Model Evaluation', 'Problem Definition', 'Problem Solving Framework', 'Statistics']
+    }
+
+object_dict['cat_reference_list'] = {
+    'Process':"Documentation Taxonomy Categorization",
+    'Categorization':'Reference List',
+    'Word':"Documentation Taxonomy Categorization",
+    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
+    'publish':1,
+    'python_object':['Concept', 'Definition', 'Feature Selection', 'Filter Order', 'Formula', 'Guidance', 'Information', 'Process Step', 'Reference List', 'Regularization', 'Required', 'Requirement', 'Theorem', 'Transformation']
+    }
+
+object_dict['algo_class_ref_list'] = {
+    'Process':"Algorithm Categorization",
+    'Categorization':'Reference List',
+    'Word':"Algorithm Categorization Reference List",
+    'Definition':"Comprehensive List of all Values utilized in Algorithm Categorization, used to Categorize ML Methods in Algorithm Taxonomy",
+    'publish':1,
+    'python_object':['Anomaly Detection', 'Classification', 'Clustering', 'Density Estimation', 'Dimensionality Reduction', 'Feature Selection', 'Feature Transformation', 'Generative Models', 'Graph Algorithms', 'Information Retrieval', 'Optimization', 'Prediction', 'Ranking / Recommendation', 'Regression', 'Reinforcement Learning', 'Time Series Forecasting']
+    }
+
+object_dict['dot_py_reference_proc'] = {
+    'Process':"Dot Py String Taxonomy Process",
+    'Categorization':'Reference List',
+    'Word':"Dot Py String Taxonomy Process",
+    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
+    'publish':1,
+    'python_object':['OS Folder Management', 'ETL', 'Definition', 'Documentation']
+    }
+
+object_dict['dot_py_reference_cat'] = {
+    'Process':"Dot Py String Taxonomy Categorization",
+    'Categorization':'Reference List',
+    'Word':"Dot Py String Taxonomy Categorization",
+    'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
+    'publish':1,
+    'python_object':['Directory Management', 'File Management', 'Excel File Creation', 'Definition', 'Manual File Creator']
     }
     
 object_dict['csv_links'] = {

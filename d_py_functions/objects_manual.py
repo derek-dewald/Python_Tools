@@ -46,6 +46,34 @@ object_dict['python_str_documentation'] = {
         ]
     }
 
+today = datetime.datetime.now().strftime('%d-%b-%y')
+
+object_dict['template_doc_string'] = {
+    'Process':"Organziation",
+    'Categorization':'Reference String',
+    'Word':"template_doc_string",
+    'Definition':"Default Structure for Python Doc Strings",
+    'publish':0,
+    'python_object':f'''
+
+    Definition:
+        Definition of Function
+
+    Parameters:
+        List of Parameters
+
+    Returns:
+        Object Type
+
+    date_created:{today}
+    date_last_modified: {today}
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        Example Function Call
+'''
+}
+
 #############################
 
 #############################
@@ -273,35 +301,6 @@ object_dict['hex_color_list'] = {
 '#0bda51','#979aaa', '#ff8243', '#74c365', '#880085', '#c32148', '#800000','#b03060', '#e0b0ff', '#915f6d', '#ef98aa', '#73c2fb', '#e5b73b', '#6da', '#e2062c','#af4035', '#f3e5ab','#035096',
 '#1c352d','#dda0dd', '#ba55d3', '#0067a5', '#9370db','#bb3385', '#aa4069', '#3cb371', '#7b68ee', '#c9dc87', '#00fa9a', '#674c47', '#48d1cc','#79443b', '#d9603b', '#c71585','#f8b878',
 '#f8de7e','#fdbcb4', '#191970', '#004953','#ffc40c', '#3eb489', '#f5fffa', '#98ff98', '#ffe4e1', '#faebd7', '#967117', '#73a9c2', '#ae0c00', '#addfad','#30ba8f', '#997a8d', '#18453b']
-}
-
-
-today = datetime.datetime.now().strftime('%d-%b-%y')
-
-
-object_dict['template_doc_string'] = {
-    'Process':"Organziation",
-    'Categorization':'Reference String',
-    'Word':"template_doc_string",
-    'Definition':"Default Structure for Python Doc Strings",
-    'publish':0,
-    'python_object':f'''
-
-    Definition of Function
-
-    Parameters:
-        List of Parameters
-
-    Returns:
-        Object Type
-
-    date_created:{today}
-    date_last_modified: {today}
-    classification:TBD
-    sub_classification:TBD
-    usage:
-        Example Function Call
-'''
 }
 
 object_dict['emoji_dict'] = {

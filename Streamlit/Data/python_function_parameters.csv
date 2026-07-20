@@ -8,6 +8,10 @@ filesystem_tools.py,parse_dot_py_file,file_text,str,"Text, which should be struc
 filesystem_tools.py,parse_dot_py_file,function_columns,list,List of columns to include in output file and to be parsed on. Default is to import from object_dict which represents default Python String Documentation.
 filesystem_tools.py,parse_dot_py_folder,location,str,Location of Folder to be read for .py files. Default is defined as /Users/derekdewald/Documents/Python/Github_Repo/d_py_functions
 filesystem_tools.py,parse_dot_py_folder,export_location,str,"Location to where CSV file is to be exported. If left Blank, will not export a CSV."
+filesystem_tools.py,move_file_in_folder,folder1,str,Folder of First File
+filesystem_tools.py,move_file_in_folder,folder2,str,Folder of Second File
+filesystem_tools.py,move_file_in_folder,file_name,str,"Name of File to be moved, does not matter of file type)"
+filesystem_tools.py,move_file_in_folder,overwrite_without_validation,bool,Optional Argument allowing user to automate by apply to default overwrite (also meant to help reduce risk of losting information due to inadvertent overwriting)
 daily_etl_folder_mgmt.py,extract_consolidated_raw_dataset,df_dict,dict,Dictionary of files to be included.
 daily_etl_folder_mgmt.py,extract_consolidated_raw_dataset,export_location,str,"Location to where CSV file is to be exported. If left Blank, will not export a CSV."
 daily_etl_folder_mgmt.py,generate_knowledgebase,notes_df,dataframe,Dataframe containing Notes from Google. Default is none and it will pull directly from Google.
@@ -17,6 +21,9 @@ daily_etl_folder_mgmt.py,generate_knowledgebase,auto_object_df,,
 daily_etl_folder_mgmt.py,generate_knowledgebase,export_location,str,"Name of File to export excel file to. If Blank, returns nothing"
 daily_etl_folder_mgmt.py,extract_object_dot_py,object_dict,dict,Dictionary Object from either objects_manual or objects_automated
 daily_etl_folder_mgmt.py,extract_object_dot_py,export_location,str,Location where .xlsx file will be saved.
+daily_etl_folder_mgmt.py,ETL,print_,bool,To Be Determined Utilization.
 daily_etl_folder_mgmt.py,generate_objects_automated_py,links_df,df,"Data from Google Sheets with Location of CSV and Links. If Nothing, it will pull from Google."
 daily_etl_folder_mgmt.py,generate_objects_automated_py,consolidated_df,df,"Dataset created from extract_consolidated_raw_dataset.py. If nothing, it will pull from Local Source."
 daily_etl_folder_mgmt.py,generate_objects_automated_py,dot_py_documentation,df,"Dataset created from _______, representing Python String Documentation. If nothing, it will pull from local Source."
+daily_etl_folder_mgmt.py,generate_objects_automated_py,definition_df,df,Data from Google Sheets. If nothing will pull from Google.
+daily_etl_folder_mgmt.py,generate_objects_automated_py,method,,
