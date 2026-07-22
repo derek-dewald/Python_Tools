@@ -14,11 +14,6 @@ filesystem_tools.py,move_file_in_folder,file_name,str,"Name of File to be moved,
 filesystem_tools.py,move_file_in_folder,overwrite_without_validation,bool,Optional Argument allowing user to automate by apply to default overwrite (also meant to help reduce risk of losting information due to inadvertent overwriting)
 daily_etl_folder_mgmt.py,extract_consolidated_raw_dataset,df_dict,dict,Dictionary of files to be included.
 daily_etl_folder_mgmt.py,extract_consolidated_raw_dataset,export_location,str,"Location to where CSV file is to be exported. If left Blank, will not export a CSV."
-daily_etl_folder_mgmt.py,generate_knowledgebase,notes_df,dataframe,Dataframe containing Notes from Google. Default is none and it will pull directly from Google.
-daily_etl_folder_mgmt.py,generate_knowledgebase,definition_df,dataframe,Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.
-daily_etl_folder_mgmt.py,generate_knowledgebase,manual_object_df,dataframe,"Dataframe containining Dataframe of Parameters, generated from Python Process _____, which converts lists in objects_manual.py."
-daily_etl_folder_mgmt.py,generate_knowledgebase,auto_object_df,,
-daily_etl_folder_mgmt.py,generate_knowledgebase,export_location,str,"Name of File to export excel file to. If Blank, returns nothing"
 daily_etl_folder_mgmt.py,extract_object_dot_py,object_dict,dict,Dictionary Object from either objects_manual or objects_automated
 daily_etl_folder_mgmt.py,extract_object_dot_py,export_location,str,Location where .xlsx file will be saved.
 daily_etl_folder_mgmt.py,ETL,print_,bool,To Be Determined Utilization.
@@ -27,3 +22,8 @@ daily_etl_folder_mgmt.py,generate_objects_automated_py,consolidated_df,df,"Datas
 daily_etl_folder_mgmt.py,generate_objects_automated_py,dot_py_documentation,df,"Dataset created from _______, representing Python String Documentation. If nothing, it will pull from local Source."
 daily_etl_folder_mgmt.py,generate_objects_automated_py,definition_df,df,Data from Google Sheets. If nothing will pull from Google.
 daily_etl_folder_mgmt.py,generate_objects_automated_py,method,,
+daily_etl_folder_mgmt.py,generate_knowledgebase,notes_df,dataframe,Dataframe containing Notes from Google. Default is none and it will pull directly from Google.
+daily_etl_folder_mgmt.py,generate_knowledgebase,definition_df,dataframe,Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.
+daily_etl_folder_mgmt.py,generate_knowledgebase,manual_object_df,dataframe,"Dataframe containining Dataframe of Parameters, generated from Python Process _____, which converts lists in objects_manual.py."
+daily_etl_folder_mgmt.py,generate_knowledgebase,auto_object_df,,
+daily_etl_folder_mgmt.py,generate_knowledgebase,export_location,str,"Name of File to export excel file to. If Blank, returns nothing"

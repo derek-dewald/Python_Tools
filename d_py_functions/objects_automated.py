@@ -13,7 +13,7 @@ object_dict['process_reference_list'] = {
     'Word':"Documentation Taxonomy Process",
     'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
     'publish':1,
-    'python_object':['Algorithm Categorization', 'Algorithm Taxonomy', 'Behavioural Economics', 'Best Linear Unbiased Estimator', 'Categorization Filter Order', 'Data Collection', 'Data Dictionary Columns', 'Data Preparation', 'Default Python String Taxonomy', 'Documentation Taxonomy Categorization', 'Dot Py String Classification', 'Dot Py String Taxonomy Categorization', 'Dot Py String Taxonomy Process', 'Feature Engineering', 'General Definition', 'Goal Setting', 'Machine Learning Lifecycle', 'Mathematics', 'Model Evaluation', 'Problem Definition', 'Problem Solving Framework', 'Statistics']
+    'python_object':['Algorithm Categorization', 'Algorithm Taxonomy', 'Behavioural Economics', 'Best Linear Unbiased Estimator', 'Categorization Filter Order', 'Data Collection', 'Data Dictionary Columns', 'Data Engineering', 'Data Preparation', 'Default Python String Taxonomy', 'Documentation Taxonomy Categorization', 'Dot Py String Classification', 'Dot Py String Taxonomy Categorization', 'Dot Py String Taxonomy Process', 'Feature Engineering', 'Feature Selection', 'General Definition', 'Goal Setting', 'Graph Algorithms', 'Information Retrieval', 'LLM', 'ML Definitions', 'ML Model', 'ML Training', 'Machine Learning Lifecycle', 'Mathematics', 'Model Evaluation', 'NLP', 'Neural Network', 'Problem Definition', 'Problem Solving Framework', 'Statistics', 'Vector Database', 'Vector Search']
     }
 
 object_dict['cat_reference_list'] = {
@@ -22,7 +22,7 @@ object_dict['cat_reference_list'] = {
     'Word':"Documentation Taxonomy Categorization",
     'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
     'publish':1,
-    'python_object':['Concept', 'Definition', 'Feature Selection', 'Filter Order', 'Formula', 'Guidance', 'Information', 'Process Step', 'Reference List', 'Regularization', 'Required', 'Requirement', 'Theorem', 'Transformation']
+    'python_object':['Algorithm', 'Concept', 'Definition', 'Feature Selection', 'Filter Order', 'Formula', 'Guidance', 'Information', 'Method', 'Process Step', 'Reference List', 'Regularization', 'Required', 'Requirement', 'Theorem', 'Tool', 'Transformation']
     }
 
 object_dict['algo_class_ref_list'] = {

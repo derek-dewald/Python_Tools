@@ -57,112 +57,6 @@ def extract_consolidated_raw_dataset(df_dict,export_location=False):
 
     return df
 
-def generate_knowledgebase(
-    notes_df=pd.DataFrame(),
-    definition_df=pd.DataFrame(),
-    manual_object_df=pd.DataFrame(),
-    auto_object_df=pd.DataFrame(),
-    export_location=None):
-
-    '''
-    Definition:
-        Process Utilized to Combine Notes/ Definitions and Logic into Knowledge Base, which is utilized to Create, Processes, Parameters.
-    Parameters:
-        notes_df (dataframe): Dataframe containing Notes from Google. Default is none and it will pull directly from Google.
-        definition_df (dataframe): Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.
-        manual_object_df (dataframe): Dataframe containining Dataframe of Parameters, generated from Python Process _____, which converts lists in objects_manual.py.
-        export_location(str): Name of File to export excel file to. If Blank, returns nothing
-    Returns:
-        Excel File
-    Date Created:
-        02-Jul-26
-    Date Last Modified:
-        02-Jul-26
-    Process:
-        Definition
-    Categorization:
-        Definition
-    Usage:
-        d = generate_knowledgebase(notes_df,definition_df,manual_object_df)
-        d = generate_knowledgebase()
-    Notes:
-        None
-        
-    '''
-    if len(notes_df)==0:
-        notes_df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv')
-
-    if len(definition_df)==0:
-        definition_df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv')
-
-    if len(auto_object_df)==0:
-        auto_object_df = pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_auto_published.xlsx')
-
-    if len(manual_object_df)==0:
-        manual_object_df = pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
-
-    
-    # Combine Notes from Google and Notes Extract from Manual List
-    consolidated_notes = pd.concat([notes_df,manual_object_df.drop('Order',axis=1)])
-
-    # Take all Processes from Notes, so we can extract Definitions
-    process_list = consolidated_notes['Process'].unique().tolist()
-
-    # Also, include any Item in the Consolidated sheet that is a Process Step. 
-    process_list.extend(consolidated_notes[consolidated_notes['Categorization']=='Process Step']['Word'].unique().tolist())
-    process_list = list(set(process_list))
-
-    # Extract Definitions to include into Consolidated Notes.
-    notes_from_def = definition_df[definition_df['Process'].isin(process_list)][['Process','Categorization','Word','Definition']]
-    
-    # Create a Consolidated notes list (Before Incorporating Definitions).
-    
-    final_df = pd.concat([
-        consolidated_notes,
-        notes_from_def])
-
-    # Merge in Sub Processes
-    word_list = final_df['Word'].unique().tolist()
-    sub_processes = final_df[(final_df['Process'].isin(word_list))]
-    #sub_processes = sub_processes.drop(['Categorization'],axis=1).rename(columns={'Word':"Categorization",'Process':'Word','Definition':"Definition"})
-    # Include Process.
-    
-    sub_processes['Definition'] = sub_processes['Word'].fillna("") + ": " + sub_processes['Definition'].fillna('')
-    sub_processes['Word'] = sub_processes['Process']
-    sub_processes.drop('Process',axis=1,inplace=True)
-    sub_processes = sub_processes.merge(final_df[['Word','Process']],on='Word',how='left')
-
-
-    # Add Automated Dictionary. Here, do not want it causing duplication/ Issue.
-    final_df = pd.concat([
-        final_df,
-        sub_processes,
-        auto_object_df
-    ])
-    
-    final_df = final_df.merge(definition_df[['Word','Definition']].rename(columns={'Definition':'Definition1'}),on='Word',how='left')
-    final_df['Definition'] = np.where(final_df['Definition'].notnull(),final_df['Definition'],final_df['Definition1'])
-    final_df.drop('Definition1',axis=1,inplace=True)
-    
-    # Sorting
-    # Process - Has to be Alphabetical. Do not actually Care Order.
-    # Categorization - Based on Manually defined Order, imported from Objects_Manual.
-    # Words Matter when they are part of a process, generally when not then alphabetically preferred. 
-    
-    # Merge in Process  Filter
-    proc_filter = manual_object_df[(manual_object_df['Process']=='Notes')&(manual_object_df['Categorization']=='Filter Order')][['Word','Order']].reset_index(drop=True).rename(columns={'Word':"Categorization",'Order':"proc_order"})
-    final_df = final_df.merge(proc_filter,on='Categorization',how='left')
-    
-    # Merge in Word Order.
-    final_df = final_df.merge(manual_object_df.drop(['Categorization','Definition'],axis=1).rename(columns={'Order':'word_order'}),on=['Process','Word'],how='left')
-    
-    final_df.sort_values(['Process','word_order','proc_order','Word'],inplace=True)
-    final_df.drop(['word_order','proc_order'],axis=1,inplace=True)
-
-    if export_location:
-        final_df.to_excel(export_location,index=False)
-       
-    return final_df
 
 def extract_object_dot_py(
     object_dict,
@@ -457,3 +351,117 @@ object_dict['url_links'] = {{
 
     with open("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/objects_automated.py", "w") as f:
         f.write(text_)
+
+
+def generate_knowledgebase(
+    notes_df=pd.DataFrame(),
+    definition_df=pd.DataFrame(),
+    manual_object_df=pd.DataFrame(),
+    auto_object_df=pd.DataFrame(),
+    export_location=None):
+
+    '''
+    Definition:
+        Process Utilized to Combine Notes/ Definitions and Logic into Knowledge Base, which is utilized to Create, Processes, Parameters.
+    Parameters:
+        notes_df (dataframe): Dataframe containing Notes from Google. Default is none and it will pull directly from Google.
+        definition_df (dataframe): Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.
+        manual_object_df (dataframe): Dataframe containining Dataframe of Parameters, generated from Python Process _____, which converts lists in objects_manual.py.
+        export_location(str): Name of File to export excel file to. If Blank, returns nothing
+    Returns:
+        Excel File
+    Date Created:
+        02-Jul-26
+    Date Last Modified:
+        22-Jul-26
+    Process:
+        Definition
+    Categorization:
+        Definition
+    Usage:
+        d = generate_knowledgebase(notes_df,definition_df,manual_object_df)
+        d = generate_knowledgebase()
+    Notes:
+        22-Jul - Overhauled merge. Attempted to streamline, simplify and reduce duplication. Increase Visability.
+        
+    '''
+    if len(notes_df)==0:
+        notes_df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv')
+
+    if len(definition_df)==0:
+        definition_df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv')
+
+    if len(auto_object_df)==0:
+        auto_object_df = pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_auto_published.xlsx')
+
+    if len(manual_object_df)==0:
+        manual_object_df = pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
+
+    # Combine Notes from Google and Notes Extract from Manual List
+    consolidated_notes = pd.concat([notes_df,manual_object_df.drop('Order',axis=1)])
+
+    # Take all Processes from Notes, so we can extract Definitions
+    process_list = consolidated_notes['Process'].unique().tolist()
+
+    # Also, include any Item in the Consolidated sheet that is a Process Step. 
+    process_list.extend(consolidated_notes[consolidated_notes['Categorization']=='Process Step']['Word'].unique().tolist())
+    process_list = list(set(process_list))
+
+    # Extract Definitions to include into Consolidated Notes.
+    notes_from_def = definition_df[definition_df['Process'].isin(process_list)][['Process','Categorization','Word','Definition']]
+    
+    # Create a Consolidated notes list (Before Incorporating Definitions).
+    
+    final_df = pd.concat([
+        consolidated_notes,
+        notes_from_def])
+
+    # Merge in Definitions.
+    final_df1 = final_df.merge(definition_df[['Word','Definition']].drop_duplicates('Word'),on='Word',how='left',suffixes=("","_"))
+    final_df1['Definition'] = np.where(final_df1['Definition'].isnull(),final_df1['Definition_'],final_df1['Definition'])
+    final_df1.drop('Definition_',axis=1,inplace=True)
+    
+    # Merge in Processes into themself. IE. In Machine Learning Lifecycle add Goal Setting Steps to makea  complete process
+    temp = final_df1[final_df1['Process'].isin(final_df1['Word'].tolist())].copy()
+    temp['Definition'] = temp['Word'] +': '+ temp['Definition']
+    temp['Word'] = temp['Process']
+    temp['Categorization'] = np.where(temp['Categorization']=='Process Step','Guidance',temp['Categorization'])
+    temp.drop('Process',axis=1,inplace=True)
+    
+    final_df1 = final_df1.merge(temp,on='Word',how='left',suffixes=("","_"))
+    final_df1['Categorization'] = np.where(final_df1['Categorization_'].notnull(),final_df1['Categorization_'],final_df1['Categorization'])
+    final_df1['Definition'] = np.where(final_df1['Definition_'].notnull(),final_df1['Definition_'],final_df1['Definition'])
+    
+    final_df1.drop(['Definition_','Categorization_'],axis=1,inplace=True)
+
+    
+    auto_object_df = auto_object_df.merge(definition_df[['Word','Definition']].drop_duplicates('Word'),on='Word',how='left',suffixes=("","_"))
+    auto_object_df['Definition'] = np.where(auto_object_df['Definition'].isnull(),auto_object_df['Definition_'],auto_object_df['Definition'])
+    auto_object_df.drop('Definition_',inplace=True,axis=1)
+    
+    # Add Automated Dictionary. Here, do not want it causing duplication/ Issue.
+    final_df1 = pd.concat([
+        final_df1,
+        auto_object_df
+    ])
+
+    # Sorting
+    # Process - Has to be Alphabetical. Do not actually Care Order.
+    # Categorization - Based on Manually defined Order, imported from Objects_Manual.
+    # Words Matter when they are part of a process, generally when not then alphabetically preferred. 
+    
+    # Merge in Process  Filter
+    cat_filter = cat_filter = manual_object_df[manual_object_df['Process']=='Categorization Filter Order'][["Word",'Order']].reset_index(drop=True).rename(columns={'Word':"Categorization",'Order':"proc_order"})
+    final_df1 = final_df1.merge(cat_filter,on='Categorization',how='left')
+    
+    # Merge in Word Order.
+    final_df1 = final_df1.merge(manual_object_df.drop(['Categorization','Definition'],axis=1).rename(columns={'Order':'word_order'}),on=['Process','Word'],how='left')
+    
+    final_df1.sort_values(['Process','word_order','proc_order','Word'],inplace=True)
+    final_df1.drop(['word_order','proc_order'],axis=1,inplace=True)    
+    final_df1.reset_index(drop=True,inplace=True)
+
+    if export_location:
+        final_df1.to_excel(export_location,index=False)
+       
+    return final_df1
