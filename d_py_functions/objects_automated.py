@@ -31,7 +31,7 @@ object_dict['algo_class_ref_list'] = {
     'Word':"Algorithm Categorization Reference List",
     'Definition':"Comprehensive List of all Values utilized in Algorithm Categorization, used to Categorize ML Methods in Algorithm Taxonomy",
     'publish':1,
-    'python_object':['Anomaly Detection', 'Classification', 'Clustering', 'Density Estimation', 'Dimensionality Reduction', 'Feature Selection', 'Feature Transformation', 'Generative Models', 'Graph Algorithms', 'Information Retrieval', 'Optimization', 'Prediction', 'Ranking / Recommendation', 'Regression', 'Reinforcement Learning', 'Time Series Forecasting']
+    'python_object':['Anomaly Detection', 'Classification', 'Clustering', 'Density Estimation', 'Dimensionality Reduction', 'Feature Selection (AC)', 'Feature Transformation', 'Generative Models', 'Graph Algorithms', 'Information Retrieval', 'Optimization', 'Prediction', 'Ranking / Recommendation', 'Regression', 'Reinforcement Learning', 'Time Series Forecasting']
     }
 
 object_dict['dot_py_reference_proc'] = {
