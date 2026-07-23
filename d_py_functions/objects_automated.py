@@ -13,7 +13,7 @@ object_dict['process_reference_list'] = {
     'Word':"Documentation Taxonomy Process",
     'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
     'publish':1,
-    'python_object':['Algorithm Categorization', 'Algorithm Taxonomy', 'Behavioural Economics', 'Best Linear Unbiased Estimator', 'Categorization Filter Order', 'Data Collection', 'Data Dictionary Columns', 'Data Engineering', 'Data Preparation', 'Default Python String Taxonomy', 'Documentation Taxonomy Categorization', 'Dot Py String Classification', 'Dot Py String Taxonomy Categorization', 'Dot Py String Taxonomy Process', 'Feature Engineering', 'Feature Selection', 'General Definition', 'Goal Setting', 'Graph Algorithms', 'Information Retrieval', 'LLM', 'ML Definitions', 'ML Model', 'ML Training', 'Machine Learning Lifecycle', 'Mathematics', 'Model Evaluation', 'NLP', 'Neural Network', 'Problem Definition', 'Problem Solving Framework', 'Statistics', 'Vector Database', 'Vector Search']
+    'python_object':['Algorithm Categorization', 'Algorithm Taxonomy', 'Behavioural Economics', 'Best Linear Unbiased Estimator', 'Bias, Fairness, and Ethics', 'Categorization Filter Order', 'Clustering', 'Data Collection', 'Data Dictionary Columns', 'Data Engineering', 'Data Preparation', 'Default Python String Taxonomy', 'Deployment', 'Documentation Taxonomy Categorization', 'Dot Py String Classification', 'Dot Py String Taxonomy Categorization', 'Dot Py String Taxonomy Process', 'Feature Engineering', 'Feature Selection', 'General Definition', 'Goal Setting', 'Graph Algorithms', 'Hyperparameter Tuning', 'Information Retrieval', 'LLM', 'ML Definitions', 'ML Model', 'ML Training', 'Machine Learning Lifecycle', 'Mathematics', 'Model Evaluation', 'Model Interpretability', 'Model Selection', 'Monitoring', 'NLP', 'Neural Network', 'Organization Taxonomy', 'Problem Definition', 'Problem Solving Framework', 'Process Development', 'Statistics', 'Training', 'Validation/ Model Selection', 'Vector Database', 'Vector Search']
     }
 
 object_dict['cat_reference_list'] = {
@@ -22,7 +22,7 @@ object_dict['cat_reference_list'] = {
     'Word':"Documentation Taxonomy Categorization",
     'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
     'publish':1,
-    'python_object':['Algorithm', 'Concept', 'Definition', 'Feature Selection', 'Filter Order', 'Formula', 'Guidance', 'Information', 'Method', 'Process Step', 'Reference List', 'Regularization', 'Required', 'Requirement', 'Theorem', 'Tool', 'Transformation']
+    'python_object':['Algorithm', 'Concept', 'Consideration', 'Definition', 'Feature Selection', 'Filter Order', 'Formula', 'Guidance', 'Information', 'Method', 'Model Evaluation', 'Process Step', 'Reference List', 'Regularization', 'Required', 'Requirement', 'Theorem', 'Tool', 'Trade-offs ', 'Transformation']
     }
 
 object_dict['algo_class_ref_list'] = {
@@ -40,7 +40,7 @@ object_dict['dot_py_reference_proc'] = {
     'Word':"Dot Py String Taxonomy Process",
     'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
     'publish':1,
-    'python_object':['OS Folder Management', 'ETL', 'Definition', 'Documentation']
+    'python_object':['OS Folder Management', 'ETL', 'Documentation', 'Definition']
     }
 
 object_dict['dot_py_reference_cat'] = {
@@ -49,7 +49,7 @@ object_dict['dot_py_reference_cat'] = {
     'Word':"Dot Py String Taxonomy Categorization",
     'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
     'publish':1,
-    'python_object':['Directory Management', 'File Management', 'Excel File Creation', 'Definition', 'Manual File Creator']
+    'python_object':['Directory Management', 'File Management', 'Excel File Creation', 'Manual File Creator', 'Definition']
     }
     
 object_dict['csv_links'] = {
