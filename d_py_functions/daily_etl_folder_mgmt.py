@@ -169,8 +169,6 @@ def ETL(print_=False):
     manual_object_df = pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
     auto_object_df =   pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_auto_published.xlsx')
     
-    from daily_etl_folder_mgmt import generate_knowledgebase
-    
     # Generate Updated Knowledge Base
     knowledge_base_df = generate_knowledgebase(
         notes_df=notes_df,
@@ -352,7 +350,7 @@ object_dict['url_links'] = {{
     with open("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/objects_automated.py", "w") as f:
         f.write(text_)
 
-
+        
 def generate_knowledgebase(
     notes_df=pd.DataFrame(),
     definition_df=pd.DataFrame(),
@@ -385,17 +383,21 @@ def generate_knowledgebase(
         22-Jul - Overhauled merge. Attempted to streamline, simplify and reduce duplication. Increase Visability.
         
     '''
+    
     if len(notes_df)==0:
         notes_df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv')
+        notes_df = notes_df[notes_df['Word'].notnull()].copy()
 
     if len(definition_df)==0:
         definition_df = pd.read_csv('https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv')
-
+        definition_df = definition_df[definition_df['Word'].notnull()].copy()
     if len(auto_object_df)==0:
         auto_object_df = pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_auto_published.xlsx')
+        auto_object_df = auto_object_df[auto_object_df['Word'].notnull()].copy()
 
     if len(manual_object_df)==0:
         manual_object_df = pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
+        manual_object_df = manual_object_df[manual_object_df['Word'].notnull()].copy()
 
     # Combine Notes from Google and Notes Extract from Manual List
     consolidated_notes = pd.concat([notes_df,manual_object_df.drop('Order',axis=1)])
@@ -420,21 +422,24 @@ def generate_knowledgebase(
     final_df1 = final_df.merge(definition_df[['Word','Definition']].drop_duplicates('Word'),on='Word',how='left',suffixes=("","_"))
     final_df1['Definition'] = np.where(final_df1['Definition'].isnull(),final_df1['Definition_'],final_df1['Definition'])
     final_df1.drop('Definition_',axis=1,inplace=True)
-    
+
     # Merge in Processes into themself. IE. In Machine Learning Lifecycle add Goal Setting Steps to makea  complete process
     temp = final_df1[final_df1['Process'].isin(final_df1['Word'].tolist())].copy()
-    temp['Definition'] = temp['Word'] +': '+ temp['Definition']
-    temp['Word'] = temp['Process']
-    temp['Categorization'] = np.where(temp['Categorization']=='Process Step','Guidance',temp['Categorization'])
-    temp.drop('Process',axis=1,inplace=True)
-    
-    final_df1 = final_df1.merge(temp,on='Word',how='left',suffixes=("","_"))
-    final_df1['Categorization'] = np.where(final_df1['Categorization_'].notnull(),final_df1['Categorization_'],final_df1['Categorization'])
-    final_df1['Definition'] = np.where(final_df1['Definition_'].notnull(),final_df1['Definition_'],final_df1['Definition'])
-    
-    final_df1.drop(['Definition_','Categorization_'],axis=1,inplace=True)
+    temp['Categorization'] = temp['Process'].copy()
 
+    # Add this as we will use it at the very end after filtering has been completed.
+    temp['Word__'] = temp['Word'].copy()
+    temp['Word'] = temp['Process'].copy()
+    temp.drop(['Process','Categorization'],axis=1,inplace=True)
+
+    # Need to create a distinct dataset with which to merge into.    
+    temp1 = final_df1.merge(temp,on='Word',how='inner',suffixes=("","_"))
+    temp1['Categorization'] = temp1['Word'].copy()
+    temp1['Definition'] = np.where(temp1['Definition_'].notnull(),temp1['Definition_'],temp1['Definition'])
+    temp1.drop('Definition_',axis=1,inplace=True)
     
+    final_df1 = pd.concat([final_df1,temp1])
+        
     auto_object_df = auto_object_df.merge(definition_df[['Word','Definition']].drop_duplicates('Word'),on='Word',how='left',suffixes=("","_"))
     auto_object_df['Definition'] = np.where(auto_object_df['Definition'].isnull(),auto_object_df['Definition_'],auto_object_df['Definition'])
     auto_object_df.drop('Definition_',inplace=True,axis=1)
@@ -456,9 +461,18 @@ def generate_knowledgebase(
     
     # Merge in Word Order.
     final_df1 = final_df1.merge(manual_object_df.drop(['Categorization','Definition'],axis=1).rename(columns={'Order':'word_order'}),on=['Process','Word'],how='left')
+
+    # Merge in ML Lifecycle Order to filter Category for instances where No other filter is being applied
+    ml_order = manual_object_df[manual_object_df['Process']=='Machine Learning Lifecycle'][['Word','Order']].rename(columns={'Order':"ml_order"})
     
-    final_df1.sort_values(['Process','word_order','proc_order','Word'],inplace=True)
-    final_df1.drop(['word_order','proc_order'],axis=1,inplace=True)    
+    final_df1 = final_df1.merge(ml_order,on='Word',how='left')
+    final_df1 = final_df1.merge(ml_order.rename(columns={'ml_order':'ml1_order','Word':"Categorization"}),on='Categorization',how='left')
+    
+    final_df1.sort_values(['Process','word_order','proc_order','ml_order','ml1_order','Categorization','Word'],inplace=True)
+
+    final_df1['Word'] = np.where(final_df1['Word__'].notnull(),final_df1['Word__'],final_df1['Word'])
+    
+    final_df1.drop(['word_order','proc_order','Word__','ml_order','ml1_order'],axis=1,inplace=True)    
     final_df1.reset_index(drop=True,inplace=True)
 
     if export_location:
