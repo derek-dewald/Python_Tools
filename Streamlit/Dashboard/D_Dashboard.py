@@ -831,14 +831,16 @@ elif page == 'Functions':
 # -----------------------------------
 
 elif page == 'ML Models':
-    st.title("Processes")
+    st.title("ML Models")
     df = data_dict['consolidated_df']
 
     word_list = ['ML Model Taxonomy']
     word_list.extend(df[df['Process'] == 'ML Model Taxonomy']['Word'].tolist())
     df_base = df[df['Process'].isin(word_list)][['Process','Categorization','Word','Definition']]
+    print(df_base)
     temp = df[df['Process'].isin(df_base['Word'].tolist())][['Process','Categorization','Word','Definition']]
     df_base = pd.concat([df_base,temp]).drop_duplicates()
+    df_base = df_base.fillna("")
     df_base.sort_values(['Process','Categorization','Word'])
 
     c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
