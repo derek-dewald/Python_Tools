@@ -161,7 +161,7 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ "Home Page", 'Definitions','Notes',"Knowledge Base","Technical Notes",'Processes','Process and Categorization Utilization','Functions']
+    [ "Home Page", 'Definitions','Notes',"Knowledge Base","Technical Notes",'Processes','Process and Categorization Utilization','Functions','ML Models']
      #"Frequency Summarization",,'Process Checklist',"Function List", "Function Parameters",  'Folder Table of Content', ]
 )
 
@@ -808,6 +808,100 @@ elif page == 'Functions':
         resizable=True,
         sortable=True,
         filter=True,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gridOptions = gb.build()
+
+    gridOptions["onGridReady"] = on_grid_ready
+    gridOptions["onGridSizeChanged"] = on_grid_size_changed
+
+    AgGrid(
+        df_view,
+        gridOptions=gridOptions,
+        height=800,
+        allow_unsafe_jscode=True,
+        fit_columns_on_grid_load=False,
+        reload_data=True,
+    )
+
+# -----------------------------------
+# Processes
+# -----------------------------------
+
+elif page == 'ML Models':
+    st.title("Processes")
+    df = data_dict['consolidated_df']
+
+    word_list = ['ML Model Taxonomy']
+    word_list.extend(df[df['Process'] == 'ML Model Taxonomy']['Word'].tolist())
+    df_base = df[df['Process'].isin(word_list)][['Process','Categorization','Word','Definition']]
+    temp = df[df['Process'].isin(df_base['Word'].tolist())][['Process','Categorization','Word','Definition']]
+    df_base = pd.concat([df_base,temp]).drop_duplicates()
+    df_base.sort_values(['Process','Categorization','Word'])
+
+    c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
+
+    c1_word = 'Process'
+    c2_word = 'Categorization'
+    c3_word = 'Word'
+    search_word = 'Definition'
+
+    with c1:
+        c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
+        c1_sel = st.selectbox(c1_word, c1_options, index=0)
+
+    df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
+
+    with c2:
+        c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
+        c2_sel = st.selectbox(c2_word, c2_options, index=0)
+
+    df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
+
+    with c3:
+        c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
+        c3_sel = st.selectbox(c3_word, c3_options, index=0)
+
+    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
+
+    with c4:
+        definition_search = st.text_input("Definition search", value="", placeholder="Type to search Description...")
+
+    df_view = df3
+    if definition_search.strip():
+        s = definition_search.strip().lower()
+        df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
+
+    st.caption(f"Rows: {len(df_view)}")
+
+    excel_bytes = df_to_excel_bytes(
+        df_view,
+        sheet_name="Processes",
+        long_columns=["Definition"],
+        default_max_width=30,
+        long_max_width=80
+    )
+
+    gb = GridOptionsBuilder.from_dataframe(df_view)
+
+    gb.configure_default_column(
+        resizable=True,
+        sortable=True,
+        filter=True,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gb.configure_column(c1_word, width=100, minWidth=80, maxWidth=120)
+    gb.configure_column(c2_word, width=100, minWidth=80, maxWidth=120)
+    gb.configure_column(c3_word, width=150, minWidth=120, maxWidth=170)
+
+    gb.configure_column(
+        search_word,
+        flex=1,
+        minWidth=700,
         wrapText=True,
         autoHeight=True
     )
