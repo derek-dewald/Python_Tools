@@ -183,6 +183,7 @@ object_dict['problem_framework_relative_order'] = {
         'Process Definition',
         'Definition',
         'Process Step',
+        'Reqiurement',
         'Guiding Principle',
         'Guidance',
         'Expected Outcomes',

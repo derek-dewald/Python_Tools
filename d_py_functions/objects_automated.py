@@ -13,7 +13,7 @@ object_dict['process_reference_list'] = {
     'Word':"Documentation Taxonomy Process",
     'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
     'publish':1,
-    'python_object':['Algorithm Categorization', 'Algorithm Taxonomy', 'Behavioural Economics', 'Best Linear Unbiased Estimator', 'Bias, Fairness, and Ethics', 'Cardinal Presentation Sins', 'Categorization Filter Order', 'Clustering', 'Communication', 'Data Collection', 'Data Dictionary Columns', 'Data Engineering', 'Data Preparation', 'Decision Making', 'Default Python String Taxonomy', 'Deployment', 'Documentation Taxonomy Categorization', 'Dot Py String Classification', 'Dot Py String Taxonomy Categorization', 'Dot Py String Taxonomy Process', 'Feature Engineering', 'Feature Selection', 'General Definition', 'Goal Setting', 'Graph Algorithms', 'Hyperparameter Tuning', 'Information Retrieval', 'LLM', 'ML Definitions', 'ML Model', 'ML Training', 'Machine Learning Lifecycle', 'Make it as Short as Possible', 'Mathematics', 'Model Evaluation', 'Model Interpretability', 'Model Selection', 'Monitoring', 'NLP', 'Neural Network', 'Notes from Books', 'Organization Taxonomy', 'Persuasion', 'Presentation Tenants', 'Problem Definition', 'Problem Solving Framework', 'Process Development', 'Re-enforce the Message', 'Statistics', 'Story Telling Tenants', 'Supervised Learning', 'Training', 'Types of Problems', 'Understand Your Audience', 'Understand Your Message', 'Understand Your Visuals', 'Validation/ Model Selection', 'Vector Database', 'Vector Search']
+    'python_object':['Activation Function', 'Anomaly Detection', 'Behavioural Economics', 'Best Linear Unbiased Estimator', 'Bias, Fairness, and Ethics', 'Cardinal Presentation Sins', 'Categorization', 'Categorization Filter Order', 'Classification', 'Clustering', 'Communication', 'Confusion Matrix', 'Data Collection', 'Data Dictionary Columns', 'Data Engineering', 'Data Preparation', 'Decision Making', 'Default Python String Taxonomy', 'Density Estimation', 'Deployment', 'Dimensionality Reduction', 'Documentation Taxonomy Categorization', 'Dot Py String Classification', 'Dot Py String Taxonomy Categorization', 'Dot Py String Taxonomy Process', 'Experiement Design', 'Feature Engineering', 'Feature Selection', 'Feature Transformation', 'Function', 'General Definition', 'Generative Models', 'Goal Setting', 'Graph Algorithms', 'Graph Theory', 'Hadoop', 'Hyperparameter', 'Hyperparameter Tuning', 'Information Retrieval', 'LLM', 'Learning Paradigm', 'ML Definitions', 'ML Model Taxonomy', 'ML Training', 'Machine Learning Lifecycle', 'Make it as Short as Possible', 'Mathematics', 'Method', 'Method Approach', 'Method Objective', 'Model Evaluation', 'Model Interpretability', 'Model Selection', 'Monitoring', 'NLP', 'Natural Language Processing', 'Neural Network', 'Notes from Books', 'Optimization', 'Organization Taxonomy', 'Persuasion', 'Presentation Tenants', 'Principle', 'Problem Definition', 'Problem Solving Framework', 'Process Development', 'Ranking / Recommendation', 'Re-enforce the Message', 'Regression', 'Reinforcement Learning', 'Representation Learning', 'Similarity', 'Spark', 'Statistics', 'Story Telling Tenants', 'Supervised Learning', 'TBD', 'Time Series Forecasting', 'Tooling', 'Training', 'Types of Problems', 'Understand Your Audience', 'Understand Your Message', 'Understand Your Visuals', 'Validation/ Model Selection', 'Vector Database', 'Vector Search', 'Wicked Problem']
     }
 
 object_dict['cat_reference_list'] = {
@@ -22,7 +22,7 @@ object_dict['cat_reference_list'] = {
     'Word':"Documentation Taxonomy Categorization",
     'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
     'publish':1,
-    'python_object':['Algorithm', 'Bias, Fairness, and Ethics', 'Cardinal Presentation Sins', 'Concept', 'Consideration', 'Data Collection', 'Data Preparation', 'Decision Making', 'Definition', 'Deployment', 'Example', 'Feature Engineering', 'Feature Selection', 'Filter Order', 'Formula', 'Goal Setting', 'Guidance', 'Hyperparameter Tuning', 'Information', 'Make it as Short as Possible', 'Method', 'Model Evaluation', 'Model Interpretability', 'Model Selection', 'Monitoring', 'Problem Definition', 'Process Step', 'Re-enforce the Message', 'Reference List', 'Regularization', 'Required', 'Requirement', 'Story Telling', 'Storytelling', 'Technology Adoption', 'Theorem', 'Tool', 'Training', 'Transformation', 'Understand Your Audience', 'Understand Your Message', 'Understand Your Visuals', 'Validation/ Model Selection']
+    'python_object':['Algorithm', 'Automating Python', 'Bias, Fairness, and Ethics', 'Cardinal Presentation Sins', 'Concept', 'Consideration', 'Data Collection', 'Data Preparation', 'Definition', 'Defintion', 'Deployment', 'Example', 'Feature Engineering', 'Feature Selection', 'Filter Order', 'Formula', 'Goal Setting', 'Guidance', 'Hyperparameter Tuning', 'Information', 'Make it as Short as Possible', 'Method', 'Metric', 'Model Evaluation', 'Model Interpretability', 'Model Selection', 'Monitoring', 'Optimization', 'Outcome', 'Paradigm', 'Problem Definition', 'Process Step', 'Re-enforce the Message', 'Reference List', 'Regularization', 'Required', 'Requirement', 'Story Telling', 'Storytelling', 'TBD', 'Technology Adoption', 'Theorem', 'Tool', 'Training', 'Transformation', 'Understand Your Audience', 'Understand Your Message', 'Understand Your Visuals', 'Validation/ Model Selection']
     }
 
 object_dict['algo_class_ref_list'] = {
@@ -30,8 +30,8 @@ object_dict['algo_class_ref_list'] = {
     'Categorization':'Reference List',
     'Word':"Algorithm Categorization Reference List",
     'Definition':"Comprehensive List of all Values utilized in Algorithm Categorization, used to Categorize ML Methods in Algorithm Taxonomy",
-    'publish':1,
-    'python_object':['Anomaly Detection', 'Classification', 'Clustering', 'Density Estimation', 'Dimensionality Reduction', 'Feature Selection (AC)', 'Feature Transformation', 'Generative Models', 'Graph Algorithms', 'Information Retrieval', 'Optimization', 'Prediction', 'Ranking / Recommendation', 'Regression', 'Reinforcement Learning', 'Representation Learning', 'Time Series Forecasting']
+    'publish':0,
+    'python_object':[]
     }
 
 object_dict['dot_py_reference_proc'] = {
@@ -40,7 +40,7 @@ object_dict['dot_py_reference_proc'] = {
     'Word':"Dot Py String Taxonomy Process",
     'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Process",
     'publish':1,
-    'python_object':['OS Folder Management', 'ETL', 'Documentation', 'Definition']
+    'python_object':['OS Folder Management', 'ETL', 'Definition', 'Documentation']
     }
 
 object_dict['dot_py_reference_cat'] = {
@@ -49,7 +49,7 @@ object_dict['dot_py_reference_cat'] = {
     'Word':"Dot Py String Taxonomy Categorization",
     'Definition':"Comprehensive List of all Values utilized in Organizational Taxonomy in the Column Categorization",
     'publish':1,
-    'python_object':['Directory Management', 'File Management', 'Excel File Creation', 'Manual File Creator', 'Definition']
+    'python_object':['Directory Management', 'File Management', 'Excel File Creation', 'Definition', 'Manual File Creator']
     }
     
 object_dict['csv_links'] = {
@@ -69,3 +69,40 @@ object_dict['url_links'] = {
     'publish':0,
     'python_object':{'google_definition_csv': 'https://docs.google.com/spreadsheets/d/1tZ-_5Vv99_bm9CCEdDDN0KkmsFNcjWeKM86237yrCTQ/edit?gid=0#gid=0', 'google_notes_csv': 'https://docs.google.com/spreadsheets/d/1jddkkF5IWRr_eV1hTjB-T_IlmGJ-GpizYgeMgZQQxb4/edit?gid=0#gid=0', 'technical_notes': 'https://docs.google.com/spreadsheets/d/1FpYYq4LN6AZBaNRhnj1f76YNvnG-hTco40wJ1PUugto/edit?gid=0#gid=0', 'd_links': 'https://docs.google.com/spreadsheets/d/14CtNmNIajcY1mlEkRWw4ka93MQYGs2wN-kvL5qhvQX0/edit?gid=469651051#gid=469651051', 'Job Search': 'https://docs.google.com/spreadsheets/d/1sMdgmp80DXDojDl6uYS6INdoJxVDbhIwpwCtpxBjHVg/edit?gid=668067090#gid=668067090', 'OurWorldData': 'www.ourworlddata.org', 'KaggelDatasets': 'https://www.kaggle.com/datasets', 'StLouisFed': 'https://fred.stlouisfed.org', 'GoggleResearch': 'https://datasetsearch.research.google.com', 'UCI': 'https://archive.ics.uci.edu', 'AWS': 'https://registry.opendata.aws/', 'AWSDataExchange': 'https://aws.amazon.com/data-exchange/', 'AWSPublicData': 'https://aws.amazon.com/public-datasets/', 'SKlearn Model Parameters': 'https://docs.google.com/spreadsheets/d/1GhIiuEMY-A-SNtQOj5Z24wARLVGvEd10qVT3MpGtj2Y/edit?gid=175044227#gid=175044227', 'TensorFlow Playground': 'https://playground.tensorflow.org/', 'SQL Cheatsheet': 'https://raw.githubusercontent.com/derek-dewald/d_functions/main/images/SQL_Cheatsheet.png'}
         }
+        
+object_dict['ml_model_tax_list'] = {
+    'Process':"ML Model Taxonomy",
+    'Categorization':'Reference List',
+    'Word':"ML Model Taxonomy",
+    'Definition':"List of Current Values for Items in ML Model Taxonomy",
+    'publish':0,
+    'python_object':['Learning Paradigm', 'Method Objective', 'Method', 'Method Approach']
+        }
+
+object_dict['ml_method_list'] = {
+    'Process':"Method",
+    'Categorization':'Reference List',
+    'Word':"Method",
+    'Definition':"List of Current Values for Distinct Types of Methods (While the distinction is subtle, and confusing), methods are of different types and to understand which to use, and when to apply, its important to understand the distinct classification",
+    'publish':0,
+    'python_object':['Function', 'Algorithm', 'Model', 'Technique']
+        }
+
+object_dict['ml_function_list'] = {
+    'Process':"Function",
+    'Categorization':'Reference List',
+    'Word':"Function",
+    'Definition':"List of Current Values for Functions. These methods refer to ML (not Python) as help to reinforce the nuance, subtly and what explicitly is happening when a ML model is running",
+    'publish':0,
+    'python_object':['Scoring Function', 'Kernel Function', 'Distance Function', 'Similarity Function', 'Activation Function', 'Objective Function', 'Loss Function', 'Cost Function']
+        }
+
+object_dict['ml_lp_list'] = {
+    'Process':"Learning Paradigm",
+    'Categorization':'Reference List',
+    'Word':"Learning Paradigm",
+    'Definition':"List of Current Values for Items in ML Model Taxonomy",
+    'publish':0,
+    'python_object':['Supervised Learning', 'Unsupervised Learning', 'Semi-Supervised Learning', 'Reinforcement Learning']
+        }
+

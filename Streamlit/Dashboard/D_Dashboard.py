@@ -10,7 +10,7 @@ import plotly.express as px
 import datetime as dt
 import textwrap
 import html
-
+import hashlib
 
 # To Download Project Checklist 
 from openpyxl.utils import get_column_letter
@@ -96,6 +96,69 @@ def df_to_excel_bytes(df,
 
     return buffer.getvalue()
 
+
+def display_reference_grid(
+    table_df: pd.DataFrame,
+    key: str,
+    column_widths: dict[str, int],
+    height: int = 350
+) -> None:
+    """
+    Display an AgGrid reference table that refreshes when its data changes.
+    """
+    grid_df = table_df.copy().reset_index(drop=True)
+
+    missing_columns = [
+        column
+        for column in column_widths
+        if column not in grid_df.columns
+    ]
+
+    if missing_columns:
+        raise ValueError(
+            f"Columns not found in DataFrame: {missing_columns}"
+        )
+
+    reference_options = GridOptionsBuilder.from_dataframe(grid_df)
+
+    reference_options.configure_default_column(
+        resizable=True,
+        sortable=True,
+        filter=True,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    for column, width in column_widths.items():
+        reference_options.configure_column(
+            column,
+            width=width,
+            minWidth=max(50, int(width * 0.75)),
+            maxWidth=int(width * 1.5),
+            wrapText=True,
+            autoHeight=True
+        )
+
+    # Create a hash that changes whenever the DataFrame changes.
+    dataframe_hash = hashlib.md5(
+        pd.util.hash_pandas_object(
+            grid_df,
+            index=True
+        ).values.tobytes()
+    ).hexdigest()
+
+    dynamic_key = f"{key}_{dataframe_hash}"
+
+    AgGrid(
+        grid_df,
+        gridOptions=reference_options.build(),
+        height=height,
+        allow_unsafe_jscode=True,
+        fit_columns_on_grid_load=False,
+        reload_data=True,
+        key=dynamic_key
+    )
+
 # ✅ Must be first Streamlit command
 st.set_page_config(page_title="Python Function Catalog", layout="wide")
 
@@ -161,7 +224,7 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ "Home Page", 'Definitions','Notes',"Knowledge Base","Technical Notes",'Processes','Process and Categorization Utilization','Functions','ML Models']
+    [ "Home Page", 'Definitions','Notes',"Knowledge Base","Technical Notes",'Processes','Process and Categorization Utilization','Functions','ML Models','Summarization']
      #"Frequency Summarization",,'Process Checklist',"Function List", "Function Parameters",  'Folder Table of Content', ]
 )
 
@@ -835,13 +898,10 @@ elif page == 'ML Models':
     df = data_dict['consolidated_df']
 
     word_list = ['ML Model Taxonomy']
-    word_list.extend(df[df['Process'] == 'ML Model Taxonomy']['Word'].tolist())
+    word_list.extend(df[df['Process'] == 'ML Model Taxonomy']['Word'].dropna().tolist())
     df_base = df[df['Process'].isin(word_list)][['Process','Categorization','Word','Definition']]
-    print(df_base)
     temp = df[df['Process'].isin(df_base['Word'].tolist())][['Process','Categorization','Word','Definition']]
-    df_base = pd.concat([df_base,temp]).drop_duplicates()
-    df_base = df_base.fillna("")
-    df_base.sort_values(['Process','Categorization','Word'])
+    df_base = pd.concat([df_base,temp]).drop_duplicates(['Word','Process']).fillna("").sort_values(['Process','Categorization','Word'])
 
     c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
 
@@ -876,15 +936,99 @@ elif page == 'ML Models':
         s = definition_search.strip().lower()
         df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
 
-    st.caption(f"Rows: {len(df_view)}")
+############
 
-    excel_bytes = df_to_excel_bytes(
-        df_view,
-        sheet_name="Processes",
-        long_columns=["Definition"],
-        default_max_width=30,
-        long_max_width=80
-    )
+
+    # ---------------------------------------------------------
+    # Display the three tables side by side
+    # ---------------------------------------------------------
+    
+    # Values in columns are % of screen allocation.
+    reference_col1, reference_col2, reference_col3 = st.columns([20,30,50])
+
+    def create_process_summary(source_df,table_=1,selected_word='(All)'):
+
+        # Create a Dataframe for Visualization of Method Objective
+        df_table1 = source_df[(source_df['Process']=='Method Objective')&(~source_df['Categorization'].isin(['Process Step','General Definition']))][["Word"]].rename(columns={'Word':"Method Objective"})
+        ac_list = df_table1['Method Objective'].tolist()
+
+        # Create a List of ML Model Taxonomy Items for Filtering returned items for Method Graph
+        ml_model_tax_df = source_df[(source_df['Process']=='ML Model Taxonomy')][['Word']].rename(columns={'Word':'ML Model Taxonomy'})
+        ml_model_tax_list = ml_model_tax_df['ML Model Taxonomy'].tolist()
+
+        # Create a df of Method Types based on Process = Method. For Other Pertinent Info
+        method_df = source_df[(source_df['Process']=='Method')][['Word']].rename(columns={'Word':'Method Types'})
+
+        # Create a Df of Learning Paradigm for Other Pertinent Info.
+        lp_df = source_df[source_df['Process']=='Learning Paradigm'][['Word']].rename(columns={'Word':'Learning Paradigm'})
+
+        # Create a Df of Function Type for Other Pertinent Info.
+        func_df = source_df[source_df['Process']=='Function'][['Word']].rename(columns={'Word':'Function Types'})
+
+
+
+        if table_==1:
+            return df_table1
+        
+        if table_==2:
+            if (selected_word!='(All)')&(selected_word in ac_list):
+                return source_df[
+                    (source_df['Process'].isin(ac_list))&
+                    (source_df['Categorization'].isin(ml_model_tax_list))&
+                    (source_df['Process']==selected_word)
+                    ][['Word','Process']].rename(columns={'Word':'Method','Process':"Learning Paradigm"})
+            else:
+                return source_df[(source_df['Process'].isin(ac_list))&(source_df['Categorization'].isin(ml_model_tax_list))][['Word','Process']].rename(columns={'Word':'Method','Process':"Learning Paradigm"})
+        
+        # Build A Table with ML Taxonomy. Method Types.
+        if table_==3:
+            d1 = ml_model_tax_df.reset_index(drop=True)
+            d2 = method_df.sort_values('Method Types').reset_index(drop=True)
+            d3 = lp_df.sort_values('Learning Paradigm').reset_index(drop=True)
+            d4 = func_df.sort_values('Function Types').reset_index(drop=True)
+
+            w = d1.merge(d2,left_index=True,right_index=True,how='outer').merge(d3,left_index=True,right_index=True,how='outer').merge(d4,left_index=True,right_index=True,how='outer').fillna("")
+            w = w.apply(lambda col: col.replace("", pd.NA).sort_values(ignore_index=True)).fillna("")
+            return w
+        
+    table_1_df = create_process_summary(df_base)
+    table_2_df = create_process_summary(df_base,2,c1_sel)
+    table_3_df = create_process_summary(df_base,3)
+
+    
+    with reference_col1:
+        st.markdown("#### Method Objective")
+    
+        display_reference_grid(
+            table_1_df,
+            column_widths={"Learning Paradigm": 500},
+            key="algo_classification_table"
+        )
+
+    with reference_col2:
+        st.markdown("#### Methods")
+
+        display_reference_grid(
+            table_2_df,
+            column_widths={'Learning Paradigm':200},
+            key="methods_table"
+        )
+
+    with reference_col3:
+        st.markdown("#### Other Key Information")
+
+        display_reference_grid(
+            table_3_df,
+            column_widths={'ML Model Taxonomy':125,'Method Types':100,"Learning Paradigm":150},
+            key="method_type_table"
+        )
+
+############
+
+
+
+
+    st.caption(f"Rows: {len(df_view)}")
 
     gb = GridOptionsBuilder.from_dataframe(df_view)
 
@@ -921,3 +1065,142 @@ elif page == 'ML Models':
         fit_columns_on_grid_load=False,
         reload_data=True,
     )
+
+
+elif page == 'Summarization':
+    st.title("Summarization")
+    df_base = data_dict['consolidated_df']
+
+    c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
+
+    c1_word = 'Process'
+    c2_word = 'Categorization'
+    c3_word = 'Word'
+    search_word = 'Definition'
+
+    with c1:
+        c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
+        c1_sel = st.selectbox(c1_word, c1_options, index=0)
+
+    df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
+
+    with c2:
+        c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
+        c2_sel = st.selectbox(c2_word, c2_options, index=0)
+
+    df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
+
+    with c3:
+        c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
+        c3_sel = st.selectbox(c3_word, c3_options, index=0)
+
+    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
+
+    with c4:
+        definition_search = st.text_input("Definition search", value="", placeholder="Type to search Description...")
+
+    df_view = df3
+    if definition_search.strip():
+        s = definition_search.strip().lower()
+        df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
+
+############
+
+
+    # ---------------------------------------------------------
+    # Display the three tables side by side
+    # ---------------------------------------------------------
+    
+    # Values in columns are % of screen allocation.
+    reference_col1, reference_col2, reference_col3 = st.columns([.25,.25,.5])
+
+    def create_process_summary(source_df,table_=1):
+
+        # Create a Dataframe for Visualization of Algorithm Classification
+
+        words = ['Process','Categorization']
+
+        
+        df_table1 = source_df[['Process']].groupby('Process').size().reset_index().rename(columns={0:'Records'})
+        df_table2 = source_df[['Categorization']].groupby('Categorization').size().reset_index().rename(columns={0:'Records'})
+        df_table3 = source_df[words].groupby(words).size().reset_index().rename(columns={0:'Records'})
+
+        if table_==1:
+            return df_table1.sort_values('Records',ascending=False)
+
+        if table_==2:
+            return df_table2.sort_values('Records',ascending=False)
+
+        if table_==3:
+            return df_table3.sort_values('Records',ascending=False)
+        
+        
+    table_1_df = create_process_summary(df_view)
+    table_2_df = create_process_summary(df_view,2)
+    table_3_df = create_process_summary(df_view,3)
+
+    with reference_col1:
+        st.markdown("#### Learning Paradigm")
+    
+        display_reference_grid(
+            table_1_df,
+            column_widths={"Process": 200},
+            key="algo_classification_table"
+        )
+
+    with reference_col2:
+        st.markdown("#### Methods")
+
+        display_reference_grid(
+            table_2_df,
+            column_widths={'Categorization':200},
+            key="methods_table"
+        )
+
+    with reference_col3:
+        st.markdown("#### Other Key Information")
+
+        display_reference_grid(
+            table_3_df,
+            column_widths={"Process": 200,'Categorization':200},
+            key="method_type_table"
+        )
+
+############
+
+    gb = GridOptionsBuilder.from_dataframe(df_view)
+
+    gb.configure_default_column(
+        resizable=True,
+        sortable=True,
+        filter=True,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gb.configure_column(c1_word, width=100, minWidth=80, maxWidth=120)
+    gb.configure_column(c2_word, width=100, minWidth=80, maxWidth=120)
+    gb.configure_column(c3_word, width=150, minWidth=120, maxWidth=170)
+
+    gb.configure_column(
+        search_word,
+        flex=1,
+        minWidth=700,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gridOptions = gb.build()
+
+    gridOptions["onGridReady"] = on_grid_ready
+    gridOptions["onGridSizeChanged"] = on_grid_size_changed
+
+    AgGrid(
+        df_view,
+        gridOptions=gridOptions,
+        height=800,
+        allow_unsafe_jscode=True,
+        fit_columns_on_grid_load=False,
+        reload_data=True,
+    )
+
