@@ -760,40 +760,6 @@ elif page == 'Process and Categorization Utilization':
     df_view = df3[['Process','Categorization','Word','Definition']]
     gb_df = df3[['Process','Categorization','Location']].groupby(['Process','Categorization','Location']).size().reset_index().rename(columns={0:'Record Count'})
 
-    st.caption(f"Rows: {len(gb_df)}")
-
-    gb = GridOptionsBuilder.from_dataframe(gb_df)
-
-    gb.configure_default_column(
-        resizable=True,
-        sortable=True,
-        filter=True,
-        wrapText=True,
-        autoHeight=True
-    )
-
-    gb.configure_column(c1_word, width=180, minWidth=220, maxWidth=260)
-    gb.configure_column(c2_word, width=140, minWidth=120, maxWidth=160)
-    gb.configure_column('Location', width=140, minWidth=120, maxWidth=160)
-    gb.configure_column('Record Count', width=100, minWidth=90, maxWidth=120)
-
-    gridOptions = gb.build()
-
-    gridOptions["onGridReady"] = on_grid_ready
-    gridOptions["onGridSizeChanged"] = on_grid_size_changed
-
-    table_col, blank_col = st.columns([5, 6])
-
-    with table_col:
-        AgGrid(
-            gb_df,
-            gridOptions=gridOptions,
-            height= min(400, max(120, 45 + len(gb_df) * 35)),
-            allow_unsafe_jscode=True,
-            fit_columns_on_grid_load=True,
-            reload_data=True,
-        )
-
     gb1 = GridOptionsBuilder.from_dataframe(df_view)
 
     gb1.configure_default_column(
@@ -950,10 +916,16 @@ elif page == 'ML Models':
 
         # Create a Dataframe for Visualization of Method Objective
         df_table1 = source_df[(source_df['Process']=='Method Objective')&(~source_df['Categorization'].isin(['Process Step','General Definition']))][["Word"]].rename(columns={'Word':"Method Objective"})
-        ac_list = df_table1['Method Objective'].tolist()
+        method_objetive_list = df_table1['Method Objective'].tolist()
 
         # Create a List of ML Model Taxonomy Items for Filtering returned items for Method Graph
         ml_model_tax_df = source_df[(source_df['Process']=='ML Model Taxonomy')][['Word']].rename(columns={'Word':'ML Model Taxonomy'})
+        manual_order = {'Learning Paradigm':1,'Method Objective':2,'Method':3,'Method Approach':4}
+        ml_model_tax_df['Order'] = ml_model_tax_df['ML Model Taxonomy'].map(manual_order)
+        ml_model_tax_df = ml_model_tax_df.sort_values('Order').drop('Order',axis=1).reset_index(drop=True)
+
+        method_approach_df = source_df[source_df['Process']=='Method Approach'][['Word']].rename(columns={'Word':"Method Approach"})
+
         ml_model_tax_list = ml_model_tax_df['ML Model Taxonomy'].tolist()
 
         # Create a df of Method Types based on Process = Method. For Other Pertinent Info
@@ -965,35 +937,46 @@ elif page == 'ML Models':
         # Create a Df of Function Type for Other Pertinent Info.
         func_df = source_df[source_df['Process']=='Function'][['Word']].rename(columns={'Word':'Function Types'})
 
-
-
         if table_==1:
             return df_table1
-        
+
         if table_==2:
-            if (selected_word!='(All)')&(selected_word in ac_list):
+            if (selected_word!='(All)')&(selected_word in method_objetive_list):
                 return source_df[
-                    (source_df['Process'].isin(ac_list))&
+                    (source_df['Process'].isin(method_objetive_list))&
                     (source_df['Categorization'].isin(ml_model_tax_list))&
                     (source_df['Process']==selected_word)
                     ][['Word','Process']].rename(columns={'Word':'Method','Process':"Learning Paradigm"})
             else:
-                return source_df[(source_df['Process'].isin(ac_list))&(source_df['Categorization'].isin(ml_model_tax_list))][['Word','Process']].rename(columns={'Word':'Method','Process':"Learning Paradigm"})
+                return source_df[(source_df['Process'].isin(method_objetive_list))&(source_df['Categorization'].isin(ml_model_tax_list))][['Word','Process']].rename(columns={'Word':'Method','Process':"Learning Paradigm"})
         
         # Build A Table with ML Taxonomy. Method Types.
         if table_==3:
-            d1 = ml_model_tax_df.reset_index(drop=True)
-            d2 = method_df.sort_values('Method Types').reset_index(drop=True)
-            d3 = lp_df.sort_values('Learning Paradigm').reset_index(drop=True)
-            d4 = func_df.sort_values('Function Types').reset_index(drop=True)
+            # LP - MA - M - MO
+            d1 = ml_model_tax_df
+            d2 = lp_df.sort_values('Learning Paradigm').reset_index(drop=True)
+            d3 = method_approach_df.sort_values('Method Approach').reset_index(drop=True)
+            d4 = method_df.sort_values('Method Types').reset_index(drop=True)
 
+            #d5 = func_df.sort_values('Function Types').reset_index(drop=True)
             w = d1.merge(d2,left_index=True,right_index=True,how='outer').merge(d3,left_index=True,right_index=True,how='outer').merge(d4,left_index=True,right_index=True,how='outer').fillna("")
-            w = w.apply(lambda col: col.replace("", pd.NA).sort_values(ignore_index=True)).fillna("")
+
+            for col in w.columns:
+                if col != "ML Model Taxonomy":
+                    w[col] = (
+                        w[col]
+                        .replace("", pd.NA)
+                        .sort_values(ignore_index=True)
+                        .fillna("")
+                    )
             return w
         
     table_1_df = create_process_summary(df_base)
     table_2_df = create_process_summary(df_base,2,c1_sel)
     table_3_df = create_process_summary(df_base,3)
+
+
+    #table_3_df = create_process_summary(df_base,3)
 
     
     with reference_col1:
@@ -1001,7 +984,7 @@ elif page == 'ML Models':
     
         display_reference_grid(
             table_1_df,
-            column_widths={"Learning Paradigm": 500},
+            column_widths={"Method Objective": 500},
             key="algo_classification_table"
         )
 
@@ -1010,7 +993,7 @@ elif page == 'ML Models':
 
         display_reference_grid(
             table_2_df,
-            column_widths={'Learning Paradigm':200},
+            column_widths={'Method':200},
             key="methods_table"
         )
 
@@ -1019,7 +1002,8 @@ elif page == 'ML Models':
 
         display_reference_grid(
             table_3_df,
-            column_widths={'ML Model Taxonomy':125,'Method Types':100,"Learning Paradigm":150},
+            column_widths={'Learning Paradigm':200},
+            #column_widths={'ML Model Taxonomy':125,'Method Types':100,"Learning Paradigm":150},
             key="method_type_table"
         )
 
