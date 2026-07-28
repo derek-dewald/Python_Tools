@@ -224,7 +224,7 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ "Home Page", 'Definitions','Notes',"Knowledge Base","Technical Notes",'Processes','Process and Categorization Utilization','Functions','ML Models','Summarization']
+    [ "Home Page", 'Definitions','Notes',"Knowledge Base","Technical Notes",'Processes','Process Checklist','Functions','ML Models','Summarization']
      #"Frequency Summarization",,'Process Checklist',"Function List", "Function Parameters",  'Folder Table of Content', ]
 )
 
@@ -239,7 +239,7 @@ if page == "Home Page":
                 <li>Knowledge Base</li>
                 <li>Technical Notes</li>
                 <li>Processes</li>
-                <li>Processes and Categorization Utilization</li>
+                <li>Processes Checklist</li>
                 <li>Functions</li>
             </ul>
         </li>
@@ -729,9 +729,13 @@ elif page == 'Processes':
 # Process and Categorization Utilization
 # -----------------------------------
 
-elif page == 'Process and Categorization Utilization':
-    st.title("Process and Categorization Utilization")
+elif page == 'Process Checklist':
+    st.title("Process Checklist")
     df_base = data_dict['consolidated_df'].copy()
+
+    p_list = df_base[df_base['Categorization']=='Process']['Process'].drop_duplicates().unique().tolist()
+    df_base = df_base[df_base['Process'].isin(p_list)].copy()
+
     c1, c2, c3, c4 = st.columns([1, 1, 1, 1])
 
     c1_word = 'Process'
@@ -749,9 +753,23 @@ elif page == 'Process and Categorization Utilization':
 
     df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
 
-
     df_view = df2[['Process','Categorization','Word','Definition']]
-    gb_df = df2[['Process','Categorization']].groupby(['Process','Categorization']).size().reset_index().rename(columns={0:'Record Count'})
+
+    st.caption(f"Rows: {len(df_view)}")
+
+    excel_bytes = df_to_excel_bytes(
+        df_view,
+        sheet_name="Processes",
+        long_columns=["Definition"],
+        default_max_width=30,
+        long_max_width=80
+    )
+
+    st.download_button(
+        label="Download filtered Processes as Excel",
+        data=excel_bytes,
+        file_name="filtered_processes.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 
     gb1 = GridOptionsBuilder.from_dataframe(df_view)
 
