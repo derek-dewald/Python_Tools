@@ -736,7 +736,6 @@ elif page == 'Process and Categorization Utilization':
 
     c1_word = 'Process'
     c2_word = 'Categorization'
-    c3_word = 'Word'
 
     with c1:
         c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
@@ -750,15 +749,9 @@ elif page == 'Process and Categorization Utilization':
 
     df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
 
-    with c3:
-        c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
-        default_index = (c3_options.index("Knowledge Base") if "Knowledge Base" in c3_options else 0)
-        c3_sel = st.selectbox(c3_word,c3_options,index=default_index)
 
-    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
-
-    df_view = df3[['Process','Categorization','Word','Definition']]
-    gb_df = df3[['Process','Categorization','Location']].groupby(['Process','Categorization','Location']).size().reset_index().rename(columns={0:'Record Count'})
+    df_view = df2[['Process','Categorization','Word','Definition']]
+    gb_df = df2[['Process','Categorization']].groupby(['Process','Categorization']).size().reset_index().rename(columns={0:'Record Count'})
 
     gb1 = GridOptionsBuilder.from_dataframe(df_view)
 
