@@ -736,7 +736,7 @@ elif page == 'Process and Categorization Utilization':
 
     c1_word = 'Process'
     c2_word = 'Categorization'
-    c3_word = 'Location'
+    c3_word = 'Word'
 
     with c1:
         c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
