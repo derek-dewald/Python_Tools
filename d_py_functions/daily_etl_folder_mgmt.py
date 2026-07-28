@@ -67,11 +67,21 @@ def generate_files_for_streamlit(
     '''
     Definition:
         Process Utilized to Combine Notes/ Definitions and Logic into Knowledge Base, which is utilized to Create, Processes, Parameters.
+
+        Taxonomy - Process >> Process Step >> Word/Action/Guidance/Etc.
+
+        Process: 
+        Process Step:
+
+        Important. To Retain Order in Consolidated Data, or to be included in Process it must be defined as a process.
+        Machine Learning - Process. Which is Comprised of Processes. Goal Setting, Data Preparation etc..
+
+
+        
     Parameters:
         notes_df (dataframe): Dataframe containing Notes from Google. Default is none and it will pull directly from Google.
         definition_df (dataframe): Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.
-        manual_object_df (dataframe): Dataframe containining Dataframe of Parameters, generated from Python Process _____, which converts lists in objects_manual.py.
-        export_location(str): Name of File to export excel file to. If Blank, returns nothing
+        
     Returns:
         Excel File
     Date Created:
@@ -111,9 +121,8 @@ def generate_files_for_streamlit(
     # Create 2 Distinct Files Processes. Not Processes
     processes = knowledge_base_df[knowledge_base_df['Categorization']=='Process'].reset_index(drop=True).reset_index().rename(columns={'index':'PROC_ORDER'})
     not_processes = knowledge_base_df[knowledge_base_df['Categorization']!='Process'].reset_index(drop=True).reset_index().rename(columns={'index':'NP_ORDER'})
-
     #return knowledge_base_df,processes,not_processes
-
+    
     # Create a Supplemental File which are effectively Items which need to be merged into Processes to move from the Straw Man Process to a more fullsome 
     supplemental = not_processes.merge(knowledge_base_df[['Word','Process']].drop_duplicates().rename(columns={'Process':'Process_','Word':"Process"}),on='Process',how='inner')
     supplemental['Word_'] = supplemental['Word'].copy()
@@ -123,25 +132,46 @@ def generate_files_for_streamlit(
 
     # Before Supplemental can be finalized, needs to merge into Final DF. to ORder BEFORE replacing Word with Word_
     consolidated_data = pd.concat([knowledge_base_df,supplemental])
+    
     consolidated_data = consolidated_data.merge(processes[['PROC_ORDER',"Process"]].rename(columns={'Process':"Word"}),on='Word',how='left')
-
-    cat_order_dict = {'Process':0,'Process Step':1}
-    consolidated_data['CAT_ORDER'] = consolidated_data['Categorization'].map(cat_order_dict)
+    # For items that dont have a order does this matter?
+    consolidated_data['CAT_ORDER'] = np.where(consolidated_data['Categorization']=='Process',0,1)
+    
     # Fill as 0 so that Proceses will take higher priorirty, while retain NP Order
     consolidated_data['NP_ORDER'] = consolidated_data['NP_ORDER'].fillna(0)
 
-    consolidated_data = consolidated_data.sort_values(['Process','PROC_ORDER','CAT_ORDER','NP_ORDER'])
+    consolidated_data = consolidated_data.sort_values(['Process','CAT_ORDER','PROC_ORDER','NP_ORDER'])
     consolidated_data['Categorization'] = np.where(consolidated_data['Word_'].notnull(),consolidated_data['Word'],consolidated_data['Categorization'])
     consolidated_data['Word'] = np.where(consolidated_data['Word_'].notnull(),consolidated_data['Word_'],consolidated_data['Word'])
-
+    
     consolidated_data.drop(['Word_','PROC_ORDER','CAT_ORDER','NP_ORDER'],inplace=True,axis=1)
     
+    # Merge in Second ORder items. Examples Regularization. WHich is Machine Learning Lifecycle - Data Preperation - Regularization - Lasso/Ridge
+    supp1 = supplemental[['Process','Word','Definition','Word_']].rename(columns={'Process':"Categorization"})
+    
+    temp = consolidated_data.merge(supp1,on=["Categorization",'Word'],how='inner',suffixes=("","_"))
+    temp['Definition'] = np.where(temp['Definition_'].notnull(),temp['Definition_'],temp['Definition'])
+    temp['Categorization'] = np.where(temp['Definition_'].notnull(),temp['Word'],temp['Categorization'])
+    temp['Word'] = np.where(temp['Word_'].notnull(),temp['Word_'],temp['Word'])
+    
+    temp.drop(['Definition_','Word_'],axis=1,inplace=True)
+
+    # Need to add the Order. Complex due to second level relationship.
+    order_df = consolidated_data[['Process','Categorization','Word']].drop_duplicates().reset_index(drop=True).reset_index().rename(columns={'index':'order'})
+    consolidated_data = consolidated_data.merge(order_df,on=['Process','Categorization','Word'],how='left')
+    
+    temp = temp.merge(consolidated_data[['Process','Word','order']].rename(columns={'Word':'Categorization'}),on=['Process','Categorization'],how='left')
+    consolidated_data['order1']=0
+    temp['order1'] = 1
+    consolidated_df = pd.concat([consolidated_data,temp]).sort_values(['order','order1']).drop(['order','order1'],axis=1)
+
     # Create a DataFrame for the Highlevel Process, which is Processes and Process Steps.
-    process_df = consolidated_data[consolidated_data['Categorization'].isin(['Process','Process Step'])].copy()
+    process_df = consolidated_df[consolidated_df['Categorization'].isin(['Process','Process Step'])].copy()
 
     if generate_excel_files:
         knowledge_base_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/knowledge_base.xlsx',index=False)
         process_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/defined_processes.xlsx',index=False)
-        consolidated_data.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/consolidated_dataset.xlsx',index=False)
+        consolidated_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/consolidated_dataset.xlsx',index=False)
     
-    return knowledge_base_df,process_df,consolidated_data
+    return knowledge_base_df,process_df,consolidated_df
+    
