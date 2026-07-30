@@ -184,23 +184,31 @@ st.markdown(
 
 @st.cache_data(show_spinner=False)
 def load_data():
+
+    
+    knowledge_local =       '/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/knowledge_base.xlsx' 
+    knowledge_base_xlsx = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/knowledge_base.xlsx"
+    
     google_note_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv'
     google_definition_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv'
-    knowledge_base_xlsx = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/knowledge_base.xlsx"
+    
     technical_notes = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv'
-    processes_xlsx = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/defined_processes.xlsx"
-    consolidated_xlsx = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/consolidated_dataset.xlsx"
     function_list = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/python_function_list.csv"
     parameter_list = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/python_function_parameters.csv"
 
     data_dict = {}
+    try:
+        data_dict['knowledge_base_df'] = pd.read_excel(knowledge_local)
+        print("Local Files Utilized for Knowledge, Consolidated, Process")
+
+    except:
+        data_dict['knowledge_base_df'] = pd.read_excel(knowledge_base_xlsx)
+        
+    data_dict['function_df'] = pd.read_csv(function_list)
     data_dict['google_notes_df'] = pd.read_csv(google_note_csv)
     data_dict['google_definition_df'] = pd.read_csv(google_definition_csv)
-    data_dict['knowledge_base_df'] = pd.read_excel(knowledge_base_xlsx)
     data_dict['technical_notes_df'] = pd.read_csv(technical_notes)
-    data_dict['processes_df'] = pd.read_excel(processes_xlsx)
-    data_dict['consolidated_df'] = pd.read_excel(consolidated_xlsx)
-    data_dict['function_df'] = pd.read_csv(function_list)
+    
     data_dict['parameter_df'] = pd.read_csv(parameter_list)
     
     # Normalize: keep your existing behavior (everything to string)
@@ -486,12 +494,18 @@ elif page == 'Notes':
 elif page == 'Knowledge Base':
     st.title("Knowledge Base")
     df_base = data_dict['knowledge_base_df'].copy()
+
+
+    st.subheader("Debug - df_base")
+    st.dataframe(df_base)
+
     c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
 
     c1_word = 'Process'
     c2_word = 'Categorization'
     c3_word = 'Word'
-    search_word = 'Definition'
+    c4_word = 'Source'
+    
 
     with c1:
         c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
@@ -512,14 +526,28 @@ elif page == 'Knowledge Base':
     df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
 
     with c4:
-        definition_search = st.text_input("Definition search", value="", placeholder="Type to search Description...")
+        c4_options = ["(All)"] + sorted([x for x in df3[c4_word].unique() if x.strip()])
+        c4_sel = st.selectbox(c4_word, c4_options, index=0)
 
-    df_view = df3
-    if definition_search.strip():
-        s = definition_search.strip().lower()
-        df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
+    df_view = df3 if c4_sel == "(All)" else df3[df3[c4_word] == c4_sel]
 
     st.caption(f"Rows: {len(df_view)}")
+
+    excel_bytes = df_to_excel_bytes(
+        df_view,
+        sheet_name="Processes",
+        long_columns=["Definition"],
+        default_max_width=30,
+        long_max_width=80
+    )
+
+    st.download_button(
+        label="Download filtered Processes as Excel",
+        data=excel_bytes,
+        file_name="filtered_processes.xlsx",
+        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
+
+
     gb = GridOptionsBuilder.from_dataframe(df_view)
 
     gb.configure_default_column(
@@ -533,6 +561,7 @@ elif page == 'Knowledge Base':
     gb.configure_column(c1_word, width=100, minWidth=80, maxWidth=120)
     gb.configure_column(c2_word, width=100, minWidth=80, maxWidth=120)
     gb.configure_column(c3_word, width=150, minWidth=120, maxWidth=170)
+    gb.configure_column(c4_word, width=150, minWidth=120, maxWidth=170)
 
     gb.configure_column(
         search_word,
@@ -620,180 +649,6 @@ elif page == 'Technical Notes':
     )
 
     gridOptions = gb.build()
-
-    gridOptions["onGridReady"] = on_grid_ready
-    gridOptions["onGridSizeChanged"] = on_grid_size_changed
-
-    AgGrid(
-        df_view,
-        gridOptions=gridOptions,
-        height=800,
-        allow_unsafe_jscode=True,
-        fit_columns_on_grid_load=False,
-        reload_data=True,
-    )
-
-# -----------------------------------
-# Processes
-# -----------------------------------
-
-elif page == 'Processes':
-    st.title("Processes")
-    df_base = data_dict['processes_df'].copy()
-    c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
-
-    c1_word = 'Process'
-    c2_word = 'Categorization'
-    c3_word = 'Word'
-    search_word = 'Definition'
-
-    with c1:
-        c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
-        c1_sel = st.selectbox(c1_word, c1_options, index=0)
-
-    df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
-
-    with c2:
-        c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
-        c2_sel = st.selectbox(c2_word, c2_options, index=0)
-
-    df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
-
-    with c3:
-        c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
-        c3_sel = st.selectbox(c3_word, c3_options, index=0)
-
-    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
-
-    with c4:
-        definition_search = st.text_input("Definition search", value="", placeholder="Type to search Description...")
-
-    df_view = df3
-    if definition_search.strip():
-        s = definition_search.strip().lower()
-        df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
-
-    st.caption(f"Rows: {len(df_view)}")
-
-    excel_bytes = df_to_excel_bytes(
-        df_view,
-        sheet_name="Processes",
-        long_columns=["Definition"],
-        default_max_width=30,
-        long_max_width=80
-    )
-
-    st.download_button(
-        label="Download filtered Processes as Excel",
-        data=excel_bytes,
-        file_name="filtered_processes.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-
-    gb = GridOptionsBuilder.from_dataframe(df_view)
-
-    gb.configure_default_column(
-        resizable=True,
-        sortable=True,
-        filter=True,
-        wrapText=True,
-        autoHeight=True
-    )
-
-    gb.configure_column(c1_word, width=100, minWidth=80, maxWidth=120)
-    gb.configure_column(c2_word, width=100, minWidth=80, maxWidth=120)
-    gb.configure_column(c3_word, width=150, minWidth=120, maxWidth=170)
-
-    gb.configure_column(
-        search_word,
-        flex=1,
-        minWidth=700,
-        wrapText=True,
-        autoHeight=True
-    )
-
-    gridOptions = gb.build()
-
-    gridOptions["onGridReady"] = on_grid_ready
-    gridOptions["onGridSizeChanged"] = on_grid_size_changed
-
-    AgGrid(
-        df_view,
-        gridOptions=gridOptions,
-        height=800,
-        allow_unsafe_jscode=True,
-        fit_columns_on_grid_load=False,
-        reload_data=True,
-    )
-
-# -----------------------------------
-# Process and Categorization Utilization
-# -----------------------------------
-
-elif page == 'Process Checklist':
-    st.title("Process Checklist")
-    df_base = data_dict['consolidated_df'].copy()
-
-    p_list = df_base[df_base['Categorization']=='Process']['Process'].drop_duplicates().unique().tolist()
-    df_base = df_base[df_base['Process'].isin(p_list)].copy()
-
-    c1, c2, c3, c4 = st.columns([1, 1, 1, 1])
-
-    c1_word = 'Process'
-    c2_word = 'Categorization'
-
-    with c1:
-        c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
-        c1_sel = st.selectbox(c1_word, c1_options, index=0)
-
-    df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
-
-    with c2:
-        c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
-        c2_sel = st.selectbox(c2_word, c2_options, index=0)
-
-    df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
-
-    df_view = df2[['Process','Categorization','Word','Definition']]
-
-    st.caption(f"Rows: {len(df_view)}")
-
-    excel_bytes = df_to_excel_bytes(
-        df_view,
-        sheet_name="Processes",
-        long_columns=["Definition"],
-        default_max_width=30,
-        long_max_width=80
-    )
-
-    st.download_button(
-        label="Download filtered Processes as Excel",
-        data=excel_bytes,
-        file_name="filtered_processes.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-
-    gb1 = GridOptionsBuilder.from_dataframe(df_view)
-
-    gb1.configure_default_column(
-        resizable=True,
-        sortable=True,
-        filter=True,
-        wrapText=True,
-        autoHeight=True
-    )
-
-    gb1.configure_column(c1_word, width=100, minWidth=80, maxWidth=120)
-    gb1.configure_column(c2_word, width=100, minWidth=80, maxWidth=120)
-    gb1.configure_column('Word', width=150, minWidth=120, maxWidth=170)
-
-    gb1.configure_column(
-        "Definition",
-        flex=1,
-        minWidth=700,
-        wrapText=True,
-        autoHeight=True
-    )
-
-    gridOptions = gb1.build()
 
     gridOptions["onGridReady"] = on_grid_ready
     gridOptions["onGridSizeChanged"] = on_grid_size_changed

@@ -57,11 +57,11 @@ def extract_consolidated_raw_dataset(df_dict,export_location=False):
 
     return df
 
-
 def generate_files_for_streamlit(
     definition_df=pd.DataFrame(),
     notes_df=pd.DataFrame(),
-    generate_excel_files=True
+    generate_excel_files=True,
+    ignore_words_from_lvl1_lvl2 = []
 ):
 
     '''
@@ -76,8 +76,6 @@ def generate_files_for_streamlit(
         Important. To Retain Order in Consolidated Data, or to be included in Process it must be defined as a process.
         Machine Learning - Process. Which is Comprised of Processes. Goal Setting, Data Preparation etc..
 
-
-        
     Parameters:
         notes_df (dataframe): Dataframe containing Notes from Google. Default is none and it will pull directly from Google.
         definition_df (dataframe): Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.
@@ -87,7 +85,7 @@ def generate_files_for_streamlit(
     Date Created:
         02-Jul-26
     Date Last Modified:
-        22-Jul-26
+        29-Jul-26
     Process:
         Definition
     Categorization:
@@ -98,6 +96,13 @@ def generate_files_for_streamlit(
     Notes:
         22-Jul - Overhauled merge. Attempted to streamline, simplify and reduce duplication. Increase Visability.
         28-Jul - Originally Named - generate_knowledge_base, stream lined to remove usage of Dictionary, which were complex and operationally inefficient.
+        29-Jul - Changed Foundational Structure. Simplified with Clarity on Input.
+
+        Version 3. With the Idea that We have 3 Layers. 
+        Combined Definition/ Notes.
+        Level 1 - Process is also a Word. Merge this in. Machine Learning Lifecycle.
+        Level 2 - Categorization is also a Word.
+        
     '''
     
     if len(definition_df)==0:
@@ -106,72 +111,76 @@ def generate_files_for_streamlit(
     if len(notes_df)==0:
         notes_df = pd.read_csv(object_dict['csv_links']['python_object']['google_notes_csv']).fillna('')
 
+    if len(ignore_words_from_lvl1_lvl2)==0:
+        ignore_words_from_lvl1_lvl2 = ['Process','Requirement','Definition','Guidance']
+
     # Before Merging Files. Update Notes to include Definitions from any item which is a Process from Definition.
 
-    definition_df = definition_df[['Process','Categorization','Word',"Definition"]].fillna('').copy()
-    notes_df = notes_df[['Process','Categorization','Word',"Definition"]].fillna('').copy()
+    definition_df = definition_df[(definition_df['Process'].notnull())&(definition_df['Process']!="")][['Process','Categorization','Word',"Definition"]].fillna('').copy()
+    notes_df = notes_df[(notes_df['Process'].notnull())&(notes_df['Process']!="")][['Process','Categorization','Word',"Definition"]].fillna('').copy()
 
     notes_df1 = notes_df.merge(definition_df[definition_df['Word']=='Definition'][['Process','Definition']].rename(columns={'Process':"Word",'Definition':'Definition_'}),on='Word',how='left').fillna("")
     notes_df1['Definition'] = np.where((notes_df1['Categorization']=='Process Step')&(notes_df1['Definition']==""),notes_df1['Definition_'],notes_df1['Definition'])
     notes_df1.drop('Definition_',axis=1,inplace=True)
 
     # CREATE KNOWLEDGE File, which is simply everything combined Together
+    notes_filter = notes_df1[['Word','Process']].drop_duplicates().reset_index().rename(columns={'index':'notes_order'})
+    def_filter = definition_df[['Word','Process']].drop_duplicates().reset_index().rename(columns={'index':'def_order'})
+    
     knowledge_base_df = pd.concat([definition_df,notes_df1]).reset_index(drop=True)
-    
-    # Create 2 Distinct Files Processes. Not Processes
-    processes = knowledge_base_df[knowledge_base_df['Categorization']=='Process'].reset_index(drop=True).reset_index().rename(columns={'index':'PROC_ORDER'})
-    not_processes = knowledge_base_df[knowledge_base_df['Categorization']!='Process'].reset_index(drop=True).reset_index().rename(columns={'index':'NP_ORDER'})
-    #return knowledge_base_df,processes,not_processes
-    
-    # Create a Supplemental File which are effectively Items which need to be merged into Processes to move from the Straw Man Process to a more fullsome 
-    supplemental = not_processes.merge(knowledge_base_df[['Word','Process']].drop_duplicates().rename(columns={'Process':'Process_','Word':"Process"}),on='Process',how='inner')
-    supplemental['Word_'] = supplemental['Word'].copy()
-    supplemental['Word'] = supplemental['Process'].copy()
-    supplemental['Process'] = supplemental['Process_'].copy()
-    supplemental.drop('Process_',axis=1,inplace=True)
 
-    # Before Supplemental can be finalized, needs to merge into Final DF. to ORder BEFORE replacing Word with Word_
-    consolidated_data = pd.concat([knowledge_base_df,supplemental])
-    
-    consolidated_data = consolidated_data.merge(processes[['PROC_ORDER',"Process"]].rename(columns={'Process':"Word"}),on='Word',how='left')
-    # For items that dont have a order does this matter?
-    consolidated_data['CAT_ORDER'] = np.where(consolidated_data['Categorization']=='Process',0,1)
-    
-    # Fill as 0 so that Proceses will take higher priorirty, while retain NP Order
-    consolidated_data['NP_ORDER'] = consolidated_data['NP_ORDER'].fillna(0)
+    # generate a list of Records where the Value for Word is also a Process, meaning these are Sub Processes 
+    process_also_word_list = knowledge_base_df['Word'].unique().tolist()
+    # Filter list to get Dataframe
+    lvl1_df = knowledge_base_df[(knowledge_base_df['Process'].isin(process_also_word_list))&(knowledge_base_df['Categorization']!='Process')]
 
-    consolidated_data = consolidated_data.sort_values(['Process','CAT_ORDER','PROC_ORDER','NP_ORDER'])
-    consolidated_data['Categorization'] = np.where(consolidated_data['Word_'].notnull(),consolidated_data['Word'],consolidated_data['Categorization'])
-    consolidated_data['Word'] = np.where(consolidated_data['Word_'].notnull(),consolidated_data['Word_'],consolidated_data['Word'])
-    
-    consolidated_data.drop(['Word_','PROC_ORDER','CAT_ORDER','NP_ORDER'],inplace=True,axis=1)
-    
-    # Merge in Second ORder items. Examples Regularization. WHich is Machine Learning Lifecycle - Data Preperation - Regularization - Lasso/Ridge
-    supp1 = supplemental[['Process','Word','Definition','Word_']].rename(columns={'Process':"Categorization"})
-    
-    temp = consolidated_data.merge(supp1,on=["Categorization",'Word'],how='inner',suffixes=("","_"))
-    temp['Definition'] = np.where(temp['Definition_'].notnull(),temp['Definition_'],temp['Definition'])
-    temp['Categorization'] = np.where(temp['Definition_'].notnull(),temp['Word'],temp['Categorization'])
-    temp['Word'] = np.where(temp['Word_'].notnull(),temp['Word_'],temp['Word'])
-    
-    temp.drop(['Definition_','Word_'],axis=1,inplace=True)
+    # Merge Filtered list back into dataset to get a list of Items to add as LVL1 Processes
+    lv1_insert_df = knowledge_base_df.drop('Definition',axis=1).merge(lvl1_df,left_on='Word',right_on='Process',how='inner',suffixes=('',"_"))
+    lv1_insert_df['Source'] = 'LVL1'
 
-    # Need to add the Order. Complex due to second level relationship.
-    order_df = consolidated_data[['Process','Categorization','Word']].drop_duplicates().reset_index(drop=True).reset_index().rename(columns={'index':'order'})
-    consolidated_data = consolidated_data.merge(order_df,on=['Process','Categorization','Word'],how='left')
+    knowledge_base_df['Source'] = "Knowledge Base"
+    knowledge_base_df = pd.concat([knowledge_base_df,lv1_insert_df])
+
+    # Merge in Filter List
+    knowledge_base_df = knowledge_base_df.merge(notes_filter,on=['Word','Process'],how='left').merge(def_filter,on=['Word','Process'],how='left')
+    knowledge_base_df.sort_values(['Process','def_order','notes_order'],inplace=True)
+
+    # Standardize After Filtering.
+    knowledge_base_df['Categorization'] = np.where(knowledge_base_df['Process_'].notnull(),knowledge_base_df['Process_'],knowledge_base_df['Categorization'])
+    knowledge_base_df['Word'] = np.where(knowledge_base_df['Word_'].notnull(),knowledge_base_df['Word_'],knowledge_base_df['Word'])
+    knowledge_base_df.drop(['Process_','Categorization_','Word_','notes_order','def_order'],inplace=True,axis=1)
+
+
+    order_df = knowledge_base_df[['Process','Categorization','Word']].drop_duplicates().reset_index(drop=True).reset_index(names='order')
     
-    temp = temp.merge(consolidated_data[['Process','Word','order']].rename(columns={'Word':'Categorization'}),on=['Process','Categorization'],how='left')
-    consolidated_data['order1']=0
-    temp['order1'] = 1
-    consolidated_df = pd.concat([consolidated_data,temp]).sort_values(['order','order1']).drop(['order','order1'],axis=1)
+    # Need to merge in Second Level. Identify items which are Words
+    cat_is_word_list = knowledge_base_df['Word'].unique().tolist()
 
-    # Create a DataFrame for the Highlevel Process, which is Processes and Process Steps.
-    process_df = consolidated_df[consolidated_df['Categorization'].isin(['Process','Process Step'])].copy()
+    # Do not want to take Standarized Word
+    cat_is_word_list = [x for x in cat_is_word_list if x not in ignore_words_from_lvl1_lvl2]
 
+    # Generate List of Items to Merge Back in
+    lvl2_df = knowledge_base_df[(knowledge_base_df['Categorization'].isin(cat_is_word_list))]
+
+    # Merge ONLY where Processs and Categorization from Master Are Equal to Process and Categorization from LVL2 to prevent unitended duplicationk
+    lvl2 = knowledge_base_df.drop('Source',axis=1).merge(lvl2_df.drop('Source',axis=1),left_on=['Categorization','Word'],right_on=['Process','Categorization'],how='inner',suffixes=("","_"))
+    lvl2['Source'] = "LVL2"
+
+    knowledge_base_df = pd.concat([knowledge_base_df,lvl2])
+    knowledge_base_df = knowledge_base_df.merge(order_df,on=['Process','Categorization','Word'],how='left')
+    
+    # Clean Up residual definitions
+    knowledge_base_df['Categorization'] = np.where(knowledge_base_df['Categorization_'].notnull(),knowledge_base_df['Categorization_'],knowledge_base_df['Categorization'])
+    knowledge_base_df['Word'] = np.where(knowledge_base_df['Word_'].notnull(),knowledge_base_df['Word_'],knowledge_base_df['Word'])
+    knowledge_base_df['Definition'] = np.where(knowledge_base_df['Definition_'].notnull(),knowledge_base_df['Definition_'],knowledge_base_df['Definition'])
+    knowledge_base_df.drop(['Process_','Categorization_','Word_','Definition_'],inplace=True,axis=1)
+
+    source_map = {'Knowledge Base':0,'LVL1':1,'LVL2':2}
+    knowledge_base_df['source_map'] = knowledge_base_df['Source'].map(source_map)
+
+
+    knowledge_base_df = knowledge_base_df.sort_values(['order','source_map']).drop(['order','source_map'],axis=1)
     if generate_excel_files:
-        knowledge_base_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/knowledge_base.xlsx',index=False)
-        process_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/defined_processes.xlsx',index=False)
-        consolidated_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/consolidated_dataset.xlsx',index=False)
-    
-    return knowledge_base_df,process_df,consolidated_df
-    
+        knowledge_base_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/knowledge_base_df.xlsx',index=False)
+
+    return knowledge_base_df
