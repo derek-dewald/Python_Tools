@@ -217,12 +217,6 @@ def load_data():
             data_dict[dict_key][column] = data_dict[dict_key][column].fillna("").astype(str)
 
     return data_dict    # Normalize: keep your existing behavior (everything to string)
-    for dict_key in data_dict.keys():
-        for column in data_dict[dict_key].columns:
-            data_dict[dict_key][column] = data_dict[dict_key][column].fillna("").astype(str)
-
-    return data_dict
-
 
 data_dict = load_data()
 
@@ -232,7 +226,7 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ "Home Page", 'Definitions','Notes',"Knowledge Base","Technical Notes",'Processes','Process Checklist','Functions','ML Models','Summarization']
+    [ "Home Page", 'Definitions','Notes',"Knowledge Base","Technical Notes",'Functions','ML Models','Summarization']
      #"Frequency Summarization",,'Process Checklist',"Function List", "Function Parameters",  'Folder Table of Content', ]
 )
 
@@ -496,16 +490,21 @@ elif page == 'Knowledge Base':
     df_base = data_dict['knowledge_base_df'].copy()
 
 
-    st.subheader("Debug - df_base")
-    st.dataframe(df_base)
+    # Create a Dashboard View Based on Source
+    
+    df_base['Process List'] = np.where(df_base['Categorization']=='Process Step',1,0)
+    df_base['Taxonomy List'] = np.where(df_base['Categorization']=='Taxonomy Node',1,0)
+    df_base['Knowledge Base'] = np.where(df_base['Source']=='Knowledge Base',1,0)
+    df_base['Process Check List'] = np.where(df_base['Source']!='LVL2',1,0)
+    df_base['Consolidated Data'] = 1
+
 
     c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
 
     c1_word = 'Process'
     c2_word = 'Categorization'
     c3_word = 'Word'
-    c4_word = 'Source'
-    
+ 
 
     with c1:
         c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
@@ -525,13 +524,27 @@ elif page == 'Knowledge Base':
 
     df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
 
+    view_columns = [
+        'Process List',
+        'Knowledge Base',
+        'Process Check List',
+        'Consolidated Data',
+        'Taxonomy List'
+        ]
+
     with c4:
-        c4_options = ["(All)"] + sorted([x for x in df3[c4_word].unique() if x.strip()])
-        c4_sel = st.selectbox(c4_word, c4_options, index=0)
+        selected_views = st.multiselect(
+            "Dataset View",
+            options=view_columns,
+            default=['Consolidated Data']
+            )
 
-    df_view = df3 if c4_sel == "(All)" else df3[df3[c4_word] == c4_sel]
+    if selected_views:
+        df_view = df3[df3[selected_views].eq(1).any(axis=1)].copy()
+    else:
+        df_view = df3.iloc[0:0].copy()
 
-    st.caption(f"Rows: {len(df_view)}")
+        st.caption(f"Rows: {len(df_view)}")
 
     excel_bytes = df_to_excel_bytes(
         df_view,
@@ -548,7 +561,7 @@ elif page == 'Knowledge Base':
         mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
 
 
-    gb = GridOptionsBuilder.from_dataframe(df_view)
+    gb = GridOptionsBuilder.from_dataframe(df_view.drop(['Process List','Knowledge Base','Process Check List','Consolidated Data','Source','Taxonomy List'],axis=1))
 
     gb.configure_default_column(
         resizable=True,
@@ -558,26 +571,17 @@ elif page == 'Knowledge Base':
         autoHeight=True
     )
 
-    gb.configure_column(c1_word, width=100, minWidth=80, maxWidth=120)
-    gb.configure_column(c2_word, width=100, minWidth=80, maxWidth=120)
-    gb.configure_column(c3_word, width=150, minWidth=120, maxWidth=170)
-    gb.configure_column(c4_word, width=150, minWidth=120, maxWidth=170)
-
-    gb.configure_column(
-        search_word,
-        flex=1,
-        minWidth=700,
-        wrapText=True,
-        autoHeight=True
-    )
-
+    gb.configure_column(c1_word, width=120, minWidth=80, maxWidth=170)
+    gb.configure_column(c2_word, width=120, minWidth=80, maxWidth=170)
+    gb.configure_column(c3_word, width=200, minWidth=120, maxWidth=200)
+ 
     gridOptions = gb.build()
 
     gridOptions["onGridReady"] = on_grid_ready
     gridOptions["onGridSizeChanged"] = on_grid_size_changed
 
     AgGrid(
-        df_view,
+        df_view.drop(['Process List','Knowledge Base','Process Check List','Consolidated Data','Source'],axis=1),
         gridOptions=gridOptions,
         height=800,
         allow_unsafe_jscode=True,
@@ -725,9 +729,35 @@ elif page == 'Functions':
 # Processes
 # -----------------------------------
 
+
 elif page == 'ML Models':
     st.title("ML Models")
-    df = data_dict['consolidated_df']
+    df = data_dict['knowledge_base_df']
+
+
+    mlo_desc = df[(df['Process']=='Machine Learning Ontology')&(df['Word']=='Definition')&(df['Categorization']=='Taxonomy')]['Definition'].item()
+    ont_desc = df[df['Word']=='Ontological']['Definition'].item()
+    ped_desc = df[df['Word']=='Pedagogical']['Definition'].item()
+    epi_desc = df[df['Word']=='Epistemological']['Definition'].item()
+
+    mlo_desc = " ".join(mlo_desc.split())
+    ont_desc = " ".join(ont_desc.split())
+    ped_desc = " ".join(ped_desc.split())
+    epi_desc = " ".join(epi_desc.split())
+
+    st.markdown(f"""
+    - {mlo_desc}
+        - **Premises**
+            - **Ontological:** {ont_desc} 
+            - **Pedagogical:** {ped_desc}
+            - **Epistemological:** {epi_desc}
+        - **Dimensions**
+            - **Learning Paradigm:** How is knowledge acquired or applied?
+            - **Learning Objective:** What problem is being solved?
+            - **Computational Approach:** What broad computational strategy is used?
+            - **Analytical Method:** What specific analytical method is being applied?
+            - **Analytical Object Type:** What kind of analytical object is it?
+    """)
 
     word_list = ['ML Model Taxonomy']
     word_list.extend(df[df['Process'] == 'ML Model Taxonomy']['Word'].dropna().tolist())
@@ -776,86 +806,37 @@ elif page == 'ML Models':
     # ---------------------------------------------------------
     
     # Values in columns are % of screen allocation.
-    reference_col1, reference_col2, reference_col3 = st.columns([20,30,50])
+    reference_col1, reference_col2 = st.columns([70,30])
 
-    def create_process_summary(source_df,table_=1,selected_word='(All)'):
-
-        # Create a Dataframe for Visualization of Method Objective
-        df_table1 = source_df[(source_df['Process']=='Method Objective')&(~source_df['Categorization'].isin(['Process Step','General Definition']))][["Word"]].rename(columns={'Word':"Method Objective"})
-        method_objetive_list = df_table1['Method Objective'].tolist()
-
-        # Create a List of ML Model Taxonomy Items for Filtering returned items for Method Graph
-        ml_model_tax_df = source_df[(source_df['Process']=='ML Model Taxonomy')][['Word']].rename(columns={'Word':'ML Model Taxonomy'})
-        manual_order = {'Learning Paradigm':1,'Method Objective':2,'Method':3,'Method Approach':4}
-        ml_model_tax_df['Order'] = ml_model_tax_df['ML Model Taxonomy'].map(manual_order)
-        ml_model_tax_df = ml_model_tax_df.sort_values('Order').drop('Order',axis=1).reset_index(drop=True)
-
-        method_approach_df = source_df[source_df['Process']=='Method Approach'][['Word']].rename(columns={'Word':"Method Approach"})
-
-        ml_model_tax_list = ml_model_tax_df['ML Model Taxonomy'].tolist()
-
-        # Create a df of Method Types based on Process = Method. For Other Pertinent Info
-        method_df = source_df[(source_df['Process']=='Method')][['Word']].rename(columns={'Word':'Method Types'})
-
-        # Create a Df of Learning Paradigm for Other Pertinent Info.
-        lp_df = source_df[source_df['Process']=='Learning Paradigm'][['Word']].rename(columns={'Word':'Learning Paradigm'})
-
-        # Create a Df of Function Type for Other Pertinent Info.
-        func_df = source_df[source_df['Process']=='Function'][['Word']].rename(columns={'Word':'Function Types'})
-
-        if table_==1:
-            return df_table1
-
-        if table_==2:
-            if (selected_word!='(All)')&(selected_word in method_objetive_list):
-                return source_df[
-                    (source_df['Process'].isin(method_objetive_list))&
-                    (source_df['Categorization'].isin(ml_model_tax_list))&
-                    (source_df['Process']==selected_word)
-                    ][['Word','Process']].rename(columns={'Word':'Method','Process':"Learning Paradigm"})
-            else:
-                return source_df[(source_df['Process'].isin(method_objetive_list))&(source_df['Categorization'].isin(ml_model_tax_list))][['Word','Process']].rename(columns={'Word':'Method','Process':"Learning Paradigm"})
-        
-        # Build A Table with ML Taxonomy. Method Types.
-        if table_==3:
-            # LP - MA - M - MO
-            d1 = ml_model_tax_df
-            d2 = lp_df.sort_values('Learning Paradigm').reset_index(drop=True)
-            d3 = method_approach_df.sort_values('Method Approach').reset_index(drop=True)
-            d4 = method_df.sort_values('Method Types').reset_index(drop=True)
-
-            #d5 = func_df.sort_values('Function Types').reset_index(drop=True)
-            w = d1.merge(d2,left_index=True,right_index=True,how='outer').merge(d3,left_index=True,right_index=True,how='outer').merge(d4,left_index=True,right_index=True,how='outer').fillna("")
-
-            for col in w.columns:
-                if col != "ML Model Taxonomy":
-                    w[col] = (
-                        w[col]
-                        .replace("", pd.NA)
-                        .sort_values(ignore_index=True)
-                        .fillna("")
-                    )
-            return w
-        
-    table_1_df = create_process_summary(df_base)
-    table_2_df = create_process_summary(df_base,2,c1_sel)
-    table_3_df = create_process_summary(df_base,3)
+    
+    # Present Method Objectives    
 
 
-    #table_3_df = create_process_summary(df_base,3)
+    table_1_df = df[(df['Process'] == 'Learning Paradigm')&(df['Categorization']=='Definition')][['Word']].sort_values('Word').rename(columns={'Word':'Learning Paradigm'})
+    learning_objective = df[(df['Process'] == 'Learning Objective')&(df['Categorization']=='Definition')][['Word']].sort_values('Word').rename(columns={'Word':'Learning Objective'})
+    computational_approach = df[df['Process']=='Computational Approach'][['Word']].reset_index(drop=True).sort_values('Word').rename(columns={'Word':"Computational Approach"}).reset_index(drop=True)
+
+    print(df[(df['Process']=='Analytical Object Type')])
+
+    object_type = df[(df['Process']=='Analytical Object Type')&(df['Categorization']=='Definition')][['Word']].reset_index(drop=True).rename(columns={'Word':"Analytical Object Type"})
+    
+    table_1_df = table_1_df.reset_index(drop=True).merge(learning_objective.reset_index(drop=True),left_index=True,right_index=True,how='outer').merge(computational_approach,left_index=True,right_index=True,how='outer').merge(object_type,left_index=True,right_index=True,how='outer')
+    
+    learn_objective_list = table_1_df['Learning Objective'].tolist()
+    table_2_df = df[(df['Categorization'].isin(learn_objective_list))&(df['Process']=='Learning Objective')].sort_values('Categorization')[['Word','Categorization']].rename(columns={'Word':"Method",'Categorization':'Learning Objective'})
 
     
     with reference_col1:
-        st.markdown("#### Method Objective")
+        st.markdown("#### Machine Learning Ontology")
     
         display_reference_grid(
             table_1_df,
-            column_widths={"Method Objective": 500},
+            column_widths={"Learning Paradigm": 300,"Learning Objective": 300,'Computational Approach':300,"Analytical Object Type":300},
             key="algo_classification_table"
         )
 
     with reference_col2:
-        st.markdown("#### Methods")
+        st.markdown("#### Analytical Methods")
 
         display_reference_grid(
             table_2_df,
@@ -863,20 +844,17 @@ elif page == 'ML Models':
             key="methods_table"
         )
 
-    with reference_col3:
-        st.markdown("#### Other Key Information")
+    # with reference_col3:
+    #     st.markdown("#### Other Key Information")
 
-        display_reference_grid(
-            table_3_df,
-            column_widths={'Learning Paradigm':200},
-            #column_widths={'ML Model Taxonomy':125,'Method Types':100,"Learning Paradigm":150},
-            key="method_type_table"
-        )
+    #     display_reference_grid(
+    #         table_3_df,
+    #         column_widths={'Learning Paradigm':200},
+    #         #column_widths={'ML Model Taxonomy':125,'Method Types':100,"Learning Paradigm":150},
+    #         key="method_type_table"
+    #    )
 
 ############
-
-
-
 
     st.caption(f"Rows: {len(df_view)}")
 

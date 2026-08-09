@@ -181,6 +181,6 @@ def generate_files_for_streamlit(
 
     knowledge_base_df = knowledge_base_df.sort_values(['order','source_map']).drop(['order','source_map'],axis=1)
     if generate_excel_files:
-        knowledge_base_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/knowledge_base_df.xlsx',index=False)
+        knowledge_base_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/knowledge_base.xlsx',index=False)
 
     return knowledge_base_df
