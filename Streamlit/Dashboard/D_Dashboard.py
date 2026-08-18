@@ -726,14 +726,13 @@ elif page == 'Functions':
     )
 
 # -----------------------------------
-# Processes
+# ML Models
 # -----------------------------------
 
 
 elif page == 'ML Models':
     st.title("ML Models")
     df = data_dict['knowledge_base_df']
-
 
     mlo_desc = df[(df['Process']=='Machine Learning Ontology')&(df['Word']=='Definition')&(df['Categorization']=='Taxonomy')]['Definition'].item()
     ont_desc = df[df['Word']=='Ontological']['Definition'].item()
@@ -759,73 +758,20 @@ elif page == 'ML Models':
             - **Analytical Object Type:** What kind of analytical object is it?
     """)
 
-    word_list = ['ML Model Taxonomy']
-    word_list.extend(df[df['Process'] == 'ML Model Taxonomy']['Word'].dropna().tolist())
-    df_base = df[df['Process'].isin(word_list)][['Process','Categorization','Word','Definition']]
-    temp = df[df['Process'].isin(df_base['Word'].tolist())][['Process','Categorization','Word','Definition']]
-    df_base = pd.concat([df_base,temp]).drop_duplicates(['Word','Process']).fillna("").sort_values(['Process','Categorization','Word'])
-
-    c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
-
-    c1_word = 'Process'
-    c2_word = 'Categorization'
-    c3_word = 'Word'
-    search_word = 'Definition'
-
-    with c1:
-        c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
-        c1_sel = st.selectbox(c1_word, c1_options, index=0)
-
-    df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
-
-    with c2:
-        c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
-        c2_sel = st.selectbox(c2_word, c2_options, index=0)
-
-    df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
-
-    with c3:
-        c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
-        c3_sel = st.selectbox(c3_word, c3_options, index=0)
-
-    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
-
-    with c4:
-        definition_search = st.text_input("Definition search", value="", placeholder="Type to search Description...")
-
-    df_view = df3
-    if definition_search.strip():
-        s = definition_search.strip().lower()
-        df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
-
-############
-
-
-    # ---------------------------------------------------------
-    # Display the three tables side by side
-    # ---------------------------------------------------------
-    
     # Values in columns are % of screen allocation.
     reference_col1, reference_col2 = st.columns([70,30])
 
-    
     # Present Method Objectives    
-
-
     table_1_df = df[(df['Process'] == 'Learning Paradigm')&(df['Categorization']=='Definition')][['Word']].sort_values('Word').rename(columns={'Word':'Learning Paradigm'})
     learning_objective = df[(df['Process'] == 'Learning Objective')&(df['Categorization']=='Definition')][['Word']].sort_values('Word').rename(columns={'Word':'Learning Objective'})
     computational_approach = df[df['Process']=='Computational Approach'][['Word']].reset_index(drop=True).sort_values('Word').rename(columns={'Word':"Computational Approach"}).reset_index(drop=True)
-
-    print(df[(df['Process']=='Analytical Object Type')])
 
     object_type = df[(df['Process']=='Analytical Object Type')&(df['Categorization']=='Definition')][['Word']].reset_index(drop=True).rename(columns={'Word':"Analytical Object Type"})
     
     table_1_df = table_1_df.reset_index(drop=True).merge(learning_objective.reset_index(drop=True),left_index=True,right_index=True,how='outer').merge(computational_approach,left_index=True,right_index=True,how='outer').merge(object_type,left_index=True,right_index=True,how='outer')
     
-    learn_objective_list = table_1_df['Learning Objective'].tolist()
-    table_2_df = df[(df['Categorization'].isin(learn_objective_list))&(df['Process']=='Learning Objective')].sort_values('Categorization')[['Word','Categorization']].rename(columns={'Word':"Method",'Categorization':'Learning Objective'})
+    table_2_df = df[(df['Process']=='Analytical Method')].sort_values('Word')[['Word']].rename(columns={'Word':"Analytical Method"})
 
-    
     with reference_col1:
         st.markdown("#### Machine Learning Ontology")
     
@@ -840,64 +786,18 @@ elif page == 'ML Models':
 
         display_reference_grid(
             table_2_df,
-            column_widths={'Method':200},
+            column_widths={'Analytical Method':200},
             key="methods_table"
         )
 
-    # with reference_col3:
-    #     st.markdown("#### Other Key Information")
-
-    #     display_reference_grid(
-    #         table_3_df,
-    #         column_widths={'Learning Paradigm':200},
-    #         #column_widths={'ML Model Taxonomy':125,'Method Types':100,"Learning Paradigm":150},
-    #         key="method_type_table"
-    #    )
-
-############
-
-    st.caption(f"Rows: {len(df_view)}")
-
-    gb = GridOptionsBuilder.from_dataframe(df_view)
-
-    gb.configure_default_column(
-        resizable=True,
-        sortable=True,
-        filter=True,
-        wrapText=True,
-        autoHeight=True
-    )
-
-    gb.configure_column(c1_word, width=100, minWidth=80, maxWidth=120)
-    gb.configure_column(c2_word, width=100, minWidth=80, maxWidth=120)
-    gb.configure_column(c3_word, width=150, minWidth=120, maxWidth=170)
-
-    gb.configure_column(
-        search_word,
-        flex=1,
-        minWidth=700,
-        wrapText=True,
-        autoHeight=True
-    )
-
-    gridOptions = gb.build()
-
-    gridOptions["onGridReady"] = on_grid_ready
-    gridOptions["onGridSizeChanged"] = on_grid_size_changed
-
-    AgGrid(
-        df_view,
-        gridOptions=gridOptions,
-        height=800,
-        allow_unsafe_jscode=True,
-        fit_columns_on_grid_load=False,
-        reload_data=True,
-    )
+# -----------------------------------
+# Summarization
+# -----------------------------------
 
 
 elif page == 'Summarization':
     st.title("Summarization")
-    df_base = data_dict['consolidated_df']
+    df_base = data_dict['knowledge_base_df']
 
     c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
 
