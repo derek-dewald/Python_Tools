@@ -1,0 +1,9 @@
+Function,Definition
+eda_functions.py,
+objects_automated.py,
+utility_functions.py,
+taxonomy_admin_functions.py,Functions with deal primarily with administration and maintenance of Taxonomy supporting Documentation. Generalized Functions not to be included.
+filesystem_tools.py,"Function which stores all functions that deal with the Maintenance and Adminstration of Windows/IOS/Python folders and files. Specifically, includes Python Documentation Functions."
+objects_manual.py,
+archive.py,
+ml_project.py,

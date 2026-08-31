@@ -168,3 +168,78 @@ def ml_validation_data_cleaning(df):
         })
 
     return pd.DataFrame(records)
+
+
+def visualize_dataframe_in_notebook(
+    df,
+    show_as_number=[],
+    show_as_currency=[],
+    show_as_currency_without_dec=[],
+    show_as_percentage=[],
+):
+    
+    '''
+    
+    Definition:
+        Function which applies some modest formating to a Dataframe to increase visual astetic.
+
+    Parameters:
+        df (dataframe): Any DataFrame
+        show_as_number(list): List of Columns which are to be displayed as format :,.2f
+        show_as_currency(list): List of Columns which are to be displayed as format $:,.2f
+        show_as_currency_without_dec(list): List of Columns which are to be displayed as format $:,.0f
+        show_as_percentage(list): List of Columns which are to be displayed as format :.2f%        
+        
+
+    Returns:
+        Object Type
+
+    date_created: 27-Aug-26
+    date_last_modified: 27-Aug-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        visualize_dataframe_in_notebook(df)
+
+    '''
+
+    formats = {}
+    
+    for val in show_as_number:
+        formats[val] = '{:,.2f}'
+    
+    for val in show_as_currency_without_dec:
+        formats[val] = '${:,.0f}'
+
+    for val in show_as_currency:
+        formats[val] = '${:,.2f}'
+
+    for val in show_as_percentage:
+        formats[val] = '{:.2f}%'
+
+    
+    #df = df.replace(r'\$', r'\\$', regex=True)
+ 
+    styled_df = (
+        df.style
+        .hide(axis='index')
+        .format(formats,escape='html')
+        .set_table_styles([
+              {'selector': 'table',
+               'props': [('border-collapse', 'collapse')]},
+              {'selector': 'th',
+               'props': [('border', '1px solid black'),
+                         ('padding', '5px'),
+                         ('text-align', 'center'),
+                         ('vertical-align', 'middle'),
+                         ('white-space', 'normal')]},
+              {'selector': 'td',
+               'props': [('border', '1px solid black'),
+                         ('padding', '5px'),
+                        ('text-align', 'center'),
+                         ('vertical-align', 'middle'),
+                         ('white-space', 'normal')]}
+          ])
+    )
+
+    display(styled_df)

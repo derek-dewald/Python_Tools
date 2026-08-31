@@ -463,3 +463,49 @@ object_dict['ml_lp_list'] = {{
 
     with open("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/objects_automated.py", "w") as f:
         f.write(text_)
+
+
+def extract_consolidated_raw_dataset(df_dict,export_location=False):
+    
+    '''
+    Definition:
+        Create a Consolidated Dataset of files in Dictionary, which are meant to be of the structure Process, Categorization, Word and Definition. Data set for the purposes, of aggregating totals and _____________. Used as a input for generate_objects_automated_py.
+    Parameters:
+        df_dict(dict): Dictionary of files to be included. 
+        export_location(str): Location to where CSV file is to be exported. If left Blank, will not export a CSV.
+    Returns:
+        Excel File
+    Date Created:
+        06-Jul-26
+    Date Last Modified:
+        06-Jul-26
+    Process:
+        ETL
+    Categorization:
+        Excel File Creation
+    Usage:
+        df_dict = {
+        'Notes':notes_df,
+        'Definitions':definition_df,
+        'Knowledge Base':knowledge_base_df,
+        'Manual Objects':manual_object_df
+        }
+        extract_consolidated_raw_dataset(df_dict)
+    Notes:
+        Definition
+
+    '''
+    df = pd.DataFrame()
+    
+    for df_name in df_dict.keys():
+        try:
+            temp = df_dict[df_name][['Process','Categorization','Word','Definition']]
+            temp['Location'] = df_name
+            df = pd.concat([df,temp])
+        except:
+            print(f'Could not compute, {df_name}')
+
+    if export_location:
+        df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/consolidated_dataset.xlsx',index=False)
+
+    return df

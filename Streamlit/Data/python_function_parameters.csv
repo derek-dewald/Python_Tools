@@ -1,29 +1,49 @@
-Folder,Function,Parameters,Type,Definition
-filesystem_tools.py,read_directory,location,str,The path to the directory. Defaults to the current working directory if not provided.
-filesystem_tools.py,read_directory,file_type,str,"The file extension or type to filter by (e.g., '.ipynb'). If empty, returns all files."
-filesystem_tools.py,read_directory,match_str,str,Option to be applied to help filter only wanted files by portion of string condition.
-filesystem_tools.py,txt_to_python,file_name,str,"Name of File, including path location for import"
-filesystem_tools.py,txt_to_python,encoding,str,Encoding to be applied by With Open call. Default is utf-8.
-filesystem_tools.py,parse_dot_py_file,file_text,str,"Text, which should be structured someone in format of function_columns, based on prevailing default Python String Documentation"
-filesystem_tools.py,parse_dot_py_file,function_columns,list,List of columns to include in output file and to be parsed on. Default is to import from object_dict which represents default Python String Documentation.
-filesystem_tools.py,parse_dot_py_folder,location,str,Location of Folder to be read for .py files. Default is defined as /Users/derekdewald/Documents/Python/Github_Repo/d_py_functions
-filesystem_tools.py,parse_dot_py_folder,export_location,str,"Location to where CSV file is to be exported. If left Blank, will not export a CSV."
-filesystem_tools.py,move_file_in_folder,folder1,str,Folder of First File
-filesystem_tools.py,move_file_in_folder,folder2,str,Folder of Second File
-filesystem_tools.py,move_file_in_folder,file_name,str,"Name of File to be moved, does not matter of file type)"
-filesystem_tools.py,move_file_in_folder,overwrite_without_validation,bool,Optional Argument allowing user to automate by apply to default overwrite (also meant to help reduce risk of losting information due to inadvertent overwriting)
-daily_etl_folder_mgmt.py,extract_consolidated_raw_dataset,df_dict,dict,Dictionary of files to be included.
-daily_etl_folder_mgmt.py,extract_consolidated_raw_dataset,export_location,str,"Location to where CSV file is to be exported. If left Blank, will not export a CSV."
-daily_etl_folder_mgmt.py,extract_object_dot_py,object_dict,dict,Dictionary Object from either objects_manual or objects_automated
-daily_etl_folder_mgmt.py,extract_object_dot_py,export_location,str,Location where .xlsx file will be saved.
-daily_etl_folder_mgmt.py,ETL,print_,bool,To Be Determined Utilization.
-daily_etl_folder_mgmt.py,generate_knowledgebase,notes_df,dataframe,Dataframe containing Notes from Google. Default is none and it will pull directly from Google.
-daily_etl_folder_mgmt.py,generate_knowledgebase,definition_df,dataframe,Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.
-daily_etl_folder_mgmt.py,generate_knowledgebase,manual_object_df,dataframe,"Dataframe containining Dataframe of Parameters, generated from Python Process _____, which converts lists in objects_manual.py."
-daily_etl_folder_mgmt.py,generate_knowledgebase,auto_object_df,,
-daily_etl_folder_mgmt.py,generate_knowledgebase,export_location,str,"Name of File to export excel file to. If Blank, returns nothing"
-daily_etl_folder_mgmt.py,generate_objects_automated_py,links_df,df,"Data from Google Sheets with Location of CSV and Links. If Nothing, it will pull from Google."
-daily_etl_folder_mgmt.py,generate_objects_automated_py,consolidated_df,df,"Dataset created from extract_consolidated_raw_dataset.py. If nothing, it will pull from Local Source."
-daily_etl_folder_mgmt.py,generate_objects_automated_py,dot_py_documentation,df,"Dataset created from _______, representing Python String Documentation. If nothing, it will pull from local Source."
-daily_etl_folder_mgmt.py,generate_objects_automated_py,definition_df,df,Data from Google Sheets. If nothing will pull from Google.
-daily_etl_folder_mgmt.py,generate_objects_automated_py,method,,
+Function,Parameters,Type,Definition,Folder
+univariate_analysis,df,,,eda_functions.py
+univariate_analysis,sparsity_threshold,,,eda_functions.py
+univariate_analysis,skew_threshold,,,eda_functions.py
+univariate_analysis,extreme_threshold,,,eda_functions.py
+univariate_analysis,high_cardinality_threshold,,,eda_functions.py
+ml_validation_data_cleaning,df,,,eda_functions.py
+visualize_dataframe_in_notebook,df,dataframe,Any DataFrame,eda_functions.py
+visualize_dataframe_in_notebook,show_as_number,list,"List of Columns which are to be displayed as format :,.2f",eda_functions.py
+visualize_dataframe_in_notebook,show_as_currency,list,"List of Columns which are to be displayed as format $:,.2f",eda_functions.py
+visualize_dataframe_in_notebook,show_as_currency_without_dec,list,"List of Columns which are to be displayed as format $:,.0f",eda_functions.py
+visualize_dataframe_in_notebook,show_as_percentage,list,List of Columns which are to be displayed as format :.2f%,eda_functions.py
+InspectFunction,function_name,,,utility_functions.py
+create_knowledge_base,definition_df,dataframe,Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.,taxonomy_admin_functions.py
+create_knowledge_base,notes_df,dataframe,Dataframe containing Notes from Google. Default is none and it will pull directly from Google.,taxonomy_admin_functions.py
+create_knowledge_base,generate_excel_files,,,taxonomy_admin_functions.py
+create_knowledge_base,ignore_words_from_lvl1_lvl2,,,taxonomy_admin_functions.py
+parse_dot_py_file,file_text,str,"Text, which should be structured someone in format of function_columns, based on prevailing default Python String Documentation",taxonomy_admin_functions.py
+parse_dot_py_file,function_columns,list,List of columns to include in output file and to be parsed on. Default is to import from object_dict which represents default Python String Documentation.,taxonomy_admin_functions.py
+create_python_documentation,location,str,Location of Folder to be read for .py files. Default is defined as /Users/derekdewald/Documents/Python/Github_Repo/d_py_functions,taxonomy_admin_functions.py
+create_python_documentation,export_location,str,"Location to where CSV file is to be exported. If left Blank, will not export a CSV.",taxonomy_admin_functions.py
+create_df_dot_py_doc_string,location,str,Name of Windows/IOS Folder.,taxonomy_admin_functions.py
+read_dot_py_doc_string,file,str,Name of file as documented in local Folder.,taxonomy_admin_functions.py
+generate_objects_automated_py,links_df,df,"Data from Google Sheets with Location of CSV and Links. If Nothing, it will pull from Google.",taxonomy_admin_functions.py
+generate_objects_automated_py,knowledge_base_df,,,taxonomy_admin_functions.py
+read_directory,location,str,The path to the directory. Defaults to the current working directory if not provided.,filesystem_tools.py
+read_directory,file_type,str,"The file extension or type to filter by (e.g., '.ipynb'). If empty, returns all files.",filesystem_tools.py
+read_directory,match_str,str,Option to be applied to help filter only wanted files by portion of string condition.,filesystem_tools.py
+move_file_in_folder,folder1,str,Folder of First File,filesystem_tools.py
+move_file_in_folder,folder2,str,Folder of Second File,filesystem_tools.py
+move_file_in_folder,file_name,str,"Name of File to be moved, does not matter of file type)",filesystem_tools.py
+move_file_in_folder,overwrite_without_validation,bool,Optional Argument allowing user to automate by apply to default overwrite (also meant to help reduce risk of losting information due to inadvertent overwriting),filesystem_tools.py
+txt_to_python,file_name,str,"Name of File, including path location for import",filesystem_tools.py
+txt_to_python,encoding,str,Encoding to be applied by With Open call. Default is utf-8.,filesystem_tools.py
+extract_object_dot_py,object_dict,dict,Dictionary Object from either objects_manual or objects_automated,archive.py
+extract_object_dot_py,export_location,str,Location where .xlsx file will be saved.,archive.py
+ETL,print_,bool,To Be Determined Utilization.,archive.py
+generate_knowledgebase,notes_df,dataframe,Dataframe containing Notes from Google. Default is none and it will pull directly from Google.,archive.py
+generate_knowledgebase,definition_df,dataframe,Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.,archive.py
+generate_knowledgebase,manual_object_df,dataframe,"Dataframe containining Dataframe of Parameters, generated from Python Process _____, which converts lists in objects_manual.py.",archive.py
+generate_knowledgebase,auto_object_df,,,archive.py
+generate_knowledgebase,export_location,str,"Name of File to export excel file to. If Blank, returns nothing",archive.py
+generate_objects_automated_py,links_df,df,"Data from Google Sheets with Location of CSV and Links. If Nothing, it will pull from Google.",archive.py
+generate_objects_automated_py,consolidated_df,df,"Dataset created from extract_consolidated_raw_dataset.py. If nothing, it will pull from Local Source.",archive.py
+generate_objects_automated_py,dot_py_documentation,df,"Dataset created from _______, representing Python String Documentation. If nothing, it will pull from local Source.",archive.py
+generate_objects_automated_py,definition_df,df,Data from Google Sheets. If nothing will pull from Google.,archive.py
+generate_objects_automated_py,method,,,archive.py
+extract_consolidated_raw_dataset,df_dict,dict,Dictionary of files to be included.,archive.py
+extract_consolidated_raw_dataset,export_location,str,"Location to where CSV file is to be exported. If left Blank, will not export a CSV.",archive.py
