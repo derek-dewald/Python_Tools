@@ -1,21 +1,40 @@
+# ==================================================
+# IGNORE EVERYTHING BY DEFAULT
+# ==================================================
 
-# Ignore Mac system files
+*
+
+# Always track .gitignore
+!.gitignore
+
+
+# ==================================================
+# FOLDERS TO SHARE
+# ==================================================
+
+!d_py_functions/
+!d_py_functions/**
+
+!Streamlit/
+!Streamlit/**
+
+!Images/
+!Images/**
+
+# ==================================================
+# NEVER SHARE
+# ==================================================
+
+# Archive folders anywhere in the repository
+archive/
+**/archive/
+
+# Mac system files
 .DS_Store
 
-# Ignore Jupyter Notebook checkpoints
+# Jupyter checkpoints
 .ipynb_checkpoints/
 
-# Ignore Python cache files
+# Python cache
 *.pyc
 __pycache__/
-
-# Include Python files and folders
-Clean Up Historical Work.ipynb
-Archive
-Machine Learning/mlruns/
-d_py_functions/Archive
-Time-Series-Analysis-with-Python-Cookbook-Second-Edition
-JupyterNotebooks/mlruns/
-/Investing/
-/Job Search/
-/automated_py_jobs/
