@@ -1,4 +1,12 @@
 Function,Parameters,Type,Definition,Folder
+binary_complex_equivalency,df,dataframe,DataFrame,feature_engineering.py
+binary_complex_equivalency,column_name,str,Name of Column to be tested against column_name1.,feature_engineering.py
+binary_complex_equivalency,column_name1,str,Name of Column to be tested against column_name.,feature_engineering.py
+binary_complex_equivalency,new_column_name,str,"Name of Created Column, representing where values are either Equal, or Not Equal. Default Name is EQ_FLAG",feature_engineering.py
+binary_complex_equivalency,eq,str,Any Value which will represent condition Matching.,feature_engineering.py
+binary_complex_equivalency,ne,str,"Any value, representing Not Equal Condition",feature_engineering.py
+binary_complex_equivalency,tolerance,float,Degree of grace to be applied by np.is_close() to minimize python rounding errors.,feature_engineering.py
+binary_complex_equivalency,include_difference,bool,Boolean flag to determine whether to include arthematic difference in addition to binary flag.,feature_engineering.py
 univariate_analysis,df,,,eda_functions.py
 univariate_analysis,sparsity_threshold,,,eda_functions.py
 univariate_analysis,skew_threshold,,,eda_functions.py

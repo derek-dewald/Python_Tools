@@ -1,4 +1,5 @@
 Function,Definition,Parameters,Returns,Date Created,Date Last Modified,Process,Categorization,Usage,Notes,Required Functions,Folder
+binary_complex_equivalency,Function which tests the Equivalence of 2 Columns in a dataframe to determine whether they are Equal or Not.,"['df', 'column_name', 'column_name1', 'new_column_name', 'eq', 'ne', 'tolerance', 'include_difference']",df,28-Aug-26,28-Aug-26,TBD,TBD,"binary_complex_equivalency(df,'SCORE1','SCORE2')",None,None,feature_engineering.py
 univariate_analysis,,"['df', 'sparsity_threshold', 'skew_threshold', 'extreme_threshold', 'high_cardinality_threshold']",,,,,,,,,eda_functions.py
 ml_validation_data_cleaning,,['df'],,,,,,,,,eda_functions.py
 visualize_dataframe_in_notebook,Function which applies some modest formating to a Dataframe to increase visual astetic.,"['df', 'show_as_number', 'show_as_currency', 'show_as_currency_without_dec', 'show_as_percentage']",Object Type date_created: 27-Aug-26 date_last_modified: 27-Aug-26 classification:TBD sub_classification:TBD,,,,,visualize_dataframe_in_notebook(df),,,eda_functions.py

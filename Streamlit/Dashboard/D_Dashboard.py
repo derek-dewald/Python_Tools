@@ -194,6 +194,7 @@ def load_data():
     
     technical_notes = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv'
     function_list = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/python_function_list.csv"
+    function_definition = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/python_function_file_definition.csv"
     parameter_list = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/python_function_parameters.csv"
 
     data_dict = {}
@@ -205,11 +206,13 @@ def load_data():
         data_dict['knowledge_base_df'] = pd.read_excel(knowledge_base_xlsx)
         
     data_dict['function_df'] = pd.read_csv(function_list)
+    data_dict['function_def_df'] = pd.read_csv(function_definition)
     data_dict['google_notes_df'] = pd.read_csv(google_note_csv)
     data_dict['google_definition_df'] = pd.read_csv(google_definition_csv)
     data_dict['technical_notes_df'] = pd.read_csv(technical_notes)
     
     data_dict['parameter_df'] = pd.read_csv(parameter_list)
+
     
     # Normalize: keep your existing behavior (everything to string)
     for dict_key in data_dict.keys():
@@ -671,9 +674,48 @@ elif page == 'Technical Notes':
 # Functions
 # -----------------------------------
 
+
+
+
 elif page == 'Functions':
     st.title("Functions")
     df_base = data_dict['function_df'].copy()
+    df_func_definition = data_dict['function_def_df'].copy()
+
+  
+    gb_def = GridOptionsBuilder.from_dataframe(df_func_definition)
+
+    gb_def.configure_default_column(
+        resizable=True,
+        sortable=True,
+        filter=True,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gb_def.configure_column(
+        "Function",
+        flex=15,
+        minWidth=120
+    )
+
+    gb_def.configure_column(
+        "Definition",
+        flex=85,
+        minWidth=800
+    )
+
+    gridOptions_def = gb_def.build()
+
+    AgGrid(
+        df_func_definition,
+        gridOptions=gridOptions_def,
+        height=250,
+        allow_unsafe_jscode=True,
+        fit_columns_on_grid_load=False,
+        reload_data=True,
+    )
+
     c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
 
     c1_word = 'Process'
@@ -697,7 +739,9 @@ elif page == 'Functions':
         c3_sel = st.selectbox(c3_word, c3_options, index=0)
 
     df_view = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
-    df_view = df_view[['Folder','Function','Process','Categorization','Definition']]
+    df_view = df_view[['Folder','Function','Definition','Process','Categorization',]]
+
+    
 
 
     st.caption(f"Rows: {len(df_view)}")
@@ -710,6 +754,12 @@ elif page == 'Functions':
         wrapText=True,
         autoHeight=True
     )
+
+    gb.configure_column("Folder", width=200, minWidth=180, maxWidth=200)
+    gb.configure_column("Function", width=200, minWidth=180, maxWidth=200)
+    gb.configure_column("Process", width=150, minWidth=140, maxWidth=150)
+    gb.configure_column("Categorization", width=150, minWidth=140, maxWidth=150)
+    gb.configure_column("Definition", width=900, minWidth=800, maxWidth=850)
 
     gridOptions = gb.build()
 
