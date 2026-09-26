@@ -1,6 +1,8 @@
 '''
-module_name: object_rendering
-module_purpose: Functions that transform Python objects or structured data into human-readable, formatted representations or documents without changing the underlying meaning of the data. Rendering is the process of converting data or an object from its internal structure into a visual or formatted output suitable for viewing, interpretation, or sharing.
+module_word: object_rendering
+module_definition: Functions that transform Python objects or structured data into human-readable, formatted representations or documents without changing the underlying meaning of the data. Rendering is the process of converting data or an object from its internal structure into a visual or formatted output suitable for viewing, interpretation, or sharing.
+
+module_word: module_definition
 
 '''
 import pandas as pd
@@ -10,6 +12,121 @@ from docx.shared import Pt, Inches, RGBColor
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
+
+
+def txt_to_python(file_name,encoding="utf-8"):
+
+    
+    '''
+    Definition: 
+        Function Used to Import .txt or .py File into Python.
+    Parameters: 
+        file_name(str): Name of File, including path location for import
+        encoding(str): Encoding to be applied by With Open call. Default is utf-8.
+
+    Returns:
+        Dataframe
+    Date Created:
+        3-Dec-25
+    Date Last Modified:
+        3-Dec-25
+    Process:
+        OS Folder Management
+    Categorization:
+        File Management
+    usage:
+        location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/DFProcessing.py'
+        file = TextFileImport(location)
+    
+    '''
+
+    with open(file_name, "r", encoding=encoding) as file:
+        data = file.read()
+    
+    return data
+
+def export_formatted_df_to_single_xlsx(
+    df,
+    file_name,
+    sheet_name="Sheet1",
+    index=False,
+    freeze_header=True,
+    column_formats=None,  # dict: {col_name: format_type}
+):
+    '''
+    Definition:
+        Function Used to Simplify the required formating to a excel output from Python to Excel
+    Parameters:
+        df(dataframe): Any Dataframe
+        file_name(str): Name of Excel Output File
+        sheet_name(str): Name of Sheet to be generated in Excel
+        index(bool): Include DF index in output as default action
+        freeze_header(bool): Freeze Excel File Column Header as default action
+        column_foratas(dict): Dictionary to format specific columns based on desired type, options include 
+    Returns:
+        TBD
+    Date Created:
+        28-Aug-26
+    Date Last Modified:
+        28-Aug-26
+    Process:
+        TBD
+    Categorization:
+        TBD
+    Usage:
+        TBD
+    Notes:
+        None
+    Required Functions:
+        None
+    
+    
+    '''
+    
+    if not file_name.endswith(".xlsx"):
+            file_name += ".xlsx"
+            
+    with pd.ExcelWriter(file_name, engine="xlsxwriter") as writer:
+        df.to_excel(writer, index=index, sheet_name=sheet_name)
+
+        workbook = writer.book
+        ws = writer.sheets[sheet_name]
+
+        if freeze_header:
+            ws.freeze_panes(1, 0)
+        
+        # ---- Base format (default for all cells) ----
+        base_format = workbook.add_format({
+            'text_wrap': True,
+            'align': 'center',
+            'valign': 'vcenter'
+        })
+
+        # ---- Predefined special formats ----
+        format_map = {
+            "acct": workbook.add_format({'num_format': '0'}),
+            "date": workbook.add_format({'num_format': 'yyyy-mm-dd'}),
+            "money": workbook.add_format({'num_format': '$#,##0.00'}),
+        }
+
+        # ---- Auto-size columns ----
+        for col_idx, col in enumerate(df.columns):
+            max_len = min(
+                80,
+                max(df[col].astype(str).map(len).max(), len(col)) + 2
+            )
+
+            # Check if column has a special format
+            if column_formats and col in column_formats:
+                fmt_key = column_formats[col]
+                fmt = format_map.get(fmt_key, base_format)
+            else:
+                fmt = base_format
+
+            ws.set_column(col_idx, col_idx, max_len, fmt)
+
+
+
 
 
 def visualize_dataframe_in_notebook(
@@ -227,8 +344,37 @@ def create_short_form_ml_project_dict(df=None):
     return text
 
 
+def create_machine_learning_project_baseline():
+    
+    '''
+    Definition:
+        Create Baseline Formatted Machine Learning Dictionary for purposes of copy and pasting into new Project.
+        
+    Parameters:
+        None
+    Returns:
+        dict
+    Date Created:
+        09-Sep-26
+    Date Last Modified:
+        09-Sep-26
+    Process:
+        TBD
+    Categorization:
+        TBD
+    Usage:
+        TBD
+    Notes:
+        Created for simplificity.
+    Required Functions:
+        None
+    
+    '''
 
-def create_ml_dictionary_template():
+    base_dict,base_df = create_base_ml_dictionary_from_df()
+    return create_baseline_dictionary_for_project(base_dict)
+
+def create_base_ml_dictionary_from_df():
     '''
     '''
     def ml_dict_to_df(base_dict):

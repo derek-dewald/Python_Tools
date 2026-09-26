@@ -1,4 +1,8 @@
+'''
+module_word: archive
+module_definition: Repo for functions which have been created, but are no longer in use. Specifically, those which might at some point become relevant or of interest.
 
+'''
 def extract_object_dot_py(
     object_dict,
     export_location):

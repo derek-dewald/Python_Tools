@@ -1,6 +1,6 @@
 '''
 module_word: taxonomy_admin_functions.py
-module_definition: Functions with deal primarily with administration and maintenance of Taxonomy supporting Documentation. Generalized Functions not to be included.
+module_definition: Functions which deal primarily with administration and maintenance of Taxonomy supporting Documentation. Generalized Functions not to be included.
 
 '''
 
@@ -11,7 +11,8 @@ import ast
 import re
 
 from objects_automated import object_dict
-from filesystem_tools import txt_to_python,read_directory
+from filesystem_tools import read_directory
+from object_rendering import txt_to_python
 
 def create_knowledge_base(
     definition_df=pd.DataFrame(),
@@ -174,22 +175,6 @@ def create_blank_function_doc_string():
         else:
             text += f"\n{item}:\n    TBD"
     print(text)
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 ###########################################################
 
@@ -516,7 +501,6 @@ def read_dot_py_doc_string(file):
 
     return file_info
 
-
 def generate_objects_automated_py(
     links_df=None,
     knowledge_base_df=None
@@ -662,7 +646,8 @@ object_dict['analytical_method'] = {{
     'publish':0,
     'python_object':{knowledge_base_df[knowledge_base_df['Process']=='Analytical Method']['Word'].sort_values().tolist()}
         }}
-
 """
     with open("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/objects_automated.py", "w") as f:
         f.write(text_)
+
+generate_objects_automated_py()  

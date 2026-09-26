@@ -7,17 +7,21 @@ binary_complex_equivalency,eq,str,Any Value which will represent condition Match
 binary_complex_equivalency,ne,str,"Any value, representing Not Equal Condition",feature_engineering.py
 binary_complex_equivalency,tolerance,float,Degree of grace to be applied by np.is_close() to minimize python rounding errors.,feature_engineering.py
 binary_complex_equivalency,include_difference,bool,Boolean flag to determine whether to include arthematic difference in addition to binary flag.,feature_engineering.py
+statistical_analytics_time_series,df,dataframe,DataFrame,feature_engineering.py
+statistical_analytics_time_series,index,,,feature_engineering.py
 univariate_analysis,df,,,eda_functions.py
 univariate_analysis,sparsity_threshold,,,eda_functions.py
 univariate_analysis,skew_threshold,,,eda_functions.py
 univariate_analysis,extreme_threshold,,,eda_functions.py
 univariate_analysis,high_cardinality_threshold,,,eda_functions.py
 ml_validation_data_cleaning,df,,,eda_functions.py
-visualize_dataframe_in_notebook,df,dataframe,Any DataFrame,eda_functions.py
-visualize_dataframe_in_notebook,show_as_number,list,"List of Columns which are to be displayed as format :,.2f",eda_functions.py
-visualize_dataframe_in_notebook,show_as_currency,list,"List of Columns which are to be displayed as format $:,.2f",eda_functions.py
-visualize_dataframe_in_notebook,show_as_currency_without_dec,list,"List of Columns which are to be displayed as format $:,.0f",eda_functions.py
-visualize_dataframe_in_notebook,show_as_percentage,list,List of Columns which are to be displayed as format :.2f%,eda_functions.py
+stastical_compare_column_diff,df,df,Dataframe,eda_functions.py
+stastical_compare_column_diff,column1,str,Name of Column to be represented as Column1.,eda_functions.py
+stastical_compare_column_diff,column2,str,Name of Column to be represented as Column2.,eda_functions.py
+stastical_compare_column_diff_grouped,df,df,Dataframe,eda_functions.py
+stastical_compare_column_diff_grouped,column1,str,Name of Column to be represented as Column1.,eda_functions.py
+stastical_compare_column_diff_grouped,column2,str,Name of Column to be represented as Column2.,eda_functions.py
+stastical_compare_column_diff_grouped,group_columns,str,"Can also be a list, column to apply group.",eda_functions.py
 InspectFunction,function_name,,,utility_functions.py
 create_knowledge_base,definition_df,dataframe,Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.,taxonomy_admin_functions.py
 create_knowledge_base,notes_df,dataframe,Dataframe containing Notes from Google. Default is none and it will pull directly from Google.,taxonomy_admin_functions.py
@@ -38,14 +42,6 @@ move_file_in_folder,folder1,str,Folder of First File,filesystem_tools.py
 move_file_in_folder,folder2,str,Folder of Second File,filesystem_tools.py
 move_file_in_folder,file_name,str,"Name of File to be moved, does not matter of file type)",filesystem_tools.py
 move_file_in_folder,overwrite_without_validation,bool,Optional Argument allowing user to automate by apply to default overwrite (also meant to help reduce risk of losting information due to inadvertent overwriting),filesystem_tools.py
-txt_to_python,file_name,str,"Name of File, including path location for import",filesystem_tools.py
-txt_to_python,encoding,str,Encoding to be applied by With Open call. Default is utf-8.,filesystem_tools.py
-export_formatted_df_to_single_xlsx,df,dataframe,Any Dataframe,filesystem_tools.py
-export_formatted_df_to_single_xlsx,file_name,str,Name of Excel Output File,filesystem_tools.py
-export_formatted_df_to_single_xlsx,sheet_name,str,Name of Sheet to be generated in Excel,filesystem_tools.py
-export_formatted_df_to_single_xlsx,index,bool,Include DF index in output as default action,filesystem_tools.py
-export_formatted_df_to_single_xlsx,freeze_header,bool,Freeze Excel File Column Header as default action,filesystem_tools.py
-export_formatted_df_to_single_xlsx,column_formats,,,filesystem_tools.py
 extract_object_dot_py,object_dict,dict,Dictionary Object from either objects_manual or objects_automated,archive.py
 extract_object_dot_py,export_location,str,Location where .xlsx file will be saved.,archive.py
 ETL,print_,bool,To Be Determined Utilization.,archive.py
@@ -61,6 +57,14 @@ generate_objects_automated_py,definition_df,df,Data from Google Sheets. If nothi
 generate_objects_automated_py,method,,,archive.py
 extract_consolidated_raw_dataset,df_dict,dict,Dictionary of files to be included.,archive.py
 extract_consolidated_raw_dataset,export_location,str,"Location to where CSV file is to be exported. If left Blank, will not export a CSV.",archive.py
+txt_to_python,file_name,str,"Name of File, including path location for import",object_rendering.py
+txt_to_python,encoding,str,Encoding to be applied by With Open call. Default is utf-8.,object_rendering.py
+export_formatted_df_to_single_xlsx,df,dataframe,Any Dataframe,object_rendering.py
+export_formatted_df_to_single_xlsx,file_name,str,Name of Excel Output File,object_rendering.py
+export_formatted_df_to_single_xlsx,sheet_name,str,Name of Sheet to be generated in Excel,object_rendering.py
+export_formatted_df_to_single_xlsx,index,bool,Include DF index in output as default action,object_rendering.py
+export_formatted_df_to_single_xlsx,freeze_header,bool,Freeze Excel File Column Header as default action,object_rendering.py
+export_formatted_df_to_single_xlsx,column_formats,,,object_rendering.py
 visualize_dataframe_in_notebook,df,dataframe,Any DataFrame,object_rendering.py
 visualize_dataframe_in_notebook,show_as_number,list,"List of Columns which are to be displayed as format :,.2f",object_rendering.py
 visualize_dataframe_in_notebook,show_as_currency,list,"List of Columns which are to be displayed as format $:,.2f",object_rendering.py

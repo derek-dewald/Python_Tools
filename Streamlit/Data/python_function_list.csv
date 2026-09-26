@@ -1,8 +1,10 @@
 Function,Definition,Parameters,Returns,Date Created,Date Last Modified,Process,Categorization,Usage,Notes,Required Functions,Folder
 binary_complex_equivalency,Function which tests the Equivalence of 2 Columns in a dataframe to determine whether they are Equal or Not.,"['df', 'column_name', 'column_name1', 'new_column_name', 'eq', 'ne', 'tolerance', 'include_difference']",df,28-Aug-26,28-Aug-26,TBD,TBD,"binary_complex_equivalency(df,'SCORE1','SCORE2')",None,None,feature_engineering.py
+statistical_analytics_time_series,Apply Statistical Analysis to all columns in a Time Series Dataframe,"['df', 'index']",df,10-Sep-26,10-Sep-26,TBD,TBD,df = statistical_analytics_time_series(df),None,None,feature_engineering.py
 univariate_analysis,,"['df', 'sparsity_threshold', 'skew_threshold', 'extreme_threshold', 'high_cardinality_threshold']",,,,,,,,,eda_functions.py
 ml_validation_data_cleaning,,['df'],,,,,,,,,eda_functions.py
-visualize_dataframe_in_notebook,Function which applies some modest formating to a Dataframe to increase visual astetic.,"['df', 'show_as_number', 'show_as_currency', 'show_as_currency_without_dec', 'show_as_percentage']",Object Type date_created: 27-Aug-26 date_last_modified: 27-Aug-26 classification:TBD sub_classification:TBD,,,,,visualize_dataframe_in_notebook(df),,,eda_functions.py
+stastical_compare_column_diff,Statistically Analyze the Difference Value between two columns.,"['df', 'column1', 'column2']",df Need to document that is makes an assumption that Zeros and Blanks are handled through DQ Analysis. Not going to explicilty report here.,09-Sep-26,09-Sep-26,TBD,TBD,TBD,None,binary_complex_equivalency,eda_functions.py
+stastical_compare_column_diff_grouped,"Extends stastical_compare_column_diff_grouped to include a Group By on variable, or list.","['df', 'column1', 'column2', 'group_columns']",df Need to document that is makes an assumption that Zeros and Blanks are handled through DQ Analysis. Not going to explicilty report here.,09-Sep-26,09-Sep-26,TBD,TBD,TBD,None,binary_complex_equivalency,eda_functions.py
 InspectFunction,,['function_name'],,,,,,,,,utility_functions.py
 create_knowledge_base,"Process Utilized to create Knowledge Base. Knowledge base combines Notes/Definition Datasets into a single expanded piece which expands individual Processes, Taxonomy and Definitions into complete data assets. Important. To Retain Order in Consolidated Data, or to be included in Process it must be defined as a process.
 Machine Learning - Process. Which is Comprised of Processes. Goal Setting, Data Preparation etc..","['definition_df', 'notes_df', 'generate_excel_files', 'ignore_words_from_lvl1_lvl2']",Excel File Version 3. With the Idea that We have 3 Layers. Combined Definition/ Notes. Level 1 - Process is also a Word. Merge this in. Machine Learning Lifecycle. Level 2 - Categorization is also a Word.,02-Jul-26,29-Jul-26,Definition,Definition,"knowledge_base_df,process_df,consolidated_data = generate_files_for_streamlit(definition_df,notes_df)
@@ -30,9 +32,6 @@ read_directory(d_py_function)",,,filesystem_tools.py
 move_file_in_folder,"Function Created to Help Move Files Between Folders Directly in Python.
 Function will validate that the Folders both exist and there currently isn't a file of the same name, to reduce risk of overwriting
 unexpectedly. (There is a manual override).","['folder1', 'folder2', 'file_name', 'overwrite_without_validation']","None date_created:09-Feb-26 date_last_modified: 09-Feb-26 classification: OS Folder Management sub_classification: File Management folder1 = '/Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks' folder2 = '/Users/derekdewald/Documents/Python/Github_Repo/Project Folder/Synthetic Member Dataset' move_file_in_folder(folder1,folder2,'Sythentic Member V3.ipynb')",,,,,,,,filesystem_tools.py
-txt_to_python,Function Used to Import .txt or .py File into Python.,"['file_name', 'encoding']",Dataframe,3-Dec-25,3-Dec-25,OS Folder Management,File Management,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/DFProcessing.py'
-file = TextFileImport(location)",,,filesystem_tools.py
-export_formatted_df_to_single_xlsx,Function Used to Simplify the required formating to a excel output from Python to Excel,"['df', 'file_name', 'sheet_name', 'index', 'freeze_header', 'column_formats']",TBD,28-Aug-26,28-Aug-26,TBD,TBD,TBD,None,None,filesystem_tools.py
 extract_object_dot_py,Generate an Excel file of all parameters which are manually stored and maintained. File which is generated is used a input component for generate_knowledgebase.,"['object_dict', 'export_location']",df date_created:29-Jun-26 date_last_modified: 3-Jul-26 classification:TBD sub_classification:TBD,,,,,"manual_object_df(object_dict_manual,'/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
 update:
 Added Definition as new record, added column definition.
@@ -51,10 +50,14 @@ extract_consolidated_raw_dataset,"Create a Consolidated Dataset of files in Dict
 'Manual Objects':manual_object_df
 }
 extract_consolidated_raw_dataset(df_dict)",Definition,,archive.py
+txt_to_python,Function Used to Import .txt or .py File into Python.,"['file_name', 'encoding']",Dataframe,3-Dec-25,3-Dec-25,OS Folder Management,File Management,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/DFProcessing.py'
+file = TextFileImport(location)",,,object_rendering.py
+export_formatted_df_to_single_xlsx,Function Used to Simplify the required formating to a excel output from Python to Excel,"['df', 'file_name', 'sheet_name', 'index', 'freeze_header', 'column_formats']",TBD,28-Aug-26,28-Aug-26,TBD,TBD,TBD,None,None,object_rendering.py
 visualize_dataframe_in_notebook,Function which applies some modest formating to a Dataframe to increase visual astetic.,"['df', 'show_as_number', 'show_as_currency', 'show_as_currency_without_dec', 'show_as_percentage']",Object Type date_created: 27-Aug-26 date_last_modified: 27-Aug-26 classification:TBD sub_classification:TBD,,,,,visualize_dataframe_in_notebook(df),,,object_rendering.py
 print_dict,Print Text from Dictionary into a structured output in Console.,"['d', 'indent']",None. Prints Structured Text in Console.,28-Aug-26,28-Aug-26,TBD,TBD,TBD,Developed for usage with Machine Learning Project.,None,object_rendering.py
 create_short_form_ml_project_dict,Creates a formatted text representation of a wireframe dictionary for the Short Form ML Project Process.,['df'],"str: Formatted text containing a valid Python dictionary assignment that can be printed, displayed, or saved.",28-Aug-26,09-Sep-26,TBD,Object Rendering,short_form_text = create_short_form_ml_project_dict(),This function is slightly unique as it takes the DataFrame directly and converts it into a formatted dictionary representation. Solely used for the Short Form ML Project Process.,None,object_rendering.py
-create_ml_dictionary_template,,[],,,,,,,,,object_rendering.py
+create_machine_learning_project_baseline,Create Baseline Formatted Machine Learning Dictionary for purposes of copy and pasting into new Project.,[],dict,09-Sep-26,09-Sep-26,TBD,TBD,TBD,Created for simplificity.,None,object_rendering.py
+create_base_ml_dictionary_from_df,,[],,,,,,,,,object_rendering.py
 create_baseline_dictionary_for_project,"Creates a formatted text representation of a dictionary that
 can be used in a Notebook to track project completion.
 Note that the ML Project requires an intermediary step because

@@ -1,11 +1,11 @@
 Function,Definition
-feature_engineering.py,
-eda_functions.py,
+feature_engineering.py,Repo for functions which create data elements within the context of an existing Data Frame. Does not include the creation of New Data Sets.
+eda_functions.py,Repo for functions required to implement Exploratory Data Analysis in Machine Learning Lifecycle
 objects_automated.py,
 utility_functions.py,
-taxonomy_admin_functions.py,Functions with deal primarily with administration and maintenance of Taxonomy supporting Documentation. Generalized Functions not to be included.
+taxonomy_admin_functions.py,Functions which deal primarily with administration and maintenance of Taxonomy supporting Documentation. Generalized Functions not to be included.
 filesystem_tools.py,"Function which stores all functions that deal with the Maintenance and Adminstration of Windows/IOS/Python folders and files. Specifically, includes Python Documentation Functions."
 objects_manual.py,
-archive.py,
-object_rendering.py,
+archive.py,"Repo for functions which have been created, but are no longer in use. Specifically, those which might at some point become relevant or of interest."
+object_rendering.py,"Functions that transform Python objects or structured data into human-readable, formatted representations or documents without changing the underlying meaning of the data. Rendering is the process of converting data or an object from its internal structure into a visual or formatted output suitable for viewing, interpretation, or sharing."
 ml_project.py,

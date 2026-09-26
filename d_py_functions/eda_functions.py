@@ -1,12 +1,13 @@
 '''
-module_name: eda_functions
-module_purpose: Repo for functions required to implement Exploratory Data Analysis in Machine Learning Lifecycle
+module_word: eda_functions
+module_definition: Repo for functions required to implement Exploratory Data Analysis in Machine Learning Lifecycle
 
 '''
 
 import numpy as np
 import pandas as pd
 
+from feature_engineering import binary_complex_equivalency
 
 def univariate_analysis(
     df,
@@ -169,77 +170,162 @@ def ml_validation_data_cleaning(df):
 
     return pd.DataFrame(records)
 
-
-def visualize_dataframe_in_notebook(
+def stastical_compare_column_diff(
     df,
-    show_as_number=[],
-    show_as_currency=[],
-    show_as_currency_without_dec=[],
-    show_as_percentage=[],
+    column1,
+    column2
 ):
     
     '''
-    
     Definition:
-        Function which applies some modest formating to a Dataframe to increase visual astetic.
-
+        Statistically Analyze the Difference Value between two columns.
     Parameters:
-        df (dataframe): Any DataFrame
-        show_as_number(list): List of Columns which are to be displayed as format :,.2f
-        show_as_currency(list): List of Columns which are to be displayed as format $:,.2f
-        show_as_currency_without_dec(list): List of Columns which are to be displayed as format $:,.0f
-        show_as_percentage(list): List of Columns which are to be displayed as format :.2f%        
+        df(df): Dataframe
+        column1(str): Name of Column to be represented as Column1. 
+        column2(str): Name of Column to be represented as Column2. 
         
-
     Returns:
-        Object Type
+        df
 
-    date_created: 27-Aug-26
-    date_last_modified: 27-Aug-26
-    classification:TBD
-    sub_classification:TBD
-    usage:
-        visualize_dataframe_in_notebook(df)
+    Date Created:
+        09-Sep-26
+    Date Last Modified:
+        09-Sep-26
+    Process:
+        TBD
+    Categorization:
+        TBD
+    Usage:
+        TBD
+    Notes:
+        None
+    Required Functions:
+        binary_complex_equivalency
+    
+    
+    Need to document that is makes an assumption that Zeros and Blanks are handled through DQ Analysis. Not going to explicilty report here.
 
     '''
 
-    formats = {}
+    temp_df = df[[column1,column2]].copy()
     
-    for val in show_as_number:
-        formats[val] = '{:,.2f}'
+    binary_complex_equivalency(temp_df,column1,column2,include_difference=True)
+
+    diff_stats  = temp_df['COLUMN_DIFF'].describe()
+
+    top_5 = temp_df[temp_df['COLUMN_DIFF']!=0]['COLUMN_DIFF'].value_counts().head(5)
     
-    for val in show_as_currency_without_dec:
-        formats[val] = '${:,.0f}'
+    dict_ = {
+        'COLUMN1':column1,
+        'COLUMN2':column2,
+        'RECORDS':len(df),
+        'EQUAL_VALUES':temp_df['EQ_FLAG'].sum(),
+        'PERCENT_EQUAL':round((temp_df['EQ_FLAG'].sum()/len(df))*100,2),
+        'DIFF_MEAN':temp_df['COLUMN_DIFF'].mean(),
+        'DIFF_STD':temp_df['COLUMN_DIFF'].std(),
+        'MAX_DIFF':temp_df['COLUMN_DIFF'].max(),
+        '1ST_QUARTILE':diff_stats['25%'],
+        '2ND_QUARTILE':diff_stats['50%'],
+        '3RD_QUARTILE':diff_stats['75%']    
+    }
 
-    for val in show_as_currency:
-        formats[val] = '${:,.2f}'
+    for i, (value, frequency) in enumerate(top_5.items(), start=1):
+        dict_[f'TOP_{i}_OBSERVATION'] = f'Value: {value}, Frequency: {frequency}'
 
-    for val in show_as_percentage:
-        formats[val] = '{:.2f}%'
+    return pd.DataFrame([dict_.values()],columns=dict_.keys())
+
+
+def stastical_compare_column_diff_grouped(
+    df,
+    column1,
+    column2,
+    group_columns
+):
+    '''
+    Definition:
+        Extends stastical_compare_column_diff_grouped to include a Group By on variable, or list.
+    Parameters:
+        df(df): Dataframe
+        column1(str): Name of Column to be represented as Column1. 
+        column2(str): Name of Column to be represented as Column2. 
+        group_columns(str): Can also be a list, column to apply group.
+        
+    Returns:
+        df
+
+    Date Created:
+        09-Sep-26
+    Date Last Modified:
+        09-Sep-26
+    Process:
+        TBD
+    Categorization:
+        TBD
+    Usage:
+        TBD
+    Notes:
+        None
+    Required Functions:
+        binary_complex_equivalency
+    
+    
+    Need to document that is makes an assumption that Zeros and Blanks are handled through DQ Analysis. Not going to explicilty report here.
 
     
-    #df = df.replace(r'\$', r'\\$', regex=True)
- 
-    styled_df = (
-        df.style
-        .hide(axis='index')
-        .format(formats,escape='html')
-        .set_table_styles([
-              {'selector': 'table',
-               'props': [('border-collapse', 'collapse')]},
-              {'selector': 'th',
-               'props': [('border', '1px solid black'),
-                         ('padding', '5px'),
-                         ('text-align', 'center'),
-                         ('vertical-align', 'middle'),
-                         ('white-space', 'normal')]},
-              {'selector': 'td',
-               'props': [('border', '1px solid black'),
-                         ('padding', '5px'),
-                        ('text-align', 'center'),
-                         ('vertical-align', 'middle'),
-                         ('white-space', 'normal')]}
-          ])
+    
+    
+    '''
+    if isinstance(group_columns, str):
+        group_columns = [group_columns]
+
+    temp_df = df[
+        group_columns + [column1, column2]
+    ].copy()
+
+    binary_complex_equivalency(
+        temp_df,
+        column1,
+        column2,
+        include_difference=True
     )
 
-    display(styled_df)
+    summary = (
+        temp_df
+        .groupby(group_columns)
+        .agg(
+            RECORDS=('EQ_FLAG', 'size'),
+            EQUAL_VALUES=('EQ_FLAG', 'sum'),
+            DIFF_MEAN=('COLUMN_DIFF', 'mean'),
+            DIFF_STD=('COLUMN_DIFF', 'std'),
+            MAX_DIFF=('COLUMN_DIFF', 'max')
+        )
+    )
+
+    quartiles = (
+        temp_df
+        .groupby(group_columns)['COLUMN_DIFF']
+        .quantile([.25, .50, .75])
+        .unstack()
+        .rename(columns={
+            .25: '1ST_QUARTILE',
+            .50: '2ND_QUARTILE',
+            .75: '3RD_QUARTILE'
+        })
+    )
+
+    result = (
+        summary
+        .join(quartiles)
+        .reset_index()
+    )
+
+    result['PERCENT_EQUAL'] = (
+        result['EQUAL_VALUES']
+        / result['RECORDS']
+        * 100
+    ).round(2)
+
+    result.insert(0, 'COLUMN1', column1)
+    result.insert(1, 'COLUMN2', column2)
+
+    return result
