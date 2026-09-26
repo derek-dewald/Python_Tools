@@ -651,4 +651,3 @@ object_dict['analytical_method'] = {{
     with open("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/objects_automated.py", "w") as f:
         f.write(text_)
 
-generate_objects_automated_py()  
