@@ -291,6 +291,7 @@ def parse_dot_py_file(
                     col_name = metadata_map[key_norm]
                     meta_record[col_name] = value_part.strip()
                     current_metadata_key = col_name
+                    current_section = "metadata" ## ADDED 26-Sep-26 In attempt to reduce Sentence Run.
                     continue
 
             # Section headers

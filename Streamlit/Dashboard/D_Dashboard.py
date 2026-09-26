@@ -739,7 +739,7 @@ elif page == 'Functions':
         c3_sel = st.selectbox(c3_word, c3_options, index=0)
 
     df_view = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
-    df_view = df_view[['Folder','Function','Definition','Process','Categorization',]]
+    df_view = df_view[['Folder','Function','Definition','Returns','Process','Categorization',]]
 
     
 
@@ -759,7 +759,8 @@ elif page == 'Functions':
     gb.configure_column("Function", width=200, minWidth=180, maxWidth=200)
     gb.configure_column("Process", width=150, minWidth=140, maxWidth=150)
     gb.configure_column("Categorization", width=150, minWidth=140, maxWidth=150)
-    gb.configure_column("Definition", width=900, minWidth=800, maxWidth=850)
+    gb.configure_column("Returns", width=150, minWidth=120, maxWidth=200)
+    gb.configure_column("Definition", width=800, minWidth=700, maxWidth=750)
 
     gridOptions = gb.build()
 
