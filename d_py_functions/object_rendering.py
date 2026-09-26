@@ -2,8 +2,6 @@
 module_word: object_rendering
 module_definition: Functions that transform Python objects or structured data into human-readable, formatted representations or documents without changing the underlying meaning of the data. Rendering is the process of converting data or an object from its internal structure into a visual or formatted output suitable for viewing, interpretation, or sharing.
 
-module_word: module_definition
-
 '''
 import pandas as pd
 

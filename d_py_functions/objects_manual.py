@@ -1,9 +1,7 @@
 '''
-module_name: objects_manual
-module_purpose: Created to serve as a repository for manually created lists, dictionaries, etc.
+module_word: objects_manual
+module_definition: Created to serve as a repository for manually created lists, dictionaries, etc. Only include items which must be manually maintained.
 default_structure: object_dict['NAME'] = {'Process':"",'Categorization':'','Word':"Name",'Definition':"",'publish':0,'python_object':''}
-module_guidance: This is the Default Location for Lists, Templates and process order. Publish relates to automatic inclusion into Notes
-
 
 Process
 

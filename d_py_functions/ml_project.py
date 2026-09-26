@@ -1,6 +1,6 @@
 '''
-module_name: eda_functions
-module_purpose: Repo for functions required to implement Exploratory Data Analysis in Machine Learning Lifecycle
+module_word: eda_functions
+module_definition: Repo for functions required to implement Exploratory Data Analysis in Machine Learning Lifecycle
 
 '''
 
