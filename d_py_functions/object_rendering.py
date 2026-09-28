@@ -10,7 +10,7 @@ from docx.shared import Pt, Inches, RGBColor
 from docx.enum.table import WD_TABLE_ALIGNMENT
 from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
-
+import textwrap
 
 def txt_to_python(file_name,encoding="utf-8"):
 
@@ -123,10 +123,6 @@ def export_formatted_df_to_single_xlsx(
 
             ws.set_column(col_idx, col_idx, max_len, fmt)
 
-
-
-
-
 def visualize_dataframe_in_notebook(
     df,
     show_as_number=[],
@@ -201,7 +197,7 @@ def visualize_dataframe_in_notebook(
 
     display(styled_df)
 
-def print_dict(d, indent=0):
+def print_dict(d, indent=0, width=100):
     '''
     Definition:
         Print Text from Dictionary into a structured output in Console.
@@ -240,16 +236,28 @@ def print_dict(d, indent=0):
 
         if isinstance(value, dict):
             print(f"\n{prefix}{key}")
-            print_dict(value, indent + 1)
+            print_dict(value, indent + 1, width)
 
         elif isinstance(value, list):
             print(f"\n{prefix}{key}")
             for item in value:
-                print(f"{prefix}    - {item.strip()}")
+                text = str(item).strip()
+                print(textwrap.fill(
+                    text,
+                    width=width,
+                    initial_indent=f"{prefix}    - ",
+                    subsequent_indent=f"{prefix}      "
+                ))
 
         else:
             print(f"\n{prefix}{key}")
-            print(f"{prefix}    {str(value).strip()}")
+            text = str(value).strip()
+            print(textwrap.fill(
+                text,
+                width=width,
+                initial_indent=f"{prefix}    ",
+                subsequent_indent=f"{prefix}    "
+            ))
 
 def create_short_form_ml_project_dict(df=None):
     '''
@@ -1199,3 +1207,125 @@ def visualize_dict_as_docx(
     # =========================================================
 
     document.save(output_file)
+
+
+
+def generate_formated_excel_file(
+    df,
+    filename,
+    sheet_name='Sheet1',
+    wrap=True,
+    align='center',
+    valign='vcenter',
+    currency_columns=None,
+    balance_columns=None,
+    date_columns=None,
+    int_columns=None,
+    decimal_columns=None
+):
+
+    # Default empty lists
+    currency_columns = currency_columns or []
+    balance_columns = balance_columns or []
+    date_columns = date_columns or []
+    int_columns = int_columns or []
+    decimal_columns = decimal_columns or []
+
+    with pd.ExcelWriter(
+        filename,
+        engine='xlsxwriter'
+    ) as writer:
+
+        df.to_excel(
+            writer,
+            index=False,
+            sheet_name=sheet_name
+        )
+
+        workbook = writer.book
+        worksheet = writer.sheets[sheet_name]
+
+        # --------------------------------------------------
+        # Formats
+        # --------------------------------------------------
+
+        general_format = workbook.add_format({
+            'text_wrap': wrap,
+            'align': align,
+            'valign': valign
+        })
+
+        currency_format = workbook.add_format({
+            'num_format': '$#,##0.00',
+            'text_wrap': wrap,
+            'align': align,
+            'valign': valign
+        })
+
+        balance_format = workbook.add_format({
+            'num_format': '$#,##0.00;[Red]-$#,##0.00',
+            'text_wrap': wrap,
+            'align': align,
+            'valign': valign
+        })
+
+        date_format = workbook.add_format({
+            'num_format': 'yyyy-mm-dd',
+            'text_wrap': wrap,
+            'align': align,
+            'valign': valign
+        })
+
+        int_format = workbook.add_format({
+            'num_format': '#,##0',
+            'text_wrap': wrap,
+            'align': align,
+            'valign': valign
+        })
+
+        decimal_format = workbook.add_format({
+            'num_format': '#,##0.00',
+            'text_wrap': wrap,
+            'align': align,
+            'valign': valign
+        })
+
+        # --------------------------------------------------
+        # Columns
+        # --------------------------------------------------
+
+        for idx, col in enumerate(df.columns):
+
+            max_len = min(
+                140,
+                max(
+                    df[col].astype(str).map(len).max(),
+                    len(str(col))
+                ) + 2
+            )
+
+            # Default
+            column_format = general_format
+
+            # Overrides
+            if col in currency_columns:
+                column_format = currency_format
+
+            elif col in balance_columns:
+                column_format = balance_format
+
+            elif col in date_columns:
+                column_format = date_format
+
+            elif col in int_columns:
+                column_format = int_format
+
+            elif col in decimal_columns:
+                column_format = decimal_format
+
+            worksheet.set_column(
+                idx,
+                idx,
+                max_len,
+                column_format
+            )

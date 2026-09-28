@@ -24,14 +24,15 @@ def create_knowledge_base(
     '''
     Definition:
         Process Utilized to create Knowledge Base. Knowledge base combines Notes/Definition Datasets into a single expanded piece which expands individual Processes, Taxonomy and Definitions into complete data assets. Important. To Retain Order in Consolidated Data, or to be included in Process it must be defined as a process.
-        Machine Learning - Process. Which is Comprised of Processes. Goal Setting, Data Preparation etc..
+        Machine Learning - Process. Which is Comprised of Processes. Goal Setting, Data Preparation etc.
 
     Parameters:
-        notes_df (dataframe): Dataframe containing Notes from Google. Default is none and it will pull directly from Google.
+        notes_df (dataframe): Dataframe containing Notes from Google Sheet Page. Default is none and program will call csv from google using pandas.
         definition_df (dataframe): Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.
         
     Returns:
-        Excel File
+        df
+        knowledge_base.xlsx
     Date Created:
         02-Jul-26
     Date Last Modified:
@@ -47,6 +48,7 @@ def create_knowledge_base(
         22-Jul - Overhauled merge. Attempted to streamline, simplify and reduce duplication. Increase Visability.
         28-Jul - Originally Named - generate_knowledge_base, stream lined to remove usage of Dictionary, which were complex and operationally inefficient.
         29-Jul - Changed Foundational Structure. Simplified with Clarity on Input.
+        26-Sep - Tested full functionality.
 
         Version 3. With the Idea that We have 3 Layers. 
         Combined Definition/ Notes.
@@ -358,7 +360,10 @@ def create_python_documentation(
     	location(str): Location of Folder to be read for .py files. Default is defined as /Users/derekdewald/Documents/Python/Github_Repo/d_py_functions
         export_location(str): Location to where CSV file is to be exported. If left Blank, will not export a CSV.
     Returns:
-    	DataFrame(s)
+    	dataframe
+        python_function_list.csv
+        python_function_parameters.csv
+        python_function_file_definition.csv
         
     Date Created:
     	4-Dec-25

@@ -24,7 +24,7 @@ stastical_compare_column_diff_grouped,column2,str,Name of Column to be represent
 stastical_compare_column_diff_grouped,group_columns,str,"Can also be a list, column to apply group.",eda_functions.py
 InspectFunction,function_name,,,utility_functions.py
 create_knowledge_base,definition_df,dataframe,Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.,taxonomy_admin_functions.py
-create_knowledge_base,notes_df,dataframe,Dataframe containing Notes from Google. Default is none and it will pull directly from Google.,taxonomy_admin_functions.py
+create_knowledge_base,notes_df,dataframe,Dataframe containing Notes from Google Sheet Page. Default is none and program will call csv from google using pandas.,taxonomy_admin_functions.py
 create_knowledge_base,generate_excel_files,,,taxonomy_admin_functions.py
 create_knowledge_base,ignore_words_from_lvl1_lvl2,,,taxonomy_admin_functions.py
 parse_dot_py_file,file_text,str,"Text, which should be structured someone in format of function_columns, based on prevailing default Python String Documentation",taxonomy_admin_functions.py
@@ -42,6 +42,17 @@ move_file_in_folder,folder1,str,Folder of First File,filesystem_tools.py
 move_file_in_folder,folder2,str,Folder of Second File,filesystem_tools.py
 move_file_in_folder,file_name,str,"Name of File to be moved, does not matter of file type)",filesystem_tools.py
 move_file_in_folder,overwrite_without_validation,bool,Optional Argument allowing user to automate by apply to default overwrite (also meant to help reduce risk of losting information due to inadvertent overwriting),filesystem_tools.py
+df_compare,df,,,data_validation.py
+df_compare,df1,,,data_validation.py
+df_compare,primary_key_list,list,List of Elements to Merge DataFrame on. If left blank it will only test column structure of Dataframes.,data_validation.py
+statistical_analytics_time_series,df,dataframe,DataFrame,statistical_analysis.py
+statistical_analytics_time_series,index,,,statistical_analysis.py
+t_value_test,df,,,statistical_analysis.py
+t_value_test,observed_col,,,statistical_analysis.py
+t_value_test,mean_col,,,statistical_analysis.py
+t_value_test,std_col,,,statistical_analysis.py
+t_value_test,observations,,,statistical_analysis.py
+t_value_test,confidence_level,,,statistical_analysis.py
 extract_object_dot_py,object_dict,dict,Dictionary Object from either objects_manual or objects_automated,archive.py
 extract_object_dot_py,export_location,str,Location where .xlsx file will be saved.,archive.py
 ETL,print_,bool,To Be Determined Utilization.,archive.py
@@ -72,6 +83,7 @@ visualize_dataframe_in_notebook,show_as_currency_without_dec,list,"List of Colum
 visualize_dataframe_in_notebook,show_as_percentage,list,List of Columns which are to be displayed as format :.2f%,object_rendering.py
 print_dict,d,dict,Any Dictionary.,object_rendering.py
 print_dict,indent,float,Indent Required,object_rendering.py
+print_dict,width,,,object_rendering.py
 create_short_form_ml_project_dict,df,dataframe,"Optional. DataFrame containing the Short Form ML Project definitions. If not provided, the knowledge base is loaded directly.",object_rendering.py
 create_baseline_dictionary_for_project,d,dict,,object_rendering.py
 create_baseline_dictionary_for_project,dict_name,str,,object_rendering.py
@@ -79,3 +91,14 @@ create_baseline_dictionary_for_project,blank_keys,list,,object_rendering.py
 visualize_dict_as_docx,data,dict,Dictionary,object_rendering.py
 visualize_dict_as_docx,output_file,str,Name of docx file.,object_rendering.py
 visualize_dict_as_docx,split_pages,bool,True or False Flag to determine whether each 1st level key will be generated immediately after or split to a new page.,object_rendering.py
+generate_formated_excel_file,df,,,object_rendering.py
+generate_formated_excel_file,filename,,,object_rendering.py
+generate_formated_excel_file,sheet_name,,,object_rendering.py
+generate_formated_excel_file,wrap,,,object_rendering.py
+generate_formated_excel_file,align,,,object_rendering.py
+generate_formated_excel_file,valign,,,object_rendering.py
+generate_formated_excel_file,currency_columns,,,object_rendering.py
+generate_formated_excel_file,balance_columns,,,object_rendering.py
+generate_formated_excel_file,date_columns,,,object_rendering.py
+generate_formated_excel_file,int_columns,,,object_rendering.py
+generate_formated_excel_file,decimal_columns,,,object_rendering.py
