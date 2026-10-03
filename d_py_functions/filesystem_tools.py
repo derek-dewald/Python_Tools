@@ -122,3 +122,44 @@ def move_file_in_folder(folder1,
     shutil.move(str(src_file), str(dst_file))
 
     return f"File moved successfully: {file_name}"
+
+def ReadTextFiles(
+    file_name,
+    read='r',
+    encoding="utf-8",
+    errors="replace"
+):
+    
+    '''
+    Function to Read Text Files 
+    
+    
+    '''
+    
+    with open(f'{file_name}', read, encoding=encoding, errors=errors) as f:
+        lines = [line.strip() for line in f if line.strip()]
+
+    return lines
+
+
+def extract_py_folder_from_git_repo(
+    folder_git_url,
+    output_location
+):
+    '''
+    
+    '''
+    
+    response = requests.get(folder_git_url)
+    response.raise_for_status()
+    files = response.json()
+    
+    for file in git_files:
+        if (file['name'].find('.py')!=-1)&(file['name'].find('__init__')==-1):
+            git_file_url = file['download_url']
+            temp_location = f"{output_location}{file['name']}"
+
+            extract_py_file_from_git(
+                file_download_url=git_file_url,
+                output_location=temp_location
+            )

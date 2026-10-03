@@ -7,8 +7,10 @@ binary_complex_equivalency,eq,str,Any Value which will represent condition Match
 binary_complex_equivalency,ne,str,"Any value, representing Not Equal Condition",feature_engineering.py
 binary_complex_equivalency,tolerance,float,Degree of grace to be applied by np.is_close() to minimize python rounding errors.,feature_engineering.py
 binary_complex_equivalency,include_difference,bool,Boolean flag to determine whether to include arthematic difference in addition to binary flag.,feature_engineering.py
-statistical_analytics_time_series,df,dataframe,DataFrame,feature_engineering.py
-statistical_analytics_time_series,index,,,feature_engineering.py
+create_segment_range,df,,,feature_engineering.py
+create_segment_range,column_name,,,feature_engineering.py
+create_segment_range,segment_range,,,feature_engineering.py
+create_segment_range,return_value,,,feature_engineering.py
 univariate_analysis,df,,,eda_functions.py
 univariate_analysis,sparsity_threshold,,,eda_functions.py
 univariate_analysis,skew_threshold,,,eda_functions.py
@@ -23,6 +25,10 @@ stastical_compare_column_diff_grouped,column1,str,Name of Column to be represent
 stastical_compare_column_diff_grouped,column2,str,Name of Column to be represented as Column2.,eda_functions.py
 stastical_compare_column_diff_grouped,group_columns,str,"Can also be a list, column to apply group.",eda_functions.py
 InspectFunction,function_name,,,utility_functions.py
+extract_tables_from_db,db_name,,,utility_functions.py
+extract_tables_from_db,table_dictionary_source,,,utility_functions.py
+extract_tables_from_db,include_columns,,,utility_functions.py
+extract_tables_from_db,exclude_schemas,,,utility_functions.py
 create_knowledge_base,definition_df,dataframe,Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.,taxonomy_admin_functions.py
 create_knowledge_base,notes_df,dataframe,Dataframe containing Notes from Google Sheet Page. Default is none and program will call csv from google using pandas.,taxonomy_admin_functions.py
 create_knowledge_base,generate_excel_files,,,taxonomy_admin_functions.py
@@ -42,9 +48,22 @@ move_file_in_folder,folder1,str,Folder of First File,filesystem_tools.py
 move_file_in_folder,folder2,str,Folder of Second File,filesystem_tools.py
 move_file_in_folder,file_name,str,"Name of File to be moved, does not matter of file type)",filesystem_tools.py
 move_file_in_folder,overwrite_without_validation,bool,Optional Argument allowing user to automate by apply to default overwrite (also meant to help reduce risk of losting information due to inadvertent overwriting),filesystem_tools.py
+ReadTextFiles,file_name,,,filesystem_tools.py
+ReadTextFiles,read,,,filesystem_tools.py
+ReadTextFiles,encoding,,,filesystem_tools.py
+ReadTextFiles,errors,,,filesystem_tools.py
+extract_py_folder_from_git_repo,folder_git_url,,,filesystem_tools.py
+extract_py_folder_from_git_repo,output_location,,,filesystem_tools.py
 df_compare,df,,,data_validation.py
 df_compare,df1,,,data_validation.py
 df_compare,primary_key_list,list,List of Elements to Merge DataFrame on. If left blank it will only test column structure of Dataframes.,data_validation.py
+sample_knowledge_test_single_df,base_df,,,d_daily_test.py
+sample_knowledge_test_single_df,pause,,,d_daily_test.py
+sample_knowledge_test_single_df,test_name,,,d_daily_test.py
+d_daily_test,actions,,,d_daily_test.py
+d_daily_test,sample,,,d_daily_test.py
+d_daily_test,pause,,,d_daily_test.py
+test_previous_errors,min_correct,,,d_daily_test.py
 statistical_analytics_time_series,df,dataframe,DataFrame,statistical_analysis.py
 statistical_analytics_time_series,index,,,statistical_analysis.py
 t_value_test,df,,,statistical_analysis.py
@@ -102,3 +121,8 @@ generate_formated_excel_file,balance_columns,,,object_rendering.py
 generate_formated_excel_file,date_columns,,,object_rendering.py
 generate_formated_excel_file,int_columns,,,object_rendering.py
 generate_formated_excel_file,decimal_columns,,,object_rendering.py
+InspectFunction,function_name,,,text_parsing.py
+extract_tables_from_db,db_name,,,text_parsing.py
+extract_tables_from_db,table_dictionary_source,,,text_parsing.py
+extract_tables_from_db,include_columns,,,text_parsing.py
+extract_tables_from_db,exclude_schemas,,,text_parsing.py

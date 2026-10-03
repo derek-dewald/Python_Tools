@@ -96,7 +96,7 @@ def df_compare(df,df1,primary_key_list=[]):
             final_df = pd.concat([final_df,d])
     
         display(Markdown(f'#### Sample of results which do not equal'))
-        visualize_dataframe_in_notebook(final_df)
+        visualize_dataframe_in_notebook(final_df.drop_duplicates('COLUMN'))
         return final_df
     
     return pd.DataFrame()
