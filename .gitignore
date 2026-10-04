@@ -21,6 +21,8 @@
 !Images/
 !Images/**
 
+!d_testing_folder/d_historical_test_results1.xlsx
+
 # ==================================================
 # NEVER SHARE
 # ==================================================
