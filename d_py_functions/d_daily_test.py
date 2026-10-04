@@ -14,6 +14,8 @@ from IPython.display import Markdown,display
 import sys
 sys.path.append("/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions")
 from objects_automated import object_dict
+from object_rendering import visualize_dataframe_in_notebook
+from utility_functions import gpt_question
 
 def sample_knowledge_test_single_df(
     base_df,
@@ -95,8 +97,6 @@ def d_daily_test(
             new_word_list.append(w)
             actions+= -1
 
-    print(new_word_list)
-
     test_df = definition_df[definition_df['Word'].isin(new_word_list)].copy()
 
     results_df = sample_knowledge_test_single_df(test_df,pause=pause)
@@ -125,12 +125,14 @@ def d_daily_test(
     display(Markdown(f"### Your Score today on New Items was: {100*(today_score['Score'].sum()/len(today_score)):,.2f}%"))
     
     final_results_df = pd.concat([historical_df,today_score])
+
+    gpt_question(new_word_list)
+    
+    visualize_dataframe_in_notebook(today_score)
     
     final_results_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/d_historical_test_results1.xlsx',index=False)
     final_results_df.to_excel(f"/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/archive/d_historical_test_results_{datetime.datetime.now().strftime('%d-%b-%y')}.xlsx",index=False)   
     
-    return final_results_df
-
 def test_previous_errors(
     min_correct=3
 ):
@@ -143,25 +145,27 @@ def test_previous_errors(
     df = pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/d_historical_test_results1.xlsx')
     def_df = pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/definition.xlsx')
     df = df.merge(def_df[['Word','Definition']].drop_duplicates('Word').rename(columns={'Definition':'Definition_'}),on='Word',how='left')
+    df.drop_duplicates('Word',inplace=True)
     df['Definition'] = np.where(df['Definition_'].notnull(),df['Definition_'],df['Definition'])
     df = df[['Word','Definition','Score','Date','Last Tested','Classification']]
-    df['Date'] = pd.to_datetime(df['Date'],errors='coerce')
-    df['Last Tested'] = pd.to_datetime(df['Last Tested'],errors='coerce')
-
+    df['Date'] = pd.to_datetime(df['Date'],errors='coerce').dt.date
+    df['Last Tested'] = pd.to_datetime(df['Last Tested'],errors='coerce').dt.date
     display(Markdown(f"## Time to Test Your Recall. Show me what you've learnt"))
 
+    tested_df = pd.DataFrame()
     for topic in df['Classification'].unique():
         topic_correct_remaining = min_correct
-        temp_df = df[(df['Classification']== topic)&(df['Last Tested']<(datetime.datetime.now()-datetime.timedelta(days=1)))].copy()
+        attempts=0
+        temp_df = df[(df['Classification']== topic)&(df['Last Tested']<(datetime.datetime.now()-datetime.timedelta(days=1)).date())].copy()
         topic_correct_remaining = min(topic_correct_remaining,len(temp_df))
 
-        while topic_correct_remaining >=1:
+        while (topic_correct_remaining >=1)|(attempts<5:
             display(Markdown(f"### Current Topic: {topic}, you have {topic_correct_remaining} Remaining until this topic is Solved"))
             example = temp_df.sample(1)
+            tested_df = pd.concat([tested_df,example])
             word = example['Word'].item()
             definition_ = example['Definition'].item()
             print(f'What is the definition of {word}')
-            input()
             print(f'{word}:\n{definition_}')
             if topic == 'Concepts and Definition':
                 print(def_df[def_df['Word']==word].drop(['Word','Definition','Notes','Link','Image','Markdown Equation'],axis=1).iloc[0])
@@ -171,15 +175,15 @@ def test_previous_errors(
                 val = 0
             if val==1:
                 df['Score'] = np.where(df['Word']==word,val,df['Score'])
-                df['Last Updated'] = np.where(df['Word']==word,datetime.datetime.now().strftime('%d-%b-%y'),val,df['Score'])
+                df['Last Tested'] = np.where(df['Word']==word,datetime.datetime.now().date(),df['Last Tested'])
                 temp_df = temp_df[temp_df['Word']!=word]
                 topic_correct_remaining += -int(val)
                 display(Markdown(f"#### That is Correct!"))
             else:
                 display(Markdown(f"#### That is incorrect!"))
-        
+            attempts +=1
         display(Markdown(f"### Congratulations, you have finished your reivew of {topic}"))
 
+    visualize_dataframe_in_notebook(tested_df)
+    
     df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/d_historical_test_results1.xlsx',index=False)
-
-    return df

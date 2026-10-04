@@ -56,3 +56,8 @@ ORDER BY TABLE_SCHEMA, TABLE_NAME'''
     df = df[~df['TABLE_SCHEMA'].isin(exclude_schemas)]
         
     return df
+
+
+def gpt_question(list_):
+    text = f"Can you please provide a definition for the following word(s) in my list: {list_}. Can each definition be a single paragraph of 4-5 sentences. In the sentence please include a technical definition, when it is relevant, why is it important and where possible information about the origin. My definitions lean toward a Data Science application, when in doubt please assume it is related to Data Science."
+    print(text)
