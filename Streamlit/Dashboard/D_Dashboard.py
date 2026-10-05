@@ -990,11 +990,11 @@ elif page == 'Summarization':
 # -----------------------------------
 # Daily List
 # -----------------------------------
-
 elif page == 'Daily List':
     st.title("Daily Word, Definition, Quote List")
 
     df_base = data_dict['daily_list_df'].copy()
+    df_base['Date'] = pd.to_datetime(df_base['Date'],errors='coerce').dt.date
 
     # Columns to display
     display_cols = [
@@ -1005,6 +1005,15 @@ elif page == 'Daily List':
         'Last Tested',
         'Classification'
     ]
+
+    # -------------------------
+    # Classification Filter
+    # -------------------------
+    classification_sel = st.selectbox(
+        "Filter",
+        ["All", "Daily Requirements"],
+        index=0
+    )
 
     # -------------------------
     # Date Filter
@@ -1020,14 +1029,26 @@ elif page == 'Daily List':
         index=0
     )
 
-    # Apply filter
-    if date_sel == "(All)":
-        df_view = df_base[display_cols].copy()
-    else:
-        df_view = df_base.loc[
-            df_base['Date'] == date_sel,
-            display_cols
-        ].copy()
+    # -------------------------
+    # Apply Filters
+    # -------------------------
+    df_view = df_base.copy()
+
+    # Daily Requirements:
+    # Exclude Concepts and Definitions
+    if classification_sel == "Daily Requirements":
+        df_view = df_view.loc[
+            df_view['Classification'] != "Concepts and Definitions"
+        ]
+
+    # Apply date filter
+    if date_sel != "(All)":
+        df_view = df_view.loc[
+            df_view['Date'] == date_sel
+        ]
+
+    # Keep only display columns
+    df_view = df_view[display_cols].copy()
 
     # -------------------------
     # AG Grid

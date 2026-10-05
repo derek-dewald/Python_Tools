@@ -185,5 +185,6 @@ def test_previous_errors(
         display(Markdown(f"### Congratulations, you have finished your reivew of {topic}"))
 
     visualize_dataframe_in_notebook(tested_df)
-    
+    df['Date'] = pd.to_datetime(df['Date'],errors='coerce').dt.date
+    df['Last Tested'] = pd.to_datetime(df['Last Tested'],errors='coerce').dt.date
     df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/d_historical_test_results1.xlsx',index=False)
