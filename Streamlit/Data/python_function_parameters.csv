@@ -29,6 +29,16 @@ extract_tables_from_db,db_name,,,utility_functions.py
 extract_tables_from_db,table_dictionary_source,,,utility_functions.py
 extract_tables_from_db,include_columns,,,utility_functions.py
 extract_tables_from_db,exclude_schemas,,,utility_functions.py
+gpt_question,list_,,,utility_functions.py
+standardize_column_text,df,,,df_column_engineering.py
+standardize_column_text,column_name,str,Column Name of DF column to update.,df_column_engineering.py
+standardize_column_text,new_column_name,str,"New Column Name of Updated Field. If Blank, then it replaces exists column",df_column_engineering.py
+word_counts_from_column,df,df,DataFrame,df_column_engineering.py
+word_counts_from_column,column_name,str,Column containing text to iterate through.,df_column_engineering.py
+word_counts_from_column,lower,bool,Apply Lowercasing for consistency before counting.,df_column_engineering.py
+word_counts_from_column,pattern,re,"r""[A-Za-z']+"". Regex for tokens (words). Adjust for unicode if needed. [A-Za-z0-9']+ if you want to include Numbers",df_column_engineering.py
+word_counts_from_column,min_len,int,Minimum token length to keep.,df_column_engineering.py
+word_counts_from_column,dropna,bool,Whether to drop empty tokens.,df_column_engineering.py
 create_knowledge_base,definition_df,dataframe,Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.,taxonomy_admin_functions.py
 create_knowledge_base,notes_df,dataframe,Dataframe containing Notes from Google Sheet Page. Default is none and program will call csv from google using pandas.,taxonomy_admin_functions.py
 create_knowledge_base,generate_excel_files,,,taxonomy_admin_functions.py
@@ -64,14 +74,6 @@ d_daily_test,actions,,,d_daily_test.py
 d_daily_test,sample,,,d_daily_test.py
 d_daily_test,pause,,,d_daily_test.py
 test_previous_errors,min_correct,,,d_daily_test.py
-statistical_analytics_time_series,df,dataframe,DataFrame,statistical_analysis.py
-statistical_analytics_time_series,index,,,statistical_analysis.py
-t_value_test,df,,,statistical_analysis.py
-t_value_test,observed_col,,,statistical_analysis.py
-t_value_test,mean_col,,,statistical_analysis.py
-t_value_test,std_col,,,statistical_analysis.py
-t_value_test,observations,,,statistical_analysis.py
-t_value_test,confidence_level,,,statistical_analysis.py
 extract_object_dot_py,object_dict,dict,Dictionary Object from either objects_manual or objects_automated,archive.py
 extract_object_dot_py,export_location,str,Location where .xlsx file will be saved.,archive.py
 ETL,print_,bool,To Be Determined Utilization.,archive.py
@@ -87,6 +89,7 @@ generate_objects_automated_py,definition_df,df,Data from Google Sheets. If nothi
 generate_objects_automated_py,method,,,archive.py
 extract_consolidated_raw_dataset,df_dict,dict,Dictionary of files to be included.,archive.py
 extract_consolidated_raw_dataset,export_location,str,"Location to where CSV file is to be exported. If left Blank, will not export a CSV.",archive.py
+extract_table_structure_from_sql,database_name,,,archive.py
 txt_to_python,file_name,str,"Name of File, including path location for import",object_rendering.py
 txt_to_python,encoding,str,Encoding to be applied by With Open call. Default is utf-8.,object_rendering.py
 export_formatted_df_to_single_xlsx,df,dataframe,Any Dataframe,object_rendering.py
@@ -121,8 +124,8 @@ generate_formated_excel_file,balance_columns,,,object_rendering.py
 generate_formated_excel_file,date_columns,,,object_rendering.py
 generate_formated_excel_file,int_columns,,,object_rendering.py
 generate_formated_excel_file,decimal_columns,,,object_rendering.py
-InspectFunction,function_name,,,text_parsing.py
-extract_tables_from_db,db_name,,,text_parsing.py
-extract_tables_from_db,table_dictionary_source,,,text_parsing.py
-extract_tables_from_db,include_columns,,,text_parsing.py
-extract_tables_from_db,exclude_schemas,,,text_parsing.py
+FunctionToSTR,func,function,Python Function,text_parsing.py
+compare_function,func1,function,Python Function,text_parsing.py
+compare_function,func2,function,Python Function,text_parsing.py
+compare_function,additional_records,int,Number of String Characters for each function which will be displayed after the point of identifying difference.,text_parsing.py
+compare_function,strip_docstring,bool,Boolean to determine whether you wish to compare the Doc String aswell as the function.,text_parsing.py

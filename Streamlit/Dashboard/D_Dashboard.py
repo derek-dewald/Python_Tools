@@ -197,6 +197,8 @@ def load_data():
     function_definition = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/python_function_file_definition.csv"
     parameter_list = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/python_function_parameters.csv"
 
+    daily_list = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/d_testing_folder/d_historical_test_results1.xlsx"
+
     data_dict = {}
     try:
         data_dict['knowledge_base_df'] = pd.read_excel(knowledge_local)
@@ -212,6 +214,7 @@ def load_data():
     data_dict['technical_notes_df'] = pd.read_csv(technical_notes)
     
     data_dict['parameter_df'] = pd.read_csv(parameter_list)
+    data_dict['daily_list_df'] = pd.read_excel(daily_list)
 
     
     # Normalize: keep your existing behavior (everything to string)
@@ -229,7 +232,7 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ "Home Page", 'Definitions','Notes',"Knowledge Base","Technical Notes",'Functions','ML Models','Summarization']
+    [ "Home Page", 'Definitions','Notes',"Knowledge Base","Technical Notes",'Functions','ML Models','Summarization',"Daily List"]
      #"Frequency Summarization",,'Process Checklist',"Function List", "Function Parameters",  'Folder Table of Content', ]
 )
 
@@ -983,3 +986,79 @@ elif page == 'Summarization':
         reload_data=True,
     )
 
+
+# -----------------------------------
+# Daily List
+# -----------------------------------
+
+elif page == 'Daily List':
+    st.title("Daily Word, Definition, Quote List")
+
+    df_base = data_dict['daily_list_df'].copy()
+
+    # Columns to display
+    display_cols = [
+        'Word',
+        'Definition',
+        'Score',
+        'Date',
+        'Last Tested',
+        'Classification'
+    ]
+
+    # -------------------------
+    # Date Filter
+    # -------------------------
+    date_options = ["(All)"] + sorted(
+        df_base['Date'].dropna().unique(),
+        reverse=True
+    )
+
+    date_sel = st.selectbox(
+        "Date",
+        date_options,
+        index=0
+    )
+
+    # Apply filter
+    if date_sel == "(All)":
+        df_view = df_base[display_cols].copy()
+    else:
+        df_view = df_base.loc[
+            df_base['Date'] == date_sel,
+            display_cols
+        ].copy()
+
+    # -------------------------
+    # AG Grid
+    # -------------------------
+    gb = GridOptionsBuilder.from_dataframe(df_view)
+
+    gb.configure_default_column(
+        resizable=True,
+        sortable=True,
+        filter=True,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gb.configure_column('Word', width=120)
+    gb.configure_column('Definition', flex=1, minWidth=400)
+    gb.configure_column('Score', width=60)
+    gb.configure_column('Date', width=70)
+    gb.configure_column('Last Tested', width=70)
+    gb.configure_column('Classification', width=100)
+
+    gridOptions = gb.build()
+
+    gridOptions["onGridReady"] = on_grid_ready
+    gridOptions["onGridSizeChanged"] = on_grid_size_changed
+
+    AgGrid(
+        df_view,
+        gridOptions=gridOptions,
+        height=800,
+        allow_unsafe_jscode=True,
+        fit_columns_on_grid_load=False,
+        reload_data=True,
+    )

@@ -513,3 +513,42 @@ def extract_consolidated_raw_dataset(df_dict,export_location=False):
         df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/consolidated_dataset.xlsx',index=False)
 
     return df
+
+
+
+def extract_table_structure_from_sql(database_name='Analytics'):
+    
+    '''
+    
+    
+    '''
+
+    sql = f'''
+    
+    SELECT
+        s.name AS SCHEMA_NAME,
+        t.name AS TABLE_NAME,
+        c.column_id AS COLUMN_ORDER,
+        c.name AS COLUMN_NAME,
+        ty.name AS DATA_TYPE,
+        c.max_length,
+        c.precision,
+        c.scale,
+        c.is_nullable
+    FROM {database_name}.sys.tables t
+    JOIN {database_name}.sys.schemas s
+        ON t.schema_id = s.schema_id
+    JOIN {database_name}.sys.columns c
+        ON t.object_id = c.object_id
+    JOIN {database_name}.sys.types ty
+        ON c.user_type_id = ty.user_type_id
+    ORDER BY
+        s.name,
+        t.name,
+        c.column_id;
+
+    '''
+
+    df = TIME_SQL(sql)
+    
+    return df

@@ -159,7 +159,7 @@ def test_previous_errors(
         temp_df = df[(df['Classification']== topic)&(df['Last Tested']<(datetime.datetime.now()-datetime.timedelta(days=1)).date())].copy()
         topic_correct_remaining = min(topic_correct_remaining,len(temp_df))
 
-        while (topic_correct_remaining >=1)|(attempts<5:
+        while (topic_correct_remaining >=1)|(attempts<5):
             display(Markdown(f"### Current Topic: {topic}, you have {topic_correct_remaining} Remaining until this topic is Solved"))
             example = temp_df.sample(1)
             tested_df = pd.concat([tested_df,example])

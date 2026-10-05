@@ -7,6 +7,9 @@ stastical_compare_column_diff,Statistically Analyze the Difference Value between
 stastical_compare_column_diff_grouped,"Extends stastical_compare_column_diff_grouped to include a Group By on variable, or list.","['df', 'column1', 'column2', 'group_columns']",df,09-Sep-26,09-Sep-26,TBD,TBD,TBD,None,binary_complex_equivalency,eda_functions.py
 InspectFunction,,['function_name'],,,,,,,,,utility_functions.py
 extract_tables_from_db,,"['db_name', 'table_dictionary_source', 'include_columns', 'exclude_schemas']",,,,,,,,,utility_functions.py
+gpt_question,,['list_'],,,,,,,,,utility_functions.py
+standardize_column_text,"Function which is used to Standardize Text, specifically it replaces anything that is [^\w\s] - anything that is not a word character (\w) and not whitespace (\s) or [\d] is a digit (0–9), and lower cases it.","['df', 'column_name', 'new_column_name']",TBD,09-Sep-26,09-Sep-26,TBD,TBD,TBD,None,None,df_column_engineering.py
+word_counts_from_column,,"['df', 'column_name', 'lower', 'pattern', 'min_len', 'dropna']",pd.Series. Word counts indexed by token (sorted desc). date_created:01-Feb-26 date_last_modified: 01-Feb-26 classification:TBD sub_classification:TBD,,,,,Example Function Call,,,df_column_engineering.py
 create_knowledge_base,"Process Utilized to create Knowledge Base. Knowledge base combines Notes/Definition Datasets into a single expanded piece which expands individual Processes, Taxonomy and Definitions into complete data assets. Important. To Retain Order in Consolidated Data, or to be included in Process it must be defined as a process.
 Machine Learning - Process. Which is Comprised of Processes. Goal Setting, Data Preparation etc.","['definition_df', 'notes_df', 'generate_excel_files', 'ignore_words_from_lvl1_lvl2']",df knowledge_base.xlsx,02-Jul-26,29-Jul-26,Definition,Definition,"knowledge_base_df,process_df,consolidated_data = generate_files_for_streamlit(definition_df,notes_df)
 knowledge_base_df,process_df,consolidated_data = generate_files_for_streamlit()","22-Jul - Overhauled merge. Attempted to streamline, simplify and reduce duplication. Increase Visability.
@@ -45,8 +48,6 @@ pandas",data_validation.py
 sample_knowledge_test_single_df,,"['base_df', 'pause', 'test_name']",,,,,,,,,d_daily_test.py
 d_daily_test,,"['actions', 'sample', 'pause']",,,,,,,,,d_daily_test.py
 test_previous_errors,,['min_correct'],,,,,,,,,d_daily_test.py
-statistical_analytics_time_series,Apply Statistical Analysis to all columns in a Time Series Dataframe,"['df', 'index']",df,10-Sep-26,10-Sep-26,TBD,TBD,df = statistical_analytics_time_series(df),None,None,statistical_analysis.py
-t_value_test,,"['df', 'observed_col', 'mean_col', 'std_col', 'observations', 'confidence_level']",,,,,,,,,statistical_analysis.py
 extract_object_dot_py,Generate an Excel file of all parameters which are manually stored and maintained. File which is generated is used a input component for generate_knowledgebase.,"['object_dict', 'export_location']",df date_created:29-Jun-26 date_last_modified: 3-Jul-26 classification:TBD sub_classification:TBD,,,,,"manual_object_df(object_dict_manual,'/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
 update:
 Added Definition as new record, added column definition.
@@ -65,6 +66,7 @@ extract_consolidated_raw_dataset,"Create a Consolidated Dataset of files in Dict
 'Manual Objects':manual_object_df
 }
 extract_consolidated_raw_dataset(df_dict)",Definition,,archive.py
+extract_table_structure_from_sql,,['database_name'],,,,,,,,,archive.py
 txt_to_python,Function Used to Import .txt or .py File into Python.,"['file_name', 'encoding']",Dataframe,3-Dec-25,3-Dec-25,OS Folder Management,File Management,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/DFProcessing.py'
 file = TextFileImport(location)",,,object_rendering.py
 export_formatted_df_to_single_xlsx,Function Used to Simplify the required formating to a excel output from Python to Excel,"['df', 'file_name', 'sheet_name', 'index', 'freeze_header', 'column_formats']",TBD,28-Aug-26,28-Aug-26,TBD,TBD,TBD,None,None,object_rendering.py
@@ -89,6 +91,7 @@ visualize_dict_as_docx,"Convert a Python Dictionary Object into a visually appea
 Primarily used to convert Short Form ML Projects or Machine Learning Projects to Stakeholders.","['data', 'output_file', 'split_pages']",docx,28-Aug-26,28-Aug-26,TBD,TBD,"visualize_dict_as_docx(short_form_dict,'text.docx')
 visualize_dict_as_docx(base_dict,'text1.docx',True)",100% Created by GPT.,None,object_rendering.py
 generate_formated_excel_file,,"['df', 'filename', 'sheet_name', 'wrap', 'align', 'valign', 'currency_columns', 'balance_columns', 'date_columns', 'int_columns', 'decimal_columns']",,,,,,,,,object_rendering.py
-InspectFunction,,['function_name'],,,,,,,,,text_parsing.py
-extract_tables_from_db,,"['db_name', 'table_dictionary_source', 'include_columns', 'exclude_schemas']",,,,,,,,,text_parsing.py
+FunctionToSTR,,['func'],list date_created:17-Dec-25 date_last_modified: 17-Dec-25 classification:TBD sub_classification:TBD,,,,,"from data_d_strings import template_doc_string_print
+FunctionToSTR(template_doc_string_print)",,,text_parsing.py
+compare_function,,"['func1', 'func2', 'additional_records', 'strip_docstring']",Object Type date_created:17-Dec-25 date_last_modified: 17-Dec-25 classification:TBD sub_classification:TBD,,,,,Example Function Call,,,text_parsing.py
 create_ml_dictionary_template,,[],,,,,,,,,ml_project.py
