@@ -64,6 +64,10 @@ ReadTextFiles,encoding,,,filesystem_tools.py
 ReadTextFiles,errors,,,filesystem_tools.py
 extract_py_folder_from_git_repo,folder_git_url,,,filesystem_tools.py
 extract_py_folder_from_git_repo,output_location,,,filesystem_tools.py
+copy_os_folder,source,str,Folder location to be copied.,filesystem_tools.py
+copy_os_folder,destinition,,,filesystem_tools.py
+copy_os_folder,extension,str,Type of file to be copied,filesystem_tools.py
+copy_os_folder,exclude_file_list,list,List of file names which can be excluded from copy,filesystem_tools.py
 df_compare,df,,,data_validation.py
 df_compare,df1,,,data_validation.py
 df_compare,primary_key_list,list,List of Elements to Merge DataFrame on. If left blank it will only test column structure of Dataframes.,data_validation.py
@@ -74,6 +78,9 @@ d_daily_test,actions,,,d_daily_test.py
 d_daily_test,sample,,,d_daily_test.py
 d_daily_test,pause,,,d_daily_test.py
 test_previous_errors,min_correct,,,d_daily_test.py
+add_word_quote,word,str,Word to be added.,d_daily_test.py
+add_word_quote,text,str,Definition of word,d_daily_test.py
+add_word_quote,classification,str,"Classification of Type, choices include Word, Quote, Scripture, Proverb or Concept and Definition",d_daily_test.py
 extract_object_dot_py,object_dict,dict,Dictionary Object from either objects_manual or objects_automated,archive.py
 extract_object_dot_py,export_location,str,Location where .xlsx file will be saved.,archive.py
 ETL,print_,bool,To Be Determined Utilization.,archive.py
@@ -90,6 +97,19 @@ generate_objects_automated_py,method,,,archive.py
 extract_consolidated_raw_dataset,df_dict,dict,Dictionary of files to be included.,archive.py
 extract_consolidated_raw_dataset,export_location,str,"Location to where CSV file is to be exported. If left Blank, will not export a CSV.",archive.py
 extract_table_structure_from_sql,database_name,,,archive.py
+ColumnDQComparison,df,,,archive.py
+ColumnDQComparison,column_name,str,,archive.py
+ColumnDQComparison,primary_key,,,archive.py
+ColumnDQComparison,column_name1,str,,archive.py
+ColumnDQComparison,secondary_filter,,,archive.py
+ColumnDQComparison,column_distinction,,,archive.py
+ColumnDQComparison,bracketing,list,Value to create Distintion when Calculated Difference between columns is numeric.,archive.py
+DfDqComparison,df,,,archive.py
+DfDqComparison,primary_key,,,archive.py
+DfDqComparison,secondary_filter,,,archive.py
+DfDqComparison,column_distinction,str,String which is expected to compare Columns. Added as default with MergeIdenticalDF,archive.py
+DfDqComparison,bracketing,list,Numbers which can be used to Calculate a Bracketed difference Column in COmparison,archive.py
+DfDqComparison,file_name,str,"If Included, it will generate Excel Copies (Excel Used as CSV had issues uploading to DF) Return: DataFrame of Groupby, Account and Summary calculations. Account: Listing of All Account Values, with Calculations Summary: A summary Calculation Speaking to Overall Comparison Groupby: List of Equivalent Values, to compare Material Record Change/Consistency date_created: 21-Aug-25 date_last_modified:21-Aug-25 classification:TBD sub_classification:TBD usage: TBD update_notes: 22-Jun-26: Inconsistent utilization of functions.",archive.py
 txt_to_python,file_name,str,"Name of File, including path location for import",object_rendering.py
 txt_to_python,encoding,str,Encoding to be applied by With Open call. Default is utf-8.,object_rendering.py
 export_formatted_df_to_single_xlsx,df,dataframe,Any Dataframe,object_rendering.py
@@ -124,6 +144,9 @@ generate_formated_excel_file,balance_columns,,,object_rendering.py
 generate_formated_excel_file,date_columns,,,object_rendering.py
 generate_formated_excel_file,int_columns,,,object_rendering.py
 generate_formated_excel_file,decimal_columns,,,object_rendering.py
+extract_py_folder_from_git_repo,folder_git_url,str,Link to Git Repo,external_connections.py
+extract_py_folder_from_git_repo,output_location,str,"Location to Export Files. If Blank, then returns to local directory where file is read from.",external_connections.py
+extract_py_folder_from_git_repo,file_extension,str,Filter Applied to limit types of file,external_connections.py
 FunctionToSTR,func,function,Python Function,text_parsing.py
 compare_function,func1,function,Python Function,text_parsing.py
 compare_function,func2,function,Python Function,text_parsing.py

@@ -994,8 +994,10 @@ elif page == 'Daily List':
     st.title("Daily Word, Definition, Quote List")
 
     df_base = data_dict['daily_list_df'].copy()
-    df_base['Date'] = pd.to_datetime(df_base['Date'],errors='coerce').dt.date
 
+    for col in ['Date', 'Last Tested']:
+        df_base[col] = pd.to_datetime(df_base[col],errors='coerce').dt.strftime('%Y-%m-%d')
+  
     # Columns to display
     display_cols = [
         'Word',

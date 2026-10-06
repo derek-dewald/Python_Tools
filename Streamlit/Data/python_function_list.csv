@@ -39,6 +39,7 @@ Function will validate that the Folders both exist and there currently isn't a f
 unexpectedly. (There is a manual override).","['folder1', 'folder2', 'file_name', 'overwrite_without_validation']",None date_created:09-Feb-26 date_last_modified: 09-Feb-26 classification: OS Folder Management sub_classification: File Management,,,,,,,,filesystem_tools.py
 ReadTextFiles,,"['file_name', 'read', 'encoding', 'errors']",,,,,,,,,filesystem_tools.py
 extract_py_folder_from_git_repo,,"['folder_git_url', 'output_location']",,,,,,,,,filesystem_tools.py
+copy_os_folder,Function which copies all files of a certain extension in one folder and moves them to another.,"['source', 'destinition', 'extension', 'exclude_file_list']",Copies Files from one folder to another,09-Sep-26,09-Sep-26,TBD,TBD,TBD,None,shutil,filesystem_tools.py
 df_compare,"Function which compares the Column Structure of 2 Dataframe. When a Primary Key List is Included, it will also test at a Element level the equivalency of information contained within","['df', 'df1', 'primary_key_list']",df,26-Sep-26,26-Sep-26,TBD,TBD,"df_compare(df, df1)
 df_compare(df,df1,['Function','Folder'])","This is to set Structure and changes in information at a high level. For a more granular understanding of data level change, refer to EDA functions.","binary_complex_equivalency
 visualize_dataframe_in_notebook
@@ -48,6 +49,11 @@ pandas",data_validation.py
 sample_knowledge_test_single_df,,"['base_df', 'pause', 'test_name']",,,,,,,,,d_daily_test.py
 d_daily_test,,"['actions', 'sample', 'pause']",,,,,,,,,d_daily_test.py
 test_previous_errors,,['min_correct'],,,,,,,,,d_daily_test.py
+add_word_quote,"Function to add a new Word, Quote, Scripture, Proverb or Concept and Definition to Daily Test.","['word', 'text', 'classification']",Nil (Adds new record to excel file),05-Oct-26,05-Oct-26,TBD,TBD,"add_word_quote(
+'Latent',
+'Present or existing but not currently visible, active, or apparent, although capable of becoming evident or developing in the future.',
+'Word'
+)",None,None,d_daily_test.py
 extract_object_dot_py,Generate an Excel file of all parameters which are manually stored and maintained. File which is generated is used a input component for generate_knowledgebase.,"['object_dict', 'export_location']",df date_created:29-Jun-26 date_last_modified: 3-Jul-26 classification:TBD sub_classification:TBD,,,,,"manual_object_df(object_dict_manual,'/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
 update:
 Added Definition as new record, added column definition.
@@ -67,6 +73,10 @@ extract_consolidated_raw_dataset,"Create a Consolidated Dataset of files in Dict
 }
 extract_consolidated_raw_dataset(df_dict)",Definition,,archive.py
 extract_table_structure_from_sql,,['database_name'],,,,,,,,,archive.py
+ColumnDQComparison,,"['df', 'column_name', 'primary_key', 'column_name1', 'secondary_filter', 'column_distinction', 'bracketing']","Dictionary of 3 Dataframes, Account, Summary and Group By. Values: date_created: 21-Aug-25 date_last_modified:22-Jun-26 classification:TBD sub_classification:TBD",,,,,"TBD
+update_notes:
+22-Jun-26: Inconsistent utilization of functions.",,,archive.py
+DfDqComparison,,"['df', 'primary_key', 'secondary_filter', 'column_distinction', 'bracketing', 'file_name']",,,,,,,,,archive.py
 txt_to_python,Function Used to Import .txt or .py File into Python.,"['file_name', 'encoding']",Dataframe,3-Dec-25,3-Dec-25,OS Folder Management,File Management,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/DFProcessing.py'
 file = TextFileImport(location)",,,object_rendering.py
 export_formatted_df_to_single_xlsx,Function Used to Simplify the required formating to a excel output from Python to Excel,"['df', 'file_name', 'sheet_name', 'index', 'freeze_header', 'column_formats']",TBD,28-Aug-26,28-Aug-26,TBD,TBD,TBD,None,None,object_rendering.py
@@ -91,6 +101,9 @@ visualize_dict_as_docx,"Convert a Python Dictionary Object into a visually appea
 Primarily used to convert Short Form ML Projects or Machine Learning Projects to Stakeholders.","['data', 'output_file', 'split_pages']",docx,28-Aug-26,28-Aug-26,TBD,TBD,"visualize_dict_as_docx(short_form_dict,'text.docx')
 visualize_dict_as_docx(base_dict,'text1.docx',True)",100% Created by GPT.,None,object_rendering.py
 generate_formated_excel_file,,"['df', 'filename', 'sheet_name', 'wrap', 'align', 'valign', 'currency_columns', 'balance_columns', 'date_columns', 'int_columns', 'decimal_columns']",,,,,,,,,object_rendering.py
+extract_py_folder_from_git_repo,Function Used to Extract Files from Git Hub Manually. Where a direct Git Connection can not be utilzied.,"['folder_git_url', 'output_location', 'file_extension']",TXT Files,05-Oct-26,05-Oct-26,TBD,TBD,"extract_py_folder_from_git_repo(
+folder_git_url='https://api.github.com/repos/derek-dewald/Python_Tools/contents/d_py_functions',
+output_location='/Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/test/')",None,None,external_connections.py
 FunctionToSTR,,['func'],list date_created:17-Dec-25 date_last_modified: 17-Dec-25 classification:TBD sub_classification:TBD,,,,,"from data_d_strings import template_doc_string_print
 FunctionToSTR(template_doc_string_print)",,,text_parsing.py
 compare_function,,"['func1', 'func2', 'additional_records', 'strip_docstring']",Object Type date_created:17-Dec-25 date_last_modified: 17-Dec-25 classification:TBD sub_classification:TBD,,,,,Example Function Call,,,text_parsing.py

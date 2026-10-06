@@ -12,5 +12,6 @@ objects_manual.py,"Created to serve as a repository for manually created lists, 
 statistical_analysis.py,Repository for stand alone statistical analysis functions.
 archive.py,"Repo for functions which have been created, but are no longer in use. Specifically, those which might at some point become relevant or of interest."
 object_rendering.py,"Functions that transform Python objects or structured data into human-readable, formatted representations or documents without changing the underlying meaning of the data. Rendering is the process of converting data or an object from its internal structure into a visual or formatted output suitable for viewing, interpretation, or sharing."
+external_connections.py,"Functions which connect to external sites, repos, etc."
 text_parsing.py,"Location for functions which do not fall within the scope of any other classification and are Simple, High Generalized, General Purpose functions."
 ml_project.py,Repo for functions required to implement Exploratory Data Analysis in Machine Learning Lifecycle

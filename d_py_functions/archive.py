@@ -552,3 +552,191 @@ def extract_table_structure_from_sql(database_name='Analytics'):
     df = TIME_SQL(sql)
     
     return df
+
+
+
+
+def ColumnDQComparison(df,
+                       column_name,
+                       primary_key,
+                       column_name1=None,
+                       secondary_filter=None,
+                       column_distinction='_',
+                       bracketing=[-10000,-1000,-100,-1,0,1,100,1000,10000]):
+    
+    '''
+    
+    Function which takes a dataframe with 2 Columns which are identical and attempts to Compare.
+    Designed with the intention of comparing,  BALANCE, BALANCE_, however can explicitly utilize column_name1 to override.
+
+    Function DfDqComparison takes this function and applies it to an Entire Dataframe
+    
+    Parameters:
+        column_name (str):
+        column_name1 (str):
+        additional_filter (str): Default parameter to distinguish combined dataframes, also used in MergeAndRenameColumnsDf
+        bracketing(list): Value to create Distintion when Calculated Difference between columns is numeric.
+    
+    Returns:
+        Dictionary of 3 Dataframes, Account, Summary and Group By.
+    
+    Values:
+    
+    
+    date_created: 21-Aug-25
+    date_last_modified:22-Jun-26
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        TBD
+    update_notes:
+        22-Jun-26: Inconsistent utilization of functions.
+
+    '''
+    if not column_name1:
+        column_name1 = f"{column_name}{column_distinction}"    
+    
+    if secondary_filter:
+        temp_df = df[[primary_key,secondary_filter,column_name,column_name1]]
+    else:
+        temp_df = df[[primary_key,column_name,column_name1]]
+    
+    # Change Names of Individual Columns to Something Generic so datasets can be Concatenated.
+    temp_df = temp_df.rename(columns={column_name:'DF',column_name1:'DF1'}).copy()
+    
+    output_dict = {}
+    
+    temp_df['COLUMN_NAME'] = column_name
+    
+    BinaryComplexEquivlancey(temp_df,'DF','DF1','VALUES_EQUAL',eq=1,ne=0)
+    
+    temp_df['VALUES_NOT_EQUAL'] = np.where(temp_df['VALUES_EQUAL']==0,1,0)
+    temp_df['NULL_RECORD_DF'] = np.where(temp_df['DF'].isnull(),1,0)
+    temp_df['NULL_RECORD_DF1'] = np.where(temp_df['DF1'].isnull(),1,0)
+    
+    try:
+        temp_df['DIFFERENCE'] = temp_df['DF'].fillna(0)-temp_df['DF1'].fillna(0)
+    except:        
+        temp_df['DIFFERENCE'] = 0
+        
+    try:
+        BracketColumn(temp_df,'DIFFERENCE','DIFF_SEGMENT',bracketing)
+    except:
+        temp_df['DIFF_SEGMENT'] = 'Could Not Calculate'
+    
+    # Removed Column Partitioner as it wasn't being Used.
+    
+    temp_df1 = temp_df.copy()
+    temp_df1['RECORD_COUNT']=1
+    
+    if secondary_filter:
+        output_dict['groupby_df'] = temp_df1[[secondary_filter,'COLUMN_NAME','DF','DF1','RECORD_COUNT','VALUES_EQUAL','VALUES_NOT_EQUAL','NULL_RECORD_DF','NULL_RECORD_DF1']].groupby([secondary_filter,'COLUMN_NAME','DF','DF1'],dropna=False).sum().sort_values('VALUES_EQUAL',ascending=False).head(20).reset_index()
+        
+    else:
+        output_dict['groupby_df'] = temp_df1[['COLUMN_NAME','DF','DF1','RECORD_COUNT','VALUES_EQUAL','VALUES_NOT_EQUAL','NULL_RECORD_DF','NULL_RECORD_DF1']].groupby(['COLUMN_NAME','DF','DF1'],dropna=False).sum().sort_values('VALUES_EQUAL',ascending=False).head(20).reset_index()
+    
+    if secondary_filter:
+        summary_df = pd.DataFrame()
+        for value in temp_df[secondary_filter].unique():
+            temp = temp_df[temp_df[secondary_filter]==value]
+            value_dict = {
+                'Total Combined Records':len(temp),
+                'Values Equal':temp['VALUES_EQUAL'].sum(),
+                'Values Not Equal':len(temp[temp['VALUES_EQUAL']==0]),
+                'Percent Values Equal': (temp['VALUES_EQUAL'].sum()/len(temp))*100,
+                'Null Records DF':temp['NULL_RECORD_DF'].sum(),
+                'Null Records DF1':temp['NULL_RECORD_DF1'].sum()}
+            
+            try:
+                value_dict['Total Difference']=temp['DIFFERENCE'].sum()
+            except:
+                value_dict['Total Difference']=0
+                
+            sum_df = pd.DataFrame(value_dict.values(),index=value_dict.keys(),columns=[column_name]).T.reset_index().rename(columns={'index':"COLUMN_NAME"})
+            sum_df[primary_key] = value
+            summary_df = pd.concat([summary_df,sum_df])
+    else:
+        value_dict = {
+            'Total Combined Records':len(temp_df),
+            'Values Equal':temp_df['VALUES_EQUAL'].sum(),
+            'Values Not Equal':len(temp_df[temp_df['VALUES_EQUAL']==0]),
+            'Percent Values Equal': (temp_df['VALUES_EQUAL'].sum()/len(temp_df))*100,
+            'Null Records DF':temp_df['NULL_RECORD_DF'].sum(),
+            'Null Records DF1':temp_df['NULL_RECORD_DF1'].sum()}
+        
+        try:
+            value_dict['Total Difference']=temp_df['DIFFERENCE'].sum()
+        except:
+            value_dict['Total Difference']=0
+            
+        summary_df = pd.DataFrame(value_dict.values(),index=value_dict.keys(),columns=[column_name]).T.reset_index().rename(columns={'index':"COLUMN_NAME"})
+        
+    output_dict['summary_df'] = summary_df
+    output_dict['account_df'] = temp_df
+    
+    return output_dict
+
+def DfDqComparison(df,
+                   primary_key,
+                   secondary_filter=None,
+                   column_distinction='_',
+                   bracketing=[-10000,-1000,-100,-1,0,1,100,1000,10000],
+                   file_name=None):
+    
+    '''
+    Function to Apply ColumnDQComparison against DataFrame.
+    Assumes you start with a Dataframe with Multiple Columns Different only by Column Distinction.
+    
+    Parameters:
+        df (DataFrame)
+        primary_key_list (list): List of Primary Keys, which are REMOVE from comparison Loop.
+        additional_filter (str): Filter Used to Create a distinct Dimension. Currently DOES NOT accept List
+        column_distinction (str): String which is expected to compare Columns. Added as default with MergeIdenticalDF
+        bracketing (list): Numbers which can be used to Calculate a Bracketed difference Column in COmparison
+        file_name (str): If Included, it will generate Excel Copies (Excel Used as CSV had issues uploading to DF)
+        
+    Return:
+        DataFrame of Groupby, Account and Summary calculations.
+        
+        Account: Listing of All Account Values, with Calculations
+        Summary: A summary Calculation Speaking to Overall Comparison
+        Groupby: List of Equivalent Values, to compare Material Record Change/Consistency
+    
+    date_created: 21-Aug-25
+    date_last_modified:21-Aug-25
+    classification:TBD
+    sub_classification:TBD
+    usage:
+        TBD
+    update_notes:
+        22-Jun-26: Inconsistent utilization of functions.
+    
+    '''
+    
+    df = df.copy()
+    
+    # Only Need to Test Common Records Can do a Simple Dataframe Analysis on Non Common Records.
+    
+    #Iterate Through All Columns in Common to create Final Values.
+    
+    account_df = pd.DataFrame()
+    groupby_df =  pd.DataFrame()
+    summary_df = pd.DataFrame()
+
+    for column_name in [x for x in df.columns if (x != primary_key)&(x[-1]!=column_distinction)]:
+        try:
+            temp_dict = ColumnDQComparison(df,column_name,primary_key=primary_key,secondary_filter=secondary_filter)
+            account_df = pd.concat([account_df,temp_dict['account_df']])
+            summary_df = pd.concat([summary_df,temp_dict['summary_df']])
+            groupby_df = pd.concat([groupby_df,temp_dict['groupby_df']])
+            
+        except:
+            print(f'Could Not Compute: {column_name}') 
+            
+    if file_name:
+        account_df.to_csv(f"{file_name}_ACCOUNT.csv",index=False)
+        summary_df.to_csv(f"{file_name}_SUMMARY.csv",index=False)
+        groupby_df.to_csv(f"{file_name}_GROUPBY.csv",index=False)
+
+    return account_df,summary_df,groupby_df
+

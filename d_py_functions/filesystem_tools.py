@@ -4,6 +4,7 @@ module_definition: Function which stores all functions that deal with the Mainte
 
 '''
 from pathlib import Path
+import shutil
 import os
 
 def read_directory(location=None,
@@ -163,3 +164,45 @@ def extract_py_folder_from_git_repo(
                 file_download_url=git_file_url,
                 output_location=temp_location
             )
+
+
+def copy_os_folder(
+    source,
+    destinition,
+    extension='.py',
+    exclude_file_list=[]
+):
+    '''
+    Definition:
+        Function which copies all files of a certain extension in one folder and moves them to another. 
+    Parameters:
+        source(str): Folder location to be copied.
+        destination(str): Folder location to be populated
+        extension(str): Type of file to be copied
+        exclude_file_list(list): List of file names which can be excluded from copy
+    Returns:
+        Copies Files from one folder to another
+    Date Created:
+        09-Sep-26
+    Date Last Modified:
+        09-Sep-26
+    Process:
+        TBD
+    Categorization:
+        TBD
+    Usage:
+        TBD
+    Notes:
+        None
+    Required Functions:
+        shutil
+
+
+    '''
+
+    for file in [x for x in os.listdir(source) if (x.find(f'{extension}')!=-1)&(x not in exclude_file_list)]:
+        source_file = f"{source}{file}"
+        destination_file = f"{destinition}{file}"
+        print(source_file)
+        print(destination_file)
+        shutil.copy2(source_file,destination_file)

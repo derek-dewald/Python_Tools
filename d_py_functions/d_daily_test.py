@@ -188,3 +188,68 @@ def test_previous_errors(
     df['Date'] = pd.to_datetime(df['Date'],errors='coerce').dt.date
     df['Last Tested'] = pd.to_datetime(df['Last Tested'],errors='coerce').dt.date
     df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/d_historical_test_results1.xlsx',index=False)
+
+
+def add_word_quote(
+    word,
+    text,
+    classification
+):
+    '''
+    Definition:
+        Function to add a new Word, Quote, Scripture, Proverb or Concept and Definition to Daily Test.
+    Parameters:
+        word(str): Word to be added.
+        text(str): Definition of word
+        classification(str): Classification of Type, choices include Word, Quote, Scripture, Proverb or Concept and Definition
+    Returns:
+        Nil (Adds new record to excel file)
+    Date Created:
+        05-Oct-26
+    Date Last Modified:
+        05-Oct-26
+    Process:
+        TBD
+    Categorization:
+        TBD
+    Usage:
+        add_word_quote(
+            'Latent',
+            'Present or existing but not currently visible, active, or apparent, although capable of becoming evident or developing in the future.',
+            'Word'
+        )
+    Notes:
+        None
+    Required Functions:
+        None
+        
+
+    
+    '''
+    if classification.lower()in ['word','quote','scripture','proverb','concepts and definition']:
+        
+        temp = pd.DataFrame([[
+            word,
+            text,
+            0,
+            datetime.datetime.now().strftime('%Y-%m-%d'),
+            datetime.datetime.now().strftime('%Y-%m-%d'),
+            classification.title()]],
+            columns = ['Word','Definition','Score','Date','Last Tested','Classification'])
+        
+    else:
+        print("Classification does not meet requirement")
+
+    df = pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/d_historical_test_results1.xlsx')
+    df['Date'] = pd.to_datetime(df['Date'],errors='coerce').dt.date
+    df['Last Tested'] = pd.to_datetime(df['Last Tested'],errors='coerce').dt.date
+
+    final_df = pd.concat([df,temp])
+    final_df.drop_duplicates('Word')
+
+
+    file_name = f"d_historical_test_results_{datetime.datetime.now().strftime('%d-%b-%y')}"
+    final_df.to_excel(f'/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/archive/{file_name}.xlsx',index=False)
+    final_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/d_historical_test_results1.xlsx',index=False)
+    return temp
+        
