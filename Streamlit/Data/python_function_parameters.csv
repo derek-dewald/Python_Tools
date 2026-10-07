@@ -77,7 +77,8 @@ sample_knowledge_test_single_df,test_name,,,d_daily_test.py
 d_daily_test,actions,,,d_daily_test.py
 d_daily_test,sample,,,d_daily_test.py
 d_daily_test,pause,,,d_daily_test.py
-test_previous_errors,min_correct,,,d_daily_test.py
+test_previous_errors,max_correct,,,d_daily_test.py
+test_previous_errors,max_incorrect,,,d_daily_test.py
 add_word_quote,word,str,Word to be added.,d_daily_test.py
 add_word_quote,text,str,Definition of word,d_daily_test.py
 add_word_quote,classification,str,"Classification of Type, choices include Word, Quote, Scripture, Proverb or Concept and Definition",d_daily_test.py

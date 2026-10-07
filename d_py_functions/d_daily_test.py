@@ -133,8 +133,11 @@ def d_daily_test(
     final_results_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/d_historical_test_results1.xlsx',index=False)
     final_results_df.to_excel(f"/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/archive/d_historical_test_results_{datetime.datetime.now().strftime('%d-%b-%y')}.xlsx",index=False)   
     
+
 def test_previous_errors(
-    min_correct=3
+    max_correct=3,
+    max_incorrect=5
+    
 ):
     '''
 
@@ -150,20 +153,22 @@ def test_previous_errors(
     df = df[['Word','Definition','Score','Date','Last Tested','Classification']]
     df['Date'] = pd.to_datetime(df['Date'],errors='coerce').dt.date
     df['Last Tested'] = pd.to_datetime(df['Last Tested'],errors='coerce').dt.date
+    print(df)
+    
     display(Markdown(f"## Time to Test Your Recall. Show me what you've learnt"))
 
     tested_df = pd.DataFrame()
     for topic in df['Classification'].unique():
-        topic_correct_remaining = min_correct
-        attempts=0
-        temp_df = df[(df['Classification']== topic)&(df['Last Tested']<(datetime.datetime.now()-datetime.timedelta(days=1)).date())].copy()
-        topic_correct_remaining = min(topic_correct_remaining,len(temp_df))
+        correct  = 0
+        attempts = 0
+        temp_df = df[(df['Classification']== topic)&(df['Last Tested']<=(datetime.datetime.now()-datetime.timedelta(days=1)).date())].copy()
 
-        while (topic_correct_remaining >=1)|(attempts<5):
-            display(Markdown(f"### Current Topic: {topic}, you have {topic_correct_remaining} Remaining until this topic is Solved"))
+        while (correct <max_correct)&(attempts<max_incorrect)&(len(df)>0):
+            display(Markdown(f"### Current Topic: {topic}, Attempts Remaining:{max_incorrect-attempts}, Correct: {correct}"))
             example = temp_df.sample(1)
             tested_df = pd.concat([tested_df,example])
             word = example['Word'].item()
+            temp_df = temp_df[temp_df['Word']!=word].copy()
             definition_ = example['Definition'].item()
             print(f'What is the definition of {word}')
             print(f'{word}:\n{definition_}')
@@ -176,13 +181,15 @@ def test_previous_errors(
             if val==1:
                 df['Score'] = np.where(df['Word']==word,val,df['Score'])
                 df['Last Tested'] = np.where(df['Word']==word,datetime.datetime.now().date(),df['Last Tested'])
-                temp_df = temp_df[temp_df['Word']!=word]
-                topic_correct_remaining += -int(val)
+                correct += val
                 display(Markdown(f"#### That is Correct!"))
             else:
                 display(Markdown(f"#### That is incorrect!"))
             attempts +=1
-        display(Markdown(f"### Congratulations, you have finished your reivew of {topic}"))
+        if correct>=2:
+            display(Markdown(f"### Congratulations, you have finished your reivew of {topic}"))
+        else:
+            display(Markdown(f"### You have finished your reivew of {topic}"))
 
     visualize_dataframe_in_notebook(tested_df)
     df['Date'] = pd.to_datetime(df['Date'],errors='coerce').dt.date
