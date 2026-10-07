@@ -153,3 +153,4 @@ compare_function,func1,function,Python Function,text_parsing.py
 compare_function,func2,function,Python Function,text_parsing.py
 compare_function,additional_records,int,Number of String Characters for each function which will be displayed after the point of identifying difference.,text_parsing.py
 compare_function,strip_docstring,bool,Boolean to determine whether you wish to compare the Doc String aswell as the function.,text_parsing.py
+create_ml_dictionary_template,source,str,location of manual Excel File. Can be updated to take multiple input types is necessary,ml_project.py

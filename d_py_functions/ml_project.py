@@ -7,8 +7,34 @@ module_definition: Repo for functions required to implement Exploratory Data Ana
 import numpy as np
 import pandas as pd
 
-def create_ml_dictionary_template():
-    df = pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/knowledge_base.xlsx')
+def create_ml_dictionary_template(
+    source='/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/knowledge_base.xlsx'
+):
+    '''
+    Definition:
+        Function used to create a Data Dictionary for a New Data set using a residual manual definition arepository. 
+    Parameters:
+        source(str): location of manual Excel File. Can be updated to take multiple input types is necessary
+    Returns:
+        str
+    Date Created:
+        28-Aug-26
+    Date Last Modified:
+        28-Aug-26
+    Process:
+        TBD
+    Categorization:
+        TBD
+    Usage:
+        create_blank_function_doc_string()
+    Notes:
+        None
+    Required Functions:
+        NoneGood
+    
+    '''
+    
+    df = pd.read_excel(source)
     #return {x:"" for x in df[(df['Process'].str.contains('Machine Learning Lifecycle'))&(df['Categorization']=='Process Step')]['Word']}
 
     temp_df = df[

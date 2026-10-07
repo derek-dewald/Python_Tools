@@ -31,7 +31,7 @@ object_dict['python_string_documentation'] = {
     'Word':"Python String Documentation",
     'Definition':"Python List of Categories (in order) supporting the prevailing required Python String Documentation Taxonomy",
     'publish':0,
-    'python_object':[]
+    'python_object':['Definition', 'Parameters', 'Returns', 'Date Created', 'Date Last Modified', 'Process', 'Categorization', 'Usage', 'Notes', 'Required Functions']
         }
 
 object_dict['Machine Learning Ontology'] = {
