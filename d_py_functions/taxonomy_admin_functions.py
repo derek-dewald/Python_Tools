@@ -53,10 +53,20 @@ def create_knowledge_base(
         None
     '''
 
-    
     if len(df)>1:
         df = pd.read_csv(object_dict['csv_links']['python_object']['google_definition_csv'])
 
+    # Items which are Both Process and Process Steps will have Definition in Process Step Overwriden. As process, it should not be updated here.
+
+    process_def = df[df['Categorization']=='Process'][['Process','Definition']].drop_duplicates('Process').rename(columns={'Process':'Word','Definition':"Definition_"})
+    df = df.merge(process_def,on='Word',how='left')
+    df['Definition'] = np.where(
+        (df['Categorization']=='Process Step')&
+        (df['Definition_'].notnull())
+        ,df['Definition_'],df['Definition'].fillna(''))
+    
+    df.drop('Definition_',axis=1,inplace=True)
+    
     df['Order'] = df['Order'].fillna(0)
     
     df1 = df[df['Categorization']=='Process Step'][columns].drop('Categorization',axis=1)
@@ -69,7 +79,7 @@ def create_knowledge_base(
     final_df = pd.concat([df[columns],insert_df])
     final_df['Order_OG'] = final_df['Order_OG'].fillna(0)
     final_df = final_df.sort_values(['Process','Order','Order_OG'])
-    final_df.drop(['Order','Order_OG'],axis=1)
+    final_df.drop(['Order','Order_OG'],axis=1,inplace=True)
     
     if file_name:
         try:
