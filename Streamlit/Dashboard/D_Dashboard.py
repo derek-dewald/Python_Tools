@@ -192,14 +192,14 @@ def load_data():
 
     try:
         knowledge_base_xlsx   = '/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/knowledge_base.xlsx' 
-        google_definition_csv = '/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/definitions.xlsx'  
+        google_definition = '/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/definitions.xlsx'  
         function_list         = '/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/python_function_list.csv'  
-        function_definition   = '/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/python_function_file_definition.csv"'  
+        function_definition   = '/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/python_function_file_definition.csv'  
         parameter_list        = '/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/python_function_parameters.csv'  
         daily_list            = '/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/d_historical_test_results1.xlsx'
         
         data_dict['knowledge_base_df'] = pd.read_excel(knowledge_base_xlsx)
-        data_dict['google_definition_df'] = pd.read_csv(google_definition_csv)
+        data_dict['google_definition_df'] = pd.read_excel(google_definition)
         data_dict['function_df'] = pd.read_csv(function_list)
         data_dict['function_def_df'] = pd.read_csv(function_definition)
         
@@ -715,130 +715,48 @@ elif page == 'Functions':
 # Process, Taxonomy, and Topic
 # ---------------------------------------------------------
 
-
 elif page == "Processes, Taxonomy and Topics":
     st.title("Processes, Taxonomy and Topics")
 
+    # ---------------------------------------------------------
+    # DATA
+    # ---------------------------------------------------------
     df_base = data_dict["knowledge_base_df"].copy()
 
-    c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
-
-    search_word = "Definition"
-
     # ---------------------------------------------------------
-    # FILTER 1: Select Knowledge Structure
+    # FILTER
     # ---------------------------------------------------------
-    with c1:
-        structure_options = [
-            "(Not Selected)",
-            "Taxonomy",
-            "Process",
-            "Topic"
-        ]
+    structure_options = [
+        "(Not Selected)",
+        "Process",
+        "Taxonomy",
+        "Topic"
+    ]
 
-        structure_sel = st.selectbox(
-            "Knowledge Structure",
-            structure_options,
-            index=0
-        )
-
-    # ---------------------------------------------------------
-    # FILTER 2: Select Parent
-    # ---------------------------------------------------------
-    if structure_sel != "(Not Selected)":
-
-        parent_df = df_base[
-            df_base["Categorization"] == structure_sel
-        ]
-
-        parent_options = (
-            parent_df["Word"]
-            .dropna()
-            .astype(str)
-            .loc[lambda x: x.str.strip() != ""]
-            .unique()
-            .tolist()
-        )
-
-        parent_options = ["(All)"] + sorted(parent_options)
-
-        with c2:
-            parent_sel = st.selectbox(
-                structure_sel,
-                parent_options,
-                index=0
-            )
-
-        # Filter using selected structure column
-        if parent_sel == "(All)":
-            df2 = df_base[
-                df_base[structure_sel].notna()
-                & (df_base[structure_sel].astype(str).str.strip() != "")
-            ]
-        else:
-            df2 = df_base[
-                df_base[structure_sel] == parent_sel
-            ]
-
-    else:
-        parent_sel = "(All)"
-        df2 = df_base
-
-    # ---------------------------------------------------------
-    # FILTER 3: Select Word
-    # ---------------------------------------------------------
-    with c3:
-
-        word_options = (
-            df2["Word"]
-            .dropna()
-            .astype(str)
-            .loc[lambda x: x.str.strip() != ""]
-            .unique()
-            .tolist()
-        )
-
-        word_options = ["(All)"] + sorted(word_options)
-
-        word_sel = st.selectbox(
-            "Word",
-            word_options,
-            index=0
-        )
-
-    df3 = (
-        df2
-        if word_sel == "(All)"
-        else df2[df2["Word"] == word_sel]
+    structure_sel = st.selectbox(
+        "Select Knowledge Structure",
+        structure_options,
+        index=0
     )
 
     # ---------------------------------------------------------
-    # FILTER 4: Definition Search
+    # FILTER DATA
     # ---------------------------------------------------------
-    with c4:
-        definition_search = st.text_input(
-            "Definition search",
-            value="",
-            placeholder="Type to search Definition..."
-        )
-
-    df_view = df3.copy()
-
-    if definition_search.strip():
-        s = definition_search.strip().lower()
-
-        df_view = df_view[
-            df_view[search_word]
-            .astype(str)
-            .str.lower()
-            .str.contains(s, na=False)
-        ]
+    if structure_sel == "(Not Selected)":
+        df_view = df_base.copy()
+    else:
+        df_view = df_base[
+            df_base["Categorization"] == structure_sel
+        ].copy()
 
     # ---------------------------------------------------------
     # RESULTS
     # ---------------------------------------------------------
     st.caption(f"Rows: {len(df_view)}")
 
+    # ---------------------------------------------------------
+    # AGGRID
+    # ---------------------------------------------------------
     gb = GridOptionsBuilder.from_dataframe(df_view)
 
     gb.configure_default_column(
@@ -864,7 +782,7 @@ elif page == "Processes, Taxonomy and Topics":
     )
 
     gb.configure_column(
-        search_word,
+        "Definition",
         flex=1,
         minWidth=700,
         wrapText=True,
