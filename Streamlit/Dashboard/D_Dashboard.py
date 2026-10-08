@@ -185,36 +185,44 @@ st.markdown(
 @st.cache_data(show_spinner=False)
 def load_data():
 
-    
-    knowledge_local =       '/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/knowledge_base.xlsx' 
-    knowledge_base_xlsx = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/knowledge_base.xlsx"
-    
-    google_note_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSQF2lNc4WPeTRQ_VzWPkqSZp4RODFkbap8AqmolWp5bKoMaslP2oRVVG21x2POu_JcbF1tGRcBgodu/pub?output=csv'
-    google_definition_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv'
-    
-    technical_notes = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv'
-    function_list = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/python_function_list.csv"
-    function_definition = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/python_function_file_definition.csv"
-    parameter_list = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/python_function_parameters.csv"
-
-    daily_list = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/d_testing_folder/d_historical_test_results1.xlsx"
-
     data_dict = {}
+
+    technical_notes = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vSnwd-zccEOQbpNWdItUG0qXND5rPVFbowZINjugi15TdWgqiy3A8eMRhbmSMBiRhHt1Qsry3E8tKY8/pub?output=csv'
+    data_dict['technical_notes_df'] = pd.read_csv(technical_notes)
+
     try:
-        data_dict['knowledge_base_df'] = pd.read_excel(knowledge_local)
+        knowledge_base_xlsx   = '/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/knowledge_base.xlsx' 
+        google_definition_csv = '/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/definitions.xlsx'  
+        function_list         = '/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/python_function_list.csv'  
+        function_definition   = '/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/python_function_file_definition.csv"'  
+        parameter_list        = '/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/python_function_parameters.csv'  
+        daily_list            = '/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/d_historical_test_results1.xlsx'
+        
+        data_dict['knowledge_base_df'] = pd.read_excel(knowledge_base_xlsx)
+        data_dict['google_definition_df'] = pd.read_csv(google_definition_csv)
+        data_dict['function_df'] = pd.read_csv(function_list)
+        data_dict['function_def_df'] = pd.read_csv(function_definition)
+        
+        data_dict['parameter_df'] = pd.read_csv(parameter_list) 
+        data_dict['daily_list_df'] = pd.read_excel(daily_list)
+        
         print("Local Files Utilized for Knowledge, Consolidated, Process")
 
     except:
+        knowledge_base_xlsx = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/knowledge_base.xlsx"
+        google_definition_csv = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vQq1-3cTas8DCWBa2NKYhVFXpl8kLaFDohg0zMfNTAU_Fiw6aIFLWfA5zRem4eSaGPa7UiQvkz05loW/pub?output=csv'        
+        function_list = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/python_function_list.csv"
+        function_definition = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/python_function_file_definition.csv"
+        parameter_list = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/Streamlit/Data/python_function_parameters.csv"
+        daily_list = "https://raw.githubusercontent.com/derek-dewald/Python_Tools/main/d_testing_folder/d_historical_test_results1.xlsx"
+
         data_dict['knowledge_base_df'] = pd.read_excel(knowledge_base_xlsx)
-        
-    data_dict['function_df'] = pd.read_csv(function_list)
-    data_dict['function_def_df'] = pd.read_csv(function_definition)
-    data_dict['google_notes_df'] = pd.read_csv(google_note_csv)
-    data_dict['google_definition_df'] = pd.read_csv(google_definition_csv)
-    data_dict['technical_notes_df'] = pd.read_csv(technical_notes)
-    
-    data_dict['parameter_df'] = pd.read_csv(parameter_list)
-    data_dict['daily_list_df'] = pd.read_excel(daily_list)
+        data_dict['google_definition_df'] = pd.read_csv(google_definition_csv)
+        data_dict['function_df'] = pd.read_csv(function_list)
+        data_dict['function_def_df'] = pd.read_csv(function_definition)
+        data_dict['technical_notes_df'] = pd.read_csv(technical_notes)
+        data_dict['parameter_df'] = pd.read_csv(parameter_list) 
+        data_dict['daily_list_df'] = pd.read_excel(daily_list)
 
     
     # Normalize: keep your existing behavior (everything to string)
@@ -232,7 +240,7 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ "Home Page", 'Definitions','Notes',"Knowledge Base","Technical Notes",'Functions','ML Models','Summarization',"Daily List"]
+    [ "Home Page", 'Definitions','Processes, Taxonomy and Topics',"Technical Notes",'Functions',"Daily List"]#,'Summarization',"Knowledge Base",'ML Models']
      #"Frequency Summarization",,'Process Checklist',"Function List", "Function Parameters",  'Folder Table of Content', ]
 )
 
@@ -412,46 +420,80 @@ elif page == "Definitions":
                         st.markdown(f"**{field}:**")
                         st.write(v)
 
+
+
+
+
+
+
 # -----------------------------------
-# Notes
+# Daily List
 # -----------------------------------
-elif page == 'Notes':
-    st.title("Notes")
-    df_base = data_dict['google_notes_df'].copy()
-    c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
+elif page == 'Daily List':
+    st.title("Daily Word, Definition, Quote List")
 
-    c1_word = 'Process'
-    c2_word = 'Categorization'
-    c3_word = 'Word'
-    search_word = 'Definition'
+    df_base = data_dict['daily_list_df'].copy()
 
-    with c1:
-        c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
-        c1_sel = st.selectbox(c1_word, c1_options, index=0)
+    for col in ['Date', 'Last Tested']:
+        df_base[col] = pd.to_datetime(df_base[col],errors='coerce').dt.strftime('%Y-%m-%d')
+  
+    # Columns to display
+    display_cols = [
+        'Word',
+        'Definition',
+        'Score',
+        'Date',
+        'Last Tested',
+        'Classification'
+    ]
 
-    df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
+    # -------------------------
+    # Classification Filter
+    # -------------------------
+    classification_sel = st.selectbox(
+        "Filter",
+        ["All", "Daily Requirements"],
+        index=0
+    )
 
-    with c2:
-        c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
-        c2_sel = st.selectbox(c2_word, c2_options, index=0)
+    # -------------------------
+    # Date Filter
+    # -------------------------
+    date_options = ["(All)"] + sorted(
+        df_base['Date'].dropna().unique(),
+        reverse=True
+    )
 
-    df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
+    date_sel = st.selectbox(
+        "Date",
+        date_options,
+        index=0
+    )
 
-    with c3:
-        c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
-        c3_sel = st.selectbox(c3_word, c3_options, index=0)
+    # -------------------------
+    # Apply Filters
+    # -------------------------
+    df_view = df_base.copy()
 
-    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
+    # Daily Requirements:
+    # Exclude Concepts and Definitions
+    if classification_sel == "Daily Requirements":
+        df_view = df_view.loc[
+            df_view['Classification'] != "Concepts and Definitions"
+        ]
 
-    with c4:
-        definition_search = st.text_input("Definition search", value="", placeholder="Type to search Description...")
+    # Apply date filter
+    if date_sel != "(All)":
+        df_view = df_view.loc[
+            df_view['Date'] == date_sel
+        ]
 
-    df_view = df3
-    if definition_search.strip():
-        s = definition_search.strip().lower()
-        df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
+    # Keep only display columns
+    df_view = df_view[display_cols].copy()
 
-    st.caption(f"Rows: {len(df_view)}")
+    # -------------------------
+    # AG Grid
+    # -------------------------
     gb = GridOptionsBuilder.from_dataframe(df_view)
 
     gb.configure_default_column(
@@ -462,17 +504,12 @@ elif page == 'Notes':
         autoHeight=True
     )
 
-    gb.configure_column(c1_word, width=100, minWidth=80, maxWidth=120)
-    gb.configure_column(c2_word, width=100, minWidth=80, maxWidth=120)
-    gb.configure_column(c3_word, width=150, minWidth=120, maxWidth=170)
-
-    gb.configure_column(
-        search_word,
-        flex=1,
-        minWidth=700,
-        wrapText=True,
-        autoHeight=True
-    )
+    gb.configure_column('Word', width=120)
+    gb.configure_column('Definition', flex=1, minWidth=400)
+    gb.configure_column('Score', width=60)
+    gb.configure_column('Date', width=70)
+    gb.configure_column('Last Tested', width=70)
+    gb.configure_column('Classification', width=100)
 
     gridOptions = gb.build()
 
@@ -488,112 +525,6 @@ elif page == 'Notes':
         reload_data=True,
     )
 
-# -----------------------------------
-# Knowledge Base
-# -----------------------------------
-elif page == 'Knowledge Base':
-    st.title("Knowledge Base")
-    df_base = data_dict['knowledge_base_df'].copy()
-
-
-    # Create a Dashboard View Based on Source
-    
-    df_base['Process List'] = np.where(df_base['Categorization']=='Process Step',1,0)
-    df_base['Taxonomy List'] = np.where(df_base['Categorization']=='Taxonomy Node',1,0)
-    df_base['Knowledge Base'] = np.where(df_base['Source']=='Knowledge Base',1,0)
-    df_base['Process Check List'] = np.where(df_base['Source']!='LVL2',1,0)
-    df_base['Consolidated Data'] = 1
-
-
-    c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
-
-    c1_word = 'Process'
-    c2_word = 'Categorization'
-    c3_word = 'Word'
- 
-
-    with c1:
-        c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
-        c1_sel = st.selectbox(c1_word, c1_options, index=0)
-
-    df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
-
-    with c2:
-        c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
-        c2_sel = st.selectbox(c2_word, c2_options, index=0)
-
-    df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
-
-    with c3:
-        c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
-        c3_sel = st.selectbox(c3_word, c3_options, index=0)
-
-    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
-
-    view_columns = [
-        'Process List',
-        'Knowledge Base',
-        'Process Check List',
-        'Consolidated Data',
-        'Taxonomy List'
-        ]
-
-    with c4:
-        selected_views = st.multiselect(
-            "Dataset View",
-            options=view_columns,
-            default=['Consolidated Data']
-            )
-
-    if selected_views:
-        df_view = df3[df3[selected_views].eq(1).any(axis=1)].copy()
-    else:
-        df_view = df3.iloc[0:0].copy()
-
-        st.caption(f"Rows: {len(df_view)}")
-
-    excel_bytes = df_to_excel_bytes(
-        df_view,
-        sheet_name="Processes",
-        long_columns=["Definition"],
-        default_max_width=30,
-        long_max_width=80
-    )
-
-    st.download_button(
-        label="Download filtered Processes as Excel",
-        data=excel_bytes,
-        file_name="filtered_processes.xlsx",
-        mime="application/vnd.openxmlformats-officedocument.spreadsheetml.sheet")
-
-
-    gb = GridOptionsBuilder.from_dataframe(df_view.drop(['Process List','Knowledge Base','Process Check List','Consolidated Data','Source','Taxonomy List'],axis=1))
-
-    gb.configure_default_column(
-        resizable=True,
-        sortable=True,
-        filter=True,
-        wrapText=True,
-        autoHeight=True
-    )
-
-    gb.configure_column(c1_word, width=120, minWidth=80, maxWidth=170)
-    gb.configure_column(c2_word, width=120, minWidth=80, maxWidth=170)
-    gb.configure_column(c3_word, width=200, minWidth=120, maxWidth=200)
- 
-    gridOptions = gb.build()
-
-    gridOptions["onGridReady"] = on_grid_ready
-    gridOptions["onGridSizeChanged"] = on_grid_size_changed
-
-    AgGrid(
-        df_view.drop(['Process List','Knowledge Base','Process Check List','Consolidated Data','Source'],axis=1),
-        gridOptions=gridOptions,
-        height=800,
-        allow_unsafe_jscode=True,
-        fit_columns_on_grid_load=False,
-        reload_data=True,
-    )
 
 # -----------------------------------
 # Technical Notes
@@ -779,176 +710,134 @@ elif page == 'Functions':
         reload_data=True,
     )
 
-# -----------------------------------
-# ML Models
-# -----------------------------------
+
+# ---------------------------------------------------------
+# Process, Taxonomy, and Topic
+# ---------------------------------------------------------
 
 
-elif page == 'ML Models':
-    st.title("ML Models")
-    df = data_dict['knowledge_base_df']
+elif page == "Processes, Taxonomy and Topics":
+    st.title("Processes, Taxonomy and Topics")
 
-    mlo_desc = df[(df['Process']=='Machine Learning Ontology')&(df['Word']=='Definition')&(df['Categorization']=='Taxonomy')]['Definition'].item()
-    ont_desc = df[df['Word']=='Ontological']['Definition'].item()
-    ped_desc = df[df['Word']=='Pedagogical']['Definition'].item()
-    epi_desc = df[df['Word']=='Epistemological']['Definition'].item()
-
-    mlo_desc = " ".join(mlo_desc.split())
-    ont_desc = " ".join(ont_desc.split())
-    ped_desc = " ".join(ped_desc.split())
-    epi_desc = " ".join(epi_desc.split())
-
-    st.markdown(f"""
-    - {mlo_desc}
-        - **Premises**
-            - **Ontological:** {ont_desc} 
-            - **Pedagogical:** {ped_desc}
-            - **Epistemological:** {epi_desc}
-        - **Dimensions**
-            - **Learning Paradigm:** How is knowledge acquired or applied?
-            - **Learning Objective:** What problem is being solved?
-            - **Computational Approach:** What broad computational strategy is used?
-            - **Analytical Method:** What specific analytical method is being applied?
-            - **Analytical Object Type:** What kind of analytical object is it?
-    """)
-
-    # Values in columns are % of screen allocation.
-    reference_col1, reference_col2 = st.columns([70,30])
-
-    # Present Method Objectives    
-    table_1_df = df[(df['Process'] == 'Learning Paradigm')&(df['Categorization']=='Definition')][['Word']].sort_values('Word').rename(columns={'Word':'Learning Paradigm'})
-    learning_objective = df[(df['Process'] == 'Learning Objective')&(df['Categorization']=='Definition')][['Word']].sort_values('Word').rename(columns={'Word':'Learning Objective'})
-    computational_approach = df[df['Process']=='Computational Approach'][['Word']].reset_index(drop=True).sort_values('Word').rename(columns={'Word':"Computational Approach"}).reset_index(drop=True)
-
-    object_type = df[(df['Process']=='Analytical Object Type')&(df['Categorization']=='Definition')][['Word']].reset_index(drop=True).rename(columns={'Word':"Analytical Object Type"})
-    
-    table_1_df = table_1_df.reset_index(drop=True).merge(learning_objective.reset_index(drop=True),left_index=True,right_index=True,how='outer').merge(computational_approach,left_index=True,right_index=True,how='outer').merge(object_type,left_index=True,right_index=True,how='outer')
-    
-    table_2_df = df[(df['Process']=='Analytical Method')].sort_values('Word')[['Word']].rename(columns={'Word':"Analytical Method"})
-
-    with reference_col1:
-        st.markdown("#### Machine Learning Ontology")
-    
-        display_reference_grid(
-            table_1_df,
-            column_widths={"Learning Paradigm": 300,"Learning Objective": 300,'Computational Approach':300,"Analytical Object Type":300},
-            key="algo_classification_table"
-        )
-
-    with reference_col2:
-        st.markdown("#### Analytical Methods")
-
-        display_reference_grid(
-            table_2_df,
-            column_widths={'Analytical Method':200},
-            key="methods_table"
-        )
-
-# -----------------------------------
-# Summarization
-# -----------------------------------
-
-
-elif page == 'Summarization':
-    st.title("Summarization")
-    df_base = data_dict['knowledge_base_df']
+    df_base = data_dict["knowledge_base_df"].copy()
 
     c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
 
-    c1_word = 'Process'
-    c2_word = 'Categorization'
-    c3_word = 'Word'
-    search_word = 'Definition'
+    search_word = "Definition"
 
+    # ---------------------------------------------------------
+    # FILTER 1: Select Knowledge Structure
+    # ---------------------------------------------------------
     with c1:
-        c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
-        c1_sel = st.selectbox(c1_word, c1_options, index=0)
+        structure_options = [
+            "(Not Selected)",
+            "Taxonomy",
+            "Process",
+            "Topic"
+        ]
 
-    df1 = df_base if c1_sel == "(All)" else df_base[df_base[c1_word] == c1_sel]
+        structure_sel = st.selectbox(
+            "Knowledge Structure",
+            structure_options,
+            index=0
+        )
 
-    with c2:
-        c2_options = ["(All)"] + sorted([x for x in df1[c2_word].unique() if x.strip()])
-        c2_sel = st.selectbox(c2_word, c2_options, index=0)
+    # ---------------------------------------------------------
+    # FILTER 2: Select Parent
+    # ---------------------------------------------------------
+    if structure_sel != "(Not Selected)":
 
-    df2 = df1 if c2_sel == "(All)" else df1[df1[c2_word] == c2_sel]
+        parent_df = df_base[
+            df_base["Categorization"] == structure_sel
+        ]
 
+        parent_options = (
+            parent_df["Word"]
+            .dropna()
+            .astype(str)
+            .loc[lambda x: x.str.strip() != ""]
+            .unique()
+            .tolist()
+        )
+
+        parent_options = ["(All)"] + sorted(parent_options)
+
+        with c2:
+            parent_sel = st.selectbox(
+                structure_sel,
+                parent_options,
+                index=0
+            )
+
+        # Filter using selected structure column
+        if parent_sel == "(All)":
+            df2 = df_base[
+                df_base[structure_sel].notna()
+                & (df_base[structure_sel].astype(str).str.strip() != "")
+            ]
+        else:
+            df2 = df_base[
+                df_base[structure_sel] == parent_sel
+            ]
+
+    else:
+        parent_sel = "(All)"
+        df2 = df_base
+
+    # ---------------------------------------------------------
+    # FILTER 3: Select Word
+    # ---------------------------------------------------------
     with c3:
-        c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
-        c3_sel = st.selectbox(c3_word, c3_options, index=0)
 
-    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
+        word_options = (
+            df2["Word"]
+            .dropna()
+            .astype(str)
+            .loc[lambda x: x.str.strip() != ""]
+            .unique()
+            .tolist()
+        )
 
+        word_options = ["(All)"] + sorted(word_options)
+
+        word_sel = st.selectbox(
+            "Word",
+            word_options,
+            index=0
+        )
+
+    df3 = (
+        df2
+        if word_sel == "(All)"
+        else df2[df2["Word"] == word_sel]
+    )
+
+    # ---------------------------------------------------------
+    # FILTER 4: Definition Search
+    # ---------------------------------------------------------
     with c4:
-        definition_search = st.text_input("Definition search", value="", placeholder="Type to search Description...")
+        definition_search = st.text_input(
+            "Definition search",
+            value="",
+            placeholder="Type to search Definition..."
+        )
 
-    df_view = df3
+    df_view = df3.copy()
+
     if definition_search.strip():
         s = definition_search.strip().lower()
-        df_view = df_view[df_view[search_word].str.lower().str.contains(s, na=False)]
 
-############
-
+        df_view = df_view[
+            df_view[search_word]
+            .astype(str)
+            .str.lower()
+            .str.contains(s, na=False)
+        ]
 
     # ---------------------------------------------------------
-    # Display the three tables side by side
+    # RESULTS
     # ---------------------------------------------------------
-    
-    # Values in columns are % of screen allocation.
-    reference_col1, reference_col2, reference_col3 = st.columns([.25,.25,.5])
-
-    def create_process_summary(source_df,table_=1):
-
-        # Create a Dataframe for Visualization of Algorithm Classification
-
-        words = ['Process','Categorization']
-
-        
-        df_table1 = source_df[['Process']].groupby('Process').size().reset_index().rename(columns={0:'Records'})
-        df_table2 = source_df[['Categorization']].groupby('Categorization').size().reset_index().rename(columns={0:'Records'})
-        df_table3 = source_df[words].groupby(words).size().reset_index().rename(columns={0:'Records'})
-
-        if table_==1:
-            return df_table1.sort_values('Records',ascending=False)
-
-        if table_==2:
-            return df_table2.sort_values('Records',ascending=False)
-
-        if table_==3:
-            return df_table3.sort_values('Records',ascending=False)
-        
-        
-    table_1_df = create_process_summary(df_view)
-    table_2_df = create_process_summary(df_view,2)
-    table_3_df = create_process_summary(df_view,3)
-
-    with reference_col1:
-        st.markdown("#### Learning Paradigm")
-    
-        display_reference_grid(
-            table_1_df,
-            column_widths={"Process": 200},
-            key="algo_classification_table"
-        )
-
-    with reference_col2:
-        st.markdown("#### Methods")
-
-        display_reference_grid(
-            table_2_df,
-            column_widths={'Categorization':200},
-            key="methods_table"
-        )
-
-    with reference_col3:
-        st.markdown("#### Other Key Information")
-
-        display_reference_grid(
-            table_3_df,
-            column_widths={"Process": 200,'Categorization':200},
-            key="method_type_table"
-        )
-
-############
+    st.caption(f"Rows: {len(df_view)}")
 
     gb = GridOptionsBuilder.from_dataframe(df_view)
 
@@ -960,9 +849,19 @@ elif page == 'Summarization':
         autoHeight=True
     )
 
-    gb.configure_column(c1_word, width=100, minWidth=80, maxWidth=120)
-    gb.configure_column(c2_word, width=100, minWidth=80, maxWidth=120)
-    gb.configure_column(c3_word, width=150, minWidth=120, maxWidth=170)
+    gb.configure_column(
+        "Categorization",
+        width=120,
+        minWidth=100,
+        maxWidth=150
+    )
+
+    gb.configure_column(
+        "Word",
+        width=180,
+        minWidth=140,
+        maxWidth=220
+    )
 
     gb.configure_column(
         search_word,
@@ -971,106 +870,6 @@ elif page == 'Summarization':
         wrapText=True,
         autoHeight=True
     )
-
-    gridOptions = gb.build()
-
-    gridOptions["onGridReady"] = on_grid_ready
-    gridOptions["onGridSizeChanged"] = on_grid_size_changed
-
-    AgGrid(
-        df_view,
-        gridOptions=gridOptions,
-        height=800,
-        allow_unsafe_jscode=True,
-        fit_columns_on_grid_load=False,
-        reload_data=True,
-    )
-
-
-# -----------------------------------
-# Daily List
-# -----------------------------------
-elif page == 'Daily List':
-    st.title("Daily Word, Definition, Quote List")
-
-    df_base = data_dict['daily_list_df'].copy()
-
-    for col in ['Date', 'Last Tested']:
-        df_base[col] = pd.to_datetime(df_base[col],errors='coerce').dt.strftime('%Y-%m-%d')
-  
-    # Columns to display
-    display_cols = [
-        'Word',
-        'Definition',
-        'Score',
-        'Date',
-        'Last Tested',
-        'Classification'
-    ]
-
-    # -------------------------
-    # Classification Filter
-    # -------------------------
-    classification_sel = st.selectbox(
-        "Filter",
-        ["All", "Daily Requirements"],
-        index=0
-    )
-
-    # -------------------------
-    # Date Filter
-    # -------------------------
-    date_options = ["(All)"] + sorted(
-        df_base['Date'].dropna().unique(),
-        reverse=True
-    )
-
-    date_sel = st.selectbox(
-        "Date",
-        date_options,
-        index=0
-    )
-
-    # -------------------------
-    # Apply Filters
-    # -------------------------
-    df_view = df_base.copy()
-
-    # Daily Requirements:
-    # Exclude Concepts and Definitions
-    if classification_sel == "Daily Requirements":
-        df_view = df_view.loc[
-            df_view['Classification'] != "Concepts and Definitions"
-        ]
-
-    # Apply date filter
-    if date_sel != "(All)":
-        df_view = df_view.loc[
-            df_view['Date'] == date_sel
-        ]
-
-    # Keep only display columns
-    df_view = df_view[display_cols].copy()
-
-    # -------------------------
-    # AG Grid
-    # -------------------------
-    gb = GridOptionsBuilder.from_dataframe(df_view)
-
-    gb.configure_default_column(
-        resizable=True,
-        sortable=True,
-        filter=True,
-        wrapText=True,
-        autoHeight=True
-    )
-
-    gb.configure_column('Word', width=120)
-    gb.configure_column('Definition', flex=1, minWidth=400)
-    gb.configure_column('Score', width=60)
-    gb.configure_column('Date', width=70)
-    gb.configure_column('Last Tested', width=70)
-    gb.configure_column('Classification', width=100)
 
     gridOptions = gb.build()
 

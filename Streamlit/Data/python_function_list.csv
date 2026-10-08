@@ -10,12 +10,12 @@ extract_tables_from_db,,"['db_name', 'table_dictionary_source', 'include_columns
 gpt_question,,['list_'],,,,,,,,,utility_functions.py
 standardize_column_text,"Function which is used to Standardize Text, specifically it replaces anything that is [^\w\s] - anything that is not a word character (\w) and not whitespace (\s) or [\d] is a digit (0–9), and lower cases it.","['df', 'column_name', 'new_column_name']",TBD,09-Sep-26,09-Sep-26,TBD,TBD,TBD,None,None,df_column_engineering.py
 word_counts_from_column,,"['df', 'column_name', 'lower', 'pattern', 'min_len', 'dropna']",pd.Series. Word counts indexed by token (sorted desc). date_created:01-Feb-26 date_last_modified: 01-Feb-26 classification:TBD sub_classification:TBD,,,,,Example Function Call,,,df_column_engineering.py
-create_knowledge_base,"Process Utilized to create Knowledge Base. Knowledge base combines Notes/Definition Datasets into a single expanded piece which expands individual Processes, Taxonomy and Definitions into complete data assets. Important. To Retain Order in Consolidated Data, or to be included in Process it must be defined as a process.
-Machine Learning - Process. Which is Comprised of Processes. Goal Setting, Data Preparation etc.","['definition_df', 'notes_df', 'generate_excel_files', 'ignore_words_from_lvl1_lvl2']",df knowledge_base.xlsx,02-Jul-26,29-Jul-26,Definition,Definition,"knowledge_base_df,process_df,consolidated_data = generate_files_for_streamlit(definition_df,notes_df)
-knowledge_base_df,process_df,consolidated_data = generate_files_for_streamlit()","22-Jul - Overhauled merge. Attempted to streamline, simplify and reduce duplication. Increase Visability.
+create_knowledge_base,"Process Utilized to create Knowledge Base.
+Knowledge base has had multiple iterations, currently it is Definitions, with Process Steps Merged back into Process to Make a completely and simply filterable file","['df', 'columns', 'file_name']",knowledge_base.xlsx,02-Jul-26,7-Oct-26,TBD,TBD,create_knowledge_base(),"22-Jul - Overhauled merge. Attempted to streamline, simplify and reduce duplication. Increase Visability.
 28-Jul - Originally Named - generate_knowledge_base, stream lined to remove usage of Dictionary, which were complex and operationally inefficient.
 29-Jul - Changed Foundational Structure. Simplified with Clarity on Input.
-26-Sep - Tested full functionality.",objects_automated,taxonomy_admin_functions.py
+26-Sep - Tested full functionality.
+10-Oct - With a material restructure of Definitions/Notes. Was able to drastically simplify this process.",None,taxonomy_admin_functions.py
 create_blank_function_doc_string,Function which generates Default Documentation for Python Function Documentaiton in consistent format.,[],str,28-Aug-26,28-Aug-26,TBD,TBD,create_blank_function_doc_string(),None,None,taxonomy_admin_functions.py
 parse_dot_py_file,Function which parses a .py file which has been read into python into a DataFrame categorizing function for ease of articulation and classification,"['file_text', 'function_columns']",Excel File(s),05-Aug-25,06-Jul-26,OS Folder Management,File Management,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/'
 file_text = txt_to_python(f""{location}/filesystem_tools.py"")
@@ -77,6 +77,12 @@ ColumnDQComparison,,"['df', 'column_name', 'primary_key', 'column_name1', 'secon
 update_notes:
 22-Jun-26: Inconsistent utilization of functions.",,,archive.py
 DfDqComparison,,"['df', 'primary_key', 'secondary_filter', 'column_distinction', 'bracketing', 'file_name']",,,,,,,,,archive.py
+create_knowledge_base_V0,"Process Utilized to create Knowledge Base. Knowledge base combines Notes/Definition Datasets into a single expanded piece which expands individual Processes, Taxonomy and Definitions into complete data assets. Important. To Retain Order in Consolidated Data, or to be included in Process it must be defined as a process.
+Machine Learning - Process. Which is Comprised of Processes. Goal Setting, Data Preparation etc.","['definition_df', 'notes_df', 'generate_excel_files', 'ignore_words_from_lvl1_lvl2']",df knowledge_base.xlsx,02-Jul-26,29-Jul-26,Definition,Definition,"knowledge_base_df,process_df,consolidated_data = generate_files_for_streamlit(definition_df,notes_df)
+knowledge_base_df,process_df,consolidated_data = generate_files_for_streamlit()","22-Jul - Overhauled merge. Attempted to streamline, simplify and reduce duplication. Increase Visability.
+28-Jul - Originally Named - generate_knowledge_base, stream lined to remove usage of Dictionary, which were complex and operationally inefficient.
+29-Jul - Changed Foundational Structure. Simplified with Clarity on Input.
+26-Sep - Tested full functionality.",objects_automated,archive.py
 txt_to_python,Function Used to Import .txt or .py File into Python.,"['file_name', 'encoding']",Dataframe,3-Dec-25,3-Dec-25,OS Folder Management,File Management,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/DFProcessing.py'
 file = TextFileImport(location)",,,object_rendering.py
 export_formatted_df_to_single_xlsx,Function Used to Simplify the required formating to a excel output from Python to Excel,"['df', 'file_name', 'sheet_name', 'index', 'freeze_header', 'column_formats']",TBD,28-Aug-26,28-Aug-26,TBD,TBD,TBD,None,None,object_rendering.py

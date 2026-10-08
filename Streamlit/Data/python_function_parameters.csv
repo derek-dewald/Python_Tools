@@ -39,10 +39,9 @@ word_counts_from_column,lower,bool,Apply Lowercasing for consistency before coun
 word_counts_from_column,pattern,re,"r""[A-Za-z']+"". Regex for tokens (words). Adjust for unicode if needed. [A-Za-z0-9']+ if you want to include Numbers",df_column_engineering.py
 word_counts_from_column,min_len,int,Minimum token length to keep.,df_column_engineering.py
 word_counts_from_column,dropna,bool,Whether to drop empty tokens.,df_column_engineering.py
-create_knowledge_base,definition_df,dataframe,Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.,taxonomy_admin_functions.py
-create_knowledge_base,notes_df,dataframe,Dataframe containing Notes from Google Sheet Page. Default is none and program will call csv from google using pandas.,taxonomy_admin_functions.py
-create_knowledge_base,generate_excel_files,,,taxonomy_admin_functions.py
-create_knowledge_base,ignore_words_from_lvl1_lvl2,,,taxonomy_admin_functions.py
+create_knowledge_base,df,dataframe,"File, if None it will call Google Sheet.",taxonomy_admin_functions.py
+create_knowledge_base,columns,list,Default columns to include in extract,taxonomy_admin_functions.py
+create_knowledge_base,file_name,str,"File Name of Export File, If Blank it WILL NOT export a file.",taxonomy_admin_functions.py
 parse_dot_py_file,file_text,str,"Text, which should be structured someone in format of function_columns, based on prevailing default Python String Documentation",taxonomy_admin_functions.py
 parse_dot_py_file,function_columns,list,List of columns to include in output file and to be parsed on. Default is to import from object_dict which represents default Python String Documentation.,taxonomy_admin_functions.py
 create_python_documentation,location,str,Location of Folder to be read for .py files. Default is defined as /Users/derekdewald/Documents/Python/Github_Repo/d_py_functions,taxonomy_admin_functions.py
@@ -111,6 +110,10 @@ DfDqComparison,secondary_filter,,,archive.py
 DfDqComparison,column_distinction,str,String which is expected to compare Columns. Added as default with MergeIdenticalDF,archive.py
 DfDqComparison,bracketing,list,Numbers which can be used to Calculate a Bracketed difference Column in COmparison,archive.py
 DfDqComparison,file_name,str,"If Included, it will generate Excel Copies (Excel Used as CSV had issues uploading to DF) Return: DataFrame of Groupby, Account and Summary calculations. Account: Listing of All Account Values, with Calculations Summary: A summary Calculation Speaking to Overall Comparison Groupby: List of Equivalent Values, to compare Material Record Change/Consistency date_created: 21-Aug-25 date_last_modified:21-Aug-25 classification:TBD sub_classification:TBD usage: TBD update_notes: 22-Jun-26: Inconsistent utilization of functions.",archive.py
+create_knowledge_base_V0,definition_df,dataframe,Dataframe containing Definitions from Google. Default is none and it will pull directly from Google.,archive.py
+create_knowledge_base_V0,notes_df,dataframe,Dataframe containing Notes from Google Sheet Page. Default is none and program will call csv from google using pandas.,archive.py
+create_knowledge_base_V0,generate_excel_files,,,archive.py
+create_knowledge_base_V0,ignore_words_from_lvl1_lvl2,,,archive.py
 txt_to_python,file_name,str,"Name of File, including path location for import",object_rendering.py
 txt_to_python,encoding,str,Encoding to be applied by With Open call. Default is utf-8.,object_rendering.py
 export_formatted_df_to_single_xlsx,df,dataframe,Any Dataframe,object_rendering.py
