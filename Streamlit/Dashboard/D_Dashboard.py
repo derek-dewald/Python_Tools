@@ -36,6 +36,21 @@ function(params) {
 }
 """)
 
+def create_structured_order(df):
+
+    a = df[df['Categorization'].isin(['Process Step','Taxonomy Node','Topic Node'])][['Process','Categorization','Word']].rename(columns={'Process':"Parent_Process",'Word':"Process"})
+    b = df[df['Categorization'].isin(['Process','Taxonomy','Topic'])][['Process','Categorization']].reset_index(drop=True)
+    
+    c = b.merge(a,on='Process',how='left')
+    c['Parent_Process'] = np.where(c['Parent_Process'].isnull(),c['Process'],c['Parent_Process'])
+    c['Test'] = c.groupby('Parent_Process')['Process'].transform('size')
+    c['DROP'] = np.where((c['Process']==c['Parent_Process'])&(c['Test']>1),1,0)
+    c = c[c['DROP']!=1][['Process','Parent_Process']].groupby(['Process','Parent_Process']).count()
+
+    d = c.reset_index().merge(df[['Word','Order']].rename(columns={'Word':'Process'}),on='Process',how='left')
+    d = d.sort_values(['Parent_Process','Order']).drop('Order',axis=1).drop_duplicates().set_index(['Parent_Process','Process'])
+
+    return c,d
 
 def df_to_excel_bytes(df,
                       sheet_name= "Sheet1",
@@ -240,7 +255,7 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ "Home Page", 'Definitions',"Knowledge Base",'Processes, Taxonomy and Topics',"Technical Notes",'Functions',"Daily List"]#,'Summarization','ML Models']
+    [ "Home Page", 'Definitions',"Knowledge Base",'Processes, Taxonomy and Topics',"Hierarchy View","Technical Notes",'Functions',"Daily List"]#,'Summarization','ML Models']
      #"Frequency Summarization",,'Process Checklist',"Function List", "Function Parameters",  'Folder Table of Content', ]
 )
 
@@ -873,3 +888,83 @@ elif page == "Processes, Taxonomy and Topics":
         fit_columns_on_grid_load=False,
         reload_data=True,
     )
+
+# ---------------------------------------------------------
+# Hierarchy View"
+# ---------------------------------------------------------
+elif page == "Hierarchy View":
+    st.title("Hierarchy View")
+
+    # ---------------------------------------------------------
+    # DATA
+    # ---------------------------------------------------------
+    df_base = data_dict["google_definition_df"].copy()
+
+    c, d = create_structured_order(df_base)
+
+    # ---------------------------------------------------------
+    # SIDE-BY-SIDE OUTPUT
+    # ---------------------------------------------------------
+    col1, col2 = st.columns(2)
+
+    # ---------------------------------------------------------
+    # DATAFRAME C
+    # ---------------------------------------------------------
+    with col1:
+        st.subheader("Structured Order - C")
+        st.caption(f"Rows: {len(c)}")
+
+        c_view = c.reset_index()
+
+        gb_c = GridOptionsBuilder.from_dataframe(c_view)
+
+        gb_c.configure_default_column(
+            resizable=True,
+            sortable=True,
+            filter=True,
+            wrapText=True,
+            autoHeight=True
+        )
+
+        gridOptions_c = gb_c.build()
+
+        AgGrid(
+            c_view,
+            gridOptions=gridOptions_c,
+            height=700,
+            allow_unsafe_jscode=True,
+            fit_columns_on_grid_load=True,
+            reload_data=True,
+            key="structured_order_c"
+        )
+
+    # ---------------------------------------------------------
+    # DATAFRAME D
+    # ---------------------------------------------------------
+    with col2:
+        st.subheader("Structured Order - D")
+        st.caption(f"Rows: {len(d)}")
+
+        d_view = d.reset_index()
+
+        gb_d = GridOptionsBuilder.from_dataframe(d_view)
+
+        gb_d.configure_default_column(
+            resizable=True,
+            sortable=True,
+            filter=True,
+            wrapText=True,
+            autoHeight=True
+        )
+
+        gridOptions_d = gb_d.build()
+
+        AgGrid(
+            d_view,
+            gridOptions=gridOptions_d,
+            height=700,
+            allow_unsafe_jscode=True,
+            fit_columns_on_grid_load=True,
+            reload_data=True,
+            key="structured_order_d"
+        )
