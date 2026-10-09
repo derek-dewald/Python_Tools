@@ -39,6 +39,10 @@ word_counts_from_column,lower,bool,Apply Lowercasing for consistency before coun
 word_counts_from_column,pattern,re,"r""[A-Za-z']+"". Regex for tokens (words). Adjust for unicode if needed. [A-Za-z0-9']+ if you want to include Numbers",df_column_engineering.py
 word_counts_from_column,min_len,int,Minimum token length to keep.,df_column_engineering.py
 word_counts_from_column,dropna,bool,Whether to drop empty tokens.,df_column_engineering.py
+generate_process_dictionary_from_knowledge_base,df,Dataframe,Can import Knowledge Base Directly to save from calling Git.,project_process_tools.py
+generate_process_dictionary_from_knowledge_base,process,str,Desired Process to be manually documented. Default is Machine Learning Lifecycle,project_process_tools.py
+update_process_df_status,df,dataframe,Dataframe,project_process_tools.py
+update_process_df_status,project_status_dict,dict,Dictionary. Manually created from generate_process_dictionary_from_knowledge_base,project_process_tools.py
 create_knowledge_base,df,dataframe,"File, if None it will call Google Sheet.",taxonomy_admin_functions.py
 create_knowledge_base,columns,list,Default columns to include in extract,taxonomy_admin_functions.py
 create_knowledge_base,file_name,str,"File Name of Export File, If Blank it WILL NOT export a file.",taxonomy_admin_functions.py
@@ -114,6 +118,13 @@ create_knowledge_base_V0,definition_df,dataframe,Dataframe containing Definition
 create_knowledge_base_V0,notes_df,dataframe,Dataframe containing Notes from Google Sheet Page. Default is none and program will call csv from google using pandas.,archive.py
 create_knowledge_base_V0,generate_excel_files,,,archive.py
 create_knowledge_base_V0,ignore_words_from_lvl1_lvl2,,,archive.py
+create_short_form_ml_project_dict,df,dataframe,"Optional. DataFrame containing the Short Form ML Project definitions. If not provided, the knowledge base is loaded directly.",archive.py
+create_baseline_dictionary_for_project,d,dict,,archive.py
+create_baseline_dictionary_for_project,dict_name,str,,archive.py
+create_baseline_dictionary_for_project,blank_keys,list,,archive.py
+visualize_dict_as_docx,data,dict,Dictionary,archive.py
+visualize_dict_as_docx,output_file,str,Name of docx file.,archive.py
+visualize_dict_as_docx,split_pages,bool,True or False Flag to determine whether each 1st level key will be generated immediately after or split to a new page.,archive.py
 txt_to_python,file_name,str,"Name of File, including path location for import",object_rendering.py
 txt_to_python,encoding,str,Encoding to be applied by With Open call. Default is utf-8.,object_rendering.py
 export_formatted_df_to_single_xlsx,df,dataframe,Any Dataframe,object_rendering.py
@@ -130,13 +141,6 @@ visualize_dataframe_in_notebook,show_as_percentage,list,List of Columns which ar
 print_dict,d,dict,Any Dictionary.,object_rendering.py
 print_dict,indent,float,Indent Required,object_rendering.py
 print_dict,width,,,object_rendering.py
-create_short_form_ml_project_dict,df,dataframe,"Optional. DataFrame containing the Short Form ML Project definitions. If not provided, the knowledge base is loaded directly.",object_rendering.py
-create_baseline_dictionary_for_project,d,dict,,object_rendering.py
-create_baseline_dictionary_for_project,dict_name,str,,object_rendering.py
-create_baseline_dictionary_for_project,blank_keys,list,,object_rendering.py
-visualize_dict_as_docx,data,dict,Dictionary,object_rendering.py
-visualize_dict_as_docx,output_file,str,Name of docx file.,object_rendering.py
-visualize_dict_as_docx,split_pages,bool,True or False Flag to determine whether each 1st level key will be generated immediately after or split to a new page.,object_rendering.py
 generate_formated_excel_file,df,,,object_rendering.py
 generate_formated_excel_file,filename,,,object_rendering.py
 generate_formated_excel_file,sheet_name,,,object_rendering.py

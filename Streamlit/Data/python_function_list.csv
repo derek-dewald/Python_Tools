@@ -10,6 +10,13 @@ extract_tables_from_db,,"['db_name', 'table_dictionary_source', 'include_columns
 gpt_question,,['list_'],,,,,,,,,utility_functions.py
 standardize_column_text,"Function which is used to Standardize Text, specifically it replaces anything that is [^\w\s] - anything that is not a word character (\w) and not whitespace (\s) or [\d] is a digit (0–9), and lower cases it.","['df', 'column_name', 'new_column_name']",TBD,09-Sep-26,09-Sep-26,TBD,TBD,TBD,None,None,df_column_engineering.py
 word_counts_from_column,,"['df', 'column_name', 'lower', 'pattern', 'min_len', 'dropna']",pd.Series. Word counts indexed by token (sorted desc). date_created:01-Feb-26 date_last_modified: 01-Feb-26 classification:TBD sub_classification:TBD,,,,,Example Function Call,,,df_column_engineering.py
+generate_process_dictionary_from_knowledge_base,"Function Used to created a Dataframe and Dictionary which Extracts the Expected Processes for a specific activity from Knowledge Base. To be used to help
+guidance project requirements and activities required.","['df', 'process']","df,text",09-Oct-26,09-Oct-26,TBD,TBD,project_df = generate_process(knowledge_base),None,"print_dict
+object_dict",project_process_tools.py
+update_process_df_status,Function Used to Quickly Visualize and Calculate the Status of a Project which has utilized the Manual Dictionary Maintenance approach as exported from generate_process_dictionary_from_knowledge_base,"['df', 'project_status_dict']",Text,09-Oct-26,09-Oct-26,TBD,TBD,"update_process_df_status(df,project_status_dict)",None,"generate_process_dictionary_from_knowledge_base
+visualize_dataframe_in_notebook
+Markdown
+display",project_process_tools.py
 create_knowledge_base,"Process Utilized to create Knowledge Base.
 Knowledge base has had multiple iterations, currently it is Definitions, with Process Steps Merged back into Process to Make a completely and simply filterable file","['df', 'columns', 'file_name']",knowledge_base.xlsx,02-Jul-26,7-Oct-26,TBD,TBD,create_knowledge_base(),"22-Jul - Overhauled merge. Attempted to streamline, simplify and reduce duplication. Increase Visability.
 28-Jul - Originally Named - generate_knowledge_base, stream lined to remove usage of Dictionary, which were complex and operationally inefficient.
@@ -83,14 +90,9 @@ knowledge_base_df,process_df,consolidated_data = generate_files_for_streamlit()"
 28-Jul - Originally Named - generate_knowledge_base, stream lined to remove usage of Dictionary, which were complex and operationally inefficient.
 29-Jul - Changed Foundational Structure. Simplified with Clarity on Input.
 26-Sep - Tested full functionality.",objects_automated,archive.py
-txt_to_python,Function Used to Import .txt or .py File into Python.,"['file_name', 'encoding']",Dataframe,3-Dec-25,3-Dec-25,OS Folder Management,File Management,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/DFProcessing.py'
-file = TextFileImport(location)",,,object_rendering.py
-export_formatted_df_to_single_xlsx,Function Used to Simplify the required formating to a excel output from Python to Excel,"['df', 'file_name', 'sheet_name', 'index', 'freeze_header', 'column_formats']",TBD,28-Aug-26,28-Aug-26,TBD,TBD,TBD,None,None,object_rendering.py
-visualize_dataframe_in_notebook,Function which applies some modest formating to a Dataframe to increase visual astetic.,"['df', 'show_as_number', 'show_as_currency', 'show_as_currency_without_dec', 'show_as_percentage']",Object Type date_created: 27-Aug-26 date_last_modified: 27-Aug-26 classification:TBD sub_classification:TBD,,,,,visualize_dataframe_in_notebook(df),,,object_rendering.py
-print_dict,Print Text from Dictionary into a structured output in Console.,"['d', 'indent', 'width']",None. Prints Structured Text in Console.,28-Aug-26,28-Aug-26,TBD,TBD,TBD,Developed for usage with Machine Learning Project.,None,object_rendering.py
-create_short_form_ml_project_dict,Creates a formatted text representation of a wireframe dictionary for the Short Form ML Project Process.,['df'],"str: Formatted text containing a valid Python dictionary assignment that can be printed, displayed, or saved.",28-Aug-26,09-Sep-26,TBD,Object Rendering,short_form_text = create_short_form_ml_project_dict(),This function is slightly unique as it takes the DataFrame directly and converts it into a formatted dictionary representation. Solely used for the Short Form ML Project Process.,None,object_rendering.py
-create_machine_learning_project_baseline,Create Baseline Formatted Machine Learning Dictionary for purposes of copy and pasting into new Project.,[],dict,09-Sep-26,09-Sep-26,TBD,TBD,TBD,Created for simplificity.,None,object_rendering.py
-create_base_ml_dictionary_from_df,,[],,,,,,,,,object_rendering.py
+create_short_form_ml_project_dict,Creates a formatted text representation of a wireframe dictionary for the Short Form ML Project Process.,['df'],"str: Formatted text containing a valid Python dictionary assignment that can be printed, displayed, or saved.",28-Aug-26,09-Sep-26,TBD,Object Rendering,short_form_text = create_short_form_ml_project_dict(),This function is slightly unique as it takes the DataFrame directly and converts it into a formatted dictionary representation. Solely used for the Short Form ML Project Process.,None,archive.py
+create_machine_learning_project_baseline,Create Baseline Formatted Machine Learning Dictionary for purposes of copy and pasting into new Project.,[],dict,09-Sep-26,09-Sep-26,TBD,TBD,TBD,Created for simplificity.,None,archive.py
+create_base_ml_dictionary_from_df,,[],,,,,,,,,archive.py
 create_baseline_dictionary_for_project,"Creates a formatted text representation of a dictionary that
 can be used in a Notebook to track project completion.
 Note that the ML Project requires an intermediary step because
@@ -102,10 +104,15 @@ blank_keys=[
 'Project Requirements'
 ]
 )","Recursively processes nested dictionaries and lists.
-Keys identified in blank_keys are returned with blank values.",None,object_rendering.py
+Keys identified in blank_keys are returned with blank values.",None,archive.py
 visualize_dict_as_docx,"Convert a Python Dictionary Object into a visually appealing .docx document.
 Primarily used to convert Short Form ML Projects or Machine Learning Projects to Stakeholders.","['data', 'output_file', 'split_pages']",docx,28-Aug-26,28-Aug-26,TBD,TBD,"visualize_dict_as_docx(short_form_dict,'text.docx')
-visualize_dict_as_docx(base_dict,'text1.docx',True)",100% Created by GPT.,None,object_rendering.py
+visualize_dict_as_docx(base_dict,'text1.docx',True)",100% Created by GPT.,None,archive.py
+txt_to_python,Function Used to Import .txt or .py File into Python.,"['file_name', 'encoding']",Dataframe,3-Dec-25,3-Dec-25,OS Folder Management,File Management,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/DFProcessing.py'
+file = TextFileImport(location)",,,object_rendering.py
+export_formatted_df_to_single_xlsx,Function Used to Simplify the required formating to a excel output from Python to Excel,"['df', 'file_name', 'sheet_name', 'index', 'freeze_header', 'column_formats']",TBD,28-Aug-26,28-Aug-26,TBD,TBD,TBD,None,None,object_rendering.py
+visualize_dataframe_in_notebook,Function which applies some modest formating to a Dataframe to increase visual astetic.,"['df', 'show_as_number', 'show_as_currency', 'show_as_currency_without_dec', 'show_as_percentage']",Object Type date_created: 27-Aug-26 date_last_modified: 27-Aug-26 classification:TBD sub_classification:TBD,,,,,visualize_dataframe_in_notebook(df),,,object_rendering.py
+print_dict,Print Text from Dictionary into a structured output in Console.,"['d', 'indent', 'width']",None. Prints Structured Text in Console.,28-Aug-26,28-Aug-26,TBD,TBD,TBD,Developed for usage with Machine Learning Project.,None,object_rendering.py
 generate_formated_excel_file,,"['df', 'filename', 'sheet_name', 'wrap', 'align', 'valign', 'currency_columns', 'balance_columns', 'date_columns', 'int_columns', 'decimal_columns']",,,,,,,,,object_rendering.py
 extract_py_folder_from_git_repo,Function Used to Extract Files from Git Hub Manually. Where a direct Git Connection can not be utilzied.,"['folder_git_url', 'output_location', 'file_extension']",TXT Files,05-Oct-26,05-Oct-26,TBD,TBD,"extract_py_folder_from_git_repo(
 folder_git_url='https://api.github.com/repos/derek-dewald/Python_Tools/contents/d_py_functions',

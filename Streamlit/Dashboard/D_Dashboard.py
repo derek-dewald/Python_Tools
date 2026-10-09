@@ -38,17 +38,17 @@ function(params) {
 
 def create_structured_order(df):
 
-    a = df[df['Categorization'].isin(['Process Step','Taxonomy Node','Topic Node'])][['Process','Categorization','Word']].rename(columns={'Process':"Parent_Process",'Word':"Process"})
+    a = df[df['Categorization'].isin(['Process Step','Taxonomy Node','Topic Node'])][['Process','Categorization','Word']].rename(columns={'Process':"Parent Process",'Word':"Process"})
     b = df[df['Categorization'].isin(['Process','Taxonomy','Topic'])][['Process','Categorization']].reset_index(drop=True)
     
     c = b.merge(a,on='Process',how='left')
-    c['Parent_Process'] = np.where(c['Parent_Process'].isnull(),c['Process'],c['Parent_Process'])
-    c['Test'] = c.groupby('Parent_Process')['Process'].transform('size')
-    c['DROP'] = np.where((c['Process']==c['Parent_Process'])&(c['Test']>1),1,0)
-    c = c[c['DROP']!=1][['Process','Parent_Process']].groupby(['Process','Parent_Process']).count()
+    c['Parent Process'] = np.where(c['Parent Process'].isnull(),c['Process'],c['Parent Process'])
+    c['Test'] = c.groupby('Parent Process')['Process'].transform('size')
+    c['DROP'] = np.where((c['Process']==c['Parent Process'])&(c['Test']>1),1,0)
+    c = c[c['DROP']!=1][['Process','Parent Process']].groupby(['Process','Parent Process']).count()
 
     d = c.reset_index().merge(df[['Word','Order']].rename(columns={'Word':'Process'}),on='Process',how='left')
-    d = d.sort_values(['Parent_Process','Order']).drop('Order',axis=1).drop_duplicates().set_index(['Parent_Process','Process'])
+    d = d.sort_values(['Parent Process','Order']).drop('Order',axis=1).drop_duplicates().set_index(['Parent Process','Process'])
 
     return c,d
 
@@ -910,8 +910,8 @@ elif page == "Hierarchy View":
     # ---------------------------------------------------------
     # DATAFRAME C
     # ---------------------------------------------------------
-    with col1:
-        st.subheader("Structured Order - C")
+    with col2:
+        st.subheader("Structured Order - By Child")
         st.caption(f"Rows: {len(c)}")
 
         c_view = c.reset_index()
@@ -941,8 +941,8 @@ elif page == "Hierarchy View":
     # ---------------------------------------------------------
     # DATAFRAME D
     # ---------------------------------------------------------
-    with col2:
-        st.subheader("Structured Order - D")
+    with col1:
+        st.subheader("Structured Order - By Parent")
         st.caption(f"Rows: {len(d)}")
 
         d_view = d.reset_index()
