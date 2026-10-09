@@ -240,7 +240,7 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ "Home Page", 'Definitions','Processes, Taxonomy and Topics',"Technical Notes",'Functions',"Daily List"]#,'Summarization',"Knowledge Base",'ML Models']
+    [ "Home Page", 'Definitions',"Knowledge Base",'Processes, Taxonomy and Topics',"Technical Notes",'Functions',"Daily List"]#,'Summarization','ML Models']
      #"Frequency Summarization",,'Process Checklist',"Function List", "Function Parameters",  'Folder Table of Content', ]
 )
 
@@ -710,54 +710,60 @@ elif page == 'Functions':
         reload_data=True,
     )
 
-
 # ---------------------------------------------------------
-# Process, Taxonomy, and Topic
+# Knowledge Base
 # ---------------------------------------------------------
 
-elif page == "Processes, Taxonomy and Topics":
-    st.title("Processes, Taxonomy and Topics")
 
-    # ---------------------------------------------------------
-    # DATA
-    # ---------------------------------------------------------
+elif page == "Knowledge Base":
+    st.title("Knowledge Base")
+
     df_base = data_dict["knowledge_base_df"].copy()
 
-    # ---------------------------------------------------------
-    # FILTER
-    # ---------------------------------------------------------
-    structure_options = [
-        "(Not Selected)",
-        "Process",
-        "Taxonomy",
-        "Topic"
-    ]
+    # Only convert actual NaN/None to ""
+    df_base = df_base.fillna("")
 
-    structure_sel = st.selectbox(
-        "Select Knowledge Structure",
-        structure_options,
-        index=0
-    )
+    required = ["Process", "Categorization", "Word", "Definition"]
+    missing = [c for c in required if c not in df_base.columns]
+    if missing:
+        st.error(f"google_definition_df is missing required columns: {missing}")
+        st.stop()
 
-    # ---------------------------------------------------------
-    # FILTER DATA
-    # ---------------------------------------------------------
-    if structure_sel == "(Not Selected)":
-        df_view = df_base.copy()
-    else:
-        df_view = df_base[
-            df_base["Categorization"] == structure_sel
-        ].copy()
+    # ----------------------------
+    # 1) Slicers
+    # ----------------------------
+    c1, c2, c3 = st.columns([1, 1, 1])
 
-    # ---------------------------------------------------------
-    # RESULTS
-    # ---------------------------------------------------------
-    st.caption(f"Rows: {len(df_view)}")
+    with c1:
+        opts1 = ["(All)"] + sorted([x for x in df_base["Process"].astype(str).unique() if str(x).strip()])
+        sel1 = st.selectbox("Process", opts1, index=0)
 
-    # ---------------------------------------------------------
-    # AGGRID
-    # ---------------------------------------------------------
-    gb = GridOptionsBuilder.from_dataframe(df_view)
+    df1 = df_base if sel1 == "(All)" else df_base[df_base["Process"].astype(str) == str(sel1)]
+
+    with c2:
+        opts2 = ["(All)"] + sorted([x for x in df1["Categorization"].astype(str).unique() if str(x).strip()])
+        sel2 = st.selectbox("Categorization", opts2, index=0)
+
+    df2 = df1 if sel2 == "(All)" else df1[df1["Categorization"].astype(str) == str(sel2)]
+
+    with c3:
+        opts3 = ["(All)"] + sorted([x for x in df2["Word"].astype(str).unique() if str(x).strip()])
+        sel3 = st.selectbox("Word", opts3, index=0)
+
+    df_view_full = df2 if sel3 == "(All)" else df2[df2["Word"].astype(str) == str(sel3)]
+    st.caption(f"Rows: {len(df_view_full)}")
+
+    # ----------------------------
+    # 2) Grid (4 visible cols) + hidden _row_id
+    # ----------------------------
+    df_view_full = df_view_full.copy().reset_index(drop=False).rename(columns={"index": "_row_id"})
+
+
+# Build Visual
+    visible_cols = ["Process", "Categorization", "Word", "Definition"]
+    grid_df = df_view_full[["_row_id"] + visible_cols].copy()
+
+    gb = GridOptionsBuilder.from_dataframe(grid_df)
 
     gb.configure_default_column(
         resizable=True,
@@ -767,19 +773,12 @@ elif page == "Processes, Taxonomy and Topics":
         autoHeight=True
     )
 
-    gb.configure_column(
-        "Categorization",
-        width=120,
-        minWidth=100,
-        maxWidth=150
-    )
+    gb.configure_selection("single", use_checkbox=False)
+    gb.configure_column("_row_id", hide=True)
 
-    gb.configure_column(
-        "Word",
-        width=180,
-        minWidth=140,
-        maxWidth=220
-    )
+    gb.configure_column("Process", width=100, minWidth=80, maxWidth=120)
+    gb.configure_column("Categorization", width=100, minWidth=80, maxWidth=120)
+    gb.configure_column("Word", width=120, minWidth=100, maxWidth=140)
 
     gb.configure_column(
         "Definition",
@@ -789,15 +788,87 @@ elif page == "Processes, Taxonomy and Topics":
         autoHeight=True
     )
 
-    gridOptions = gb.build()
 
+    gridOptions = gb.build()
     gridOptions["onGridReady"] = on_grid_ready
     gridOptions["onGridSizeChanged"] = on_grid_size_changed
+    gridOptions["domLayout"] = "normal"
+
+    grid_resp = AgGrid(
+        grid_df,
+        gridOptions=gridOptions,
+        height=700,
+        fit_columns_on_grid_load=False,
+        reload_data=True,
+        allow_unsafe_jscode=True
+    )
+
+
+# ---------------------------------------------------------
+# Process, Taxonomy, and Topic
+# ---------------------------------------------------------
+
+elif page == "Processes, Taxonomy and Topics":
+    st.title("Processes, Taxonomy and Topics")
+
+    df_base = data_dict['knowledge_base_df'].drop('Word',axis=1).copy()
+
+    df_base1 = (
+        df_base[
+            df_base['Categorization'].isin(
+                ['Process', 'Taxonomy', 'Topic']
+            )
+        ]
+        .sort_values(['Categorization', 'Process'])
+        .fillna("")
+    )
+
+    # ---------------------------------------------------------
+    # CATEGORIZATION FILTER
+    # ---------------------------------------------------------
+    categorization_options = [
+        "(All)",
+        "Process",
+        "Taxonomy",
+        "Topic"
+    ]
+
+    categorization_sel = st.selectbox(
+        "Categorization",
+        categorization_options,
+        index=0
+    )
+
+    # Apply filter only when selected
+    if categorization_sel != "(All)":
+        df_view = df_base1[
+            df_base1["Categorization"] == categorization_sel
+        ].copy()
+    else:
+        df_view = df_base1.copy()
+
+    # ---------------------------------------------------------
+    # GRID
+    # ---------------------------------------------------------
+    gb_def = GridOptionsBuilder.from_dataframe(df_view)
+
+    gb_def.configure_default_column(
+        resizable=True,
+        sortable=True,
+        filter=True,
+        wrapText=True,
+        autoHeight=True
+    )
+
+    gb_def.configure_column("Process",width=120,minWidth=100,maxWidth=150)
+    gb_def.configure_column("Categorization",width=120,minWidth=100,maxWidth=150)
+
+    gridOptions_def = gb_def.build()
 
     AgGrid(
         df_view,
-        gridOptions=gridOptions,
-        height=800,
+        gridOptions=gridOptions_def,
+        height=700,
         allow_unsafe_jscode=True,
         fit_columns_on_grid_load=False,
         reload_data=True,
