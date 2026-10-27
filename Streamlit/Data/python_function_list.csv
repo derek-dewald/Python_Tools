@@ -1,19 +1,20 @@
 Function,Definition,Parameters,Returns,Date Created,Date Last Modified,Process,Categorization,Usage,Notes,Required Functions,Folder
 binary_complex_equivalency,Function which tests the Equivalence of 2 Columns in a dataframe to determine whether they are Equal or Not.,"['df', 'column_name', 'column_name1', 'new_column_name', 'eq', 'ne', 'tolerance', 'include_difference']",df,28-Aug-26,28-Aug-26,TBD,TBD,"binary_complex_equivalency(df,'SCORE1','SCORE2')",None,None,feature_engineering.py
 create_segment_range,,"['df', 'column_name', 'segment_range', 'return_value']",,,,,,,,,feature_engineering.py
-univariate_analysis,,"['df', 'sparsity_threshold', 'skew_threshold', 'extreme_threshold', 'high_cardinality_threshold']",,,,,,,,,eda_functions.py
-ml_validation_data_cleaning,,['df'],,,,,,,,,eda_functions.py
-stastical_compare_column_diff,Statistically Analyze the Difference Value between two columns.,"['df', 'column1', 'column2']",df,09-Sep-26,09-Sep-26,TBD,TBD,TBD,None,binary_complex_equivalency,eda_functions.py
-stastical_compare_column_diff_grouped,"Extends stastical_compare_column_diff_grouped to include a Group By on variable, or list.","['df', 'column1', 'column2', 'group_columns']",df,09-Sep-26,09-Sep-26,TBD,TBD,TBD,None,binary_complex_equivalency,eda_functions.py
+review_dataset_lvl1,"Function used to provide a level 1 assessment of the data to understand a mimimum state of the dataset.
+Used as Step 1 in Exploratory Data Analysis.","['df', 'top_n', 'min_top_count']","dict, df",09-Oct-26,09-Oct-26,TBD,TBD,test = review_dataset_lvl1(df),None,"visualize_dataframe_in_notebook
+display
+Markdown",eda_functions.py
 InspectFunction,,['function_name'],,,,,,,,,utility_functions.py
 extract_tables_from_db,,"['db_name', 'table_dictionary_source', 'include_columns', 'exclude_schemas']",,,,,,,,,utility_functions.py
 gpt_question,,['list_'],,,,,,,,,utility_functions.py
 standardize_column_text,"Function which is used to Standardize Text, specifically it replaces anything that is [^\w\s] - anything that is not a word character (\w) and not whitespace (\s) or [\d] is a digit (0–9), and lower cases it.","['df', 'column_name', 'new_column_name']",TBD,09-Sep-26,09-Sep-26,TBD,TBD,TBD,None,None,df_column_engineering.py
 word_counts_from_column,,"['df', 'column_name', 'lower', 'pattern', 'min_len', 'dropna']",pd.Series. Word counts indexed by token (sorted desc). date_created:01-Feb-26 date_last_modified: 01-Feb-26 classification:TBD sub_classification:TBD,,,,,Example Function Call,,,df_column_engineering.py
+synthetic_txn_dataset,,['months'],,,,,,,,,synthetic_datasets.py
 generate_process_dictionary_from_knowledge_base,"Function Used to created a Dataframe and Dictionary which Extracts the Expected Processes for a specific activity from Knowledge Base. To be used to help
-guidance project requirements and activities required.","['df', 'process']","df,text",09-Oct-26,09-Oct-26,TBD,TBD,project_df = generate_process(knowledge_base),None,"print_dict
+guidance project requirements and activities required.","['df', 'process', 'return_value']","dict_, rendered object",09-Oct-26,26-Oct-26,TBD,TBD,project_df = generate_process(knowledge_base),None,"print_dict
 object_dict",project_process_tools.py
-update_process_df_status,Function Used to Quickly Visualize and Calculate the Status of a Project which has utilized the Manual Dictionary Maintenance approach as exported from generate_process_dictionary_from_knowledge_base,"['df', 'project_status_dict']",Text,09-Oct-26,09-Oct-26,TBD,TBD,"update_process_df_status(df,project_status_dict)",None,"generate_process_dictionary_from_knowledge_base
+update_process_df_status,Function Used to Quickly Visualize and Calculate the Status of a Project which has utilized the Manual Dictionary Maintenance approach as exported from generate_process_dictionary_from_knowledge_base,['project_status_dict'],Text,09-Oct-26,09-Oct-26,TBD,TBD,"update_process_df_status(df,project_status_dict)",None,"generate_process_dictionary_from_knowledge_base
 visualize_dataframe_in_notebook
 Markdown
 display",project_process_tools.py
@@ -111,9 +112,23 @@ visualize_dict_as_docx(base_dict,'text1.docx',True)",100% Created by GPT.,None,a
 txt_to_python,Function Used to Import .txt or .py File into Python.,"['file_name', 'encoding']",Dataframe,3-Dec-25,3-Dec-25,OS Folder Management,File Management,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/DFProcessing.py'
 file = TextFileImport(location)",,,object_rendering.py
 export_formatted_df_to_single_xlsx,Function Used to Simplify the required formating to a excel output from Python to Excel,"['df', 'file_name', 'sheet_name', 'index', 'freeze_header', 'column_formats']",TBD,28-Aug-26,28-Aug-26,TBD,TBD,TBD,None,None,object_rendering.py
-visualize_dataframe_in_notebook,Function which applies some modest formating to a Dataframe to increase visual astetic.,"['df', 'show_as_number', 'show_as_currency', 'show_as_currency_without_dec', 'show_as_percentage']",Object Type date_created: 27-Aug-26 date_last_modified: 27-Aug-26 classification:TBD sub_classification:TBD,,,,,visualize_dataframe_in_notebook(df),,,object_rendering.py
 print_dict,Print Text from Dictionary into a structured output in Console.,"['d', 'indent', 'width']",None. Prints Structured Text in Console.,28-Aug-26,28-Aug-26,TBD,TBD,TBD,Developed for usage with Machine Learning Project.,None,object_rendering.py
 generate_formated_excel_file,,"['df', 'filename', 'sheet_name', 'wrap', 'align', 'valign', 'currency_columns', 'balance_columns', 'date_columns', 'int_columns', 'decimal_columns']",,,,,,,,,object_rendering.py
+generate_data_header_box,Function Used to Create a Psedu-Dashboard header. Used to quickly visualize information in header box with leading and trailing text.,"['value_dict', 'leading_text', 'trailing_text', 'width']",Rendered Output,21-Oct-26,21-Oct-26,TBD,TBD,"generate_data_header_box(example,leading_text,trailing_text)",None,"html
+Markdown
+display",object_rendering.py
+generate_metric_val_perc_pivot_heatmap,"Function to create 2 Heatmaps, which Display the Total Value of 1 Column, and the Relative Percentage. Used to articulate how values are distributed absolutely and relatively within segmentation in a bi-variable relationship.","['df', 'index', 'columns', 'numerator', 'denominator', 'leading_text', 'trailing_text']",Rendered Object,21-Oct-26,21-Oct-26,TBD,TBD,"generate_metric_val_perc_pivot_heatmap(
+df2,
+""FINAL_TRANSACTION"",
+""TRANSACTION_VAL_SEGMENT"",
+numerator=""FINAL_DECISION_COUNT"",
+denominator='Total',
+leading_text='# Leading Test',
+trailing_text='# Trailing Test'
+)",None,None,object_rendering.py
+visualize_dataframe_in_notebook,Function which applies some modest formating to a Dataframe to increase visual astetic.,"['df', 'show_as_int', 'show_as_number', 'show_as_currency', 'show_as_currency_without_dec', 'show_as_percentage', 'normalize_percentage', 'return_value', 'hide_index']",Object Type date_created: 27-Aug-26 date_last_modified: 27-Aug-26 classification:TBD sub_classification:TBD,,,,,visualize_dataframe_in_notebook(df),,,object_rendering.py
+visualize_overtime_change,,"['pivot_df', 'decimals', 'cmap', 'calculation', 'return_value', 'hide_index']",,,,,,,,,object_rendering.py
+visualize_dataframe_by_row,,"['df', 'show_as_int', 'show_as_number', 'show_as_currency', 'show_as_currency_without_dec', 'show_as_percentage', 'return_value']",,,,,,,,,object_rendering.py
 extract_py_folder_from_git_repo,Function Used to Extract Files from Git Hub Manually. Where a direct Git Connection can not be utilzied.,"['folder_git_url', 'output_location', 'file_extension']",TXT Files,05-Oct-26,05-Oct-26,TBD,TBD,"extract_py_folder_from_git_repo(
 folder_git_url='https://api.github.com/repos/derek-dewald/Python_Tools/contents/d_py_functions',
 output_location='/Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/test/')",None,None,external_connections.py

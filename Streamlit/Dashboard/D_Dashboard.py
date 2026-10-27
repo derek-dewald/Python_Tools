@@ -665,11 +665,12 @@ elif page == 'Functions':
         reload_data=True,
     )
 
-    c1, c2, c3, c4 = st.columns([1, 1, 1, 2])
+    c1, c2, c3, c4 = st.columns([1, 1, 1, 1])
 
-    c1_word = 'Process'
-    c2_word = 'Categorization'
-    c3_word = 'Function'
+    c1_word = 'Folder'
+    c2_word = 'Function'
+    c3_word = 'Process'
+    c4_word = 'Categorization'
 
     with c1:
         c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])
@@ -687,8 +688,17 @@ elif page == 'Functions':
         c3_options = ["(All)"] + sorted([x for x in df2[c3_word].unique() if x.strip()])
         c3_sel = st.selectbox(c3_word, c3_options, index=0)
 
-    df_view = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
-    df_view = df_view[['Folder','Function','Definition','Returns','Process','Categorization',]]
+    df3 = df2 if c3_sel == "(All)" else df2[df2[c3_word] == c3_sel]
+
+    with c4:
+        c4_options = ["(All)"] + sorted([x for x in df3[c4_word].unique() if x.strip()])
+        c4_sel = st.selectbox(c4_word, c4_options, index=0)
+
+    df_view = df3 if c4_sel == "(All)" else df3[df3[c4_word] == c4_sel]
+
+    df_view = df_view[
+        ['Folder', 'Function', 'Definition', 'Returns', 'Process', 'Categorization']
+    ]
 
     
 

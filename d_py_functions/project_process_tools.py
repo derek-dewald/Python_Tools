@@ -10,7 +10,12 @@ import pandas as pd
 import numpy as np
 
 
-def generate_process_dictionary_from_knowledge_base(df=None,process='Machine Learning Lifecycle'):
+
+def generate_process_dictionary_from_knowledge_base(
+    df=None,
+    process='Machine Learning Lifecycle',
+    return_value='project_dict'
+):
     '''
     Definition:
         Function Used to created a Dataframe and Dictionary which Extracts the Expected Processes for a specific activity from Knowledge Base. To be used to help
@@ -19,12 +24,16 @@ def generate_process_dictionary_from_knowledge_base(df=None,process='Machine Lea
     Parameters:
         df(Dataframe): Can import Knowledge Base Directly to save from calling Git.
         process(str): Desired Process to be manually documented. Default is Machine Learning Lifecycle
+        return_value(str): Three Options. print_dict/project_dict
+            project_dict: Returns a Python Dictionary, which can be used to manage the project
+            print_dict: Returns Text, Explaining Steps as Outlined in Knowledge Base
+                
     Returns:
-        df,text
+        dict_, rendered object
     Date Created:
         09-Oct-26
     Date Last Modified:
-        09-Oct-26
+        26-Oct-26
     Process:
         TBD
     Categorization:
@@ -39,7 +48,7 @@ def generate_process_dictionary_from_knowledge_base(df=None,process='Machine Lea
         
     '''
 
-    if len(df)==0:
+    if df is None or df.empty:
         try:
             df = pd.read_excel("/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/knowledge_base.xlsx")
         except:
@@ -75,30 +84,31 @@ def generate_process_dictionary_from_knowledge_base(df=None,process='Machine Lea
             process_dict[process]['Step Activities'][row['Word']] = row['Definition']
             progress_list.append(f"{process} - {row['Word']}")
 
-    print_dict(process_dict)
-
     break_text = '''
 ##########################################################################
 Generate Manual Dictionary    
 ##########################################################################
 '''
-    print(break_text)
-    print('project_status_dict = {')
-    for item in progress_list:
-        text = f"""'{item}':
-        {{
-        'Comments':[],
-        'Pending Items':[],
-        'Assumptions':[],
-        'Is Completed':0
-        }},
-        """
-        print(text)
-    print('}')
 
-    return df
+    if return_value=='project_dict':
+        print(break_text)
+        print('project_status_dict = {')
+        for item in progress_list:
+            text = f"""'{item}':
+            {{
+            'Comments':[],
+            'Pending Items':[],
+            'Assumptions':[],
+            'Is Completed':0
+            }},
+            """
+            print(text)
+        print('}')
+    else:
+        print_dict(process_dict)
+
+
 def update_process_df_status(
-    df,
     project_status_dict
 ):
 
@@ -127,27 +137,39 @@ def update_process_df_status(
         visualize_dataframe_in_notebook
         Markdown
         display
-    
+
     '''
-    
-    project_status_completion_dict = {x:project_status_dict[x]['Is Completed'] for x in project_status_dict.keys()}
-    df['MATCH_COL'] = df['Categorization'] + ' - ' + df['Word']
+    score_dict = {}
+    project_step = []
+    for item in project_status_dict.keys():
+        score_dict[item] = project_status_dict[item]['Is Completed']
+        project_step.append(item[:item.find(' - ')])
 
-    df["T"] = df['MATCH_COL'].map(project_status_completion_dict)
-    df["T1"] = df['Word'].map(project_status_completion_dict)
-    df["IS_COMPLETE"] = np.where(df['T'].notnull(),df['T'],df['T1'])
+    df = pd.DataFrame(score_dict.values(),index=score_dict.keys(),columns=['IS_COMPLETE']).reset_index().rename(columns={'index':"Project Step"})
+    df['Step'] = project_step
 
-    df = df[df['IS_COMPLETE'].notnull()]
-    df['IS_COMPLETE'] = df['IS_COMPLETE'].astype(int)
-    
-    df.drop(['T','T1','MATCH_COL'],axis=1,inplace=True)
-    
     complete = df['IS_COMPLETE'].sum()
     remaining = len(df['IS_COMPLETE'].notnull()) - complete
     complete_perc = (complete/len(df))*100
 
     print(f'You have currently completed {complete} for a straight line approximated completion percentage of {complete_perc:.2f}%, there are {remaining} remaining')
-    
+
+    display(Markdown(f"## Step Status"))
+    step_df = (df[['Step','IS_COMPLETE']]
+        .groupby('Step')
+        .agg(
+            Completed=('IS_COMPLETE', 'sum'),
+            Total=('IS_COMPLETE', 'count')
+        )
+        .reset_index().rename(columns={'sum':"",'count':'Total Steps'})
+              )
+    step_df['Percentage Completed'] = step_df['Completed']*100/step_df['Total']
+
+    visualize_dataframe_in_notebook(
+        step_df,
+        show_as_percentage=['Percentage Completed']
+    )
+
     display(Markdown(f"## Completed items"))
     visualize_dataframe_in_notebook(df[df['IS_COMPLETE']==1])
 
