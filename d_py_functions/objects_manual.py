@@ -9,6 +9,8 @@ Process
 '''
 
 import datetime
+import pandas as pd
+
 object_dict = {}
 
 object_dict['Example'] = {
@@ -380,3 +382,64 @@ object_dict['emoji_dict'] = {
         "emojis": ['🚀', '🔥', '💥', '💫', '🌟', '🏆', '💎', '🌱']
     }
 }}
+
+
+
+object_dict['reading_library'] = {
+    # Michael Lewis
+    "Liar's Poker": {"Author": "Michael Lewis", "Rating": 5},
+    "The New New Thing": {"Author": "Michael Lewis", "Rating": 5},
+    "Next": {"Author": "Michael Lewis", "Rating": 5},
+    "Moneyball": {"Author": "Michael Lewis", "Rating": 5},
+    "The Blind Side": {"Author": "Michael Lewis", "Rating": 5},
+    "Panic": {"Author": "Michael Lewis", "Rating": 4},
+    "The Big Short": {"Author": "Michael Lewis", "Rating": 5},
+    "Boomerang": {"Author": "Michael Lewis", "Rating": 4},
+    "Flash Boys": {"Author": "Michael Lewis", "Rating": 5},
+    "The Undoing Project": {"Author": "Michael Lewis", "Rating": 5},
+    "The Fifth Risk": {"Author": "Michael Lewis", "Rating":5},
+    "The Premonition": {"Author": "Michael Lewis", "Rating": 5},
+    "Going Infinite": {"Author": "Michael Lewis", "Rating": 4},
+    
+    "The Honest Truth About Dishonesty": {"Author": "Dan Ariely", "Rating": 5},
+    "Nudge": {"Author": "Richard H. Thaler and Cass R. Sunstein", "Rating": 5},
+    "Noise": {"Author": "Daniel Kahneman, Olivier Sibony and Cass R. Sunstein", "Rating": 5},
+    "Talking to Strangers": {"Author": "Malcolm Gladwell", "Rating": 5},
+    "Misbelief": {"Author": "Dan Ariely", "Rating": 5},
+    "Creativity, Inc.": {"Author": "Ed Catmull and Amy Wallace", "Rating": 4},
+    "Quiet Strength": {"Author": "Tony Dungy and Nathan Whitaker", "Rating": 4},
+    "Citizen Coke": {"Author": "Bartow J. Elmore", "Rating": 4},
+    "David and Goliath": {"Author": "Malcolm Gladwell", "Rating": 5},
+    "The Tipping Point": {"Author": "Malcolm Gladwell", "Rating": 5},
+    "Console Wars": {"Author": "Blake J. Harris", "Rating": 5},
+    "The Phoenix Project": {"Author": "Gene Kim, Kevin Behr and George Spafford", "Rating": 5},
+    "Think Like a Freak": {"Author": "Steven D. Levitt and Stephen J. Dubner", "Rating": 5},
+    "Too Big to Fail": {"Author": "Andrew Ross Sorkin", "Rating": 5},
+    "What Happens in Vegas": {"Author": "James Patterson and Mark Seal", "Rating": 5},
+    "The Outsiders": {"Author": "William N. Thorndike", "Rating": 4},
+    "The Signal and the Noise": {"Author": "Nate Silver", "Rating": 5},
+    "Misbehaving": {"Author": "Richard H. Thaler", "Rating": 5},
+    "Range": {"Author": "David Epstein", "Rating": 5},
+    "The Data Detective": {"Author": "Tim Harford", "Rating": 4},
+    "How Not to Be Wrong": {"Author": "Jordan Ellenberg", "Rating": 3},
+    "Bad Blood": {"Author": "John Carreyrou", "Rating": 5},
+    "When Genius Failed": {"Author": "Roger Lowenstein", "Rating": 5},
+    "The Smartest Guys in the Room": {"Author": "Bethany McLean and Peter Elkind", "Rating": 5},
+    "Superforecasting": {"Author": "Philip E. Tetlock and Dan Gardner", "Rating": None},
+    "On the Edge": {"Author": "Nate Silver", "Rating": 2},
+    "The Art of Uncertainty": {"Author": "David Spiegelhalter", "Rating": 2}
+}
+
+
+try:
+    df = pd.read_excel("/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/definitions.xlsx")
+    df = df[df['Categorization'].notnull()].sort_values('Definition').drop_duplicates('Word')
+    object_dict['word_definition_map'] = df[['Word','Definition']].set_index('Word')['Definition'].to_dict()
+    
+except:
+    pass
+
+
+
+
+
