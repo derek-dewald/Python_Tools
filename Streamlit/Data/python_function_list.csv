@@ -1,13 +1,52 @@
 Function,Definition,Parameters,Returns,Date Created,Date Last Modified,Process,Categorization,Usage,Notes,Required Functions,Folder
+load_presentation_font,,"['size', 'bold', 'font_path']",,,,,,,,,Delete.py
+frame_the_question,,"['question', 'context', 'why', 'scope', 'folder_location', 'filename', 'title', 'header', 'left_footer', 'right_footer']",,,,,,,,,Delete.py
+member_population_overview,,"['demographics', 'activity', 'observations', 'folder_location', 'filename', 'images', 'title', 'header', 'left_footer', 'right_footer']",,,,,,,,,Delete.py
+comparison_framework,,"['groups', 'target_population', 'folder_location', 'filename', 'images', 'title', 'header', 'subtitle', 'methodology_note', 'left_footer', 'right_footer']",,,,,,,,,Delete.py
+engagement_measurement_grid,,"['questions', 'folder_location', 'filename', 'title', 'header', 'subtitle', 'methodology_note', 'left_footer', 'right_footer']",,,,,,,,,Delete.py
+engagement_comparison_matrix,,"['data', 'folder_location', 'filename', 'title', 'header', 'subtitle', 'left_footer', 'right_footer', 'font_path']",,,,,,,,,Delete.py
+key_findings_slide,,"['findings', 'folder_location', 'filename', 'title', 'header', 'subtitle', 'left_footer', 'right_footer', 'font_path']",,,,,,,,,Delete.py
+assumptions_limitations_slide,,"['assumptions', 'limitations', 'folder_location', 'filename', 'title', 'header', 'subtitle', 'interpretation_note', 'left_footer', 'right_footer', 'font_path']",,,,,,,,,Delete.py
+opportunities_next_steps_slide,,"['opportunities', 'folder_location', 'filename', 'title', 'header', 'subtitle', 'left_footer', 'right_footer', 'font_path']",,,,,,,,,Delete.py
 binary_complex_equivalency,Function which tests the Equivalence of 2 Columns in a dataframe to determine whether they are Equal or Not.,"['df', 'column_name', 'column_name1', 'new_column_name', 'eq', 'ne', 'tolerance', 'include_difference']",df,28-Aug-26,28-Aug-26,TBD,TBD,"binary_complex_equivalency(df,'SCORE1','SCORE2')",None,None,feature_engineering.py
-create_segment_range,,"['df', 'column_name', 'segment_range', 'return_value']",,,,,,,,,feature_engineering.py
+create_segment_range,,"['df', 'column_name', 'segment_range', 'print_']",,,,,,,,,feature_engineering.py
+lognormal_distribution_generator,,"['base', 'std_dev', 'rng']",,,,,,,,,feature_engineering.py
+review_dataset_lvl0,"Function used to provide a level 0 assessment of the data to understand a mimimum state of the dataset.
+Used as Step 1 in Exploratory Data Analysis.",['df'],rendered_object,09-Oct-26,03-Nov-26,TBD,TBD,test = review_dataset_lvl0(df),None,"visualize_dataframe_in_notebook
+display
+Markdown",eda_functions.py
 review_dataset_lvl1,"Function used to provide a level 1 assessment of the data to understand a mimimum state of the dataset.
 Used as Step 1 in Exploratory Data Analysis.","['df', 'top_n', 'min_top_count']","dict, df",09-Oct-26,09-Oct-26,TBD,TBD,test = review_dataset_lvl1(df),None,"visualize_dataframe_in_notebook
 display
 Markdown",eda_functions.py
+plot_categorical_bar_frequency_distribution,,"['df', 'column', 'top_n', 'ax']",,,,,,,,,eda_functions.py
+plot_numeric_histogram,,"['df', 'column', 'bins', 'ax']",,,,,,,,,eda_functions.py
+plot_visualization_grid,,"['visualizations', 'ncols', 'figsize']",,,,,,,,,eda_functions.py
+classify_distribution,,['skew'],,,,,,,,,eda_functions.py
+recommend_log_scale,,"['s', 'threshold']",,,,,,,,,eda_functions.py
+review_dataset_lvl1,"Function used to provide a Level 1 assessment of
+the dataset through descriptive statistics,
+distribution analysis and visualizations.","['df', 'top_n', 'min_top_count']",dict: Numerical Columns Text Columns,,,"1. Calculate descriptive statistics.
+2. Classify numeric distribution shape.
+3. Recommend logarithmic visualization.
+4. Display numeric and categorical summaries.
+5. Plot standard distributions (N x 3).
+6. Plot linear/log comparisons (N x 2).
+7. Plot categorical distributions (N x 3).",,,,"visualize_dataframe_in_notebook
+classify_distribution
+recommend_log_scale
+plot_numeric_histogram
+plot_categorical_bar_frequency_distribution
+plot_visualization_grid",eda_functions.py
+plot_categorical_bar_frequency_distribution,,"['df', 'column', 'top_n', 'ax']",,,,,,,,,eda_functions.py
+plot_numeric_histogram,,"['df', 'column', 'bins', 'ax', 'log_scale']",,,,,,,,,eda_functions.py
+plot_visualization_grid_,,"['visualizations', 'ncols', 'figsize']",,,,,,,,,eda_functions.py
+plot_visualization_grid,,"['visualizations', 'ncols', 'figsize', 'max_rows']",,,,,,,,,eda_functions.py
 InspectFunction,,['function_name'],,,,,,,,,utility_functions.py
 extract_tables_from_db,,"['db_name', 'table_dictionary_source', 'include_columns', 'exclude_schemas']",,,,,,,,,utility_functions.py
 gpt_question,,['list_'],,,,,,,,,utility_functions.py
+net_present_value_calculator,,"['annual_interest', 'payment', 'total_amount', 'payments', 'annual_payments']",,,,,,,,,utility_functions.py
+preview_images_in_n_by_n_matrix,Display all PNG images in a directory as a gallery.,"['folder_location', 'columns', 'image_size', 'show_filename']",Rendered,04-Nov-26,04-Nov-26,TBD,TBD,TBD,None,None,utility_functions.py
 standardize_column_text,"Function which is used to Standardize Text, specifically it replaces anything that is [^\w\s] - anything that is not a word character (\w) and not whitespace (\s) or [\d] is a digit (0–9), and lower cases it.","['df', 'column_name', 'new_column_name']",TBD,09-Sep-26,09-Sep-26,TBD,TBD,TBD,None,None,df_column_engineering.py
 word_counts_from_column,,"['df', 'column_name', 'lower', 'pattern', 'min_len', 'dropna']",pd.Series. Word counts indexed by token (sorted desc). date_created:01-Feb-26 date_last_modified: 01-Feb-26 classification:TBD sub_classification:TBD,,,,,Example Function Call,,,df_column_engineering.py
 synthetic_txn_dataset,,['months'],,,,,,,,,synthetic_datasets.py
@@ -54,14 +93,25 @@ visualize_dataframe_in_notebook
 display
 markdown
 pandas",data_validation.py
+frame_the_question,"Creates a 1600x900 presentation slide with a central
+analytical question and three supporting sections.","['question', 'context', 'why', 'scope', 'folder_location', 'title', 'header', 'left_footer', 'right_footer', 'return_value', 'context_image', 'why_image', 'scope_image', 'image_size', 'color_dict']",,,,,,,,,storytelling_presentation.py
+member_population_overview,,"['demographics', 'activity', 'observations', 'folder_location', 'images', 'title', 'header', 'left_footer', 'right_footer', 'return_value', 'color_dict']",,,,,,,,,storytelling_presentation.py
+peer_group_introduction,,"['groups', 'target_population', 'folder_location', 'images', 'title', 'header', 'subtitle', 'methodology_note', 'left_footer', 'right_footer', 'return_value', 'color_dict', 'group_image_size', 'concept_image_size']",,,,,,,,,storytelling_presentation.py
+engagement_measurement_grid,,"['questions', 'folder_location', 'title', 'subtitle', 'left_footer', 'right_footer', 'color_dict', 'return_value']",,,,,,,,,storytelling_presentation.py
+engagement_comparison_matrix,,"['df', 'folder_location', 'title', 'subtitle', 'left_footer', 'right_footer', 'font_path', 'row_formats', 'return_value', 'output', 'color_dict']",,,,,,,,,storytelling_presentation.py
+statistical_assessment_matrix,,"['questions', 'groups', 'df', 'target_final_assessment', 'folder_location', 'title', 'subtitle', 'left_footer', 'right_footer', 'color_dict', 'return_value']",,,,,,,,,storytelling_presentation.py
+key_findings,,"['findings', 'folder_location', 'title', 'subtitle', 'left_footer', 'right_footer', 'font_path', 'color_dict', 'return_value']",,,,,,,,,storytelling_presentation.py
+opportunities_next_steps,,"['opportunities', 'folder_location', 'title', 'subtitle', 'left_footer', 'right_footer', 'color_dict', 'return_value']",,,,,,,,,storytelling_presentation.py
+generate_storytelling_presentation,,"['presentation_dict', 'performance_df', 'folder_location', 'df_assessment', 'target_final_assessment']",,,,,,,,,storytelling_presentation.py
+load_presentation_font,"Function Created by ChatGpt to Render Font, for Pillow Usage. Needed as original version of coding did not work in PC environment.","['size', 'bold', 'font_path']",TBD,04-Nov-26,04-Nov-26,TBD,TBD,TBD,None,None,storytelling_presentation.py
 sample_knowledge_test_single_df,,"['base_df', 'pause', 'test_name']",,,,,,,,,d_daily_test.py
-d_daily_test,,"['actions', 'sample', 'pause']",,,,,,,,,d_daily_test.py
 test_previous_errors,,"['max_correct', 'max_incorrect']",,,,,,,,,d_daily_test.py
 add_word_quote,"Function to add a new Word, Quote, Scripture, Proverb or Concept and Definition to Daily Test.","['word', 'text', 'classification']",Nil (Adds new record to excel file),05-Oct-26,05-Oct-26,TBD,TBD,"add_word_quote(
 'Latent',
 'Present or existing but not currently visible, active, or apparent, although capable of becoming evident or developing in the future.',
 'Word'
 )",None,None,d_daily_test.py
+d_daily_test,,"['words', 'sample', 'pause', 'exclude_processes']",,,,,,,,,d_daily_test.py
 extract_object_dot_py,Generate an Excel file of all parameters which are manually stored and maintained. File which is generated is used a input component for generate_knowledgebase.,"['object_dict', 'export_location']",df date_created:29-Jun-26 date_last_modified: 3-Jul-26 classification:TBD sub_classification:TBD,,,,,"manual_object_df(object_dict_manual,'/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
 update:
 Added Definition as new record, added column definition.

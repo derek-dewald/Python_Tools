@@ -53,86 +53,6 @@ def sample_knowledge_test_single_df(
     return temp_df
 
 
-def d_daily_test(
-    actions=5,
-    sample=3,
-    pause=1
-):
-    '''
-    Have a decision, do I merge in and count if its on historical then drop, or do I count if its coorect. If its not correct, then it should
-    have the potential to be added on, and if I cant ger it correct. Have to be careful due to duplication, if there are multiple instances.
-    
-    
-    '''
-    # Download Data 
-    historical_df = pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/d_historical_test_results1.xlsx')
-        
-    definition_df = pd.read_csv(object_dict['csv_links']['python_object']['google_definition_csv'])
-    definition_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/definition.xlsx',index=False)
-    definition_df = definition_df[definition_df['Word']!='Definition'].copy()
-    def_df = definition_df.merge(historical_df[['Word','Score']].rename(columns={'Score':'HISTORICAL_SCORE'}),on='Word',how='left')
-    
-    
-    wqs_df = pd.read_csv(object_dict['csv_links']['python_object']['google_word_quote'])
-    wqs_df = wqs_df.merge(historical_df[['Word','Score']],on='Word',how='left')
-    wqs_df = wqs_df[wqs_df['Score'].isnull()].copy()
-    
-    
-    # Start by testing More ML Words
-    ml_words = definition_df[definition_df['Process']=='Analytical Method']['Word'].tolist()
-    all_other_words = definition_df[definition_df['Process']!='Analytical Method']['Word'].tolist()
-
-    new_word_list = []
-
-    while actions>0:
-        # Select ML Words when Available. Except for Last Word, to create a distrubition and Include a Non ML Word.
-        if (len(ml_words)>0)&(actions>1):
-            w = ml_words.pop(random.randrange(len(ml_words)))
-            #print(f'ML Word Selected:{w}')
-            new_word_list.append(w)
-            actions+= -1
-        elif len(all_other_words)>0:
-            w = all_other_words.pop(random.randrange(len(all_other_words)))
-            #print(f'Non ML Word Selected:{w}')
-            new_word_list.append(w)
-            actions+= -1
-
-    test_df = definition_df[definition_df['Word'].isin(new_word_list)].copy()
-
-    results_df = sample_knowledge_test_single_df(test_df,pause=pause)
-
-    # Select A Word, Quote, Scripture and Proverb.
-    
-    word_dict = {}
-    word_dict['Word'] = wqs_df[wqs_df['Classification']=='Word'].sample(1)['Word'].item()
-    word_dict['Quote'] = wqs_df[wqs_df['Classification']=='Quote'].sample(1)['Word'].item()
-    word_dict['Scripture'] = wqs_df[wqs_df['Classification']=='Scripture'].sample(1)['Word'].item()
-    word_dict['Proverb'] = wqs_df[wqs_df['Classification']=='Proverb'].sample(1)['Word'].item()
-    
-    word_list2 = list(word_dict.values())
-    
-    results_df1 = wqs_df[wqs_df['Word'].isin(word_list2)].drop_duplicates('Word')
-    
-    for word in word_list2:
-        display(Markdown(f"#### {word}"))
-        display(Markdown(f"#### {results_df1[results_df1['Word']==word]['Definition'].item()}"))
-    
-    results_df1['Score'] = 0
-    results_df1['Date'] = datetime.datetime.now().strftime('%d-%b-%y')
-    results_df1['Last Tested'] = datetime.datetime.now().strftime('%d-%b-%y')
-
-    today_score = pd.concat([results_df,results_df1])
-    display(Markdown(f"### Your Score today on New Items was: {100*(today_score['Score'].sum()/len(today_score)):,.2f}%"))
-    
-    final_results_df = pd.concat([historical_df,today_score])
-
-    gpt_question(new_word_list)
-    
-    visualize_dataframe_in_notebook(today_score)
-    
-    final_results_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/d_historical_test_results1.xlsx',index=False)
-    final_results_df.to_excel(f"/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/archive/d_historical_test_results_{datetime.datetime.now().strftime('%d-%b-%y')}.xlsx",index=False)   
-    
 
 def test_previous_errors(
     max_correct=3,
@@ -259,4 +179,87 @@ def add_word_quote(
     final_df.to_excel(f'/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/archive/{file_name}.xlsx',index=False)
     final_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/d_historical_test_results1.xlsx',index=False)
     return temp
+
+
+import random 
+
+def d_daily_test(
+    words=5,
+    sample=3,
+    pause=1,
+    exclude_processes=['AI Agents']
+):
+    '''
+    Have a decision, do I merge in and count if its on historical then drop, or do I count if its coorect. If its not correct, then it should
+    have the potential to be added on, and if I cant ger it correct. Have to be careful due to duplication, if there are multiple instances.
+    
+    
+    '''
+    # Download Data 
+    historical_df = pd.read_excel('/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/d_historical_test_results1.xlsx')
         
+    definition_df = pd.read_csv(object_dict['csv_links']['python_object']['google_definition_csv'])
+    definition_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/definition.xlsx',index=False)
+    
+    # Only Want to Include Words Not Related to a Process 
+    definition_df = definition_df[definition_df['Word']!='Definition'].copy()
+    def_df = definition_df.merge(historical_df[['Word','Score']].rename(columns={'Score':'HISTORICAL_SCORE'}),on='Word',how='left')
+    def_df = def_df[
+        (def_df['Word']!='Definition')&
+        (~def_df['Categorization'].isin(['Process','Process Node']))&
+        (def_df['HISTORICAL_SCORE'].isnull())
+    ]
+
+    wqs_df = pd.read_csv(object_dict['csv_links']['python_object']['google_word_quote'])
+    wqs_df = wqs_df.merge(historical_df[['Word','Score']],on='Word',how='left')
+    wqs_df = wqs_df[wqs_df['Score'].isnull()].copy()
+    
+    def_df = def_df[
+        (def_df['Word']!='Definition')&
+        (~def_df['Categorization'].isin(['Process','Process Node','Process Step']))&
+        (def_df['Word']!='Taxonomy Definition')&
+        (def_df['HISTORICAL_SCORE'].isnull())&
+        (~def_df['Process'].isin(exclude_processes))
+        ]
+
+    # Start by testing More ML Words
+    words_ = def_df['Word'].tolist()
+
+    new_word_list = random.sample(words_, min(words,len(words_)))
+    
+    test_df = definition_df[definition_df['Word'].isin(new_word_list)].copy()
+
+    results_df = sample_knowledge_test_single_df(test_df,pause=pause)
+
+    # Select A Word, Quote, Scripture and Proverb.
+    
+    word_dict = {}
+    word_dict['Word'] = wqs_df[wqs_df['Classification']=='Word'].sample(1)['Word'].item()
+    word_dict['Quote'] = wqs_df[wqs_df['Classification']=='Quote'].sample(1)['Word'].item()
+    word_dict['Scripture'] = wqs_df[wqs_df['Classification']=='Scripture'].sample(1)['Word'].item()
+    word_dict['Proverb'] = wqs_df[wqs_df['Classification']=='Proverb'].sample(1)['Word'].item()
+    
+    word_list2 = list(word_dict.values())
+    
+    results_df1 = wqs_df[wqs_df['Word'].isin(word_list2)].drop_duplicates('Word')
+    
+    for word in word_list2:
+        display(Markdown(f"#### {word}"))
+        display(Markdown(f"#### {results_df1[results_df1['Word']==word]['Definition'].item()}"))
+    
+    results_df1['Score'] = 0
+    results_df1['Date'] = datetime.datetime.now().strftime('%d-%b-%y')
+    results_df1['Last Tested'] = datetime.datetime.now().strftime('%d-%b-%y')
+
+    today_score = pd.concat([results_df,results_df1])
+    display(Markdown(f"### Your Score today on New Items was: {100*(today_score['Score'].sum()/len(today_score)):,.2f}%"))
+    
+    final_results_df = pd.concat([historical_df,today_score])
+
+    gpt_question(new_word_list)
+    
+    visualize_dataframe_in_notebook(today_score)
+    
+    final_results_df.to_excel('/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/d_historical_test_results1.xlsx',index=False)
+    final_results_df.to_excel(f"/Users/derekdewald/Documents/Python/Github_Repo/d_testing_folder/archive/d_historical_test_results_{datetime.datetime.now().strftime('%d-%b-%y')}.xlsx",index=False)   
+    

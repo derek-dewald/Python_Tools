@@ -670,7 +670,7 @@ elif page == 'Functions':
     c1_word = 'Folder'
     c2_word = 'Function'
     c3_word = 'Process'
-    c4_word = 'Categorization'
+    c4_word = 'Categorizatio'
 
     with c1:
         c1_options = ["(All)"] + sorted([x for x in df_base[c1_word].unique() if x.strip()])

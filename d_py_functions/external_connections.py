@@ -55,6 +55,6 @@ def extract_py_folder_from_git_repo(
             if output_location:
                 file_name = f"{output_location}{file_name}"
             
-            with open(file_name, 'w', encoding='utf-8') as f:
-                f.write(file_response.text)
+            with open(file_name, 'wb') as f:
+                f.write(file_response.content)
                 print(file_name,file_url)

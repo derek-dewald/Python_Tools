@@ -85,7 +85,7 @@ def create_segment_range(
     df,
     column_name,
     segment_range,
-    return_value='text'
+    print_=False
 ):
     """
     """
@@ -106,5 +106,39 @@ def create_segment_range(
         labels=labels,
         right=True
     )
-    
-    display(df[f"{column_name}_SEGMENT"].value_counts().sort_index())
+    if print_:
+        display(df[f"{column_name}_SEGMENT"].value_counts().sort_index())
+
+
+
+def lognormal_distribution_generator(base, std_dev=0.30, rng=None):
+    """
+    Takes a Number 
+
+    Parameters
+    ----------
+    base : float or array-like
+        Expected expense (arithmetic mean).
+    std_dev : float
+        Standard deviation as a proportion of the mean.
+    rng : numpy.random.Generator
+        Random number generator.
+
+    Returns
+    -------
+    float or ndarray
+        Generated expense amounts.
+    """
+    if rng is None:
+        rng = np.random.default_rng(42)
+
+    base = np.asarray(base, dtype=float)
+
+    sigma = np.sqrt(np.log1p(std_dev**2))
+    mu = -0.5 * sigma**2
+
+    return base * rng.lognormal(
+        mean=mu,
+        sigma=sigma,
+        size=base.shape
+    )
