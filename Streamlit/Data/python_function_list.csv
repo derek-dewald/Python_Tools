@@ -1,13 +1,4 @@
 Function,Definition,Parameters,Returns,Date Created,Date Last Modified,Process,Categorization,Usage,Notes,Required Functions,Folder
-load_presentation_font,,"['size', 'bold', 'font_path']",,,,,,,,,Delete.py
-frame_the_question,,"['question', 'context', 'why', 'scope', 'folder_location', 'filename', 'title', 'header', 'left_footer', 'right_footer']",,,,,,,,,Delete.py
-member_population_overview,,"['demographics', 'activity', 'observations', 'folder_location', 'filename', 'images', 'title', 'header', 'left_footer', 'right_footer']",,,,,,,,,Delete.py
-comparison_framework,,"['groups', 'target_population', 'folder_location', 'filename', 'images', 'title', 'header', 'subtitle', 'methodology_note', 'left_footer', 'right_footer']",,,,,,,,,Delete.py
-engagement_measurement_grid,,"['questions', 'folder_location', 'filename', 'title', 'header', 'subtitle', 'methodology_note', 'left_footer', 'right_footer']",,,,,,,,,Delete.py
-engagement_comparison_matrix,,"['data', 'folder_location', 'filename', 'title', 'header', 'subtitle', 'left_footer', 'right_footer', 'font_path']",,,,,,,,,Delete.py
-key_findings_slide,,"['findings', 'folder_location', 'filename', 'title', 'header', 'subtitle', 'left_footer', 'right_footer', 'font_path']",,,,,,,,,Delete.py
-assumptions_limitations_slide,,"['assumptions', 'limitations', 'folder_location', 'filename', 'title', 'header', 'subtitle', 'interpretation_note', 'left_footer', 'right_footer', 'font_path']",,,,,,,,,Delete.py
-opportunities_next_steps_slide,,"['opportunities', 'folder_location', 'filename', 'title', 'header', 'subtitle', 'left_footer', 'right_footer', 'font_path']",,,,,,,,,Delete.py
 binary_complex_equivalency,Function which tests the Equivalence of 2 Columns in a dataframe to determine whether they are Equal or Not.,"['df', 'column_name', 'column_name1', 'new_column_name', 'eq', 'ne', 'tolerance', 'include_difference']",df,28-Aug-26,28-Aug-26,TBD,TBD,"binary_complex_equivalency(df,'SCORE1','SCORE2')",None,None,feature_engineering.py
 create_segment_range,,"['df', 'column_name', 'segment_range', 'print_']",,,,,,,,,feature_engineering.py
 lognormal_distribution_generator,,"['base', 'std_dev', 'rng']",,,,,,,,,feature_engineering.py
@@ -102,8 +93,9 @@ engagement_comparison_matrix,,"['df', 'folder_location', 'title', 'subtitle', 'l
 statistical_assessment_matrix,,"['questions', 'groups', 'df', 'target_final_assessment', 'folder_location', 'title', 'subtitle', 'left_footer', 'right_footer', 'color_dict', 'return_value']",,,,,,,,,storytelling_presentation.py
 key_findings,,"['findings', 'folder_location', 'title', 'subtitle', 'left_footer', 'right_footer', 'font_path', 'color_dict', 'return_value']",,,,,,,,,storytelling_presentation.py
 opportunities_next_steps,,"['opportunities', 'folder_location', 'title', 'subtitle', 'left_footer', 'right_footer', 'color_dict', 'return_value']",,,,,,,,,storytelling_presentation.py
-generate_storytelling_presentation,,"['presentation_dict', 'performance_df', 'folder_location', 'df_assessment', 'target_final_assessment']",,,,,,,,,storytelling_presentation.py
+generate_storytelling_presentation,,"['presentation_dict', 'performance_df', 'folder_location', 'df_assessment', 'target_final_assessment', 'process_df']",,,,,,,,,storytelling_presentation.py
 load_presentation_font,"Function Created by ChatGpt to Render Font, for Pillow Usage. Needed as original version of coding did not work in PC environment.","['size', 'bold', 'font_path']",TBD,04-Nov-26,04-Nov-26,TBD,TBD,TBD,None,None,storytelling_presentation.py
+render_visual_text_storytelling_framework,,"['df', 'process_col', 'item_col', 'description_col', 'title']",,,,,,,,,storytelling_presentation.py
 sample_knowledge_test_single_df,,"['base_df', 'pause', 'test_name']",,,,,,,,,d_daily_test.py
 test_previous_errors,,"['max_correct', 'max_incorrect']",,,,,,,,,d_daily_test.py
 add_word_quote,"Function to add a new Word, Quote, Scripture, Proverb or Concept and Definition to Daily Test.","['word', 'text', 'classification']",Nil (Adds new record to excel file),05-Oct-26,05-Oct-26,TBD,TBD,"add_word_quote(

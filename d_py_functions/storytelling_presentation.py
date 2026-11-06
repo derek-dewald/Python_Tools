@@ -1,9 +1,11 @@
+from IPython.utils.text import indent
+
 from matplotlib.ticker import MaxNLocator
 import matplotlib.pyplot as plt
 
 from PIL import Image, ImageDraw, ImageFont,ImageOps
 from pathlib import Path
-
+from IPython.display import Markdown,display
 
 from io import BytesIO
 import pandas as pd
@@ -11,8 +13,6 @@ import numpy as np
 import math
 import os
 import re
-from IPython.display import display
-
 
 color_dict = {
     'white': '#FFFFFF',
@@ -1350,7 +1350,7 @@ def engagement_measurement_grid(
     column_header_y = separator_y + 20
 
     grid_top = column_header_y + 38
-    grid_bottom = 825
+    grid_bottom = 775
 
     row_count = len(questions)
 
@@ -1564,19 +1564,37 @@ def engagement_measurement_grid(
     footer_line_y = 840
     footer_text_y = 850
 
+    # Caveat above the grey line
+    caveat_font = font(13)
+    caveat_line_height = 17
+    caveat_lines = wrap(
+        left_footer,
+        caveat_font,
+        1390
+    ) if left_footer else []
+
+    # Position caveat immediately above footer line
+    caveat_y = footer_line_y - (
+        len(caveat_lines) * caveat_line_height
+    ) - 6
+
+    for caveat_line in caveat_lines:
+        draw.text(
+            (95, caveat_y),
+            caveat_line,
+            font=caveat_font,
+            fill=muted
+        )
+        caveat_y += caveat_line_height
+
+    # Footer divider
     draw.line(
         (95, footer_line_y, 1505, footer_line_y),
         fill=line,
         width=2
     )
 
-    draw.text(
-        (95, footer_text_y),
-        left_footer,
-        font=font(17),
-        fill=muted
-    )
-
+    # Right footer remains below the divider
     footer_font = font(10)
 
     draw.text(
@@ -4163,16 +4181,111 @@ def opportunities_next_steps(
 
 
 #############################################
+# THIS IS A MANUAL PROCESS. Need to automate and pull the DF from a .py file and use dict_to_dataframe
+temp_dict = {'columns': ['Process', 'Categorization', 'Word', 'Definition'],
+ 'index': [1093,
+  1094,
+  1095,
+  1096,
+  1097,
+  1098,
+  1099,
+  1100,
+  1101,
+  1102,
+  1103,
+  1104,
+  1105,
+  1106,
+  1107,
+  1108],
+ 'data': [['Storytelling Presentation Template',
+   'Process',
+   'Process Definition',
+   "The purpose of this framework is to remind, guide, and challenge us to think beyond simply presenting information. It's easy to become immersed in data, analysis, and visualizations and lose sight of the bigger picture: What story are we telling, why does it matter, and what do we want our audience to understand or do?\n\nStorytelling is the process of connecting information into a meaningful narrative, where each slide has a clear purpose and contributes to the overall message. Insight is not simply a finding; it is an understanding of what that finding means and why it matters. Purpose is the reason the information deserves the audience's attention.\n\nAs you build your presentation, continually challenge yourself: Are we simply showing information, or are we helping our audience move from information to understanding, understanding to insight, and insight to action? "],
+  ['Storytelling Presentation Template',
+   'Process Step',
+   'Frame the Question',
+   'Establish the context, purpose, and central question that the analysis is intended to address.'],
+  ['Storytelling Presentation Template',
+   'Frame the Question',
+   'Slide 1',
+   'Introduce the analytical premise and establish why the question matters.'],
+  ['Storytelling Presentation Template',
+   'Process Step',
+   'Structure the Evaluation',
+   None],
+  ['Storytelling Presentation Template',
+   'Structure the Evaluation',
+   'Slide 2',
+   'Introduce Target Population, define dimensions of interest, preliminary observations'],
+  ['Storytelling Presentation Template',
+   'Structure the Evaluation',
+   'Process Definition',
+   "Establish a structured and transparent approach for evaluating the question, including relevant populations, comparisons, dimensions, and metrics."],
+  ['Storytelling Presentation Template',
+   'Structure the Evaluation',
+   'Slide 3',
+   'Introduce Peer Groups, at high level, Appendix for Peer Equivalent Slides'],
+  ['Storytelling Presentation Template',
+   'Structure the Evaluation',
+   'Slide 4',
+   'Introduce Metrics of Relevance and context of scope'],
+  ['Storytelling Presentation Template',
+   'Process Step',
+   'Assess & Interpret',
+   'Systematically evaluate the evidence, identify patterns and differences, and distinguish observations from potential explanations.'],
+  ['Storytelling Presentation Template',
+   'Assess & Interpret',
+   'Slide 5',
+   'Explore performance at a more granular level. of 2-3 most influential of the metrics, all else to Appendix'],
+  ['Storytelling Presentation Template',
+   'Assess & Interpret',
+   'Slide 6',
+   'Summarize group performance across dimensions.'],
+  ['Storytelling Presentation Template',
+   'Assess & Interpret',
+   'Slide 7',
+   "Consolidate observations and interpret the findings.',"],
+  ['Storytelling Presentation Template',
+   'Process Step',
+   'Implications & Opportunities',
+   'Translate analytical findings into meaningful implications, potential actions, and opportunities for further investigation or iterative improvement'],
+  ['Storytelling Presentation Template',
+   'Implications & Opportunities',
+   'Slide 8',
+   'Identify recommendations and opportunities to enhance or evolve the analysis.'],
+  ['Storytelling Presentation Template',
+   'Process Step',
+   'Appendix: Spill Over Slide 5',
+   None],
+  ['Storytelling Presentation Template',
+   'Process Step',
+   'Appendix: Assumptions and Limitations',
+   None]]}
 
+process_df = pd.DataFrame(data=temp_dict["data"],columns=temp_dict["columns"],index=temp_dict["index"])
 
 def generate_storytelling_presentation(
         presentation_dict,
         performance_df,
         folder_location,
         df_assessment,
-        target_final_assessment
+        target_final_assessment,
+        process_df=process_df
         ):
+    
 
+    definition = process_df[process_df['Categorization']=='Process']['Definition'].item()
+    process_df1 = process_df[process_df['Categorization']!='Process'].copy()
+    
+    display(Markdown('## Welcome to the Generating Storytelling Presentation Visual Walkthrough! '))
+    
+    display(Markdown(f"### {definition}"))
+
+    render_visual_text_storytelling_framework(process_df1)
+
+    count_=1
     frame_the_question(
         question=presentation_dict['frame_the_question']['Question'],
         context=presentation_dict['frame_the_question']['Context'],
@@ -4181,8 +4294,11 @@ def generate_storytelling_presentation(
         context_image=presentation_dict['frame_the_question']['context_image'],
         why_image=presentation_dict['frame_the_question']['why_image'],
         scope_image=presentation_dict['frame_the_question']['scope_image'],
-        folder_location=folder_location
+        folder_location=folder_location,
+        right_footer=str(count_)
     )
+
+    count_+=1
     
     member_population_overview(
         demographics=presentation_dict['member_population_overview']['demographic_dict'],
@@ -4190,10 +4306,10 @@ def generate_storytelling_presentation(
         observations=presentation_dict['member_population_overview']['observation_list'],
         images=presentation_dict['member_population_overview']['images'],
         folder_location=folder_location,
-        left_footer='',
-        right_footer=''
+        right_footer=str(count_)
     )
 
+    count_+=1
 
     peer_group_introduction(
         groups=presentation_dict['peer_group_introduction']['groups'],
@@ -4203,43 +4319,53 @@ def generate_storytelling_presentation(
         color_dict=color_dict,
         group_image_size=135,
         concept_image_size=120,
+        right_footer=str(count_)
     )
+
+    count_+=1
 
     engagement_measurement_grid(
         questions=presentation_dict['engagement_measurement_grid']['questions'],
         folder_location=folder_location,
         left_footer=presentation_dict['engagement_measurement_grid']['footing_caveat'],
-        right_footer=''
+        right_footer=str(count_)
     )
+
+    count_+=1
 
     engagement_comparison_matrix(
         df=performance_df,
         title="Comparing Observed Performance Across Groups",
         subtitle="By examining relative and absolute changes across our identified KPIs, we can begin to distinguish measurable differences from meaningful changes and consider what these observations tell us about our original question.",
-        left_footer="",
-        right_footer=""
+        right_footer=str(count_)
     )
+
+    count_+=1
 
     statistical_assessment_matrix(
         questions=presentation_dict['engagement_measurement_grid']['questions'],
         groups=presentation_dict['peer_group_introduction']['groups'],
         df=df_assessment,
         target_final_assessment=target_final_assessment,
-        folder_location=folder_location
+        folder_location=folder_location,
+        right_footer=str(count_)
     )
+
+    count_+=1
 
     key_findings(
         findings=presentation_dict['key_findings'],
+        right_footer=str(count_)
     )
+
+    count_+=1
 
     opportunities_next_steps(
         opportunities=presentation_dict['opportunities_next_steps'],
         folder_location=folder_location,
         left_footer="Member Engagement Analysis",
-        right_footer="",
+        right_footer=str(count_)
     )
-
-
 
 def load_presentation_font(size, bold=False, font_path=None):
     '''
@@ -4298,5 +4424,91 @@ def load_presentation_font(size, bold=False, font_path=None):
         "Install Arial/DejaVu Sans or supply font_path."
     )
 
+def render_visual_text_storytelling_framework(
+    df,
+    process_col='Categorization',
+    item_col='Word',
+    description_col='Definition',
+    title="Storytelling Presentation Guide"
+):
+    """
+    Render a storytelling framework as formatted Jupyter Markdown.
 
+    Process Step:
+        Display as a section heading with its definition.
+
+    Slide:
+        Display as a numbered list item with its description.
+
+    Process Definition:
+        Display additional guidance for the current process.
+
+    Rows are rendered in their original DataFrame order.
+    """
+
+    def clean_text(value):
+        if pd.isna(value):
+            return ""
+        return str(value).strip()
+
+    def markdown_quote(text):
+        return "\n".join(
+            f"> {line}" if line.strip() else ">"
+            for line in text.splitlines()
+        )
+
+    markdown = [
+        f"# {title}",
+        "",
+        "*A guide to the purpose, structure, and narrative "
+        "flow of the presentation.*",
+        "",
+        "---",
+        ""
+    ]
+
+    for _, row in df.iterrows():
+
+        process = clean_text(row[process_col])
+        item = clean_text(row[item_col])
+        description = clean_text(row[description_col])
+
+        # 1. New process step
+        if process == "Process Step":
+
+            markdown.append(f"## {item}")
+            markdown.append("")
+
+            if description:
+                markdown.append(markdown_quote(description))
+                markdown.append("")
+
+        # 2. Additional process definition
+        elif item == "Process Definition":
+
+            if description:
+                markdown.append("**Process Definition**")
+                markdown.append("")
+                markdown.append(markdown_quote(description))
+                markdown.append("")
+
+        # 3. Slide guidance
+        elif item.startswith("Slide "):
+
+            markdown.append(f"- **{item}**")
+
+            if description:
+                markdown.append("\n".join(f"  {line}" for line in description.splitlines()))
+            markdown.append("")
+
+        # 4. Other records
+        else:
+            markdown.append(f"**{item}**")
+
+            if description:
+                markdown.append(description)
+
+            markdown.append("")
+
+    display(Markdown("\n".join(markdown)))
 
