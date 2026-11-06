@@ -32,17 +32,16 @@ def frame_the_question(
     context,
     why,
     scope,
-    folder_location=None,
     title='Frame the Question',
     header='',
     left_footer='',
     right_footer='',
-    return_value='',
     context_image=None,
     why_image=None,
     scope_image=None,
     image_size=140,
-    color_dict=color_dict
+    color_dict=color_dict,
+    export_file=False
 ):
     '''
     Definition:
@@ -65,22 +64,6 @@ def frame_the_question(
     Required Functions:
         load_presentation_font
     '''
-
-    folder = (
-        Path(folder_location).expanduser()
-        if folder_location is not None
-        else Path.cwd()
-    )
-
-    if not folder.is_dir():
-        raise FileNotFoundError(
-            f'Folder does not exist: {folder}'
-        )
-
-    output = folder / '1_frame_the_question'
-
-    if output.suffix.lower() != '.png':
-        output = output.with_suffix('.png')
 
     W, H = 1600, 900
 
@@ -309,10 +292,11 @@ def frame_the_question(
         fill=muted
     )
 
-    if return_value == 'file':
-        img.save(output)
+    if export_file:
+        img.save('frame_the_question.png')
+        return None
 
-    return display(img)
+    display(img)
 
 
 
@@ -320,14 +304,13 @@ def member_population_overview(
     demographics,
     activity,
     observations,
-    folder_location=None,
     images=None,
     title='Understanding the Affected Population',
     header='STRUCTURE THE EVALUATION',
     left_footer='',
     right_footer='',
-    return_value='',
-    color_dict=color_dict
+    color_dict=color_dict,
+    export_file=False
 ):
     """
     Create a 1600 x 900 infographic-style presentation slide.
@@ -351,19 +334,6 @@ def member_population_overview(
 
     images = images or {}
     
-    folder = (
-        Path(folder_location).expanduser()
-        if folder_location is not None
-        else Path.cwd()
-    )
-
-    if not folder.is_dir():
-        raise FileNotFoundError(
-            f'Folder does not exist: {folder}'
-        )
-
-    output = (folder / 'member_population_overview').with_suffix('.png')
-
     W, H = 1600, 900
 
     navy  = color_dict['navy']
@@ -631,17 +601,17 @@ def member_population_overview(
         font=font(18),
         fill=muted
     )
-    
-    if return_value == 'file':
-        img.save(output)
 
-    return display(img)
+    if export_file:
+        img.save('member_population_overview.png')
+        return None
+
+    display(img)
 
 
 def peer_group_introduction(
     groups,
     target_population,
-    folder_location=None,
     images=None,
     title="Establishing the Comparison Framework",
     header="",
@@ -649,10 +619,10 @@ def peer_group_introduction(
     methodology_note="",
     left_footer="",
     right_footer="",
-    return_value="",
     color_dict=color_dict,
     group_image_size=120,
     concept_image_size=115,
+    export_file=False
 ):
     """
     Create a 1600 x 900 comparison framework slide.
@@ -1031,27 +1001,15 @@ def peer_group_introduction(
     # Output
     # --------------------------------------------------
 
-    if return_value == "file":
-        output_folder = Path(folder_location or ".")
-        output_folder.mkdir(parents=True, exist_ok=True)
-
-        output_path = (
-            output_folder / "peer_group_introduction.png"
-        )
-
-        img.save(output_path)
-        return str(output_path)
-
-    if return_value == "image":
-        return img
-
+    if export_file:
+        img.save('peer_group_introduction.png')
+        return None
+    
     display(img)
-
 
 
 def engagement_measurement_grid(
     questions,
-    folder_location=None,
     title='A Framework for Defining, Understanding and Evaluating Member Engagement',
     subtitle=(
         'Defining core measurement categories and KPIs enables '
@@ -1063,7 +1021,7 @@ def engagement_measurement_grid(
     left_footer='',
     right_footer='',
     color_dict=color_dict,
-    return_value=''
+    export_file=False
 ):
     """
     Create a dynamic 1600 x 900 measurement framework slide.
@@ -1108,20 +1066,7 @@ def engagement_measurement_grid(
     max_metrics = max(
         len(q['metrics']) for q in questions
     )
-
-    folder = (
-        Path(folder_location).expanduser()
-        if folder_location is not None
-        else Path.cwd()
-    )
-
-    if not folder.is_dir():
-        raise FileNotFoundError(
-            f'Folder does not exist: {folder}'
-        )
-
-    output = folder / 'engagement_measurement_grid.png'
-
+    
     # --------------------------------------------------
     # Canvas and colours
     # --------------------------------------------------
@@ -1610,24 +1555,24 @@ def engagement_measurement_grid(
         fill=muted
     )
 
-    if return_value == 'file':
-        img.save(output)
-
-    return display(img)
+    if export_file:
+        img.save('engagement_measurement_grid.png')
+        return None
+    
+    display(img)
 
 
 def engagement_comparison_matrix(
     df,
-    folder_location=None,
     title="Comparing Observed Performance Across Groups",
     subtitle="",
     left_footer="",
     right_footer="",
     font_path=None,
     row_formats=None,
-    return_value="",
     output=None,
     color_dict=color_dict,
+    export_file=False
 ):
     """
     Create a 1600 x 900 presentation comparison matrix.
@@ -2518,32 +2463,11 @@ def engagement_comparison_matrix(
         Image.Resampling.LANCZOS
     )
 
-    if return_value == "image":
-        return img
-
-    if return_value == "file":
-
-        if output is None:
-
-            output = (
-                Path(folder_location or ".")
-                / "engagement_comparison_matrix.png"
-            )
-
-        output = Path(output)
-
-        output.parent.mkdir(
-            parents=True,
-            exist_ok=True
-        )
-
-        img.save(output)
-
-        return str(output)
+    if export_file:
+        img.save('engagement_comparison_matrix.png')
+        return None
 
     display(img)
-
-    return None
 
 
 def statistical_assessment_matrix(
@@ -2551,13 +2475,12 @@ def statistical_assessment_matrix(
     groups,
     df,
     target_final_assessment,
-    folder_location=None,
     title='Evaluating Differences Across Our Guiding Questions',
     subtitle='Statistical comparisons with peer groups inform the overall assessment of the target population.',
     left_footer='',
     right_footer='',
     color_dict=color_dict,
-    return_value=''
+    export_file=False
 ):
     """
     Render Slide 6: Statistical Assessment Matrix.
@@ -3355,44 +3278,22 @@ def statistical_assessment_matrix(
     # 9. Output
     # =========================================================
 
-    if return_value == 'image':
-        return img
 
-    if return_value == 'file':
-
-        folder = Path(
-            folder_location or '.'
-        ).expanduser()
-
-        folder.mkdir(
-            parents=True,
-            exist_ok=True
-        )
-
-        output = (
-            folder
-            / 'statistical_assessment_matrix.png'
-        )
-
-        img.save(output)
-
-        return str(output)
+    if export_file:
+        img.save('statistical_assessment_matrix.png')
+        return None
 
     display(img)
 
-    return None
-
-
 def key_findings(
     findings,
-    folder_location=None,
     title="Key Findings",
     subtitle="What the analysis suggests about changes in member engagement.",
     left_footer="",
     right_footer="",
     font_path=None,
     color_dict=color_dict,
-    return_value=""
+    export_file=False
 ):
     """
     Create a 1600 x 900 Key Findings slide.
@@ -3763,35 +3664,23 @@ def key_findings(
     # --------------------------------------------------
     # Save / Return
     # --------------------------------------------------
-    if return_value == "file":
-
-        output = (
-            Path(folder_location or ".")
-            / filename
-        )
-
-        output.parent.mkdir(
-            parents=True,
-            exist_ok=True
-        )
-
-        img.save(output)
-
-        return str(output)
-
-    display(img)
+    if export_file:
+        img.save('key_findings.png')
+        return None
+    
     return img
+
+
 
 
 def opportunities_next_steps(
     opportunities,
-    folder_location=None,
     title="Opportunities and Next Steps",
     subtitle="Translating our findings into practical opportunities for deeper insight and better decisions.",
     left_footer="Member Engagement Analysis",
     right_footer="08",
     color_dict=color_dict,
-    return_value=''
+    export_file=False
 ):
     """
     Create a 1600 x 900 Pillow presentation slide.
@@ -3817,10 +3706,6 @@ def opportunities_next_steps(
         'file'  -> save PNG and return file path
         other   -> display image in notebook
     """
-
-    from pathlib import Path
-    from PIL import Image, ImageDraw
-    from IPython.display import display
 
     # =========================================================
     # 1. Validate inputs
@@ -4149,36 +4034,11 @@ def opportunities_next_steps(
     # 7. Output
     # =========================================================
 
-    if return_value == 'image':
-        return img
-
-    if return_value == 'file':
-
-        folder = Path(
-            folder_location or '.'
-        ).expanduser()
-
-        folder.mkdir(
-            parents=True,
-            exist_ok=True
-        )
-
-        output = (
-            folder
-            / 'opportunities_next_steps_slide.png'
-        )
-
-        img.save(output)
-
-        return str(output)
+    if export_file:
+        img.save('opportunities_next_steps.png')
+        return None
 
     display(img)
-
-    return None
-
-
-
-
 
 #############################################
 # THIS IS A MANUAL PROCESS. Need to automate and pull the DF from a .py file and use dict_to_dataframe
@@ -4269,10 +4129,10 @@ process_df = pd.DataFrame(data=temp_dict["data"],columns=temp_dict["columns"],in
 def generate_storytelling_presentation(
         presentation_dict,
         performance_df,
-        folder_location,
         df_assessment,
         target_final_assessment,
-        process_df=process_df
+        process_df=process_df,
+        export_file=False
         ):
     
 
@@ -4294,8 +4154,8 @@ def generate_storytelling_presentation(
         context_image=presentation_dict['frame_the_question']['context_image'],
         why_image=presentation_dict['frame_the_question']['why_image'],
         scope_image=presentation_dict['frame_the_question']['scope_image'],
-        folder_location=folder_location,
-        right_footer=str(count_)
+        right_footer=str(count_),
+        export_file=export_file
     )
 
     count_+=1
@@ -4305,8 +4165,8 @@ def generate_storytelling_presentation(
         activity=presentation_dict['member_population_overview']['activity_dict'],
         observations=presentation_dict['member_population_overview']['observation_list'],
         images=presentation_dict['member_population_overview']['images'],
-        folder_location=folder_location,
-        right_footer=str(count_)
+        right_footer=str(count_),
+        export_file=export_file
     )
 
     count_+=1
@@ -4314,21 +4174,21 @@ def generate_storytelling_presentation(
     peer_group_introduction(
         groups=presentation_dict['peer_group_introduction']['groups'],
         target_population='Describe the Target Population',
-        folder_location=folder_location,
         images=presentation_dict['peer_group_introduction']['images'],
         color_dict=color_dict,
         group_image_size=135,
         concept_image_size=120,
-        right_footer=str(count_)
+        right_footer=str(count_),
+        export_file=export_file
     )
 
     count_+=1
 
     engagement_measurement_grid(
         questions=presentation_dict['engagement_measurement_grid']['questions'],
-        folder_location=folder_location,
         left_footer=presentation_dict['engagement_measurement_grid']['footing_caveat'],
-        right_footer=str(count_)
+        right_footer=str(count_),
+        export_file=export_file
     )
 
     count_+=1
@@ -4337,7 +4197,8 @@ def generate_storytelling_presentation(
         df=performance_df,
         title="Comparing Observed Performance Across Groups",
         subtitle="By examining relative and absolute changes across our identified KPIs, we can begin to distinguish measurable differences from meaningful changes and consider what these observations tell us about our original question.",
-        right_footer=str(count_)
+        right_footer=str(count_),
+        export_file=export_file
     )
 
     count_+=1
@@ -4347,24 +4208,25 @@ def generate_storytelling_presentation(
         groups=presentation_dict['peer_group_introduction']['groups'],
         df=df_assessment,
         target_final_assessment=target_final_assessment,
-        folder_location=folder_location,
-        right_footer=str(count_)
+        right_footer=str(count_),
+        export_file=export_file
     )
 
     count_+=1
 
     key_findings(
         findings=presentation_dict['key_findings'],
-        right_footer=str(count_)
+        right_footer=str(count_),
+        export_file=export_file
     )
 
     count_+=1
 
     opportunities_next_steps(
         opportunities=presentation_dict['opportunities_next_steps'],
-        folder_location=folder_location,
-        left_footer="Member Engagement Analysis",
-        right_footer=str(count_)
+        left_footer="",
+        right_footer=str(count_),
+        export_file=export_file
     )
 
 def load_presentation_font(size, bold=False, font_path=None):

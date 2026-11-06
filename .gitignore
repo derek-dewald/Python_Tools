@@ -1,3 +1,4 @@
+
 # ==================================================
 # IGNORE EVERYTHING BY DEFAULT
 # ==================================================
@@ -22,6 +23,11 @@
 !Images/**
 
 !d_testing_folder/d_historical_test_results1.xlsx
+
+
+!Default Presentation Images
+!Default Presentation Images/**
+
 
 # ==================================================
 # NEVER SHARE
