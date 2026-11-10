@@ -1002,3 +1002,76 @@ def plot_visualization_grid(
 
         plt.show()
         plt.close(fig)
+
+
+
+
+from itertools import combinations
+
+
+def review_dataset_lvl2(df,exclude_columns,top_n=10):
+
+
+    columns = [col for col in df.columns if col not in exclude_columns]
+    
+    pairs = list(combinations(df.columns, 2))
+    column_df = pd.DataFrame(pairs,columns=['COLUMN1','COLUMN2'])
+    
+    column_dict = {}
+
+    for column in df.columns:
+        s =df[column]
+        if pd.api.types.is_numeric_dtype(s):
+            column_dict[column] = 'Numeric'
+        else:
+            column_dict[column] = 'Text'
+    column_df['COLUMN1_TYPE'] = column_df['COLUMN1'].map(column_dict)
+    column_df['COLUMN2_TYPE'] = column_df['COLUMN2'].map(column_dict)
+
+    
+    # Start with Numeric Columns 
+    numeric_columns =  [col for col, dtype in column_dict.items() if dtype == 'Numeric']
+    rank_df_numeric_correlations(df, numeric_columns, min_corr=.6)
+
+    # Move on to columns which are Mixed, Numeric and Text
+    
+    text_num_df =column_df[column_df['COLUMN1_TYPE']!=column_df['COLUMN2_TYPE']]
+    
+    display(Markdown('''
+    ## Summary Analysis of Bivariate Relationship between Text and Numeric Columns. 
+    ### Text Columns on Vertical
+    '''))
+    completed = []
+    
+    for a,b in text_num_df.iterrows():
+        col1,col2,col1_t,col2_t= b
+        columns = []
+        if (col1_t=='Numeric')&(col2 not in completed):
+            columns = text_num_df[text_num_df["COLUMN2"]==col2]['COLUMN1'].tolist()
+            columns.append(col2)
+            visualize_dataframe_in_notebook(df[columns].groupby(col2).mean(),hide_index=False,show_as_number=columns)
+            completed.append(col2)
+        elif (col2_t=='Numeric')&(col1 not in completed)&(col1 not in exclude_columns):
+            columns = text_num_df[text_num_df["COLUMN1"]==col1]['COLUMN2'].tolist()
+            columns.append(col1)
+            visualize_dataframe_in_notebook(df[columns].groupby(col1).mean(),hide_index=False,show_as_number=columns)
+            completed.append(col1)
+            
+
+    # Finish with Columns which are both Text
+    for a,b in column_df[(column_df['COLUMN1_TYPE'].str.contains('Text'))&(column_df['COLUMN2_TYPE'].str.contains('Text'))].iterrows():
+        
+        if (b['COLUMN2'] in exclude_columns)|(b['COLUMN1'] in exclude_columns):
+            pass
+        else:
+            temp = df[[b['COLUMN2'],b['COLUMN1']]].groupby([b['COLUMN2'],b['COLUMN1']]).size().sort_values(ascending=False).reset_index().rename(columns={0:'RECORDS'})
+            temp['PERC'] = 100*temp['RECORDS']/temp['RECORDS'].sum()
+            val1 = temp.head(top_n)['PERC'].sum()
+            val2 = len(temp[temp['PERC']>=1])
+            val3 = len(temp)
+            
+            display(Markdown(f"""
+## Bivariate analyis Top {top_n} Records for {b['COLUMN1']} and {b['COLUMN2']}
+### Top 10 Records represent {val1:,.2f}% of Distribution, and {val2} records have atleast 1%, with {val3} total unique combinations.
+            """))       
+            visualize_dataframe_in_notebook(dataframe_side_by_side(temp,top_n))

@@ -8,7 +8,7 @@ import numpy as np
 import pandas as pd
 
 from IPython.display import Markdown,display
-from eda_functions import binary_complex_equivalency
+from feature_engineering import binary_complex_equivalency
 from object_rendering import visualize_dataframe_in_notebook
 
 def df_compare(df,df1,primary_key_list=[]):

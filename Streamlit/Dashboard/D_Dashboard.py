@@ -255,8 +255,7 @@ data_dict = load_data()
 st.sidebar.title("Navigation")
 page = st.sidebar.selectbox(
     "Select Page",
-    [ "Home Page", 'Definitions',"Knowledge Base",'Processes, Taxonomy and Topics',"Hierarchy View","Technical Notes",'Functions',"Daily List"]#,'Summarization','ML Models']
-     #"Frequency Summarization",,'Process Checklist',"Function List", "Function Parameters",  'Folder Table of Content', ]
+    [ "Home Page", 'Definitions',"Knowledge Base",'Processes, Taxonomy and Topics',"Hierarchy View","Technical Notes",'Functions',"Daily List",'Read Me - Taxonomies']#,'Summarization','ML Models']
 )
 
 if page == "Home Page":
@@ -978,3 +977,126 @@ elif page == "Hierarchy View":
             reload_data=True,
             key="structured_order_d"
         )
+
+
+# ---------------------------------------------------------
+# Knowledge Base
+# ---------------------------------------------------------
+
+elif page == "Read Me - Taxonomies":
+
+    st.title("Read Me - Explaining Taxonomies")
+
+    df = data_dict['knowledge_base_df'].copy()
+
+    cat_map = {
+        'Taxonomy': 'Taxonomy',
+        'Taxonomy Node': 'Taxonomy',
+        'Process': 'Process',
+        'Process Step': 'Process',
+        'Process Note': 'Process',
+        'Topic': 'Topic',
+        'Topic Node': 'Topic',
+        'Topic Metric': 'Topic'
+    }
+
+    word_definition_map = (
+        df.dropna(subset=['Word', 'Definition'])
+        .drop_duplicates(subset=['Word'])
+        .set_index('Word')['Definition']
+        .to_dict()
+    )
+
+    processes = df['Process'].dropna().unique()
+    categories = df['Categorization'].dropna().unique()
+
+    st.markdown("""
+    ### Understanding the Knowledge Base
+
+    The Knowledge Base is organized into four columns:
+
+    1. **Process**
+    2. **Categorization**
+    3. **Word**
+    4. **Definition**
+    """)
+
+    c1, c2, c3 = st.columns(3)
+
+    c1.metric("Processes", len(processes))
+    c2.metric("Categories", len(categories))
+    c3.metric("Total Entries", len(df))
+
+    st.markdown("### Primary Categories")
+
+    for category in ['Process', 'Taxonomy', 'Topic']:
+        st.markdown(
+            f"**{category}:** "
+            f"{word_definition_map.get(category, 'Definition unavailable')}"
+        )
+
+    st.markdown("### Subcategories")
+
+    for category in [
+        'Process Step',
+        'Process Note',
+        'Taxonomy Node',
+        'Topic Node'
+    ]:
+        st.markdown(
+            f"**{category}:** "
+            f"{word_definition_map.get(category, 'Definition unavailable')}"
+        )
+
+    st.markdown("### Category Distribution")
+
+    q = df[['Categorization']].copy()
+    q['Category'] = q['Categorization'].map(cat_map)
+
+    q_pivot = (        
+        q.groupby(['Category', 'Categorization'])
+        .size()
+        .reset_index(name='Count')
+    )
+
+    st.dataframe(
+        q_pivot,
+        hide_index=True,
+        use_container_width=True
+    )
+
+    st.markdown("### Primary Category Entries")
+
+    tabs = st.tabs(['Process', 'Taxonomy', 'Topic'])
+
+    for tab, category in zip(tabs, ['Process', 'Taxonomy', 'Topic']):
+        with tab:
+            filtered = df[
+                df['Categorization'] == category
+            ][['Process', 'Categorization', 'Word', 'Definition']]
+
+            st.dataframe(
+                filtered.style.set_properties(**{
+                    'text-align': 'center',
+                    'white-space': 'normal',
+                    'overflow-wrap': 'break-word'
+                }),
+                column_config={
+                    'Process': st.column_config.TextColumn(
+                        'Process', width='small'
+                    ),
+                    'Categorization': st.column_config.TextColumn(
+                        'Categorization', width='small'
+                    ),
+                    'Word': st.column_config.TextColumn(
+                        'Word', width='small'
+                    ),
+                    'Definition': st.column_config.TextColumn(
+                        'Definition', width='large'
+                    )
+                },
+                hide_index=True,
+                use_container_width=True,
+                row_height=100
+            )
+

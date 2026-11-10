@@ -1817,3 +1817,161 @@ def visualize_dict_as_docx(
 
     document.save(output_file)
 
+def univariate_analysis(
+    df,
+    sparsity_threshold=0.90,
+    skew_threshold=2,
+    extreme_threshold=3,
+    high_cardinality_threshold=0.50
+):
+
+    records = []
+
+    for column in df.columns:
+
+        s = df[column]
+        numeric = pd.api.types.is_numeric_dtype(s)
+
+        record = {
+            'VARIABLE': column,
+            'DTYPE': str(s.dtype),
+            'COUNT': s.count(),
+            'UNIQUE': s.nunique(dropna=True),
+            'UNIQUE_PCT': s.nunique(dropna=True) / s.count()
+                if s.count() > 0 else np.nan
+        }
+
+        if numeric:
+
+            q01 = s.quantile(.01)
+            q05 = s.quantile(.05)
+            q25 = s.quantile(.25)
+            q50 = s.quantile(.50)
+            q75 = s.quantile(.75)
+            q95 = s.quantile(.95)
+            q99 = s.quantile(.99)
+
+            iqr = q75 - q25
+
+            non_zero = s[(s != 0) & s.notna()]
+
+            record.update({
+
+                # Central tendency
+                'MEAN': s.mean(),
+                'MEDIAN': q50,
+
+                # Variation
+                'STD': s.std(),
+                'IQR': iqr,
+
+                # Distribution
+                'SKEW': s.skew(),
+
+                # Range / Percentiles
+                'MIN': s.min(),
+                'P01': q01,
+                'P05': q05,
+                'Q1': q25,
+                'Q3': q75,
+                'P95': q95,
+                'P99': q99,
+                'MAX': s.max(),
+
+                # Sparsity
+                'ZERO_COUNT': s.eq(0).sum(),
+                'ZERO_PCT': (s.eq(0).mean())*100,
+
+                # Non-zero population
+                'NON_ZERO_COUNT': len(non_zero),
+                'NON_ZERO_PCT': (len(non_zero) / s.count())*100
+                    if s.count() > 0 else np.nan,
+
+                'NON_ZERO_MEDIAN': non_zero.median()
+                    if len(non_zero) > 0 else np.nan,
+
+                'NON_ZERO_STD': non_zero.std()
+                    if len(non_zero) > 1 else np.nan,
+
+                'NON_ZERO_SKEW': non_zero.skew()
+                    if len(non_zero) > 2 else np.nan,
+
+                # Potential extreme observations using IQR
+                'EXTREME_LOW_COUNT': (
+                    (s < (q25 - extreme_threshold * iqr)).sum()
+                    if iqr > 0 else 0
+                ),
+
+                'EXTREME_HIGH_COUNT': (
+                    (s > (q75 + extreme_threshold * iqr)).sum()
+                    if iqr > 0 else 0
+                )
+            })
+
+        records.append(record)
+
+    result = pd.DataFrame(records)
+
+    # --------------------------------------------------
+    # Statistical Property Flags
+    # --------------------------------------------------
+
+    result['HIGH_SPARSITY'] = (
+        result['ZERO_PCT'] >= sparsity_threshold
+    ).astype(int)
+
+    result['HIGH_SKEW'] = (
+        result['SKEW'].abs() >= skew_threshold
+    ).astype(int)
+
+    result['NO_VARIATION'] = (
+        result['STD'] == 0
+    ).astype(int)
+
+    result['EXTREME_VALUES'] = (
+        (result['EXTREME_LOW_COUNT'] > 0) |
+        (result['EXTREME_HIGH_COUNT'] > 0)
+    ).astype(int)
+
+    result['HIGH_CARDINALITY'] = (
+        result['UNIQUE_PCT'] >= high_cardinality_threshold
+    ).astype(int)
+
+    # Number of statistical properties requiring attention
+    assessment_columns = [
+        'HIGH_SPARSITY',
+        'HIGH_SKEW',
+        'NO_VARIATION',
+        'EXTREME_VALUES',
+        'HIGH_CARDINALITY'
+    ]
+
+    result['ASSESSMENT_COUNT'] = (
+        result[assessment_columns]
+        .sum(axis=1)
+    )
+    
+    d = pd.DataFrame(result[['HIGH_SPARSITY','HIGH_SKEW','NO_VARIATION','EXTREME_VALUES','HIGH_CARDINALITY']].sum(),columns=["Count"]).sort_values('Count',ascending=False)
+    d['Percentage'] = round((d['Count']/d['Count'].sum())*100,2)
+    gb = result[['HIGH_SPARSITY','HIGH_SKEW','NO_VARIATION','EXTREME_VALUES','HIGH_CARDINALITY']].groupby(['HIGH_SPARSITY','HIGH_SKEW','NO_VARIATION','EXTREME_VALUES','HIGH_CARDINALITY']).size().reset_index().rename(columns={0:'Count'}).sort_values('Count',ascending=False)
+    gb['Percentage'] = round((gb['Count']/gb['Count'].sum())*100,2)
+    
+    univariate_assessment_dict = {}
+    
+    print("Summary DataFrame Results")
+    visualize_dataframe_in_notebook(
+        result,
+        show_as_int=['EXTREME_LOW_COUNT','EXTREME_HIGH_COUNT','NON_ZERO_PCT'],
+        show_as_percentage=['ZERO_PCT','UNIQUE_PCT'],
+        show_as_number=['MEAN','MEDIAN','STD','IQR','SKEW','MIN','MAX','P01','P05','UNIQUE_PCT','NON_ZERO_PCT','NON_ZERO_MEDIAN','NON_ZERO_SKEW','NON_ZERO_STD','Q1','Q2','Q3','P95','P99']
+    )
+    
+    print("Joint Column Distribution")
+    visualize_dataframe_in_notebook(gb)
+    
+    print('Dictionary to Complete: {')
+    for key in ['HIGH_SPARSITY','HIGH_SKEW','NO_VARIATION','EXTREME_VALUES','HIGH_CARDINALITY']:
+        print(f"'{key}':There were {int(d.loc[key]['Count'])} Metrics which demonstrated High Skewness. INCLUDE ASSESSMENT")
+    print('}')
+    
+    return {'univariate_analysis':result,'issue_freq_df':d,'issue_joint_freq_df':gb,'univariate_assessment_dict':univariate_assessment_dict}

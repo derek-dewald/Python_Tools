@@ -19,8 +19,8 @@ color_dict = {
     'navy': '#10263E',
     'teal': '#236C91',
     'muted': '#536477',
-    'pale': '#E8EDF3',
-    'line': '#C6D1DE',
+    'pale': '#C5D3E2',
+    'line': '#9AABBD',
     'light_teal': '#DDE8EC',
     'border':"#F0F2F3",
     'neutral':"#F0F2F3"
