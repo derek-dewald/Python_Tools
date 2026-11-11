@@ -19,12 +19,13 @@ color_dict = {
     'navy': '#10263E',
     'teal': '#236C91',
     'muted': '#536477',
-    'pale': '#C5D3E2',
+    'pale': '#8099B3',
     'line': '#9AABBD',
     'light_teal': '#DDE8EC',
-    'border':"#F0F2F3",
-    'neutral':"#F0F2F3"
-    
+    'border': '#F0F2F3',
+    'neutral': '#F0F2F3',
+    'green':'#1B6B45',
+    'red':'#A12D35',
 }
 
 def frame_the_question(
@@ -1008,84 +1009,76 @@ def peer_group_introduction(
     display(img)
 
 
-def engagement_measurement_grid(
-    questions,
-    title='A Framework for Defining, Understanding and Evaluating Member Engagement',
-    subtitle=(
-        'Defining core measurement categories and KPIs enables '
-        'the establishment of expectations, performance tracking, '
-        'and evaluation of changes in engagement. '
-        'This results in a structured approach providing a '
-        'consistent foundation for assessment.'
-    ),
-    left_footer='',
-    right_footer='',
+
+
+def opportunities_next_steps(
+    opportunities,
+    title="Opportunities and Next Steps",
+    subtitle="Translating our findings into practical opportunities for deeper insight and better decisions.",
+    left_footer="Member Engagement Analysis",
+    right_footer="08",
     color_dict=color_dict,
     export_file=False
 ):
     """
-    Create a dynamic 1600 x 900 measurement framework slide.
+    Create a 1600 x 900 Pillow presentation slide.
 
-    Supports:
-        - 1 to 5 question rows
-        - 1 to 5 metrics per question
-        - Optional images for each metric
-        - Automatic image scaling and centering
-        - Dynamic title and subtitle positioning
-        - Column headings
-        - No question numbering
+    Parameters
+    ----------
+    opportunities : list
+        List of 2 or 3 dictionaries:
+            {
+                "title": "Opportunity title",
+                "description": "Short supporting paragraph.",
+                "image": "/absolute/path/to/icon.png"
+            }
 
-    Metric format:
-        {
-            'label': 'Deposit Balances',
-            'image': '/path/to/deposits.png'
-        }
+    folder_location : str or Path, optional
+        Destination folder when return_value='file'.
 
-    Returns
-    -------
-    PIL.Image.Image
+    color_dict : dict
+        Shared presentation colour palette.
+
+    return_value : str
+        'image' -> return PIL Image
+        'file'  -> save PNG and return file path
+        other   -> display image in notebook
     """
 
-    # --------------------------------------------------
-    # Validate input
-    # --------------------------------------------------
+    # =========================================================
+    # 1. Validate inputs
+    # =========================================================
 
-    if not 1 <= len(questions) <= 5:
+    if not 2 <= len(opportunities) <= 3:
         raise ValueError(
-            'Provide between 1 and 5 questions.'
+            "Provide 2 or 3 opportunities."
         )
 
-    if any(
-        not 1 <= len(q.get('metrics', [])) <= 5
-        for q in questions
-    ):
-        raise ValueError(
-            'Each question must contain 1 to 5 metrics.'
-        )
-
-    max_metrics = max(
-        len(q['metrics']) for q in questions
-    )
-    
-    # --------------------------------------------------
-    # Canvas and colours
-    # --------------------------------------------------
+    # =========================================================
+    # 2. Canvas and shared colour palette
+    # =========================================================
 
     W, H = 1600, 900
 
-    navy = color_dict['navy']
-    teal = color_dict['teal']
-    muted = color_dict['muted']
-    pale = color_dict['pale']
-    line = color_dict['line']
-    white = color_dict['white']
+    C = color_dict
 
-    img = Image.new('RGB', (W, H), white)
+    WHITE = C['white']
+    NAVY = C['navy']
+    TEAL = C['teal']
+    MUTED = C['muted']
+    BORDER = C['line']
+
+    img = Image.new(
+        'RGB',
+        (W, H),
+        WHITE
+    )
+
     draw = ImageDraw.Draw(img)
 
-    # --------------------------------------------------
-    # Text helpers
-    # --------------------------------------------------
+    # =========================================================
+    # 3. Typography
+    # =========================================================
 
     def font(size, bold=False):
         return load_presentation_font(
@@ -1093,24 +1086,28 @@ def engagement_measurement_grid(
             bold=bold
         )
 
-    def text_width(text, fnt):
-        bbox = draw.textbbox(
+    f_title = font(45, bold=True)
+    f_subtitle = font(20)
+    f_card_title = font(29, bold=True)
+    f_description = font(21)
+    f_footer = font(16)
+
+    def text_width(text, f):
+        bounds = draw.textbbox(
             (0, 0),
             str(text),
-            font=fnt
+            font=f
         )
-        return bbox[2] - bbox[0]
+        return bounds[2] - bounds[0]
 
-    def wrap(text, fnt, max_width):
-        words = str(text).split()
-
+    def wrap_text(text, f, max_width):
         lines = []
         current = ''
 
-        for word in words:
-            trial = (current + ' ' + word).strip()
+        for word in str(text).split():
+            trial = f'{current} {word}'.strip()
 
-            if text_width(trial, fnt) <= max_width:
+            if text_width(trial, f) <= max_width:
                 current = trial
             else:
                 if current:
@@ -1122,444 +1119,738 @@ def engagement_measurement_grid(
 
         return lines
 
-    def centered_text(
+    def draw_wrapped(
         text,
-        cx,
-        cy,
+        x,
+        y,
+        f,
+        fill,
         width,
-        size=20,
-        color=navy,
-        bold=False,
-        max_lines=3
+        line_height
     ):
-        fnt = font(size, bold)
-        lines = wrap(text, fnt, width)
+        lines = wrap_text(
+            str(text),
+            f,
+            width
+        )
 
-        if len(lines) > max_lines:
-            lines = lines[:max_lines]
-            last = lines[-1]
-
-            while (
-                last
-                and text_width(last + '…', fnt) > width
-            ):
-                last = last[:-1]
-
-            lines[-1] = last + '…'
-
-        line_height = size + 6
-        total_height = len(lines) * line_height
-
-        y = cy - total_height / 2
-
-        for line_text in lines:
-            x = cx - text_width(line_text, fnt) / 2
-
+        for line in lines:
             draw.text(
                 (x, y),
-                line_text,
-                font=fnt,
-                fill=color
+                line,
+                font=f,
+                fill=fill
             )
-
             y += line_height
 
-    # --------------------------------------------------
-    # Image helper
-    # --------------------------------------------------
+        return y
 
-    def render_metric_image(
-        image_path,
-        cx,
-        cy,
-        max_width,
-        max_height
-    ):
-        if not image_path:
-            return False
+    # =========================================================
+    # 4. Slide title and subtitle
+    # =========================================================
 
-        path = Path(image_path).expanduser()
+    # No section header
 
-        if not path.is_absolute():
-            path = folder / path
-
-        if not path.is_file():
-            raise FileNotFoundError(
-                f'Metric image not found: {path}'
-            )
-
-        with Image.open(path) as source:
-            metric_img = source.convert('RGBA')
-
-        # Crop transparent margins where available.
-        alpha = metric_img.getchannel('A')
-        bbox = alpha.getbbox()
-
-        if bbox:
-            metric_img = metric_img.crop(bbox)
-
-        metric_img = ImageOps.contain(
-            metric_img,
-            (
-                max(1, int(max_width)),
-                max(1, int(max_height))
-            ),
-            method=Image.Resampling.LANCZOS
-        )
-
-        x = round(cx - metric_img.width / 2)
-        y = round(cy - metric_img.height / 2)
-
-        img.paste(
-            metric_img,
-            (x, y),
-            metric_img
-        )
-
-        return True
-
-    # --------------------------------------------------
-    # Title and subtitle
-    # --------------------------------------------------
-
-    title_y = 45
-    title_font = font(45, True)
-    title_line_height = 53
-
-    title_lines = wrap(
+    draw.text(
+        (95, 54),
         title,
-        title_font,
-        1410
+        font=f_title,
+        fill=NAVY
     )
 
-    for i, title_line in enumerate(title_lines):
-        draw.text(
-            (
-                95,
-                title_y + i * title_line_height
-            ),
-            title_line,
-            font=title_font,
-            fill=navy
-        )
-
-    # Position subtitle dynamically beneath title.
-    subtitle_y = (
-        title_y
-        + len(title_lines) * title_line_height
-        + 16
-    )
-
-    subtitle_font = font(20)
-    subtitle_line_height = 28
-
-    subtitle_lines = wrap(
+    draw.text(
+        (95, 119),
         subtitle,
-        subtitle_font,
-        1390
-    )
-
-    for i, subtitle_line in enumerate(
-        subtitle_lines
-    ):
-        draw.text(
-            (
-                95,
-                subtitle_y + i * subtitle_line_height
-            ),
-            subtitle_line,
-            font=subtitle_font,
-            fill=muted
-        )
-
-    # Position separator dynamically beneath subtitle.
-    separator_y = (
-        subtitle_y
-        + len(subtitle_lines) * subtitle_line_height
-        + 20
+        font=f_subtitle,
+        fill=MUTED
     )
 
     draw.line(
-        (95, separator_y, 1505, separator_y),
-        fill=line,
+        (95, 178, 1505, 178),
+        fill=BORDER,
         width=3
     )
 
-    # --------------------------------------------------
-    # Dynamic grid dimensions
-    # --------------------------------------------------
+    # =========================================================
+    # 5. Card layout
+    # =========================================================
 
-    grid_left = 95
-    grid_right = 1505
+    card_top = 220
+    card_bottom = 790
+    card_gap = 26
 
-    column_header_y = separator_y + 20
+    left = 95
+    right = 1505
 
-    grid_top = column_header_y + 38
-    grid_bottom = 775
+    n = len(opportunities)
 
-    row_count = len(questions)
+    card_width = (
+        (right - left) - (n - 1) * card_gap
+    ) / n
 
-    row_gap = 10
-    column_gap = 10
+    for i, opportunity in enumerate(opportunities):
 
-    grid_width = grid_right - grid_left
-    grid_height = grid_bottom - grid_top
+        x1 = left + i * (card_width + card_gap)
+        x2 = x1 + card_width
 
-    row_height = (
-        grid_height - row_gap * (row_count - 1)
-    ) / row_count
-
-    if row_height <= 0:
-        raise ValueError(
-            'Insufficient vertical space for the grid. '
-            'Reduce title/subtitle length or question count.'
-        )
-
-    # Question column is wider than metric columns.
-    question_weight = 1.60
-
-    metric_width = (
-        grid_width - column_gap * max_metrics
-    ) / (max_metrics + question_weight)
-
-    question_width = metric_width * question_weight
-
-    question_font_size = (
-        25 if row_count <= 3
-        else 21 if row_count == 4
-        else 18
-    )
-
-    metric_font_size = (
-        17 if max_metrics <= 3
-        else 15
-    )
-
-    # --------------------------------------------------
-    # Column headings
-    # --------------------------------------------------
-
-    question_heading = 'GUIDING QUESTIONS'
-    metric_heading = 'KEY PERFORMANCE INDICATORS (KPIs)'
-
-    heading_font = font(17, True)
-
-    # Left column heading
-    draw.text(
-        (
-            grid_left
-            + (
-                question_width
-                - text_width(
-                    question_heading,
-                    heading_font
-                )
-            ) / 2,
-            column_header_y
-        ),
-        question_heading,
-        font=heading_font,
-        fill=teal
-    )
-
-    # Right columns heading
-    metrics_left = (
-        grid_left + question_width + column_gap
-    )
-
-    metrics_width = grid_right - metrics_left
-
-    draw.text(
-        (
-            metrics_left
-            + (
-                metrics_width
-                - text_width(
-                    metric_heading,
-                    heading_font
-                )
-            ) / 2,
-            column_header_y
-        ),
-        metric_heading,
-        font=heading_font,
-        fill=teal
-    )
-
-    # --------------------------------------------------
-    # Render rows
-    # --------------------------------------------------
-
-    for row_index, question_data in enumerate(
-        questions
-    ):
-
-        y1 = (
-            grid_top
-            + row_index * (row_height + row_gap)
-        )
-        y2 = y1 + row_height
-
-        # ----------------------------------------------
-        # Question card
-        # ----------------------------------------------
-
-        qx1 = grid_left
-        qx2 = qx1 + question_width
+        # -----------------------------------------------------
+        # Main card
+        # -----------------------------------------------------
 
         draw.rounded_rectangle(
-            (qx1, y1, qx2, y2),
-            radius=16,
-            fill=pale
+            (x1, card_top, x2, card_bottom),
+            radius=18,
+            fill=WHITE,
+            outline=BORDER,
+            width=2
         )
 
-        centered_text(
-            question_data['question'],
-            cx=(qx1 + qx2) / 2,
-            cy=(y1 + y2) / 2,
-            width=question_width - 36,
-            size=question_font_size,
-            bold=True,
-            max_lines=4
+        # Thin blue accent at top of card
+        draw.rounded_rectangle(
+            (
+                x1 + 30,
+                card_top + 24,
+                x1 + 95,
+                card_top + 30
+            ),
+            radius=3,
+            fill=TEAL
         )
 
-        # ----------------------------------------------
-        # Metric cards
-        # ----------------------------------------------
+        text_x = x1 + 30
+        text_width_available = card_width - 60
 
-        for metric_index, metric in enumerate(
-            question_data['metrics']
-        ):
+        # -----------------------------------------------------
+        # Opportunity title
+        # -----------------------------------------------------
 
-            if isinstance(metric, str):
-                label = metric
-                image_path = None
-            else:
-                label = metric.get('label', '')
-                image_path = metric.get('image')
+        title_y = card_top + 55
 
-            mx1 = (
-                qx2 + column_gap
-                + metric_index
-                * (metric_width + column_gap)
+        title_end = draw_wrapped(
+            opportunity['title'],
+            text_x,
+            title_y,
+            f_card_title,
+            NAVY,
+            text_width_available,
+            38
+        )
+
+        # -----------------------------------------------------
+        # Description
+        # -----------------------------------------------------
+
+        description_y = title_end + 18
+
+        description_end = draw_wrapped(
+            opportunity['description'],
+            text_x,
+            description_y,
+            f_description,
+            MUTED,
+            text_width_available,
+            30
+        )
+
+        # -----------------------------------------------------
+        # Divider between text and image
+        # -----------------------------------------------------
+
+        separator_y = description_end + 26
+
+        draw.line(
+            (
+                text_x,
+                separator_y,
+                x2 - 30,
+                separator_y
+            ),
+            fill=BORDER,
+            width=2
+        )
+
+        # -----------------------------------------------------
+        # Image placement
+        # -----------------------------------------------------
+
+        image_path = opportunity.get('image')
+
+        if image_path:
+
+            path = Path(image_path).expanduser()
+
+            if not path.is_file():
+                raise FileNotFoundError(
+                    f'Image not found: {image_path}'
+                )
+
+            with Image.open(path) as source:
+                icon = source.convert('RGBA')
+
+            image_top = separator_y + 18
+            image_bottom = card_bottom - 30
+
+            max_image_width = card_width - 90
+            max_image_height = image_bottom - image_top
+
+            if max_image_height <= 0:
+                raise ValueError(
+                    f'No space available for image in card {i + 1}.'
+                )
+
+            # Preserve aspect ratio and allow enlargement
+            scale = min(
+                max_image_width / icon.width,
+                max_image_height / icon.height
+            ) * 0.80
+
+            new_width = max(
+                1,
+                int(icon.width * scale)
             )
 
-            mx2 = mx1 + metric_width
+            new_height = max(
+                1,
+                int(icon.height * scale)
+            )
 
-            draw.rounded_rectangle(
-                (mx1, y1, mx2, y2),
-                radius=16,
-                fill=white,
-                outline=line,
+            icon = icon.resize(
+                (new_width, new_height),
+                Image.Resampling.LANCZOS
+            )
+
+            # Centre image horizontally
+            image_x = int(
+                (x1 + x2) / 2 - new_width / 2
+            )
+
+            # Centre image vertically in available space
+            image_y = int(
+                image_top
+                + (max_image_height - new_height) / 2
+            )
+
+            img.paste(
+                icon,
+                (image_x, image_y),
+                icon
+            )
+
+    # =========================================================
+    # 6. Footer
+    # =========================================================
+
+    draw.line(
+        (95, 835, 1505, 835),
+        fill=BORDER,
+        width=2
+    )
+
+    if left_footer:
+        draw.text(
+            (95, 851),
+            left_footer,
+            font=f_footer,
+            fill=MUTED
+        )
+
+    if right_footer:
+        draw.text(
+            (
+                1505 - text_width(
+                    right_footer,
+                    f_footer
+                ),
+                851
+            ),
+            right_footer,
+            font=f_footer,
+            fill=MUTED
+        )
+
+    # =========================================================
+    # 7. Output
+    # =========================================================
+
+    if export_file:
+        img.save('opportunities_next_steps.png')
+        return None
+
+    display(img)
+
+#############################################
+# THIS IS A MANUAL PROCESS. Need to automate and pull the DF from a .py file and use dict_to_dataframe
+temp_dict = {'columns': ['Process', 'Categorization', 'Word', 'Definition'],
+ 'index': [1093,
+  1094,
+  1095,
+  1096,
+  1097,
+  1098,
+  1099,
+  1100,
+  1101,
+  1102,
+  1103,
+  1104,
+  1105,
+  1106,
+  1107,
+  1108],
+ 'data': [['Storytelling Presentation Template',
+   'Process',
+   'Process Definition',
+   "The purpose of this framework is to remind, guide, and challenge us to think beyond simply presenting information. It's easy to become immersed in data, analysis, and visualizations and lose sight of the bigger picture: What story are we telling, why does it matter, and what do we want our audience to understand or do?\n\nStorytelling is the process of connecting information into a meaningful narrative, where each slide has a clear purpose and contributes to the overall message. Insight is not simply a finding; it is an understanding of what that finding means and why it matters. Purpose is the reason the information deserves the audience's attention.\n\nAs you build your presentation, continually challenge yourself: Are we simply showing information, or are we helping our audience move from information to understanding, understanding to insight, and insight to action? "],
+  ['Storytelling Presentation Template',
+   'Process Step',
+   'Frame the Question',
+   'Establish the context, purpose, and central question that the analysis is intended to address.'],
+  ['Storytelling Presentation Template',
+   'Frame the Question',
+   'Slide 1',
+   'Introduce the analytical premise and establish why the question matters.'],
+  ['Storytelling Presentation Template',
+   'Process Step',
+   'Structure the Evaluation',
+   None],
+  ['Storytelling Presentation Template',
+   'Structure the Evaluation',
+   'Slide 2',
+   'Introduce Target Population, define dimensions of interest, preliminary observations'],
+  ['Storytelling Presentation Template',
+   'Structure the Evaluation',
+   'Process Definition',
+   "Establish a structured and transparent approach for evaluating the question, including relevant populations, comparisons, dimensions, and metrics."],
+  ['Storytelling Presentation Template',
+   'Structure the Evaluation',
+   'Slide 3',
+   'Introduce Peer Groups, at high level, Appendix for Peer Equivalent Slides'],
+  ['Storytelling Presentation Template',
+   'Structure the Evaluation',
+   'Slide 4',
+   'Introduce Metrics of Relevance and context of scope'],
+  ['Storytelling Presentation Template',
+   'Process Step',
+   'Assess & Interpret',
+   'Systematically evaluate the evidence, identify patterns and differences, and distinguish observations from potential explanations.'],
+  ['Storytelling Presentation Template',
+   'Assess & Interpret',
+   'Slide 5',
+   'Explore performance at a more granular level. of 2-3 most influential of the metrics, all else to Appendix'],
+  ['Storytelling Presentation Template',
+   'Assess & Interpret',
+   'Slide 6',
+   'Summarize group performance across dimensions.'],
+  ['Storytelling Presentation Template',
+   'Assess & Interpret',
+   'Slide 7',
+   "Consolidate observations and interpret the findings.',"],
+  ['Storytelling Presentation Template',
+   'Process Step',
+   'Implications & Opportunities',
+   'Translate analytical findings into meaningful implications, potential actions, and opportunities for further investigation or iterative improvement'],
+  ['Storytelling Presentation Template',
+   'Implications & Opportunities',
+   'Slide 8',
+   'Identify recommendations and opportunities to enhance or evolve the analysis.'],
+  ['Storytelling Presentation Template',
+   'Process Step',
+   'Appendix: Spill Over Slide 5',
+   None],
+  ['Storytelling Presentation Template',
+   'Process Step',
+   'Appendix: Assumptions and Limitations',
+   None]]}
+
+process_df = pd.DataFrame(data=temp_dict["data"],columns=temp_dict["columns"],index=temp_dict["index"])
+
+
+
+
+def key_findings(
+    findings,
+    title="Key Findings",
+    subtitle="What the analysis suggests about changes in member engagement.",
+    left_footer="",
+    right_footer="",
+    font_path=None,
+    color_dict=color_dict,
+    export_file=False
+):
+    """
+    Create a 1600 x 900 Key Findings slide.
+
+    findings: list of 2 or 3 dictionaries:
+        {
+            "headline": "Main finding",
+            "support": "Supporting explanation",
+            "image": "/path/to/image.png"  # Optional
+        }
+
+    return_value:
+        ''      Return Pillow image
+        'image' Return Pillow image
+        'file'  Save PNG and return file path
+
+    Requires:
+        load_presentation_font()
+    """
+
+    if not 2 <= len(findings) <= 3:
+        raise ValueError("Provide 2 or 3 findings.")
+
+    W, H = 1600, 900
+
+    # --------------------------------------------------
+    # Colours
+    # --------------------------------------------------
+
+    WHITE = color_dict["white"]
+    NAVY = color_dict["navy"]
+    TEAL = color_dict["teal"]
+    MUTED = color_dict["muted"]
+    PALE = color_dict["pale"]
+    BORDER = color_dict["border"]
+
+    # --------------------------------------------------
+    # Fonts
+    # --------------------------------------------------
+    def font(size, bold=False):
+        return load_presentation_font(
+            size,
+            bold=bold,
+            font_path=font_path
+        )
+
+    f_title = font(48, True)
+    f_subtitle = font(23)
+    f_headline = font(30, True)
+    f_support = font(22)
+    f_footer = font(17)
+
+    # --------------------------------------------------
+    # Canvas
+    # --------------------------------------------------
+    img = Image.new("RGB", (W, H), WHITE)
+    draw = ImageDraw.Draw(img)
+
+    def text_width(text, f):
+        box = draw.textbbox(
+            (0, 0),
+            str(text),
+            font=f
+        )
+        return box[2] - box[0]
+
+    def wrap_text(text, f, max_width):
+        lines = []
+        current = ""
+
+        for word in str(text).split():
+            trial = f"{current} {word}".strip()
+
+            if text_width(trial, f) <= max_width:
+                current = trial
+            else:
+                if current:
+                    lines.append(current)
+                current = word
+
+        if current:
+            lines.append(current)
+
+        return lines
+
+    # --------------------------------------------------
+    # Header
+    # --------------------------------------------------
+    LEFT = 70
+    RIGHT = 1530
+
+    draw.text(
+        (LEFT, 43),
+        title,
+        font=f_title,
+        fill=NAVY
+    )
+
+    subtitle_lines = wrap_text(
+        subtitle,
+        f_subtitle,
+        RIGHT - LEFT
+    )
+
+    subtitle_y = 116
+
+    for line in subtitle_lines:
+        draw.text(
+            (LEFT, subtitle_y),
+            line,
+            font=f_subtitle,
+            fill=MUTED
+        )
+        subtitle_y += 31
+
+    # No line beneath the subtitle.
+
+    # --------------------------------------------------
+    # Finding cards
+    # --------------------------------------------------
+    top = max(195, subtitle_y + 32)
+    bottom = 820
+    gap = 18
+
+    n = len(findings)
+
+    card_height = (
+        bottom - top - (n - 1) * gap
+    ) / n
+
+    for i, finding in enumerate(findings):
+
+        y1 = top + i * (card_height + gap)
+        y2 = y1 + card_height
+
+        x1, x2 = LEFT, RIGHT
+
+        # ----------------------------------------------
+        # Main card
+        # ----------------------------------------------
+        draw.rounded_rectangle(
+            (
+                round(x1),
+                round(y1),
+                round(x2),
+                round(y2)
+            ),
+            radius=18,
+            fill=WHITE,
+            outline=NAVY,
+            width=4
+        )
+
+        # Left teal accent
+        draw.rounded_rectangle(
+            (
+                round(x1),
+                round(y1 + 12),
+                round(x1 + 7),
+                round(y2 - 12)
+            ),
+            radius=3,
+            fill=TEAL
+        )
+
+        # ----------------------------------------------
+        # Optional image
+        # ----------------------------------------------
+        image_path = finding.get("image")
+
+        if image_path:
+
+            path = Path(image_path)
+
+            if not path.exists():
+                raise FileNotFoundError(
+                    f"Image not found: {image_path}"
+                )
+
+            icon = Image.open(path).convert("RGBA")
+
+            # Reserved image region
+            image_region_left = x1 + 35
+            image_region_right = x1 + 235
+
+            image_region_width = (
+                image_region_right
+                - image_region_left
+            )
+
+            image_region_height = (
+                card_height - 35
+            )
+
+            # Preserve aspect ratio
+            scale = min(
+                image_region_width / icon.width,
+                image_region_height / icon.height
+            ) * 0.85
+
+            new_width = max(
+                1,
+                round(icon.width * scale)
+            )
+
+            new_height = max(
+                1,
+                round(icon.height * scale)
+            )
+
+            icon = icon.resize(
+                (new_width, new_height),
+                Image.Resampling.LANCZOS
+            )
+
+            # Centre image within reserved region
+            image_x = round(
+                image_region_left
+                + (image_region_width - new_width) / 2
+            )
+
+            image_y = round(
+                y1
+                + (card_height - new_height) / 2
+            )
+
+            # Preserve transparency
+            img.paste(
+                icon,
+                (image_x, image_y),
+                icon
+            )
+
+            # Vertical divider
+            divider_x = x1 + 260
+
+            draw.line(
+                (
+                    round(divider_x),
+                    round(y1 + 28),
+                    round(divider_x),
+                    round(y2 - 28)
+                ),
+                fill=BORDER,
                 width=2
             )
 
-            cx = (mx1 + mx2) / 2
+            text_x = x1 + 295
 
-            # ------------------------------------------
-            # Image region
-            # ------------------------------------------
+        else:
 
-            label_height = min(
-                24,
-                row_height * 0.25
+            # Use full width when no image exists
+            text_x = x1 + 43
+
+        available_width = (
+            x2 - text_x - 45
+        )
+
+        # ----------------------------------------------
+        # Wrap text
+        # ----------------------------------------------
+        headline_lines = wrap_text(
+            finding["headline"],
+            f_headline,
+            available_width
+        )
+
+        support_lines = wrap_text(
+            finding["support"],
+            f_support,
+            available_width
+        )
+
+        headline_line_height = 39
+        support_line_height = 30
+        text_gap = 13
+
+        headline_height = (
+            len(headline_lines)
+            * headline_line_height
+        )
+
+        support_height = (
+            len(support_lines)
+            * support_line_height
+        )
+
+        content_height = (
+            headline_height
+            + text_gap
+            + support_height
+        )
+
+#        if content_height > card_height - 28:
+#            raise ValueError(
+#                f"Finding {i + 1} contains too much "
+#                "text for the available card height."
+#            )
+
+        # ----------------------------------------------
+        # Vertically centre text
+        # ----------------------------------------------
+        content_y = (
+            y1 + (card_height - content_height) / 2 - 20
+        )
+
+        # Headline
+        headline_y = content_y
+
+        for line in headline_lines:
+            draw.text(
+                (text_x, headline_y),
+                line,
+                font=f_headline,
+                fill=NAVY
             )
 
-            image_top = y1 + 5
-            image_bottom = (
-                y2 - label_height - 4
+            headline_y += headline_line_height
+
+        # Supporting text
+        support_y = headline_y + text_gap
+
+        for line in support_lines:
+            draw.text(
+                (text_x, support_y),
+                line,
+                font=f_support,
+                fill=MUTED
             )
 
-            image_height = max(
-                1,
-                image_bottom - image_top
-            )
-
-            image_cy = (
-                image_top + image_bottom
-            ) / 2
-
-            if image_path:
-                render_metric_image(
-                    image_path=image_path,
-                    cx=cx,
-                    cy=image_cy,
-                    max_width=metric_width - 8,
-                    max_height=image_height
-                )
-
-            # ------------------------------------------
-            # Metric label
-            # ------------------------------------------
-
-            centered_text(
-                label,
-                cx=cx,
-                cy=y2 - label_height / 2 - 3,
-                width=metric_width - 16,
-                size=metric_font_size,
-                bold=True,
-                max_lines=2
-            )
+            support_y += support_line_height
 
     # --------------------------------------------------
     # Footer
     # --------------------------------------------------
+    footer_y = 855
 
-    footer_line_y = 840
-    footer_text_y = 850
-
-    # Caveat above the grey line
-    caveat_font = font(13)
-    caveat_line_height = 17
-    caveat_lines = wrap(
-        left_footer,
-        caveat_font,
-        1390
-    ) if left_footer else []
-
-    # Position caveat immediately above footer line
-    caveat_y = footer_line_y - (
-        len(caveat_lines) * caveat_line_height
-    ) - 6
-
-    for caveat_line in caveat_lines:
-        draw.text(
-            (95, caveat_y),
-            caveat_line,
-            font=caveat_font,
-            fill=muted
-        )
-        caveat_y += caveat_line_height
-
-    # Footer divider
     draw.line(
-        (95, footer_line_y, 1505, footer_line_y),
-        fill=line,
-        width=2
+        (LEFT, footer_y, RIGHT, footer_y),
+        fill=BORDER,
+        width=1
     )
 
-    # Right footer remains below the divider
-    footer_font = font(10)
+    if left_footer:
 
-    draw.text(
-        (
-            1505 - text_width(
-                right_footer,
-                footer_font
+        draw.text(
+            (LEFT, footer_y + 12),
+            left_footer,
+            font=f_footer,
+            fill=MUTED
+        )
+
+    if right_footer:
+
+        draw.text(
+            (
+                RIGHT - text_width(
+                    right_footer,
+                    f_footer
+                ),
+                footer_y + 12
             ),
-            footer_text_y
-        ),
-        right_footer,
-        font=footer_font,
-        fill=muted
-    )
+            right_footer,
+            font=f_footer,
+            fill=MUTED
+        )
 
+    # --------------------------------------------------
+    # Save / Return
+    # --------------------------------------------------
     if export_file:
-        img.save('engagement_measurement_grid.png')
+        img.save('key_findings.png')
         return None
     
-    display(img)
+    return img
 
 
 def engagement_comparison_matrix(
@@ -1638,6 +1929,8 @@ def engagement_comparison_matrix(
     MUTED = color_dict["muted"]
     PALE = color_dict["pale"]
     LINE = color_dict["line"]
+    GREEN = color_dict["green"]
+    RED = color_dict["red"]
 
     # --------------------------------------------------
     # High-resolution rendering
@@ -2273,12 +2566,12 @@ def engagement_comparison_matrix(
 
             if is_highest:
 
-                border_color = TEAL
+                border_color = GREEN
                 border_width = 4
 
             elif is_lowest:
 
-                border_color = NAVY
+                border_color = RED
                 border_width = 4
 
             else:
@@ -2361,7 +2654,7 @@ def engagement_comparison_matrix(
                 333,
                 legend_y + 11
             ),
-            fill=NAVY,
+            fill=RED,
             radius=2
         )
 
@@ -2380,7 +2673,7 @@ def engagement_comparison_matrix(
                 503,
                 legend_y + 11
             ),
-            fill=TEAL,
+            fill=GREEN,
             radius=2
         )
 
@@ -2470,196 +2763,86 @@ def engagement_comparison_matrix(
     display(img)
 
 
-def statistical_assessment_matrix(
+
+
+def engagement_measurement_grid(
     questions,
-    groups,
-    df,
-    target_final_assessment,
-    title='Evaluating Differences Across Our Guiding Questions',
-    subtitle='Statistical comparisons with peer groups inform the overall assessment of the target population.',
+    title='A Framework for Defining, Understanding and Evaluating Member Engagement',
+    subtitle=(
+        'Defining core measurement categories and KPIs enables '
+        'the establishment of expectations, performance tracking, '
+        'and evaluation of changes in engagement. '
+        'This results in a structured approach providing a '
+        'consistent foundation for assessment.'
+    ),
     left_footer='',
     right_footer='',
     color_dict=color_dict,
     export_file=False
 ):
     """
-    Render Slide 6: Statistical Assessment Matrix.
+    Create a dynamic 1600 x 900 measurement framework slide.
 
-    Parameters
-    ----------
-    questions : list
-        Guiding questions from:
-        presentation_dict['engagement_measurement_grid']['questions']
+    Supports:
+        - 1 to 5 question rows
+        - 1 to 5 metrics per question
+        - Optional images for each metric
+        - Automatic image scaling and centering
+        - Dynamic title and subtitle positioning
+        - Column headings
+        - No question numbering
 
-    groups : list or dict
-        Four peer groups from:
-        presentation_dict['peer_group_introduction']['groups']
+    Metric format:
+        {
+            'label': 'Deposit Balances',
+            'image': '/path/to/deposits.png'
+        }
 
-    df : pandas.DataFrame
-        Required columns:
-            question, peer_group, decision
-
-        True  = statistically significant difference detected
-        False = no statistically significant difference detected
-        None  = not tested
-
-    target_final_assessment : dict
-        Overall decisions keyed by guiding question:
-            {question: True / False / None}
-
-    return_value : str
-        'image' -> return PIL image
-        'file'  -> save PNG and return path
-        other   -> display image in notebook
-
-    Notes
-    -----
-    Statistical testing is performed outside this function.
-    This function only renders supplied decisions.
+    Returns
+    -------
+    PIL.Image.Image
     """
 
-    from pathlib import Path
-    import pandas as pd
-    import numpy as np
-    from PIL import Image, ImageDraw
-    from IPython.display import display
+    # --------------------------------------------------
+    # Validate input
+    # --------------------------------------------------
 
-    # =========================================================
-    # 1. Validate and prepare inputs
-    # =========================================================
+    if not 1 <= len(questions) <= 5:
+        raise ValueError(
+            'Provide between 1 and 5 questions.'
+        )
 
-    group_items = (
-        list(groups.values())
-        if isinstance(groups, dict)
-        else list(groups)
-    )
-
-    def group_name(group):
-        if isinstance(group, dict):
-            return str(
-                group.get('title')
-                or group.get('name')
-                or group.get('label')
-                or ''
-            )
-        return str(group)
-
-    names = [group_name(g) for g in group_items]
-
-    question_names = [
-        q.get('question', '') if isinstance(q, dict) else str(q)
+    if any(
+        not 1 <= len(q.get('metrics', [])) <= 5
         for q in questions
-    ]
-
-    if len(names) != 4:
-        raise ValueError('Exactly four peer groups are required.')
-
-    if len(set(names)) != 4 or any(not n for n in names):
+    ):
         raise ValueError(
-            'Peer group names must be unique and non-empty.'
+            'Each question must contain 1 to 5 metrics.'
         )
 
-    if not 1 <= len(question_names) <= 5:
-        raise ValueError(
-            'Provide between one and five guiding questions.'
-        )
-
-    if len(set(question_names)) != len(question_names):
-        raise ValueError('Guiding questions must be unique.')
-
-    if any(not q for q in question_names):
-        raise ValueError('Guiding questions cannot be blank.')
-
-    required_columns = {
-        'question',
-        'peer_group',
-        'decision'
-    }
-
-    if not required_columns.issubset(df.columns):
-        raise ValueError(
-            f'DataFrame must contain: {required_columns}'
-        )
-
-    if df.duplicated(['question', 'peer_group']).any():
-        raise ValueError(
-            'Duplicate question/peer-group combinations found.'
-        )
-
-    expected = pd.MultiIndex.from_product(
-        [question_names, names],
-        names=['question', 'peer_group']
+    max_metrics = max(
+        len(q['metrics']) for q in questions
     )
-
-    actual = pd.MultiIndex.from_frame(
-        df[['question', 'peer_group']]
-    )
-
-    missing = expected.difference(actual)
-    unexpected = actual.difference(expected)
-
-    if len(missing) or len(unexpected):
-        raise ValueError(
-            'Assessment combinations do not match the presentation. '
-            f'Missing: {list(missing)}; '
-            f'Unexpected: {list(unexpected)}'
-        )
-
-    if not isinstance(target_final_assessment, dict):
-        raise TypeError(
-            'target_final_assessment must be a dictionary.'
-        )
-
-    if set(target_final_assessment) != set(question_names):
-        raise ValueError(
-            'target_final_assessment keys must exactly match '
-            'the guiding questions.'
-        )
-
-    for question, result in target_final_assessment.items():
-        if not isinstance(result, dict):
-            raise TypeError(f'Result for {question!r} must be a dictionary.')
     
-        if not {'decision', 'rationale'}.issubset(result):
-            raise ValueError(
-                f'Result for {question!r} must contain '
-                "'decision' and 'rationale'."
-            )
-    
-        decision = result['decision']
-    
-        if decision is not None and not isinstance(decision, (bool, np.bool_)):
-            raise ValueError(
-                f'Invalid decision for {question!r}: {decision!r}'
-            )
-
-    # =========================================================
-    # 2. Initialize canvas and colours
-    # =========================================================
-
-    C = color_dict
-
-    WHITE = C['white']
-    NAVY = C['navy']
-    TEAL = C['teal']
-    MUTED = C['muted']
-    PALE = C['pale']
-    LINE = C['line']
-    LIGHT = C['light_teal']
+    # --------------------------------------------------
+    # Canvas and colours
+    # --------------------------------------------------
 
     W, H = 1600, 900
 
-    img = Image.new(
-        'RGB',
-        (W, H),
-        WHITE
-    )
+    navy = color_dict['navy']
+    teal = color_dict['teal']
+    muted = color_dict['muted']
+    pale = color_dict['pale']
+    line = color_dict['line']
+    white = color_dict['white']
 
+    img = Image.new('RGB', (W, H), white)
     draw = ImageDraw.Draw(img)
 
-    # =========================================================
-    # 3. Typography helpers
-    # =========================================================
+    # --------------------------------------------------
+    # Text helpers
+    # --------------------------------------------------
 
     def font(size, bold=False):
         return load_presentation_font(
@@ -2667,30 +2850,550 @@ def statistical_assessment_matrix(
             bold=bold
         )
 
-    def text_width(value, f):
-        bounds = draw.textbbox(
+    def text_width(text, fnt):
+        bbox = draw.textbbox(
             (0, 0),
-            str(value),
-            font=f
+            str(text),
+            font=fnt
+        )
+        return bbox[2] - bbox[0]
+
+    def wrap(text, fnt, max_width):
+        words = str(text).split()
+
+        lines = []
+        current = ''
+
+        for word in words:
+            trial = (current + ' ' + word).strip()
+
+            if text_width(trial, fnt) <= max_width:
+                current = trial
+            else:
+                if current:
+                    lines.append(current)
+                current = word
+
+        if current:
+            lines.append(current)
+
+        return lines
+
+    def centered_text(
+        text,
+        cx,
+        cy,
+        width,
+        size=20,
+        color=navy,
+        bold=False,
+        max_lines=3
+    ):
+        fnt = font(size, bold)
+        lines = wrap(text, fnt, width)
+
+        if len(lines) > max_lines:
+            lines = lines[:max_lines]
+            last = lines[-1]
+
+            while (
+                last
+                and text_width(last + '…', fnt) > width
+            ):
+                last = last[:-1]
+
+            lines[-1] = last + '…'
+
+        line_height = size + 6
+        total_height = len(lines) * line_height
+
+        y = cy - total_height / 2
+
+        for line_text in lines:
+            x = cx - text_width(line_text, fnt) / 2
+
+            draw.text(
+                (x, y),
+                line_text,
+                font=fnt,
+                fill=color
+            )
+
+            y += line_height
+
+    # --------------------------------------------------
+    # Image helper
+    # --------------------------------------------------
+
+    def render_metric_image(
+        image_path,
+        cx,
+        cy,
+        max_width,
+        max_height
+    ):
+        if not image_path:
+            return False
+
+        path = Path(image_path).expanduser()
+
+        if not path.is_absolute():
+            path = folder / path
+
+        if not path.is_file():
+            raise FileNotFoundError(
+                f'Metric image not found: {path}'
+            )
+
+        with Image.open(path) as source:
+            metric_img = source.convert('RGBA')
+
+        # Crop transparent margins where available.
+        alpha = metric_img.getchannel('A')
+        bbox = alpha.getbbox()
+
+        if bbox:
+            metric_img = metric_img.crop(bbox)
+
+        metric_img = ImageOps.contain(
+            metric_img,
+            (
+                max(1, int(max_width)),
+                max(1, int(max_height))
+            ),
+            method=Image.Resampling.LANCZOS
         )
 
+        x = round(cx - metric_img.width / 2)
+        y = round(cy - metric_img.height / 2)
+
+        img.paste(
+            metric_img,
+            (x, y),
+            metric_img
+        )
+
+        return True
+
+    # --------------------------------------------------
+    # Title and subtitle
+    # --------------------------------------------------
+
+    title_y = 45
+    title_font = font(45, True)
+    title_line_height = 53
+
+    title_lines = wrap(
+        title,
+        title_font,
+        1410
+    )
+
+    for i, title_line in enumerate(title_lines):
+        draw.text(
+            (
+                95,
+                title_y + i * title_line_height
+            ),
+            title_line,
+            font=title_font,
+            fill=navy
+        )
+
+    # Position subtitle dynamically beneath title.
+    subtitle_y = (
+        title_y
+        + len(title_lines) * title_line_height
+        + 16
+    )
+
+    subtitle_font = font(20)
+    subtitle_line_height = 28
+
+    subtitle_lines = wrap(
+        subtitle,
+        subtitle_font,
+        1390
+    )
+
+    for i, subtitle_line in enumerate(
+        subtitle_lines
+    ):
+        draw.text(
+            (
+                95,
+                subtitle_y + i * subtitle_line_height
+            ),
+            subtitle_line,
+            font=subtitle_font,
+            fill=muted
+        )
+
+    # Position separator dynamically beneath subtitle.
+    separator_y = (
+        subtitle_y
+        + len(subtitle_lines) * subtitle_line_height
+        + 20
+    )
+
+    draw.line(
+        (95, separator_y, 1505, separator_y),
+        fill=line,
+        width=3
+    )
+
+    # --------------------------------------------------
+    # Dynamic grid dimensions
+    # --------------------------------------------------
+
+    grid_left = 95
+    grid_right = 1505
+
+    column_header_y = separator_y + 20
+
+    grid_top = column_header_y + 38
+    grid_bottom = 775
+
+    row_count = len(questions)
+
+    row_gap = 10
+    column_gap = 10
+
+    grid_width = grid_right - grid_left
+    grid_height = grid_bottom - grid_top
+
+    row_height = (
+        grid_height - row_gap * (row_count - 1)
+    ) / row_count
+
+    if row_height <= 0:
+        raise ValueError(
+            'Insufficient vertical space for the grid. '
+            'Reduce title/subtitle length or question count.'
+        )
+
+    # Question column is wider than metric columns.
+    question_weight = 1.60
+
+    metric_width = (
+        grid_width - column_gap * max_metrics
+    ) / (max_metrics + question_weight)
+
+    question_width = metric_width * question_weight
+
+    question_font_size = (
+        25 if row_count <= 3
+        else 21 if row_count == 4
+        else 18
+    )
+
+    metric_font_size = (
+        17 if max_metrics <= 3
+        else 15
+    )
+
+    # --------------------------------------------------
+    # Column headings
+    # --------------------------------------------------
+
+    question_heading = 'GUIDING QUESTIONS'
+    metric_heading = 'KEY PERFORMANCE INDICATORS (KPIs)'
+
+    heading_font = font(17, True)
+
+    # Left column heading
+    draw.text(
+        (
+            grid_left
+            + (
+                question_width
+                - text_width(
+                    question_heading,
+                    heading_font
+                )
+            ) / 2,
+            column_header_y
+        ),
+        question_heading,
+        font=heading_font,
+        fill=teal
+    )
+
+    # Right columns heading
+    metrics_left = (
+        grid_left + question_width + column_gap
+    )
+
+    metrics_width = grid_right - metrics_left
+
+    draw.text(
+        (
+            metrics_left
+            + (
+                metrics_width
+                - text_width(
+                    metric_heading,
+                    heading_font
+                )
+            ) / 2,
+            column_header_y
+        ),
+        metric_heading,
+        font=heading_font,
+        fill=teal
+    )
+
+    # --------------------------------------------------
+    # Render rows
+    # --------------------------------------------------
+
+    for row_index, question_data in enumerate(
+        questions
+    ):
+
+        y1 = (
+            grid_top
+            + row_index * (row_height + row_gap)
+        )
+        y2 = y1 + row_height
+
+        # ----------------------------------------------
+        # Question card
+        # ----------------------------------------------
+
+        qx1 = grid_left
+        qx2 = qx1 + question_width
+
+        draw.rounded_rectangle(
+            (qx1, y1, qx2, y2),
+            radius=16,
+            fill=pale
+        )
+
+        centered_text(
+            question_data['question'],
+            cx=(qx1 + qx2) / 2,
+            cy=(y1 + y2) / 2,
+            width=question_width - 36,
+            size=question_font_size,
+            bold=True,
+            max_lines=4
+        )
+
+        # ----------------------------------------------
+        # Metric cards
+        # ----------------------------------------------
+
+        for metric_index, metric in enumerate(
+            question_data['metrics']
+        ):
+
+            if isinstance(metric, str):
+                label = metric
+                image_path = None
+            else:
+                label = metric.get('label', '')
+                image_path = metric.get('image')
+
+            mx1 = (
+                qx2 + column_gap
+                + metric_index
+                * (metric_width + column_gap)
+            )
+
+            mx2 = mx1 + metric_width
+
+            draw.rounded_rectangle(
+                (mx1, y1, mx2, y2),
+                radius=16,
+                fill=white,
+                outline=line,
+                width=2
+            )
+
+            cx = (mx1 + mx2) / 2
+
+            # ------------------------------------------
+            # Image region
+            # ------------------------------------------
+
+            label_height = min(
+                24,
+                row_height * 0.25
+            )
+
+            image_top = y1 + 5
+            image_bottom = (
+                y2 - label_height - 4
+            )
+
+            image_height = max(
+                1,
+                image_bottom - image_top
+            )
+
+            image_cy = (
+                image_top + image_bottom
+            ) / 2
+
+            if image_path:
+                render_metric_image(
+                    image_path=image_path,
+                    cx=cx,
+                    cy=image_cy,
+                    max_width=metric_width - 8,
+                    max_height=image_height
+                )
+
+            # ------------------------------------------
+            # Metric label
+            # ------------------------------------------
+
+            centered_text(
+                label,
+                cx=cx,
+                cy=y2 - label_height / 2 - 3,
+                width=metric_width - 16,
+                size=metric_font_size,
+                bold=True,
+                max_lines=2
+            )
+
+    # --------------------------------------------------
+    # Footer
+    # --------------------------------------------------
+
+    footer_line_y = 840
+    footer_text_y = 850
+
+    # Caveat above the grey line
+    caveat_font = font(13)
+    caveat_line_height = 17
+    caveat_lines = wrap(
+        left_footer,
+        caveat_font,
+        1390
+    ) if left_footer else []
+
+    # Position caveat immediately above footer line
+    caveat_y = footer_line_y - (
+        len(caveat_lines) * caveat_line_height
+    ) - 6
+
+    for caveat_line in caveat_lines:
+        draw.text(
+            (95, caveat_y),
+            caveat_line,
+            font=caveat_font,
+            fill=muted
+        )
+        caveat_y += caveat_line_height
+
+    # Footer divider
+    draw.line(
+        (95, footer_line_y, 1505, footer_line_y),
+        fill=line,
+        width=2
+    )
+
+    # Right footer remains below the divider
+    footer_font = font(10)
+
+    draw.text(
+        (
+            1505 - text_width(
+                right_footer,
+                footer_font
+            ),
+            footer_text_y
+        ),
+        right_footer,
+        font=footer_font,
+        fill=muted
+    )
+
+    if export_file:
+        img.save('engagement_measurement_grid.png')
+        return None
+    
+    display(img)
+
+
+
+
+def statistical_assessment_matrix(
+    df,
+    title="Evaluating Differences Across Our Guiding Questions",
+    subtitle="Statistical comparisons with peer groups inform the assessment of the target population.",
+    question="Question",
+    rationale="Rationale",
+    left_footer="",
+    right_footer="",
+    color_dict=None,
+    export_file=False
+):
+
+
+    # --------------------------------------------------
+    # 1. Data
+    # --------------------------------------------------
+
+    if question not in df.columns or rationale not in df.columns:
+        raise ValueError(f"DataFrame must contain '{question}' and '{rationale}'.")
+
+    groups = [c for c in df.columns if c not in [question, rationale]]
+
+    if not groups:
+        raise ValueError("No comparison groups found.")
+
+    if not 1 <= len(df) <= 5:
+        raise ValueError("Provide between 1 and 5 questions.")
+
+    if df[question].isna().any() or df[question].duplicated().any():
+        raise ValueError("Questions must be non-null and unique.")
+
+    # --------------------------------------------------
+    # 2. Colours and canvas
+    # --------------------------------------------------
+
+    C = color_dict if color_dict is not None else globals()["color_dict"]
+
+    WHITE = C["white"]
+    NAVY = C["navy"]
+    TEAL = C["teal"]
+    MUTED = C["muted"]
+    PALE = C["pale"]
+    LINE = C["line"]
+    LIGHT = C["light_teal"]
+
+    W, H = 1600, 900
+
+    img = Image.new("RGB", (W, H), WHITE)
+    draw = ImageDraw.Draw(img)
+
+    # --------------------------------------------------
+    # 3. Typography
+    # --------------------------------------------------
+
+    def font(size, bold=False):
+        return load_presentation_font(size, bold=bold)
+
+    def text_width(value, f):
+        bounds = draw.textbbox((0, 0), str(value), font=f)
         return bounds[2] - bounds[0]
 
     def wrap(value, f, max_width):
         lines = []
-        current = ''
+        current = ""
 
         for word in str(value).split():
-            candidate = (
-                current + ' ' + word
-            ).strip()
+            candidate = (current + " " + word).strip()
 
             if text_width(candidate, f) <= max_width:
                 current = candidate
             else:
                 if current:
                     lines.append(current)
-
                 current = word
 
         if current:
@@ -2708,34 +3411,21 @@ def statistical_assessment_matrix(
     ):
         for n in range(size, min_size - 1, -1):
             f = font(n, bold)
-
-            lines = wrap(
-                value,
-                f,
-                max_width
-            )
+            lines = wrap(value, f, max_width)
 
             if len(lines) <= max_lines:
                 return lines, f, n
 
         f = font(min_size, bold)
-
-        lines = wrap(
-            value,
-            f,
-            max_width
-        )[:max_lines]
+        lines = wrap(value, f, max_width)[:max_lines]
 
         if lines:
             last = lines[-1]
 
-            while (
-                last
-                and text_width(last + '…', f) > max_width
-            ):
+            while last and text_width(last + "…", f) > max_width:
                 last = last[:-1]
 
-            lines[-1] = last + '…'
+            lines[-1] = last + "…"
 
         return lines, f, min_size
 
@@ -2745,9 +3435,12 @@ def statistical_assessment_matrix(
         size=21,
         bold=False,
         color=None,
-        align='left',
+        align="left",
         max_lines=4
     ):
+        if pd.isna(value):
+            value = ""
+
         if color is None:
             color = NAVY
 
@@ -2763,17 +3456,12 @@ def statistical_assessment_matrix(
         )
 
         step = actual + 7
-
-        start_y = (
-            y1 + y2 - len(lines) * step
-        ) / 2
+        start_y = (y1 + y2 - len(lines) * step) / 2
 
         for i, line in enumerate(lines):
 
-            if align == 'center':
-                tx = (
-                    x1 + x2 - text_width(line, f)
-                ) / 2
+            if align == "center":
+                tx = (x1 + x2 - text_width(line, f)) / 2
             else:
                 tx = x1 + margin
 
@@ -2784,23 +3472,11 @@ def statistical_assessment_matrix(
                 fill=color
             )
 
-    # =========================================================
-    # 4. Antialiased decision indicators
-    # =========================================================
+    # --------------------------------------------------
+    # 4. Statistical significance indicators
+    # --------------------------------------------------
 
-    def decision_indicator(
-        value,
-        bounds,
-        radius=17,
-        scale=4
-    ):
-        """
-        Render at 4x resolution and downsample.
-
-        True  : filled blue circle with white checkmark
-        False : pale circle with navy dash
-        None  : muted dot
-        """
+    def decision_indicator(value, bounds, radius=17, scale=4):
 
         x1, y1, x2, y2 = bounds
 
@@ -2811,7 +3487,7 @@ def statistical_assessment_matrix(
         size = diameter * scale
 
         icon = Image.new(
-            'RGBA',
+            "RGBA",
             (size, size),
             (0, 0, 0, 0)
         )
@@ -2842,146 +3518,89 @@ def statistical_assessment_matrix(
                 fill=LINE
             )
 
-        elif isinstance(value, (bool, np.bool_)):
+        elif bool(value):
 
-            if bool(value):
+            # Significant: blue circle and white check
+            d.ellipse(circle, fill=TEAL)
 
-                # Filled blue circle
-                d.ellipse(
-                    circle,
-                    fill=TEAL
-                )
+            points = [
+                (center - 0.46 * r, center - 0.02 * r),
+                (center - 0.12 * r, center + 0.32 * r),
+                (center + 0.51 * r, center - 0.39 * r)
+            ]
 
-                # White checkmark
-                points = [
-                    (
-                        center - 0.46 * r,
-                        center - 0.02 * r
-                    ),
-                    (
-                        center - 0.12 * r,
-                        center + 0.32 * r
-                    ),
-                    (
-                        center + 0.51 * r,
-                        center - 0.39 * r
-                    )
-                ]
+            stroke = max(2, int(0.19 * r))
 
-                stroke = max(
-                    2,
-                    int(0.19 * r)
-                )
-
-                d.line(
-                    points,
-                    fill=WHITE,
-                    width=stroke,
-                    joint='curve'
-                )
-
-                # Rounded checkmark endpoints
-                endpoint_radius = stroke / 2
-
-                for px, py in [
-                    points[0],
-                    points[-1]
-                ]:
-                    d.ellipse(
-                        (
-                            px - endpoint_radius,
-                            py - endpoint_radius,
-                            px + endpoint_radius,
-                            py + endpoint_radius
-                        ),
-                        fill=WHITE
-                    )
-
-            else:
-
-                # Pale outlined circle
-                d.ellipse(
-                    circle,
-                    fill=PALE,
-                    outline=LINE,
-                    width=max(
-                        2,
-                        int(0.09 * r)
-                    )
-                )
-
-                # Navy horizontal dash
-                stroke = max(
-                    2,
-                    int(0.16 * r)
-                )
-
-                left = center - 0.40 * r
-                right = center + 0.40 * r
-
-                d.line(
-                    (
-                        left,
-                        center,
-                        right,
-                        center
-                    ),
-                    fill=NAVY,
-                    width=stroke
-                )
-
-                # Rounded dash endpoints
-                endpoint_radius = stroke / 2
-
-                for px in [left, right]:
-                    d.ellipse(
-                        (
-                            px - endpoint_radius,
-                            center - endpoint_radius,
-                            px + endpoint_radius,
-                            center + endpoint_radius
-                        ),
-                        fill=NAVY
-                    )
-
-        else:
-            raise ValueError(
-                f'Invalid decision {value!r}. '
-                'Expected True, False or None.'
+            d.line(
+                points,
+                fill=WHITE,
+                width=stroke,
+                joint="curve"
             )
 
-        # Supersampling / antialiasing
+            for px, py in [points[0], points[-1]]:
+                d.ellipse(
+                    (
+                        px - stroke / 2,
+                        py - stroke / 2,
+                        px + stroke / 2,
+                        py + stroke / 2
+                    ),
+                    fill=WHITE
+                )
+
+        else:
+
+            # Not significant: pale circle and navy dash
+            d.ellipse(
+                circle,
+                fill=PALE,
+                outline=LINE,
+                width=max(2, int(0.09 * r))
+            )
+
+            stroke = max(2, int(0.16 * r))
+
+            left = center - 0.40 * r
+            right = center + 0.40 * r
+
+            d.line(
+                (left, center, right, center),
+                fill=NAVY,
+                width=stroke
+            )
+
+            for px in [left, right]:
+                d.ellipse(
+                    (
+                        px - stroke / 2,
+                        center - stroke / 2,
+                        px + stroke / 2,
+                        center + stroke / 2
+                    ),
+                    fill=NAVY
+                )
+
         icon = icon.resize(
             (diameter, diameter),
             Image.Resampling.LANCZOS
         )
 
-        paste_x = int(
-            round(cx - diameter / 2)
-        )
-
-        paste_y = int(
-            round(cy - diameter / 2)
-        )
-
         img.paste(
             icon,
-            (paste_x, paste_y),
+            (
+                round(cx - diameter / 2),
+                round(cy - diameter / 2)
+            ),
             icon
         )
 
-    # =========================================================
-    # 5. Slide title and subtitle
-    # =========================================================
-
-    # Section header intentionally removed.
+    # --------------------------------------------------
+    # 5. Title and subtitle
+    # --------------------------------------------------
 
     title_lines, title_font, _ = fit_lines(
-        title,
-        1410,
-        2,
-        45,
-        bold=True
+        title, 1410, 2, 45, bold=True
     )
 
     for i, line in enumerate(title_lines):
@@ -2992,17 +3611,10 @@ def statistical_assessment_matrix(
             fill=NAVY
         )
 
-    sub_y = (
-        54
-        + len(title_lines) * 53
-        + 12
-    )
+    sub_y = 54 + len(title_lines) * 53 + 12
 
     subtitle_lines, sub_font, _ = fit_lines(
-        subtitle,
-        1410,
-        2,
-        20
+        subtitle, 1410, 2, 20
     )
 
     for i, line in enumerate(subtitle_lines):
@@ -3013,42 +3625,43 @@ def statistical_assessment_matrix(
             fill=MUTED
         )
 
-    separator_y = (
-        sub_y
-        + len(subtitle_lines) * 27
-        + 24
-    )
+    separator_y = sub_y + len(subtitle_lines) * 27 + 24
 
     draw.line(
-        (
-            95,
-            separator_y,
-            1505,
-            separator_y
-        ),
+        (95, separator_y, 1505, separator_y),
         fill=LINE,
         width=3
     )
 
-    # =========================================================
+    # --------------------------------------------------
     # 6. Table layout
-    # =========================================================
+    # --------------------------------------------------
 
-    # Column widths:
-    # Evaluation Dimension : 430
-    # Peer groups          : 105 each
-    # Target Assessment    : 130
-    # Rationale            : 430
+    # Question: 430 px
+    # Rationale: 430 px
+    # Remaining width divided equally among peer groups
 
-    x = [
-        95,
-        525,
-        630,
-        735,
-        840,
-        945,
-        1075,
-        1505
+    left = 95
+    right = 1505
+
+    question_width = 430
+    rationale_width = 430
+
+    group_width = (
+        right - left - question_width - rationale_width
+    ) / len(groups)
+
+    x = [left, left + question_width]
+
+    for _ in groups:
+        x.append(x[-1] + group_width)
+
+    x.append(right)
+
+    headers = [
+        "EVALUATION DIMENSION",
+        *groups,
+        "RATIONALE"
     ]
 
     header_y = separator_y + 18
@@ -3058,26 +3671,15 @@ def statistical_assessment_matrix(
     gap = 10
 
     row_h = (
-        bottom_y
-        - table_y
-        - gap * (len(question_names) - 1)
-    ) / len(question_names)
+        bottom_y - table_y - gap * (len(df) - 1)
+    ) / len(df)
 
     if row_h < 74:
-        raise ValueError(
-            'Insufficient vertical space for table rows.'
-        )
-
-    headers = [
-        'EVALUATION DIMENSION',
-        *names,
-        'TARGET ASSESSMENT',
-        'RATIONALE'
-    ]
-
-    assessment_lookup = df.set_index(['question', 'peer_group'])['decision'].to_dict()
+        raise ValueError("Insufficient vertical space for table rows.")
 
     for j, heading in enumerate(headers):
+
+        is_text = j == 0 or j == len(headers) - 1
 
         text_box(
             heading,
@@ -3087,28 +3689,24 @@ def statistical_assessment_matrix(
                 x[j + 1] - 2,
                 header_y + 62
             ),
-            size=18 if j in (0, 6) else 15,
+            size=18 if is_text else 15,
             bold=True,
             color=NAVY,
-            align=(
-                'left'
-                if j in (0, 6)
-                else 'center'
-            ),
+            align="left" if is_text else "center",
             max_lines=4
         )
 
-    # =========================================================
-    # 7. Populate assessment rows
-    # =========================================================
+    # --------------------------------------------------
+    # 7. Populate rows
+    # --------------------------------------------------
 
-    for i, question in enumerate(question_names):
+    for i, (_, record) in enumerate(df.iterrows()):
 
         y1 = table_y + i * (row_h + gap)
         y2 = y1 + row_h
 
-        # Draw cell backgrounds
-        for j in range(7):
+        # Cell backgrounds
+        for j in range(len(headers)):
 
             bounds = (
                 x[j] + 3,
@@ -3117,45 +3715,36 @@ def statistical_assessment_matrix(
                 y2
             )
 
-            if j == 0:
-                fill = PALE
-            elif j == 5:
-                fill = LIGHT
-            else:
-                fill = WHITE
+            fill = PALE if j == 0 else WHITE
 
             draw.rounded_rectangle(
                 bounds,
                 radius=12,
                 fill=fill,
-                outline=(
-                    None
-                    if j == 0
-                    else LINE
-                ),
+                outline=None if j == 0 else LINE,
                 width=2
             )
 
-        # Evaluation Dimension - 33% smaller font
+        # Question
         text_box(
-            question,
-            (
-                x[0] + 3,
-                y1,
-                x[1] - 3,
-                y2
-            ),
+            record[question],
+            (x[0] + 3, y1, x[1] - 3, y2),
             size=18,
             bold=True,
             max_lines=4
         )
 
-        # Peer-group statistical decisions
-        for j, name in enumerate(names):
+        # Peer group results
+        for j, group in enumerate(groups):
 
-            value = assessment_lookup[
-                (question, name)
-            ]
+            value = record[group]
+
+            if not pd.isna(value) and not isinstance(
+                value, (bool, np.bool_)
+            ):
+                raise ValueError(
+                    f"{group}: expected True, False or None/NaN"
+                )
 
             decision_indicator(
                 value,
@@ -3165,88 +3754,57 @@ def statistical_assessment_matrix(
                     x[j + 2],
                     y2
                 ),
-                radius=17,
-                scale=4
+                radius=17
             )
 
-        # Overall target assessment
-        decision_indicator(
-            target_final_assessment[question]['decision'],
-            (
-                x[5],
-                y1,
-                x[6],
-                y2
-            ),
-            radius=21,
-            scale=4
-        )
-
-        # Rationale placeholder
+        # Rationale as text
         text_box(
-            target_final_assessment[question]['rationale'],
+            record[rationale],
             (
-                x[6] + 3,
+                x[-2] + 3,
                 y1,
-                x[7] - 3,
+                x[-1] - 3,
                 y2
             ),
             size=19,
             color=MUTED,
-            max_lines=4
+            max_lines=5
         )
 
-    # =========================================================
+    # --------------------------------------------------
     # 8. Legend and footer
-    # =========================================================
+    # --------------------------------------------------
 
     legend_y = 803
 
     decision_indicator(
         True,
-        (
-            95,
-            legend_y - 15,
-            129,
-            legend_y + 19
-        ),
-        radius=12,
-        scale=4
+        (95, legend_y - 15, 129, legend_y + 19),
+        radius=12
     )
 
     draw.text(
         (139, legend_y - 10),
-        'Statistically different',
+        "Statistically different",
         font=font(16),
         fill=MUTED
     )
 
     decision_indicator(
         False,
-        (
-            365,
-            legend_y - 15,
-            399,
-            legend_y + 19
-        ),
-        radius=12,
-        scale=4
+        (365, legend_y - 15, 399, legend_y + 19),
+        radius=12
     )
 
     draw.text(
         (409, legend_y - 10),
-        'No statistically significant difference detected',
+        "No statistically significant difference detected",
         font=font(16),
         fill=MUTED
     )
 
     draw.line(
-        (
-            95,
-            835,
-            1505,
-            835
-        ),
+        (95, 835, 1505, 835),
         fill=LINE,
         width=2
     )
@@ -3263,868 +3821,55 @@ def statistical_assessment_matrix(
         f = font(16)
 
         draw.text(
-            (
-                1505 - text_width(
-                    right_footer, f
-                ),
-                851
-            ),
+            (1505 - text_width(right_footer, f), 851),
             right_footer,
             font=f,
             fill=MUTED
         )
 
-    # =========================================================
+    # --------------------------------------------------
     # 9. Output
-    # =========================================================
-
+    # --------------------------------------------------
 
     if export_file:
-        img.save('statistical_assessment_matrix.png')
-        return None
+        img.save("statistical_assessment_matrix.png")
 
     display(img)
 
-def key_findings(
-    findings,
-    title="Key Findings",
-    subtitle="What the analysis suggests about changes in member engagement.",
-    left_footer="",
-    right_footer="",
-    font_path=None,
-    color_dict=color_dict,
-    export_file=False
-):
-    """
-    Create a 1600 x 900 Key Findings slide.
-
-    findings: list of 2 or 3 dictionaries:
-        {
-            "headline": "Main finding",
-            "support": "Supporting explanation",
-            "image": "/path/to/image.png"  # Optional
-        }
-
-    return_value:
-        ''      Return Pillow image
-        'image' Return Pillow image
-        'file'  Save PNG and return file path
-
-    Requires:
-        load_presentation_font()
-    """
-
-    if not 2 <= len(findings) <= 3:
-        raise ValueError("Provide 2 or 3 findings.")
-
-    W, H = 1600, 900
-
-    # --------------------------------------------------
-    # Colours
-    # --------------------------------------------------
-
-    WHITE = color_dict["white"]
-    NAVY = color_dict["navy"]
-    TEAL = color_dict["teal"]
-    MUTED = color_dict["muted"]
-    PALE = color_dict["pale"]
-    BORDER = color_dict["border"]
-
-    # --------------------------------------------------
-    # Fonts
-    # --------------------------------------------------
-    def font(size, bold=False):
-        return load_presentation_font(
-            size,
-            bold=bold,
-            font_path=font_path
-        )
-
-    f_title = font(48, True)
-    f_subtitle = font(23)
-    f_headline = font(30, True)
-    f_support = font(22)
-    f_footer = font(17)
-
-    # --------------------------------------------------
-    # Canvas
-    # --------------------------------------------------
-    img = Image.new("RGB", (W, H), WHITE)
-    draw = ImageDraw.Draw(img)
-
-    def text_width(text, f):
-        box = draw.textbbox(
-            (0, 0),
-            str(text),
-            font=f
-        )
-        return box[2] - box[0]
-
-    def wrap_text(text, f, max_width):
-        lines = []
-        current = ""
-
-        for word in str(text).split():
-            trial = f"{current} {word}".strip()
-
-            if text_width(trial, f) <= max_width:
-                current = trial
-            else:
-                if current:
-                    lines.append(current)
-                current = word
-
-        if current:
-            lines.append(current)
-
-        return lines
-
-    # --------------------------------------------------
-    # Header
-    # --------------------------------------------------
-    LEFT = 70
-    RIGHT = 1530
-
-    draw.text(
-        (LEFT, 43),
-        title,
-        font=f_title,
-        fill=NAVY
-    )
-
-    subtitle_lines = wrap_text(
-        subtitle,
-        f_subtitle,
-        RIGHT - LEFT
-    )
-
-    subtitle_y = 116
-
-    for line in subtitle_lines:
-        draw.text(
-            (LEFT, subtitle_y),
-            line,
-            font=f_subtitle,
-            fill=MUTED
-        )
-        subtitle_y += 31
-
-    # No line beneath the subtitle.
-
-    # --------------------------------------------------
-    # Finding cards
-    # --------------------------------------------------
-    top = max(195, subtitle_y + 32)
-    bottom = 820
-    gap = 18
-
-    n = len(findings)
-
-    card_height = (
-        bottom - top - (n - 1) * gap
-    ) / n
-
-    for i, finding in enumerate(findings):
-
-        y1 = top + i * (card_height + gap)
-        y2 = y1 + card_height
-
-        x1, x2 = LEFT, RIGHT
-
-        # ----------------------------------------------
-        # Main card
-        # ----------------------------------------------
-        draw.rounded_rectangle(
-            (
-                round(x1),
-                round(y1),
-                round(x2),
-                round(y2)
-            ),
-            radius=18,
-            fill=PALE,
-            outline=BORDER,
-            width=2
-        )
-
-        # Left teal accent
-        draw.rounded_rectangle(
-            (
-                round(x1),
-                round(y1 + 12),
-                round(x1 + 7),
-                round(y2 - 12)
-            ),
-            radius=3,
-            fill=TEAL
-        )
-
-        # ----------------------------------------------
-        # Optional image
-        # ----------------------------------------------
-        image_path = finding.get("image")
-
-        if image_path:
-
-            path = Path(image_path)
-
-            if not path.exists():
-                raise FileNotFoundError(
-                    f"Image not found: {image_path}"
-                )
-
-            icon = Image.open(path).convert("RGBA")
-
-            # Reserved image region
-            image_region_left = x1 + 35
-            image_region_right = x1 + 235
-
-            image_region_width = (
-                image_region_right
-                - image_region_left
-            )
-
-            image_region_height = (
-                card_height - 35
-            )
-
-            # Preserve aspect ratio
-            scale = min(
-                image_region_width / icon.width,
-                image_region_height / icon.height
-            ) * 0.85
-
-            new_width = max(
-                1,
-                round(icon.width * scale)
-            )
-
-            new_height = max(
-                1,
-                round(icon.height * scale)
-            )
-
-            icon = icon.resize(
-                (new_width, new_height),
-                Image.Resampling.LANCZOS
-            )
-
-            # Centre image within reserved region
-            image_x = round(
-                image_region_left
-                + (image_region_width - new_width) / 2
-            )
-
-            image_y = round(
-                y1
-                + (card_height - new_height) / 2
-            )
-
-            # Preserve transparency
-            img.paste(
-                icon,
-                (image_x, image_y),
-                icon
-            )
-
-            # Vertical divider
-            divider_x = x1 + 260
-
-            draw.line(
-                (
-                    round(divider_x),
-                    round(y1 + 28),
-                    round(divider_x),
-                    round(y2 - 28)
-                ),
-                fill=BORDER,
-                width=2
-            )
-
-            text_x = x1 + 295
-
-        else:
-
-            # Use full width when no image exists
-            text_x = x1 + 43
-
-        available_width = (
-            x2 - text_x - 45
-        )
-
-        # ----------------------------------------------
-        # Wrap text
-        # ----------------------------------------------
-        headline_lines = wrap_text(
-            finding["headline"],
-            f_headline,
-            available_width
-        )
-
-        support_lines = wrap_text(
-            finding["support"],
-            f_support,
-            available_width
-        )
-
-        headline_line_height = 39
-        support_line_height = 30
-        text_gap = 13
-
-        headline_height = (
-            len(headline_lines)
-            * headline_line_height
-        )
-
-        support_height = (
-            len(support_lines)
-            * support_line_height
-        )
-
-        content_height = (
-            headline_height
-            + text_gap
-            + support_height
-        )
-
-        if content_height > card_height - 28:
-            raise ValueError(
-                f"Finding {i + 1} contains too much "
-                "text for the available card height."
-            )
-
-        # ----------------------------------------------
-        # Vertically centre text
-        # ----------------------------------------------
-        content_y = (
-            y1 + (card_height - content_height) / 2
-        )
-
-        # Headline
-        headline_y = content_y
-
-        for line in headline_lines:
-            draw.text(
-                (text_x, headline_y),
-                line,
-                font=f_headline,
-                fill=NAVY
-            )
-
-            headline_y += headline_line_height
-
-        # Supporting text
-        support_y = headline_y + text_gap
-
-        for line in support_lines:
-            draw.text(
-                (text_x, support_y),
-                line,
-                font=f_support,
-                fill=MUTED
-            )
-
-            support_y += support_line_height
-
-    # --------------------------------------------------
-    # Footer
-    # --------------------------------------------------
-    footer_y = 855
-
-    draw.line(
-        (LEFT, footer_y, RIGHT, footer_y),
-        fill=BORDER,
-        width=1
-    )
-
-    if left_footer:
-
-        draw.text(
-            (LEFT, footer_y + 12),
-            left_footer,
-            font=f_footer,
-            fill=MUTED
-        )
-
-    if right_footer:
-
-        draw.text(
-            (
-                RIGHT - text_width(
-                    right_footer,
-                    f_footer
-                ),
-                footer_y + 12
-            ),
-            right_footer,
-            font=f_footer,
-            fill=MUTED
-        )
-
-    # --------------------------------------------------
-    # Save / Return
-    # --------------------------------------------------
-    if export_file:
-        img.save('key_findings.png')
-        return None
-    
-    return img
-
-
-
-
-def opportunities_next_steps(
-    opportunities,
-    title="Opportunities and Next Steps",
-    subtitle="Translating our findings into practical opportunities for deeper insight and better decisions.",
-    left_footer="Member Engagement Analysis",
-    right_footer="08",
-    color_dict=color_dict,
-    export_file=False
-):
-    """
-    Create a 1600 x 900 Pillow presentation slide.
-
-    Parameters
-    ----------
-    opportunities : list
-        List of 2 or 3 dictionaries:
-            {
-                "title": "Opportunity title",
-                "description": "Short supporting paragraph.",
-                "image": "/absolute/path/to/icon.png"
-            }
-
-    folder_location : str or Path, optional
-        Destination folder when return_value='file'.
-
-    color_dict : dict
-        Shared presentation colour palette.
-
-    return_value : str
-        'image' -> return PIL Image
-        'file'  -> save PNG and return file path
-        other   -> display image in notebook
-    """
-
-    # =========================================================
-    # 1. Validate inputs
-    # =========================================================
-
-    if not 2 <= len(opportunities) <= 3:
-        raise ValueError(
-            "Provide 2 or 3 opportunities."
-        )
-
-    # =========================================================
-    # 2. Canvas and shared colour palette
-    # =========================================================
-
-    W, H = 1600, 900
-
-    C = color_dict
-
-    WHITE = C['white']
-    NAVY = C['navy']
-    TEAL = C['teal']
-    MUTED = C['muted']
-    BORDER = C['line']
-
-    img = Image.new(
-        'RGB',
-        (W, H),
-        WHITE
-    )
-
-    draw = ImageDraw.Draw(img)
-
-    # =========================================================
-    # 3. Typography
-    # =========================================================
-
-    def font(size, bold=False):
-        return load_presentation_font(
-            size,
-            bold=bold
-        )
-
-    f_title = font(45, bold=True)
-    f_subtitle = font(20)
-    f_card_title = font(29, bold=True)
-    f_description = font(21)
-    f_footer = font(16)
-
-    def text_width(text, f):
-        bounds = draw.textbbox(
-            (0, 0),
-            str(text),
-            font=f
-        )
-        return bounds[2] - bounds[0]
-
-    def wrap_text(text, f, max_width):
-        lines = []
-        current = ''
-
-        for word in str(text).split():
-            trial = f'{current} {word}'.strip()
-
-            if text_width(trial, f) <= max_width:
-                current = trial
-            else:
-                if current:
-                    lines.append(current)
-                current = word
-
-        if current:
-            lines.append(current)
-
-        return lines
-
-    def draw_wrapped(
-        text,
-        x,
-        y,
-        f,
-        fill,
-        width,
-        line_height
-    ):
-        lines = wrap_text(
-            str(text),
-            f,
-            width
-        )
-
-        for line in lines:
-            draw.text(
-                (x, y),
-                line,
-                font=f,
-                fill=fill
-            )
-            y += line_height
-
-        return y
-
-    # =========================================================
-    # 4. Slide title and subtitle
-    # =========================================================
-
-    # No section header
-
-    draw.text(
-        (95, 54),
-        title,
-        font=f_title,
-        fill=NAVY
-    )
-
-    draw.text(
-        (95, 119),
-        subtitle,
-        font=f_subtitle,
-        fill=MUTED
-    )
-
-    draw.line(
-        (95, 178, 1505, 178),
-        fill=BORDER,
-        width=3
-    )
-
-    # =========================================================
-    # 5. Card layout
-    # =========================================================
-
-    card_top = 220
-    card_bottom = 790
-    card_gap = 26
-
-    left = 95
-    right = 1505
-
-    n = len(opportunities)
-
-    card_width = (
-        (right - left) - (n - 1) * card_gap
-    ) / n
-
-    for i, opportunity in enumerate(opportunities):
-
-        x1 = left + i * (card_width + card_gap)
-        x2 = x1 + card_width
-
-        # -----------------------------------------------------
-        # Main card
-        # -----------------------------------------------------
-
-        draw.rounded_rectangle(
-            (x1, card_top, x2, card_bottom),
-            radius=18,
-            fill=WHITE,
-            outline=BORDER,
-            width=2
-        )
-
-        # Thin blue accent at top of card
-        draw.rounded_rectangle(
-            (
-                x1 + 30,
-                card_top + 24,
-                x1 + 95,
-                card_top + 30
-            ),
-            radius=3,
-            fill=TEAL
-        )
-
-        text_x = x1 + 30
-        text_width_available = card_width - 60
-
-        # -----------------------------------------------------
-        # Opportunity title
-        # -----------------------------------------------------
-
-        title_y = card_top + 55
-
-        title_end = draw_wrapped(
-            opportunity['title'],
-            text_x,
-            title_y,
-            f_card_title,
-            NAVY,
-            text_width_available,
-            38
-        )
-
-        # -----------------------------------------------------
-        # Description
-        # -----------------------------------------------------
-
-        description_y = title_end + 18
-
-        description_end = draw_wrapped(
-            opportunity['description'],
-            text_x,
-            description_y,
-            f_description,
-            MUTED,
-            text_width_available,
-            30
-        )
-
-        # -----------------------------------------------------
-        # Divider between text and image
-        # -----------------------------------------------------
-
-        separator_y = description_end + 26
-
-        draw.line(
-            (
-                text_x,
-                separator_y,
-                x2 - 30,
-                separator_y
-            ),
-            fill=BORDER,
-            width=2
-        )
-
-        # -----------------------------------------------------
-        # Image placement
-        # -----------------------------------------------------
-
-        image_path = opportunity.get('image')
-
-        if image_path:
-
-            path = Path(image_path).expanduser()
-
-            if not path.is_file():
-                raise FileNotFoundError(
-                    f'Image not found: {image_path}'
-                )
-
-            with Image.open(path) as source:
-                icon = source.convert('RGBA')
-
-            image_top = separator_y + 18
-            image_bottom = card_bottom - 30
-
-            max_image_width = card_width - 90
-            max_image_height = image_bottom - image_top
-
-            if max_image_height <= 0:
-                raise ValueError(
-                    f'No space available for image in card {i + 1}.'
-                )
-
-            # Preserve aspect ratio and allow enlargement
-            scale = min(
-                max_image_width / icon.width,
-                max_image_height / icon.height
-            ) * 0.80
-
-            new_width = max(
-                1,
-                int(icon.width * scale)
-            )
-
-            new_height = max(
-                1,
-                int(icon.height * scale)
-            )
-
-            icon = icon.resize(
-                (new_width, new_height),
-                Image.Resampling.LANCZOS
-            )
-
-            # Centre image horizontally
-            image_x = int(
-                (x1 + x2) / 2 - new_width / 2
-            )
-
-            # Centre image vertically in available space
-            image_y = int(
-                image_top
-                + (max_image_height - new_height) / 2
-            )
-
-            img.paste(
-                icon,
-                (image_x, image_y),
-                icon
-            )
-
-    # =========================================================
-    # 6. Footer
-    # =========================================================
-
-    draw.line(
-        (95, 835, 1505, 835),
-        fill=BORDER,
-        width=2
-    )
-
-    if left_footer:
-        draw.text(
-            (95, 851),
-            left_footer,
-            font=f_footer,
-            fill=MUTED
-        )
-
-    if right_footer:
-        draw.text(
-            (
-                1505 - text_width(
-                    right_footer,
-                    f_footer
-                ),
-                851
-            ),
-            right_footer,
-            font=f_footer,
-            fill=MUTED
-        )
-
-    # =========================================================
-    # 7. Output
-    # =========================================================
-
-    if export_file:
-        img.save('opportunities_next_steps.png')
-        return None
-
-    display(img)
-
-#############################################
-# THIS IS A MANUAL PROCESS. Need to automate and pull the DF from a .py file and use dict_to_dataframe
-temp_dict = {'columns': ['Process', 'Categorization', 'Word', 'Definition'],
- 'index': [1093,
-  1094,
-  1095,
-  1096,
-  1097,
-  1098,
-  1099,
-  1100,
-  1101,
-  1102,
-  1103,
-  1104,
-  1105,
-  1106,
-  1107,
-  1108],
- 'data': [['Storytelling Presentation Template',
-   'Process',
-   'Process Definition',
-   "The purpose of this framework is to remind, guide, and challenge us to think beyond simply presenting information. It's easy to become immersed in data, analysis, and visualizations and lose sight of the bigger picture: What story are we telling, why does it matter, and what do we want our audience to understand or do?\n\nStorytelling is the process of connecting information into a meaningful narrative, where each slide has a clear purpose and contributes to the overall message. Insight is not simply a finding; it is an understanding of what that finding means and why it matters. Purpose is the reason the information deserves the audience's attention.\n\nAs you build your presentation, continually challenge yourself: Are we simply showing information, or are we helping our audience move from information to understanding, understanding to insight, and insight to action? "],
-  ['Storytelling Presentation Template',
-   'Process Step',
-   'Frame the Question',
-   'Establish the context, purpose, and central question that the analysis is intended to address.'],
-  ['Storytelling Presentation Template',
-   'Frame the Question',
-   'Slide 1',
-   'Introduce the analytical premise and establish why the question matters.'],
-  ['Storytelling Presentation Template',
-   'Process Step',
-   'Structure the Evaluation',
-   None],
-  ['Storytelling Presentation Template',
-   'Structure the Evaluation',
-   'Slide 2',
-   'Introduce Target Population, define dimensions of interest, preliminary observations'],
-  ['Storytelling Presentation Template',
-   'Structure the Evaluation',
-   'Process Definition',
-   "Establish a structured and transparent approach for evaluating the question, including relevant populations, comparisons, dimensions, and metrics."],
-  ['Storytelling Presentation Template',
-   'Structure the Evaluation',
-   'Slide 3',
-   'Introduce Peer Groups, at high level, Appendix for Peer Equivalent Slides'],
-  ['Storytelling Presentation Template',
-   'Structure the Evaluation',
-   'Slide 4',
-   'Introduce Metrics of Relevance and context of scope'],
-  ['Storytelling Presentation Template',
-   'Process Step',
-   'Assess & Interpret',
-   'Systematically evaluate the evidence, identify patterns and differences, and distinguish observations from potential explanations.'],
-  ['Storytelling Presentation Template',
-   'Assess & Interpret',
-   'Slide 5',
-   'Explore performance at a more granular level. of 2-3 most influential of the metrics, all else to Appendix'],
-  ['Storytelling Presentation Template',
-   'Assess & Interpret',
-   'Slide 6',
-   'Summarize group performance across dimensions.'],
-  ['Storytelling Presentation Template',
-   'Assess & Interpret',
-   'Slide 7',
-   "Consolidate observations and interpret the findings.',"],
-  ['Storytelling Presentation Template',
-   'Process Step',
-   'Implications & Opportunities',
-   'Translate analytical findings into meaningful implications, potential actions, and opportunities for further investigation or iterative improvement'],
-  ['Storytelling Presentation Template',
-   'Implications & Opportunities',
-   'Slide 8',
-   'Identify recommendations and opportunities to enhance or evolve the analysis.'],
-  ['Storytelling Presentation Template',
-   'Process Step',
-   'Appendix: Spill Over Slide 5',
-   None],
-  ['Storytelling Presentation Template',
-   'Process Step',
-   'Appendix: Assumptions and Limitations',
-   None]]}
-
-process_df = pd.DataFrame(data=temp_dict["data"],columns=temp_dict["columns"],index=temp_dict["index"])
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 def generate_storytelling_presentation(
         presentation_dict,
@@ -4374,3 +4119,339 @@ def render_visual_text_storytelling_framework(
 
     display(Markdown("\n".join(markdown)))
 
+
+################################################################################################################################################################################
+
+# Create to Support Testing and Development.
+
+################################################################################################################################################################################
+
+def create_slide(width=1600, height=900):
+    return Image.new("RGB", (width, height), color_dict["white"])
+
+
+def draw_title(img, title, x=70, y=49):
+    d = ImageDraw.Draw(img)
+    font = load_presentation_font(43, bold=True)
+    d.text((x, y), title, font=font, fill=color_dict["navy"])
+    d.line((70, 119, 1530, 119), fill=color_dict["line"], width=2)
+
+
+def draw_blue_box(img, x, y, width, height, title, text):
+    d = ImageDraw.Draw(img)
+
+    d.rounded_rectangle(
+        (x, y, x + width, y + height),
+        radius=15,
+        fill=color_dict["pale"]
+    )
+
+    d.text(
+        (x + 30, y + 13),
+        title,
+        font=load_presentation_font(25, bold=True),
+        fill=color_dict["navy"]
+    )
+
+    d.text(
+        (x + 30, y + 48),
+        text,
+        font=load_presentation_font(20),
+        fill=color_dict["muted"]
+    )
+
+
+def draw_content_box(
+    img, x, y, width, height,
+    title, text, image=None,
+    image_size=120
+):
+    d = ImageDraw.Draw(img)
+
+    d.rounded_rectangle(
+        (x, y, x + width, y + height),
+        radius=15,
+        fill=color_dict["white"],
+        outline=color_dict["line"],
+        width=2
+    )
+
+    if image is not None:
+        if isinstance(image, Image.Image):
+            icon = image.copy()
+        else:
+            path = Path(image)
+            if not path.exists():
+                raise FileNotFoundError(f"Image not found: {path}")
+            with Image.open(path) as opened:
+                icon = opened.copy()
+
+        icon = ImageOps.contain(
+            icon.convert("RGBA"),
+            (image_size, image_size),
+            method=Image.Resampling.LANCZOS
+        )
+
+        cx = x + 95
+        cy = y + height / 2
+
+        img.paste(
+            icon,
+            (int(cx - icon.width / 2), int(cy - icon.height / 2)),
+            icon
+        )
+
+    text_x = x + 180 if image is not None else x + 30
+
+    d.text(
+        (text_x, y + 24),
+        title,
+        font=load_presentation_font(24, bold=True),
+        fill=color_dict["navy"]
+    )
+
+    # Wrap description to fit the box
+    font = load_presentation_font(20)
+    max_width = x + width - text_x - 25
+    words = str(text).split()
+    lines = []
+    current = ""
+
+    for word in words:
+        candidate = f"{current} {word}".strip()
+        bbox = d.textbbox((0, 0), candidate, font=font)
+
+        if bbox[2] - bbox[0] <= max_width:
+            current = candidate
+        else:
+            if current:
+                lines.append(current)
+            current = word
+
+    if current:
+        lines.append(current)
+
+    for i, line in enumerate(lines[:3]):
+        d.text(
+            (text_x, y + 65 + i * 26),
+            line,
+            font=font,
+            fill=color_dict["muted"]
+        )
+
+
+def show_slide(img, export_file=False, output="slide.png"):
+    if export_file:
+        img.save(output)
+    else:
+        display(img)
+
+
+def three_boxes_with_shaded_title(
+    info_dict,
+    width=760,
+    height=760,
+    image_size=150,
+    export_file=False,
+    output="three_notes.png"
+):
+    # Create image
+    img = Image.new("RGB", (width, height), color_dict["white"])
+    d = ImageDraw.Draw(img)
+
+    # Navy header
+    d.rounded_rectangle(
+        (15, 0, width-15, 132),
+        radius=25,
+        fill=color_dict["navy"]
+    )
+    d.rectangle(
+        (15, 100, width-15, 132),
+        fill=color_dict["navy"]
+    )
+
+    # Header title and description
+    d.text(
+        (180, 32),
+        info_dict["header"]["title"],
+        font=load_presentation_font(31, bold=True),
+        fill=color_dict["white"]
+    )
+
+    d.text(
+        (180, 78),
+        info_dict["header"]["text"],
+        font=load_presentation_font(17),
+        fill=color_dict["pale"]
+    )
+
+    # Header image
+    if info_dict["header"].get("image"):
+        icon = Image.open(info_dict["header"]["image"]).convert("RGBA")
+        icon.thumbnail((120, 120))
+        img.paste(icon, (25, 6), icon)
+
+    # Three notes
+    for count, item in enumerate(info_dict["points"].values()):
+
+        y = 148 + count * 198
+
+        draw_content_box(
+            img,
+            x=20,
+            y=y,
+            width=width - 40,
+            height=180,
+            title=item["title"],
+            text=item["text"],
+            image=item.get("image"),
+            image_size=image_size
+        )
+
+    show_slide(img, export_file=export_file, output=output)
+
+
+
+def six_boxes_two_by_three_with_description_box(
+    info_dict,
+    increase_y = 190,
+    box_width=720,
+    box_height=162):
+
+    img = create_slide()
+
+    # Title
+    draw_title(
+        img,
+        title=info_dict['title']
+    )
+
+    # Blue Box
+    draw_blue_box(
+        img,
+        x=70, y=142,
+        width=1460, height=83,
+        title=info_dict['blue_box']['title'],
+        text=info_dict['blue_box']['text']
+    )
+
+    # Boxes
+    y_pos = 243
+    # Iterate Over Small Boxes
+    for count in range(len(info_dict['boxes'])):
+        if count in [2,4,6]:
+            y_pos += increase_y
+        
+        if count % 2 ==0:
+            x_pos = 70
+        else:
+            x_pos = 810
+        
+        temp_dict = info_dict['boxes'][count]
+        draw_content_box(
+            img,
+            x=x_pos, y=y_pos,
+            width=box_width, height=box_height,
+            title=temp_dict['title'],
+            text=temp_dict['text'],
+            image=temp_dict['image']
+        )
+        
+    show_slide(img)
+
+def one_box(
+    info_dict,
+    width=760,
+    height=760,
+    image_size=200,
+    export_file=False,
+    font=24,
+    output="one_box.png"
+):
+    img = Image.new("RGB", (width, height), color_dict["white"])
+    d = ImageDraw.Draw(img)
+
+    text_box_height = height*.8
+
+    for count, item in enumerate(info_dict["points"].values()):
+
+        x = 20
+        y = 20 + count * (text_box_height + 20)
+        box_width = width - 40
+
+        # Draw content box
+        d.rounded_rectangle(
+            (x, y, x + box_width, y + text_box_height),
+            radius=15,
+            fill=color_dict["white"],
+            outline=color_dict["line"],
+            width=2
+        )
+
+        # Draw image
+        image = item.get("image")
+
+        if image is not None:
+            if isinstance(image, Image.Image):
+                icon = image.copy()
+            else:
+                with Image.open(Path(image)) as opened:
+                    icon = opened.copy()
+
+            icon = ImageOps.contain(
+                icon.convert("RGBA"),
+                (image_size, image_size),
+                method=Image.Resampling.LANCZOS
+            )
+
+            cx = x + 95
+            cy = y + text_box_height / 2
+
+            img.paste(
+                icon,
+                (int(cx - icon.width / 2), int(cy - icon.height / 2)),
+                icon
+            )
+
+        # Draw title
+        text_x = x + 180 if image is not None else x + 30
+
+        d.text(
+            (text_x, y + 24),
+            item["title"],
+            font=load_presentation_font(font+4, bold=True),
+            fill=color_dict["navy"]
+        )
+
+        # Wrap description
+        body_font = load_presentation_font(font)
+        max_width = x + box_width - text_x - 25
+
+        words = str(item["text"]).split()
+        lines = []
+        current = ""
+
+        for word in words:
+            candidate = f"{current} {word}".strip()
+            bbox = d.textbbox((0, 0), candidate, font=body_font)
+
+            if bbox[2] - bbox[0] <= max_width:
+                current = candidate
+            else:
+                if current:
+                    lines.append(current)
+                current = word
+
+        if current:
+            lines.append(current)
+
+        # Draw all lines (no three-line restriction)
+        for i, line in enumerate(lines):
+            d.text(
+                (text_x, y + 65 + i * 26),
+                line,
+                font=body_font,
+                fill=color_dict["muted"]
+            )
+
+    show_slide(img, export_file=export_file, output=output)

@@ -91,14 +91,22 @@ frame_the_question,"Creates a 1600x900 presentation slide with a central
 analytical question and three supporting sections.","['question', 'context', 'why', 'scope', 'title', 'header', 'left_footer', 'right_footer', 'context_image', 'why_image', 'scope_image', 'image_size', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
 member_population_overview,,"['demographics', 'activity', 'observations', 'images', 'title', 'header', 'left_footer', 'right_footer', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
 peer_group_introduction,,"['groups', 'target_population', 'images', 'title', 'header', 'subtitle', 'methodology_note', 'left_footer', 'right_footer', 'color_dict', 'group_image_size', 'concept_image_size', 'export_file']",,,,,,,,,storytelling_presentation.py
-engagement_measurement_grid,,"['questions', 'title', 'subtitle', 'left_footer', 'right_footer', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
-engagement_comparison_matrix,,"['df', 'title', 'subtitle', 'left_footer', 'right_footer', 'font_path', 'row_formats', 'output', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
-statistical_assessment_matrix,,"['questions', 'groups', 'df', 'target_final_assessment', 'title', 'subtitle', 'left_footer', 'right_footer', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
-key_findings,,"['findings', 'title', 'subtitle', 'left_footer', 'right_footer', 'font_path', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
 opportunities_next_steps,,"['opportunities', 'title', 'subtitle', 'left_footer', 'right_footer', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
+key_findings,,"['findings', 'title', 'subtitle', 'left_footer', 'right_footer', 'font_path', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
+engagement_comparison_matrix,,"['df', 'title', 'subtitle', 'left_footer', 'right_footer', 'font_path', 'row_formats', 'output', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
+engagement_measurement_grid,,"['questions', 'title', 'subtitle', 'left_footer', 'right_footer', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
+statistical_assessment_matrix,,"['df', 'title', 'subtitle', 'question', 'rationale', 'left_footer', 'right_footer', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
 generate_storytelling_presentation,,"['presentation_dict', 'performance_df', 'df_assessment', 'target_final_assessment', 'process_df', 'export_file']",,,,,,,,,storytelling_presentation.py
 load_presentation_font,"Function Created by ChatGpt to Render Font, for Pillow Usage. Needed as original version of coding did not work in PC environment.","['size', 'bold', 'font_path']",TBD,04-Nov-26,04-Nov-26,TBD,TBD,TBD,None,None,storytelling_presentation.py
 render_visual_text_storytelling_framework,,"['df', 'process_col', 'item_col', 'description_col', 'title']",,,,,,,,,storytelling_presentation.py
+create_slide,,"['width', 'height']",,,,,,,,,storytelling_presentation.py
+draw_title,,"['img', 'title', 'x', 'y']",,,,,,,,,storytelling_presentation.py
+draw_blue_box,,"['img', 'x', 'y', 'width', 'height', 'title', 'text']",,,,,,,,,storytelling_presentation.py
+draw_content_box,,"['img', 'x', 'y', 'width', 'height', 'title', 'text', 'image', 'image_size']",,,,,,,,,storytelling_presentation.py
+show_slide,,"['img', 'export_file', 'output']",,,,,,,,,storytelling_presentation.py
+three_boxes_with_shaded_title,,"['info_dict', 'width', 'height', 'image_size', 'export_file', 'output']",,,,,,,,,storytelling_presentation.py
+six_boxes_two_by_three_with_description_box,,"['info_dict', 'increase_y', 'box_width', 'box_height']",,,,,,,,,storytelling_presentation.py
+one_box,,"['info_dict', 'width', 'height', 'image_size', 'export_file', 'font', 'output']",,,,,,,,,storytelling_presentation.py
 sample_knowledge_test_single_df,,"['base_df', 'pause', 'test_name']",,,,,,,,,d_daily_test.py
 test_previous_errors,,"['max_correct', 'max_incorrect']",,,,,,,,,d_daily_test.py
 add_word_quote,"Function to add a new Word, Quote, Scripture, Proverb or Concept and Definition to Daily Test.","['word', 'text', 'classification']",Nil (Adds new record to excel file),05-Oct-26,05-Oct-26,TBD,TBD,"add_word_quote(
