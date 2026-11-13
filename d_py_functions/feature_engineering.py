@@ -85,10 +85,13 @@ def create_segment_range(
     df,
     column_name,
     segment_range,
+    new_column_name=None,
     print_=False
 ):
     """
     """
+    if not new_column_name:
+        new_column_name = f"{column_name}_SEGMENT"
 
     segment_range = sorted(segment_range)
 
@@ -100,14 +103,14 @@ def create_segment_range(
 
     labels.append(f"{len(segment_range) + 1}) GT {segment_range[-1]}")
 
-    df[f"{column_name}_SEGMENT"] = pd.cut(
+    df[new_column_name] = pd.cut(
         df[column_name],
         bins=bins,
         labels=labels,
         right=True
     )
     if print_:
-        display(df[f"{column_name}_SEGMENT"].value_counts().sort_index())
+        display(df[new_column_name].value_counts().sort_index())
 
 
 
@@ -142,3 +145,89 @@ def lognormal_distribution_generator(base, std_dev=0.30, rng=None):
         sigma=sigma,
         size=base.shape
     )
+
+
+
+def consolidate_relationship_grouper(
+    df,
+    parent_col,
+    child_col
+):
+
+    """
+        
+    Definition:
+        Identifies groups of interconnected members based on direct and indirect relationships using the Union-Find algorithm. Members are assigned to the same group when a relationship exists between them, either directly or through other members.
+
+    Parameters:
+        df(df):DataFrame containing member relationship pairs.
+        parent_col (str): Column identifying the primary member.
+        child_col (str): Column identifying the related member.
+
+    Returns:
+        df
+
+    Process:
+        TBD
+
+    Categorization:
+        TBD
+
+    Usage:
+        identify_connected_member_groups(df,parent,child)
+
+    Notes:
+        Relationships are treated as bidirectional.
+        Indirect relationships are included (transitive grouping).
+        Duplicate and circular relationships are handled.
+        Members without valid relationships are excluded.
+        Group IDs may change when the underlying data changes.
+        Groups represent connected networks, not necessarily households or families.
+
+    Required Functions:
+        pandas
+        
+    """
+    parent = {}
+    size = {}
+
+    def find(x):
+        if x not in parent:
+            parent[x] = x
+            size[x] = 1
+
+        while parent[x] != x:
+            parent[x] = parent[parent[x]]
+            x = parent[x]
+
+        return x
+
+    def union(a, b):
+        ra, rb = find(a), find(b)
+
+        if ra == rb:
+            return
+
+        if size[ra] < size[rb]:
+            ra, rb = rb, ra
+
+        parent[rb] = ra
+        size[ra] += size[rb]
+
+    # Build connected groups
+    for a, b in df[[parent_col, child_col]].dropna().itertuples(
+        index=False, name=None
+    ):
+        union(a, b)
+
+    # Assign sequential group IDs
+    roots = {x: find(x) for x in parent}
+    root_ids = {
+        root: f'GROUP_{i:06d}'
+        for i, root in enumerate(sorted(set(roots.values()), key=str), 1)
+    }
+
+    return pd.DataFrame({
+        'MEMBERNBR': list(roots),
+        'GROUP_ID': [root_ids[r] for r in roots.values()]
+    })

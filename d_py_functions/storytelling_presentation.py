@@ -1,5 +1,6 @@
 from IPython.utils.text import indent
 
+
 from matplotlib.ticker import MaxNLocator
 import matplotlib.pyplot as plt
 
@@ -13,6 +14,11 @@ import numpy as np
 import math
 import os
 import re
+
+from IPython.display import Markdown,display,HTML
+from objects_manual import object_dict
+
+folder_location = '/Users/derekdewald/Documents/Python/Github_Repo/Default Presentation Images/'
 
 color_dict = {
     'white': '#FFFFFF',
@@ -75,6 +81,7 @@ def frame_the_question(
     pale  = color_dict['pale']
     line  = color_dict['line']
     white = color_dict['white']
+    light_teal = color_dict['light_teal']
 
     img = Image.new('RGB', (W, H), white)
     d = ImageDraw.Draw(img)
@@ -307,7 +314,7 @@ def member_population_overview(
     observations,
     images=None,
     title='Understanding the Affected Population',
-    header='STRUCTURE THE EVALUATION',
+    header='',
     left_footer='',
     right_footer='',
     color_dict=color_dict,
@@ -343,6 +350,7 @@ def member_population_overview(
     pale  = color_dict['pale']
     line  = color_dict['line']
     white = color_dict['white']
+    light_teal = color_dict['light_teal']
     
     img = Image.new('RGB', (W, H), white)
     draw = ImageDraw.Draw(img)
@@ -411,7 +419,7 @@ def member_population_overview(
         (95, 62),
         header,
         font=font(22, True),
-        fill=teal
+        fill=navy
     )
 
     draw.text(
@@ -458,9 +466,11 @@ def member_population_overview(
         x1, y1, x2, y2 = bounds
     
         draw.rounded_rectangle(
-            bounds,
+            (x1, y1, x2, y2),
             radius=22,
-            fill=pale
+            fill=white,
+            outline=navy,
+            width=4
         )
     
         # Insert the supplied image
@@ -536,7 +546,9 @@ def member_population_overview(
     draw.rounded_rectangle(
         (x1, y1, x2, y2),
         radius=22,
-        fill=pale
+        fill=white,
+        outline=navy,
+        width=4
     )
 
     place_image(
@@ -3838,142 +3850,6 @@ def statistical_assessment_matrix(
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def generate_storytelling_presentation(
-        presentation_dict,
-        performance_df,
-        df_assessment,
-        target_final_assessment,
-        process_df=process_df,
-        export_file=False
-        ):
-    
-
-    definition = process_df[process_df['Categorization']=='Process']['Definition'].item()
-    process_df1 = process_df[process_df['Categorization']!='Process'].copy()
-    
-    display(Markdown('## Welcome to the Generating Storytelling Presentation Visual Walkthrough! '))
-    
-    display(Markdown(f"### {definition}"))
-
-    render_visual_text_storytelling_framework(process_df1)
-
-    count_=1
-    frame_the_question(
-        question=presentation_dict['frame_the_question']['Question'],
-        context=presentation_dict['frame_the_question']['Context'],
-        why=presentation_dict['frame_the_question']['Why'],
-        scope=presentation_dict['frame_the_question']['Scope'],
-        context_image=presentation_dict['frame_the_question']['context_image'],
-        why_image=presentation_dict['frame_the_question']['why_image'],
-        scope_image=presentation_dict['frame_the_question']['scope_image'],
-        right_footer=str(count_),
-        export_file=export_file
-    )
-
-    count_+=1
-    
-    member_population_overview(
-        demographics=presentation_dict['member_population_overview']['demographic_dict'],
-        activity=presentation_dict['member_population_overview']['activity_dict'],
-        observations=presentation_dict['member_population_overview']['observation_list'],
-        images=presentation_dict['member_population_overview']['images'],
-        right_footer=str(count_),
-        export_file=export_file
-    )
-
-    count_+=1
-
-    peer_group_introduction(
-        groups=presentation_dict['peer_group_introduction']['groups'],
-        target_population='Describe the Target Population',
-        images=presentation_dict['peer_group_introduction']['images'],
-        color_dict=color_dict,
-        group_image_size=135,
-        concept_image_size=120,
-        right_footer=str(count_),
-        export_file=export_file
-    )
-
-    count_+=1
-
-    engagement_measurement_grid(
-        questions=presentation_dict['engagement_measurement_grid']['questions'],
-        left_footer=presentation_dict['engagement_measurement_grid']['footing_caveat'],
-        right_footer=str(count_),
-        export_file=export_file
-    )
-
-    count_+=1
-
-    engagement_comparison_matrix(
-        df=performance_df,
-        title="Comparing Observed Performance Across Groups",
-        subtitle="By examining relative and absolute changes across our identified KPIs, we can begin to distinguish measurable differences from meaningful changes and consider what these observations tell us about our original question.",
-        right_footer=str(count_),
-        export_file=export_file
-    )
-
-    count_+=1
-
-    statistical_assessment_matrix(
-        questions=presentation_dict['engagement_measurement_grid']['questions'],
-        groups=presentation_dict['peer_group_introduction']['groups'],
-        df=df_assessment,
-        target_final_assessment=target_final_assessment,
-        right_footer=str(count_),
-        export_file=export_file
-    )
-
-    count_+=1
-
-    key_findings(
-        findings=presentation_dict['key_findings'],
-        right_footer=str(count_),
-        export_file=export_file
-    )
-
-    count_+=1
-
-    opportunities_next_steps(
-        opportunities=presentation_dict['opportunities_next_steps'],
-        left_footer="",
-        right_footer=str(count_),
-        export_file=export_file
-    )
-
 def load_presentation_font(size, bold=False, font_path=None):
     '''
     Definition:
@@ -4364,9 +4240,7 @@ def one_box(
     width=760,
     height=760,
     image_size=200,
-    export_file=False,
-    font=24,
-    output="one_box.png"
+    font=24
 ):
     img = Image.new("RGB", (width, height), color_dict["white"])
     d = ImageDraw.Draw(img)
@@ -4454,4 +4328,1189 @@ def one_box(
                 fill=color_dict["muted"]
             )
 
-    show_slide(img, export_file=export_file, output=output)
+    show_slide(img)
+
+def engagement_comparison_matrix_appendix(
+    df,
+    title="Comparing Observed Performance Across Groups",
+    left_footer="",
+    right_footer="",
+    font_path=None,
+    row_formats=None,
+    output=None,
+    color_dict=color_dict,
+    export_file=False
+):
+    """
+    Create a 1600 x 900 presentation comparison matrix (up to 8 KPIs).
+
+    DataFrame structure:
+        Index   = KPI labels
+        Columns = Comparison groups
+        Values  = Numeric observations
+
+    Formatting:
+        '%'   Percentage change (5.2 means 5.2%)
+        '$'   Dollar values
+        'int' Counts / whole numbers
+
+    Visual rules:
+        - Highest observed value: blue border
+        - Lowest observed value: navy border
+        - Other values: neutral border
+        - Ties are highlighted equally
+        - Identical values receive no highlighting
+        - Missing values are excluded from comparisons
+        - Percentage bars show direction and magnitude
+
+    Requires:
+        load_presentation_font()
+    """
+
+    # --------------------------------------------------
+    # Validate data
+    # --------------------------------------------------
+    if not isinstance(df, pd.DataFrame) or df.empty:
+        raise ValueError(
+            "df must be a non-empty DataFrame."
+        )
+
+    if df.index.has_duplicates or df.columns.has_duplicates:
+        raise ValueError(
+            "Row and column labels must be unique."
+        )
+
+    df = df.apply(pd.to_numeric, errors="raise")
+
+    row_formats = row_formats or {}
+
+    n_rows, n_cols = df.shape
+
+    if not 1 <= n_rows <= 8:
+        raise ValueError(
+            "Use between 1 and 8 KPI rows."
+        )
+
+    if not 1 <= n_cols <= 7:
+        raise ValueError(
+            "Use between 1 and 7 comparison columns."
+        )
+
+    # --------------------------------------------------
+    # Presentation palette
+    # --------------------------------------------------
+    WHITE = color_dict["white"]
+    NAVY = color_dict["navy"]
+    TEAL = color_dict["teal"]
+    MUTED = color_dict["muted"]
+    PALE = color_dict["pale"]
+    LINE = color_dict["line"]
+    GREEN = color_dict["green"]
+    RED = color_dict["red"]
+
+    # --------------------------------------------------
+    # High-resolution rendering
+    # --------------------------------------------------
+    SCALE = 2
+    W, H = 1600, 900
+
+    img = Image.new(
+        "RGB",
+        (W * SCALE, H * SCALE),
+        WHITE
+    )
+
+    draw = ImageDraw.Draw(img)
+
+    def px(value):
+        return round(value * SCALE)
+
+    def font(size, bold=False):
+        return load_presentation_font(
+            px(size),
+            bold=bold,
+            font_path=font_path
+        )
+
+    f_title = font(45, True)
+    f_header = font(17, True)
+    f_footer = font(16)
+
+    # --------------------------------------------------
+    # Drawing helpers
+    # --------------------------------------------------
+    def text_width(text, f):
+        box = draw.textbbox(
+            (0, 0),
+            str(text),
+            font=f
+        )
+
+        return (box[2] - box[0]) / SCALE
+
+    def write(
+        text,
+        x,
+        y,
+        f,
+        color,
+        anchor="lt"
+    ):
+        draw.text(
+            (px(x), px(y)),
+            str(text),
+            font=f,
+            fill=color,
+            anchor=anchor
+        )
+
+    def rectangle(
+        box,
+        fill,
+        outline=None,
+        radius=0,
+        stroke=1
+    ):
+        draw.rounded_rectangle(
+            tuple(px(v) for v in box),
+            radius=px(radius),
+            fill=fill,
+            outline=outline,
+            width=px(stroke)
+        )
+
+    def rule(
+        x1,
+        y1,
+        x2,
+        y2,
+        color=LINE,
+        stroke=1
+    ):
+        draw.line(
+            (
+                px(x1),
+                px(y1),
+                px(x2),
+                px(y2)
+            ),
+            fill=color,
+            width=px(stroke)
+        )
+
+    def wrap(text, f, max_width):
+        lines = []
+        current = ""
+
+        for word in str(text).split():
+
+            candidate = (
+                current + " " + word
+            ).strip()
+
+            if text_width(candidate, f) <= max_width:
+                current = candidate
+
+            else:
+                if current:
+                    lines.append(current)
+
+                current = word
+
+        if current:
+            lines.append(current)
+
+        return lines
+
+    def fit_font(
+        text,
+        max_width,
+        initial=31,
+        minimum=15,
+        bold=True
+    ):
+        for size in range(
+            initial,
+            minimum - 1,
+            -1
+        ):
+            f = font(size, bold)
+
+            if text_width(text, f) <= max_width:
+                return f
+
+        return font(minimum, bold)
+
+    def centered_wrapped(
+        text,
+        cx,
+        cy,
+        max_width,
+        initial_size=23,
+        max_lines=3,
+        color=None,
+        bold=True
+    ):
+        color = color or NAVY
+
+        for size in range(
+            initial_size,
+            13,
+            -1
+        ):
+            f = font(size, bold)
+
+            lines = wrap(
+                text,
+                f,
+                max_width
+            )
+
+            if len(lines) <= max_lines:
+                break
+
+        line_height = size + 7
+
+        start_y = (
+            cy
+            - (len(lines) - 1)
+            * line_height / 2
+        )
+
+        for k, line_text in enumerate(lines):
+
+            write(
+                line_text,
+                cx,
+                start_y + k * line_height,
+                f,
+                color,
+                anchor="mm"
+            )
+
+    # --------------------------------------------------
+    # Automatic KPI formatting
+    # --------------------------------------------------
+    def infer_scale(label):
+
+        label = str(label).lower()
+
+        if re.search(
+            r"growth|percent|perc|%|rate|change",
+            label
+        ):
+            return "%"
+
+        if re.search(
+            r"count|number|volume",
+            label
+        ):
+            return "int"
+
+        if re.search(
+            r"age|duration",
+            label
+        ):
+            return "floater"
+        
+        if re.search(
+            r"balance|footing|deposit|loan|value|revenue",
+            label
+        ):
+            return "$"
+
+        return "%"
+
+    def format_value(value, scale):
+
+        if pd.isna(value):
+            return "N/A"
+
+        value = float(value)
+
+        if scale == "%":
+            return (
+                f"{value:+,.1f}%"
+                if value != 0
+                else "0.0%"
+            )
+
+        if scale == "$":
+            return f"${value:,.0f}"
+
+        if scale == "int":
+            return f"{value:,.0f}"
+
+        if scale == "floater":
+            return f"{value:,.2f}"
+
+        raise ValueError(
+            f"Unsupported format: {scale}"
+        )
+
+    # --------------------------------------------------
+    # Calculate shared percentage scale
+    # --------------------------------------------------
+    percentage_values = []
+
+    for metric, values in df.iterrows():
+
+        metric_scale = row_formats.get(
+            metric,
+            infer_scale(metric)
+        )
+
+        if metric_scale not in ("%", "$", "int",'floater'):
+            raise ValueError(
+                f"Unsupported format '{metric_scale}' "
+                f"for '{metric}'"
+            )
+
+        if metric_scale == "%":
+
+            percentage_values.extend(
+                abs(float(v))
+                for v in values
+                if pd.notna(v)
+                and math.isfinite(float(v))
+            )
+
+    max_percentage = max(
+        percentage_values,
+        default=0
+    )
+
+    bar_scale = max(
+        5,
+        math.ceil(max_percentage / 5) * 5
+    )
+
+    # --------------------------------------------------
+    # Diverging bar helper
+    # --------------------------------------------------
+    def draw_diverging_bar(
+        x0,
+        x1,
+        y,
+        value,
+        height=10
+    ):
+
+        if pd.isna(value):
+            return
+
+        value = float(value)
+
+        if not math.isfinite(value):
+            return
+
+        center_x = (x0 + x1) / 2
+
+        available_half_width = (
+            x1 - x0 - 32
+        ) / 2
+
+        track_left = (
+            center_x - available_half_width
+        )
+
+        track_right = (
+            center_x + available_half_width
+        )
+
+        rectangle(
+            (
+                track_left,
+                y,
+                track_right,
+                y + height
+            ),
+            fill=PALE,
+            radius=3
+        )
+
+        rule(
+            center_x,
+            y - 3,
+            center_x,
+            y + height + 3,
+            MUTED,
+            stroke=1
+        )
+
+        if value == 0:
+            return
+
+        proportion = min(
+            abs(value) / bar_scale,
+            1
+        )
+
+        bar_width = (
+            proportion
+            * available_half_width
+        )
+
+        if value > 0:
+
+            bar_left = center_x
+            bar_right = center_x + bar_width
+
+            bar_color = TEAL
+
+        else:
+
+            bar_left = center_x - bar_width
+            bar_right = center_x
+
+            bar_color = NAVY
+
+        rectangle(
+            (
+                bar_left,
+                y,
+                bar_right,
+                y + height
+            ),
+            fill=bar_color,
+            radius=2
+        )
+
+        rule(
+            center_x,
+            y - 3,
+            center_x,
+            y + height + 3,
+            MUTED,
+            stroke=1
+        )
+
+    # --------------------------------------------------
+    # Slide title
+    # --------------------------------------------------
+    LEFT = 95
+    RIGHT = 1505
+
+    title_lines = wrap(
+        title,
+        f_title,
+        RIGHT - LEFT
+    )
+
+    title_y = 44
+
+    for k, line_text in enumerate(title_lines):
+
+        write(
+            line_text,
+            LEFT,
+            title_y + k * 53,
+            f_title,
+            NAVY
+        )
+
+    content_y = (
+        title_y
+        + len(title_lines) * 53
+        + 7
+    )
+
+    content_y += 6
+
+    rule(
+        LEFT,
+        content_y,
+        RIGHT,
+        content_y,
+        LINE,
+        stroke=2
+    )
+
+    # --------------------------------------------------
+    # Matrix geometry
+    # --------------------------------------------------
+    header_top = content_y + 17
+    header_height = 62
+
+    row_top = (
+        header_top
+        + header_height
+        + 6
+    )
+
+    row_bottom = 758
+    row_gap = 9
+
+    row_height = (
+        row_bottom
+        - row_top
+        - row_gap * (n_rows - 1)
+    ) / n_rows
+
+    if row_height < 62:
+        raise ValueError(
+            "Insufficient space for the supplied KPI rows."
+        )
+
+    label_width = 405
+    col_gap = 10
+
+    value_width = (
+        RIGHT
+        - LEFT
+        - label_width
+        - n_cols * col_gap
+    ) / n_cols
+
+    # --------------------------------------------------
+    # Column headings
+    # --------------------------------------------------
+    write(
+        "KEY PERFORMANCE INDICATORS",
+        LEFT + 17,
+        header_top + header_height / 2,
+        f_header,
+        TEAL,
+        anchor="lm"
+    )
+
+    for j, column in enumerate(df.columns):
+
+        x0 = (
+            LEFT
+            + label_width
+            + col_gap
+            + j * (value_width + col_gap)
+        )
+
+        centered_wrapped(
+            str(column),
+            x0 + value_width / 2,
+            header_top + header_height / 2,
+            value_width - 12,
+            initial_size=19,
+            max_lines=3,
+            color=TEAL
+        )
+
+    # --------------------------------------------------
+    # KPI rows
+    # --------------------------------------------------
+    for i, (metric, values) in enumerate(
+        df.iterrows()
+    ):
+
+        y0 = (
+            row_top
+            + i * (row_height + row_gap)
+        )
+
+        y1 = y0 + row_height
+
+        cy = (y0 + y1) / 2
+
+        scale = row_formats.get(
+            metric,
+            infer_scale(metric)
+        )
+
+        # ----------------------------------------------
+        # Identify highest and lowest observed values
+        # Applies to ALL KPI formats
+        # ----------------------------------------------
+        valid_values = [
+            float(v)
+            for v in values
+            if pd.notna(v)
+            and math.isfinite(float(v))
+        ]
+
+        highest_value = None
+        lowest_value = None
+
+        if len(valid_values) >= 2:
+
+            row_max = max(valid_values)
+            row_min = min(valid_values)
+
+            # No highlighting if all values are equal
+            if not math.isclose(
+                row_max,
+                row_min,
+                rel_tol=1e-12,
+                abs_tol=1e-12
+            ):
+                highest_value = row_max
+                lowest_value = row_min
+
+        # ----------------------------------------------
+        # KPI label panel
+        # ----------------------------------------------
+        rectangle(
+            (
+                LEFT,
+                y0,
+                LEFT + label_width,
+                y1
+            ),
+            fill=PALE,
+            radius=15
+        )
+
+        rectangle(
+            (
+                LEFT,
+                y0 + 15,
+                LEFT + 7,
+                y1 - 15
+            ),
+            fill=TEAL,
+            radius=3
+        )
+
+        centered_wrapped(
+            metric,
+            LEFT + label_width / 2 + 5,
+            cy,
+            label_width - 55,
+            initial_size=23,
+            max_lines=3,
+            color=NAVY
+        )
+
+        # ----------------------------------------------
+        # Comparison value cards
+        # ----------------------------------------------
+        for j, value in enumerate(values):
+
+            x0 = (
+                LEFT
+                + label_width
+                + col_gap
+                + j * (value_width + col_gap)
+            )
+
+            x1 = x0 + value_width
+
+            # ------------------------------------------
+            # Highest / lowest border highlighting
+            # ------------------------------------------
+            is_valid = (
+                pd.notna(value)
+                and math.isfinite(float(value))
+            )
+
+            is_highest = (
+                is_valid
+                and highest_value is not None
+                and math.isclose(
+                    float(value),
+                    highest_value,
+                    rel_tol=1e-12,
+                    abs_tol=1e-12
+                )
+            )
+
+            is_lowest = (
+                is_valid
+                and lowest_value is not None
+                and math.isclose(
+                    float(value),
+                    lowest_value,
+                    rel_tol=1e-12,
+                    abs_tol=1e-12
+                )
+            )
+
+            if is_highest:
+
+                border_color = GREEN
+                border_width = 4
+
+            elif is_lowest:
+
+                border_color = RED
+                border_width = 4
+
+            else:
+
+                border_color = LINE
+                border_width = 1
+
+            rectangle(
+                (x0, y0, x1, y1),
+                fill=WHITE,
+                outline=border_color,
+                radius=15,
+                stroke=border_width
+            )
+
+            # ------------------------------------------
+            # Numeric value
+            # ------------------------------------------
+            value_text = format_value(
+                value,
+                scale
+            )
+
+            value_font = fit_font(
+                value_text,
+                value_width - 24,
+                initial=31,
+                minimum=15
+            )
+
+            if scale == "%":
+
+                write(
+                    value_text,
+                    (x0 + x1) / 2,
+                    cy - 13,
+                    value_font,
+                    NAVY,
+                    anchor="mm"
+                )
+
+                draw_diverging_bar(
+                    x0=x0,
+                    x1=x1,
+                    y=cy + 19,
+                    value=value,
+                    height=10
+                )
+
+            else:
+
+                write(
+                    value_text,
+                    (x0 + x1) / 2,
+                    cy,
+                    value_font,
+                    NAVY,
+                    anchor="mm"
+                )
+
+    # --------------------------------------------------
+    # Percentage change legend
+    # --------------------------------------------------
+    if percentage_values:
+
+        legend_y = 784
+
+        write(
+            "PERCENTAGE CHANGE",
+            LEFT,
+            legend_y,
+            f_footer,
+            MUTED
+        )
+
+        rectangle(
+            (
+                310,
+                legend_y + 3,
+                333,
+                legend_y + 11
+            ),
+            fill=RED,
+            radius=2
+        )
+
+        write(
+            "Decrease",
+            344,
+            legend_y,
+            f_footer,
+            MUTED
+        )
+
+        rectangle(
+            (
+                480,
+                legend_y + 3,
+                503,
+                legend_y + 11
+            ),
+            fill=GREEN,
+            radius=2
+        )
+
+        write(
+            "Increase",
+            514,
+            legend_y,
+            f_footer,
+            MUTED
+        )
+
+        write(
+            f"Shared Scale: ±{bar_scale:g}%",
+            RIGHT,
+            legend_y,
+            f_footer,
+            MUTED,
+            anchor="rt"
+        )
+    # --------------------------------------------------
+    # Border highlighting legend
+    # --------------------------------------------------
+    border_legend_y = 807
+    
+    write(
+        "BORDER HIGHLIGHTS",
+        LEFT,
+        border_legend_y,
+        f_footer,
+        MUTED
+    )
+    
+    write(
+        "Blue = Highest Observed  |  Navy = Lowest Observed",
+        310,
+        border_legend_y,
+        f_footer,
+        MUTED
+    )
+    # --------------------------------------------------
+    # Footer
+    # --------------------------------------------------
+    footer_y = 835
+
+    rule(
+        LEFT,
+        footer_y,
+        RIGHT,
+        footer_y,
+        LINE,
+        stroke=2
+    )
+
+    if left_footer:
+
+        write(
+            left_footer,
+            LEFT,
+            footer_y + 16,
+            f_footer,
+            MUTED
+        )
+
+    if right_footer:
+
+        write(
+            right_footer,
+            RIGHT,
+            footer_y + 16,
+            f_footer,
+            MUTED,
+            anchor="rt"
+        )
+
+    # --------------------------------------------------
+    # Final anti-aliased image
+    # --------------------------------------------------
+    img = img.resize(
+        (W, H),
+        Image.Resampling.LANCZOS
+    )
+
+    if export_file:
+        img.save('engagement_comparison_matrix_appendix.png')
+        return None
+
+    display(img)
+
+
+
+def three_boxes_with_shaded_title_horizontal(
+    info_dict,
+    width=1800,
+    height=440,
+    image_size=110,
+    image_centering=0,
+    font_size=20
+):
+    img = Image.new("RGB", (width, height), color_dict["white"])
+    d = ImageDraw.Draw(img)
+
+    # Navy header
+    d.rounded_rectangle(
+        (0, 0, width-15, 132),
+        radius=25,
+        fill=color_dict["navy"]
+    )
+    d.rectangle(
+        (0, 100, width-15, 132),
+        fill=color_dict["navy"]
+    )
+
+    # Header title and description
+    d.text(
+        (180, 32),
+        info_dict["header"]["title"],
+        font=load_presentation_font(31, bold=True),
+        fill=color_dict["white"]
+    )
+
+    d.text(
+        (180, 78),
+        info_dict["header"]["text"],
+        font=load_presentation_font(17),
+        fill=color_dict["pale"]
+    )
+
+    # Header image
+    if info_dict["header"].get("image"):
+        icon = Image.open(info_dict["header"]["image"]).convert("RGBA")
+        icon.thumbnail((120, 120))
+        img.paste(icon, (25, 6), icon)
+
+    # Three horizontal boxes
+    margin = 20
+    gap = 20
+    box_width = (width - 2 * margin - 2 * gap) // 3
+    box_height = height - 168
+
+    title_font = load_presentation_font(font_size + 4, bold=True)
+    body_font = load_presentation_font(font_size)
+
+    
+    for count, item in enumerate(info_dict["points"].values()):
+
+        x = margin + count * (box_width + gap)
+        y = 148
+
+        # Draw content box
+        d.rounded_rectangle(
+            (x, y, x + box_width, y + box_height),
+            radius=20,
+            fill=color_dict["white"],
+            outline=color_dict["line"],
+            width=2
+        )
+
+        # Image
+        text_x = x + 25
+
+        if item.get("image"):
+            icon = Image.open(item["image"]).convert("RGBA")
+            icon.thumbnail((image_size, image_size))
+
+            image_x = x + 20
+            image_y = (
+                y + (box_height - icon.height) // 2
+                + image_centering
+            )
+
+            img.paste(icon, (image_x, image_y), icon)
+            text_x = x + image_size + 35
+
+        # Title
+        d.text(
+            (text_x, y + 24),
+            item["title"],
+            font=title_font,
+            fill=color_dict["navy"]
+        )
+
+        # Wrap body text based on available width
+        max_text_width = x + box_width - text_x - 20
+
+        words = item["text"].split()
+        lines = []
+        current_line = ""
+
+        for word in words:
+            test_line = (
+                f"{current_line} {word}".strip()
+            )
+
+            text_width = d.textbbox(
+                (0, 0),
+                test_line,
+                font=body_font
+            )[2]
+
+            if text_width <= max_text_width:
+                current_line = test_line
+            else:
+                if current_line:
+                    lines.append(current_line)
+                current_line = word
+
+        if current_line:
+            lines.append(current_line)
+
+        # Draw ALL wrapped lines
+        line_spacing = font_size + 8
+
+        for i, line in enumerate(lines):
+            d.text(
+                (text_x, y + 65 + i * line_spacing),
+                line,
+                font=body_font,
+                fill=color_dict["navy"]
+            )
+
+    show_slide(img)
+
+
+
+
+#####################################################################################################################
+
+### HTML Text Related Functions 
+
+#####################################################################################################################
+
+def html_text_box_display(
+    title,
+    text_list,
+    font_size=14,
+    background_color=color_dict['light_teal'],
+    border= color_dict['navy']
+):
+    text = f"""
+
+<div style="background-color:{background_color};
+            border:1px solid {border};
+            border-left:4px solid {border};
+            padding:16px 20px;
+            border-radius:6px;
+            font-family:Arial,sans-serif;
+            color:#24364B;
+            line-height:1.6;
+            border-top: 4px solid {border} !important;
+            border-right: 4px solid {border} !important;
+            border-bottom: 4px solid {border} !important;
+            border-left: 4px solid {border} !important;">
+
+<div style="font-size:{font_size+4}px;
+            font-weight:bold; 
+            margin-bottom:8px;">
+{title}
+</div>
+
+    """
+
+
+    for a in text_list:
+        text += f'''
+<div style="font-size:{font_size}px;
+            margin-bottom:8px;">
+{a}
+</div>        
+        '''
+
+    text += "</div>"
+    display(HTML(text))
+
+
+#####################################################################################################################
+
+### Generate Presentation
+
+#####################################################################################################################
+
+
+
+
+def generate_storytelling_presentation(
+        presentation_dict,
+        performance_df,
+        df_assessment,
+        target_final_assessment,
+        process_df=process_df,
+        export_file=False
+        ):
+    
+
+    definition = process_df[process_df['Categorization']=='Process']['Definition'].item()
+    process_df1 = process_df[process_df['Categorization']!='Process'].copy()
+    
+    display(Markdown('## Welcome to the Generating Storytelling Presentation Visual Walkthrough! '))
+    
+    display(Markdown(f"### {definition}"))
+
+    render_visual_text_storytelling_framework(process_df1)
+
+    count_=1
+    frame_the_question(
+        question=presentation_dict['frame_the_question']['Question'],
+        context=presentation_dict['frame_the_question']['Context'],
+        why=presentation_dict['frame_the_question']['Why'],
+        scope=presentation_dict['frame_the_question']['Scope'],
+        context_image=presentation_dict['frame_the_question']['context_image'],
+        why_image=presentation_dict['frame_the_question']['why_image'],
+        scope_image=presentation_dict['frame_the_question']['scope_image'],
+        right_footer=str(count_),
+        export_file=export_file
+    )
+
+    count_+=1
+    
+    member_population_overview(
+        demographics=presentation_dict['member_population_overview']['demographic_dict'],
+        activity=presentation_dict['member_population_overview']['activity_dict'],
+        observations=presentation_dict['member_population_overview']['observation_list'],
+        images=presentation_dict['member_population_overview']['images'],
+        right_footer=str(count_),
+        export_file=export_file
+    )
+
+    count_+=1
+
+    peer_group_introduction(
+        groups=presentation_dict['peer_group_introduction']['groups'],
+        target_population='Describe the Target Population',
+        images=presentation_dict['peer_group_introduction']['images'],
+        color_dict=color_dict,
+        group_image_size=135,
+        concept_image_size=120,
+        right_footer=str(count_),
+        export_file=export_file
+    )
+
+    count_+=1
+
+    engagement_measurement_grid(
+        questions=presentation_dict['engagement_measurement_grid']['questions'],
+        left_footer=presentation_dict['engagement_measurement_grid']['footing_caveat'],
+        right_footer=str(count_),
+        export_file=export_file
+    )
+
+    count_+=1
+
+    engagement_comparison_matrix(
+        df=performance_df,
+        title="Comparing Observed Performance Across Groups",
+        subtitle="By examining relative and absolute changes across our identified KPIs, we can begin to distinguish measurable differences from meaningful changes and consider what these observations tell us about our original question.",
+        right_footer=str(count_),
+        export_file=export_file
+    )
+
+    count_+=1
+
+    statistical_assessment_matrix(
+        df=df_assessment,
+        right_footer=str(count_),
+        export_file=export_file
+    )
+
+    count_+=1
+
+    key_findings(
+        findings=presentation_dict['key_findings'],
+        right_footer=str(count_),
+        export_file=export_file
+    )
+
+    count_+=1
+
+    opportunities_next_steps(
+        opportunities=presentation_dict['opportunities_next_steps'],
+        left_footer="",
+        right_footer=str(count_),
+        export_file=export_file
+    )

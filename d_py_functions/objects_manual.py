@@ -13,6 +13,22 @@ import pandas as pd
 
 object_dict = {}
 
+
+
+object_dict['color_dict'] = {
+    'white': '#FFFFFF',
+    'navy': '#10263E',
+    'teal': '#236C91',
+    'muted': '#536477',
+    'pale': '#8099B3',
+    'line': '#9AABBD',
+    'light_teal': '#DDE8EC',
+    'border': '#F0F2F3',
+    'neutral': '#F0F2F3',
+    'green':'#1B6B45',
+    'red':'#A12D35',
+}
+
 object_dict['Example'] = {
     'Process':"",
     'Categorization':'',
@@ -441,5 +457,82 @@ except:
 
 
 
+object_dict['context_3d_palette'] = """
 
+When a user requests an image in Context Palette 3D all rules belo apply automatically. 
+Do not reinterpret or relax them without explicit direction.
 
+**Reference authority**
+- The original four-blue Context puzzle-piece icon is the master reference for all future images.
+- Match its four blue shades, visual finish, lighting and overall aesthetic.
+- Do not substitute generic blue palettes or introduce additional hues.
+
+**Colour restrictions**
+- Use only the four established Context blues for primary and secondary objects.
+- Create visual contrast through the proportions, placement, gradients and highlights of those four shades.
+- White and neutral grey are permitted for small details, reflections and shadows.
+- Do not introduce cyan, turquoise, teal, green, yellow, gold or other accent colours unless explicitly requested.
+- Do not interpret the subject's natural colours as permission to introduce new colours.
+
+**Background and composition**
+- Background must be Transparent
+- No coloured backgrounds, clouds, halos, vignettes, decorative shapes or ambient glows.
+- Only a subtle, localized grounding shadow is permitted.
+- Keep the subject centred, with consistent visual scale and generous white space.
+
+**Rendering**
+- Polished, glossy 3D with rounded edges, smooth gradients and subtle highlights.
+- Maintain consistent lighting, material finish, proportions and visual weight across the collection.
+- Preserve the original concept and recognizable composition when recolouring.
+
+**Mandatory quality check**
+Before finalizing any image, verify:
+1. All colours comply with the four-blue reference.
+2. The background is pure white, with no decorative effects.
+3. The rendering matches the original Context 3D aesthetic.
+4. The image looks cohesive alongside the existing collection.
+5. No unnecessary elements or colours have been introduced.
+
+**Default instruction:** 
+
+"""
+
+object_dict['chart_format'] = {
+
+    # Figure
+    'figsize': (15, 5),
+    'dpi': 200,
+    'background': 'white',
+
+    # Typography
+    'title_size': 15,
+    'subtitle_size': 11,
+    'label_size': 10,
+    'tick_size': 9,
+    'legend_size': 9,
+
+    # Colours
+    'primary': object_dict['color_dict']['navy'],
+    'secondary': object_dict['color_dict']['teal'],
+    'tertiary': object_dict['color_dict']['pale'],
+    'muted': object_dict['color_dict']['muted'],
+    'grid': object_dict['color_dict']['line'],
+
+    # Axes
+    'show_top_spine': False,
+    'show_right_spine': False,
+    'grid_alpha': 0.20,
+    'grid_axis': 'y',
+
+    # Lines
+    'line_width': 2.2,
+    'marker_size': 5,
+
+    # Bars
+    'bar_alpha': 0.85,
+    'bar_width': 0.65,
+
+    # Layout
+    'title_pad': 12,
+    'subplot_spacing': 0.30
+}

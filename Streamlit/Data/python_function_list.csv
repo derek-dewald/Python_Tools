@@ -1,7 +1,13 @@
 Function,Definition,Parameters,Returns,Date Created,Date Last Modified,Process,Categorization,Usage,Notes,Required Functions,Folder
 binary_complex_equivalency,Function which tests the Equivalence of 2 Columns in a dataframe to determine whether they are Equal or Not.,"['df', 'column_name', 'column_name1', 'new_column_name', 'eq', 'ne', 'tolerance', 'include_difference']",df,28-Aug-26,28-Aug-26,TBD,TBD,"binary_complex_equivalency(df,'SCORE1','SCORE2')",None,None,feature_engineering.py
-create_segment_range,,"['df', 'column_name', 'segment_range', 'print_']",,,,,,,,,feature_engineering.py
+create_segment_range,,"['df', 'column_name', 'segment_range', 'new_column_name', 'print_']",,,,,,,,,feature_engineering.py
 lognormal_distribution_generator,,"['base', 'std_dev', 'rng']",,,,,,,,,feature_engineering.py
+consolidate_relationship_grouper,"Identifies groups of interconnected members based on direct and indirect relationships using the Union-Find algorithm. Members are assigned to the same group when a relationship exists between them, either directly or through other members.","['df', 'parent_col', 'child_col']",df,,,TBD,TBD,"identify_connected_member_groups(df,parent,child)","Relationships are treated as bidirectional.
+Indirect relationships are included (transitive grouping).
+Duplicate and circular relationships are handled.
+Members without valid relationships are excluded.
+Group IDs may change when the underlying data changes.
+Groups represent connected networks, not necessarily households or families.",pandas,feature_engineering.py
 review_dataset_lvl0,"Function used to provide a level 0 assessment of the data to understand a mimimum state of the dataset.
 Used as Step 1 in Exploratory Data Analysis.",['df'],rendered_object,09-Oct-26,03-Nov-26,TBD,TBD,test = review_dataset_lvl0(df),None,"visualize_dataframe_in_notebook
 display
@@ -41,6 +47,8 @@ net_present_value_calculator,,"['annual_interest', 'payment', 'total_amount', 'p
 preview_images_in_n_by_n_matrix,Display all PNG images in a directory as a gallery.,"['folder_location', 'columns', 'image_size', 'show_filename']",Rendered,04-Nov-26,04-Nov-26,TBD,TBD,TBD,None,None,utility_functions.py
 standardize_column_text,"Function which is used to Standardize Text, specifically it replaces anything that is [^\w\s] - anything that is not a word character (\w) and not whitespace (\s) or [\d] is a digit (0–9), and lower cases it.","['df', 'column_name', 'new_column_name']",TBD,09-Sep-26,09-Sep-26,TBD,TBD,TBD,None,None,df_column_engineering.py
 word_counts_from_column,,"['df', 'column_name', 'lower', 'pattern', 'min_len', 'dropna']",pd.Series. Word counts indexed by token (sorted desc). date_created:01-Feb-26 date_last_modified: 01-Feb-26 classification:TBD sub_classification:TBD,,,,,Example Function Call,,,df_column_engineering.py
+set_manual_column_order,,"['df', 'column_name', 'column_order']",,,,,,,,,df_column_engineering.py
+calculate_boundaries,,"['df', 'column_name', 'breaks']",,,,,,,,,df_column_engineering.py
 synthetic_txn_dataset,,['months'],,,,,,,,,synthetic_datasets.py
 generate_process_dictionary_from_knowledge_base,"Function Used to created a Dataframe and Dictionary which Extracts the Expected Processes for a specific activity from Knowledge Base. To be used to help
 guidance project requirements and activities required.","['df', 'process', 'return_value']","dict_, rendered object",09-Oct-26,26-Oct-26,TBD,TBD,project_df = generate_process(knowledge_base),None,"print_dict
@@ -49,6 +57,19 @@ update_process_df_status,Function Used to Quickly Visualize and Calculate the St
 visualize_dataframe_in_notebook
 Markdown
 display",project_process_tools.py
+statistical_analytics_time_series,Apply Statistical Analysis to all columns in a Time Series Dataframe,"['df', 'index']",df,10-Sep-26,10-Sep-26,TBD,TBD,df = statistical_analytics_time_series(df),None,None,time_series.py
+calculate_member_profile,,['df'],,,,,,,,,synthetic_member.py
+distribute_member_debt,,"['df', 'market_interest_rates', 'rng', 'concentration']",,,,,,,,,synthetic_member.py
+car_ownership,,"['df', 'car_ownership_probability', 'rng']",,,,,,,,,synthetic_member.py
+generate_branch_distribution,,"['branches', 'rng']",,,,,,,,,synthetic_member.py
+generate_member_income,,"['df', 'income_distribution', 'rng']",,,,,,,,,synthetic_member.py
+generate_homeownership,,"['df', 'homeownership_probability', 'geography_multiplier', 'rng']",,,,,,,,,synthetic_member.py
+generate_marital_status,,"['df', 'marital_status_distribution', 'rng']",,,,,,,,,synthetic_member.py
+generate_member_financials,,"['df', 'income_distribution', 'zero_debt_probability', 'rng']",,,,,,,,,synthetic_member.py
+generate_mbr_expenses,,"['df', 'rng', 'expenses_dict']",,,,,,,,,synthetic_member.py
+generate_kids_count,,"['df', 'random_state']",,,,,,,,,synthetic_member.py
+generate_member_behaviour_profiles,,"['df', 'random_state']",,,,,,,,,synthetic_member.py
+create_mbr_base_df,,"['geography_dict', 'age_distribution', 'branches', 'duration_dict', 'entity_map', 'income_distribution', 'geography_multiplier', 'seed', 'members']",,,,,,,,,synthetic_member.py
 create_knowledge_base,"Process Utilized to create Knowledge Base.
 Knowledge base has had multiple iterations, currently it is Definitions, with Process Steps Merged back into Process to Make a completely and simply filterable file","['df', 'columns', 'file_name']",knowledge_base.xlsx,02-Jul-26,7-Oct-26,TBD,TBD,create_knowledge_base(),"22-Jul - Overhauled merge. Attempted to streamline, simplify and reduce duplication. Increase Visability.
 28-Jul - Originally Named - generate_knowledge_base, stream lined to remove usage of Dictionary, which were complex and operationally inefficient.
@@ -87,6 +108,11 @@ visualize_dataframe_in_notebook
 display
 markdown
 pandas",data_validation.py
+apply_chart_format,Intermediary function created solely for the purposes of applying formating to charts. Created by GPT,"['ax', 'chart_format']",ax,11-Nov-26,11-Nov-26,TBD,TBD,TBD,None,None,visualizations.py
+plot_column_distribution_analysis,"Visualization Function, which plots 3 Graphs to help understand the distribution and values of a column.","['df', 'column_name', 'use_log', 'breaks_df', 'figsize', 'chart_format', 'print_']",fig,11-Nov-26,11-Nov-26,TBD,TBD,"from synthetic_member import member_df,activity_df,mbr_profile
+a = plot_column_distribution_analysis(activity_df,'RENT_M')",None,None,visualizations.py
+dq_search_df_column_for_str,"Identifies observations that would cause an integer conversion to fail, supporting data quality validation.
+Used when trying to merge and running into Errors/Issues, and need to track wonky column down.","['df', 'column_name']",render,11-Nov-26,11-Nov-26,Data Quality,Troubleshooting,TBD,None,None,visualizations.py
 frame_the_question,"Creates a 1600x900 presentation slide with a central
 analytical question and three supporting sections.","['question', 'context', 'why', 'scope', 'title', 'header', 'left_footer', 'right_footer', 'context_image', 'why_image', 'scope_image', 'image_size', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
 member_population_overview,,"['demographics', 'activity', 'observations', 'images', 'title', 'header', 'left_footer', 'right_footer', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
@@ -96,7 +122,6 @@ key_findings,,"['findings', 'title', 'subtitle', 'left_footer', 'right_footer', 
 engagement_comparison_matrix,,"['df', 'title', 'subtitle', 'left_footer', 'right_footer', 'font_path', 'row_formats', 'output', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
 engagement_measurement_grid,,"['questions', 'title', 'subtitle', 'left_footer', 'right_footer', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
 statistical_assessment_matrix,,"['df', 'title', 'subtitle', 'question', 'rationale', 'left_footer', 'right_footer', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
-generate_storytelling_presentation,,"['presentation_dict', 'performance_df', 'df_assessment', 'target_final_assessment', 'process_df', 'export_file']",,,,,,,,,storytelling_presentation.py
 load_presentation_font,"Function Created by ChatGpt to Render Font, for Pillow Usage. Needed as original version of coding did not work in PC environment.","['size', 'bold', 'font_path']",TBD,04-Nov-26,04-Nov-26,TBD,TBD,TBD,None,None,storytelling_presentation.py
 render_visual_text_storytelling_framework,,"['df', 'process_col', 'item_col', 'description_col', 'title']",,,,,,,,,storytelling_presentation.py
 create_slide,,"['width', 'height']",,,,,,,,,storytelling_presentation.py
@@ -106,7 +131,11 @@ draw_content_box,,"['img', 'x', 'y', 'width', 'height', 'title', 'text', 'image'
 show_slide,,"['img', 'export_file', 'output']",,,,,,,,,storytelling_presentation.py
 three_boxes_with_shaded_title,,"['info_dict', 'width', 'height', 'image_size', 'export_file', 'output']",,,,,,,,,storytelling_presentation.py
 six_boxes_two_by_three_with_description_box,,"['info_dict', 'increase_y', 'box_width', 'box_height']",,,,,,,,,storytelling_presentation.py
-one_box,,"['info_dict', 'width', 'height', 'image_size', 'export_file', 'font', 'output']",,,,,,,,,storytelling_presentation.py
+one_box,,"['info_dict', 'width', 'height', 'image_size', 'font']",,,,,,,,,storytelling_presentation.py
+engagement_comparison_matrix_appendix,,"['df', 'title', 'left_footer', 'right_footer', 'font_path', 'row_formats', 'output', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
+three_boxes_with_shaded_title_horizontal,,"['info_dict', 'width', 'height', 'image_size', 'image_centering', 'font_size']",,,,,,,,,storytelling_presentation.py
+html_text_box_display,,"['title', 'text_list', 'font_size', 'background_color', 'border']",,,,,,,,,storytelling_presentation.py
+generate_storytelling_presentation,,"['presentation_dict', 'performance_df', 'df_assessment', 'target_final_assessment', 'process_df', 'export_file']",,,,,,,,,storytelling_presentation.py
 sample_knowledge_test_single_df,,"['base_df', 'pause', 'test_name']",,,,,,,,,d_daily_test.py
 test_previous_errors,,"['max_correct', 'max_incorrect']",,,,,,,,,d_daily_test.py
 add_word_quote,"Function to add a new Word, Quote, Scripture, Proverb or Concept and Definition to Daily Test.","['word', 'text', 'classification']",Nil (Adds new record to excel file),05-Oct-26,05-Oct-26,TBD,TBD,"add_word_quote(
@@ -116,6 +145,11 @@ add_word_quote,"Function to add a new Word, Quote, Scripture, Proverb or Concept
 )",None,None,d_daily_test.py
 d_daily_test,,"['words', 'sample', 'pause', 'exclude_processes']",,,,,,,,,d_daily_test.py
 t_value_test,,"['df', 'observed_col', 'mean_col', 'std_col', 'observations', 'confidence_level', 'alternative']",,,,,,,,,statistical_analysis.py
+welch_t_test,,"['df', 'observed_mean_col', 'observed_std_col', 'observed_n_col', 'reference_mean_col', 'reference_std_col', 'reference_n_col', 'confidence_level', 'alternative']",,,,,,,,,statistical_analysis.py
+predictive_t_test,,"['df', 'observed_col', 'mean_col', 'std_col', 'observations', 'confidence_level', 'alternative']",,,,,,,,,statistical_analysis.py
+create_stratified_sample,TBD,"['df', 'column_list', 'flag_name', 'target_flag', 'dropna', 'rng', 'review_distribution']",df,12-Nov-26,12-Nov-26,TBD,TBD,"member_df = create_stratified_sample(member_df,column_list = ['AGE_SEGMENT','DURATION_YEARS_SEGMENT'])",None,None,statistical_analysis.py
+create_target_population,"Creates a randomly selected target population based on
+specified eligibility conditions and inclusion probability.","['df', 'include_condition', 'percent_include', 'new_column_name', 'rng']",None,13-Nov-26,13-Nov-26,TBD,TBD,"create_target_population(df=member_df,include_condition=(member_df['CITY'].isin(['Burnaby', 'Vancouver']) &(member_df['LEGACY_CU'] == 'Fishermans Friend')),percent_include=0.5)",TBD,numpy,statistical_analysis.py
 extract_object_dot_py,Generate an Excel file of all parameters which are manually stored and maintained. File which is generated is used a input component for generate_knowledgebase.,"['object_dict', 'export_location']",df date_created:29-Jun-26 date_last_modified: 3-Jul-26 classification:TBD sub_classification:TBD,,,,,"manual_object_df(object_dict_manual,'/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
 update:
 Added Definition as new record, added column definition.
@@ -164,6 +198,11 @@ visualize_dict_as_docx,"Convert a Python Dictionary Object into a visually appea
 Primarily used to convert Short Form ML Projects or Machine Learning Projects to Stakeholders.","['data', 'output_file', 'split_pages']",docx,28-Aug-26,28-Aug-26,TBD,TBD,"visualize_dict_as_docx(short_form_dict,'text.docx')
 visualize_dict_as_docx(base_dict,'text1.docx',True)",100% Created by GPT.,None,archive.py
 univariate_analysis,,"['df', 'sparsity_threshold', 'skew_threshold', 'extreme_threshold', 'high_cardinality_threshold']",,,,,,,,,archive.py
+generate_summary_status,,['project_dict'],,,,,,,,,archive.py
+generate_summary_status_v0,,['project_dict'],,,,,,,,,archive.py
+ml_validation_data_cleaning,,['df'],,,,,,,,,archive.py
+pixelate_image,,"['image_path', 'PixelSizeList']",pix,,,,,,,,archive.py
+JupyterNotebookMarkdown,,"['df', 'return_value']",Conditional on Return Value. Please read Args.,,,,,,,,archive.py
 txt_to_python,Function Used to Import .txt or .py File into Python.,"['file_name', 'encoding']",Dataframe,3-Dec-25,3-Dec-25,OS Folder Management,File Management,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/DFProcessing.py'
 file = TextFileImport(location)",,,object_rendering.py
 export_formatted_df_to_single_xlsx,Function Used to Simplify the required formating to a excel output from Python to Excel,"['df', 'file_name', 'sheet_name', 'index', 'freeze_header', 'column_formats']",TBD,28-Aug-26,28-Aug-26,TBD,TBD,TBD,None,None,object_rendering.py

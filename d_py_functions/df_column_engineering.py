@@ -90,3 +90,78 @@ def word_counts_from_column(df,
         tokens = tokens[tokens.str.len() >= min_len]
 
     return tokens.value_counts()
+
+
+
+def set_manual_column_order(df,column_name,column_order):
+    
+    '''
+    
+    '''
+    
+    df[column_name] = pd.Categorical(df[column_name], categories=column_order, ordered=True)
+
+def calculate_boundaries(df, column_name, breaks=10):
+    """
+    Calculates percentile-based segmentation boundaries and cumulative
+    value distributions for a numerical column.
+
+    Purpose:
+        Identifies segment thresholds based on the distribution of values, comparing boundaries calculated with and without zero observations.
+        Also measures how total value accumulates across these boundaries.
+
+    Parameters:
+        df(df) : DataFrame containing the observations.
+        column_name(str): Numeric column to analyze.
+        breaks(int): Number of percentile divisions.Defaults to 10 (deciles).
+
+    Retuns:
+        df
+    Date Created:
+        11-Nov-26
+    Date Last Modified:
+        11-Nov-26
+    Process:
+        TBD
+    Categorization:
+        TBD
+    Usage:
+        from synthetic_member import member_df,activity_df,mbr_profile
+        a = calculate_boundaries(activity_df,'RENT_M')
+    Notes:
+        None
+    Required Functions:
+        None
+    
+    """
+
+    s = df[column_name]
+    s_nonzero = s[s != 0]
+
+    percentiles = [i / breaks for i in range(1, breaks + 1)]
+
+    boundaries = s.quantile(percentiles).values
+    boundaries_nonzero = s_nonzero.quantile(percentiles).values
+
+    total_value = s.sum()
+
+    cumulative_value = [
+        s[s <= boundary].sum()
+        for boundary in boundaries
+    ]
+    
+    cumulative_pct = [
+        s[s <= boundary].sum() / total_value
+        if total_value != 0 else 0
+        for boundary in boundaries
+    ]
+
+    final_df = pd.DataFrame({
+        'Segment': range(1, breaks + 1),
+        f'{column_name}_SEG': boundaries,
+        f'{column_name}_SEG1': boundaries_nonzero,
+        'CUMULATIVE_VALUE': cumulative_value,
+        'CUMULATIVE_VALUE_PCT': cumulative_pct
+    })
+
+    return final_df.set_index('Segment')

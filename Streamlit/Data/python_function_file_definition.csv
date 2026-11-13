@@ -7,14 +7,17 @@ utility_functions.py,"Location for functions which do not fall within the scope 
 df_column_engineering.py,"Repo for functions which update, clean, change, enhance DF Columns. Primarily Text Related. Numerical Changes in Feature Engineering."
 synthetic_datasets.py,"Functions which are created for various testing and example purposes. Note, you can always expand them, try to preserve column Naming."
 project_process_tools.py,"Repo for functions which support the administration, documentation and guidance of Projects."
+time_series.py,"Functions and tools which support the management, anaylsis and evaluation of Time Series Specific Datasets"
+synthetic_member.py,
 taxonomy_admin_functions.py,Functions which deal primarily with administration and maintenance of Taxonomy supporting Documentation. Generalized Functions not to be included.
 filesystem_tools.py,"Function which stores all functions that deal with the Maintenance and Adminstration of Windows/IOS/Python folders and files. Specifically, includes Python Documentation Functions."
 df_creation_maint.py,"Repo for functions which Create, Materially Alter, Modify or Restructure DF."
 data_validation.py,"Repo for functions which validate the structure, completeness and validity of Dataframes. This DOES NOT, attempt to understand the underlying Data, but rather the structure. Note the distinction between Dataframe Structure and Underlying Data, which is EDA."
+visualizations.py,Functions and tools used to visual data.
 storytelling_presentation.py,
 d_daily_test.py,Repo for functions related to Testing Aqcquired Knowledge.
 objects_manual.py,"Created to serve as a repository for manually created lists, dictionaries, etc. Only include items which must be manually maintained. default_structure: object_dict['NAME'] = {'Process':"""",'Categorization':'','Word':""Name"",'Definition':"""",'publish':0,'python_object':''} Process"
-statistical_analysis.py,Repository for stand alone statistical analysis functions.
+statistical_analysis.py,"Repository for stand alone statistical analysis functions, or those supporting statistical analysis."
 archive.py,"Repo for functions which have been created, but are no longer in use. Specifically, those which might at some point become relevant or of interest."
 object_rendering.py,"Functions that transform Python objects or structured data into human-readable, formatted representations or documents without changing the underlying meaning of the data. Rendering is the process of converting data or an object from its internal structure into a visual or formatted output suitable for viewing, interpretation, or sharing."
 external_connections.py,"Functions which connect to external sites, repos, etc."

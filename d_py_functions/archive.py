@@ -1975,3 +1975,263 @@ def univariate_analysis(
     print('}')
     
     return {'univariate_analysis':result,'issue_freq_df':d,'issue_joint_freq_df':gb,'univariate_assessment_dict':univariate_assessment_dict}
+
+
+
+
+
+def generate_summary_status(
+    project_dict
+):
+    
+    # Indicators to turn off Status Completed
+    action_words = ['Create','Develop','Identify','Reconcile','Translate','Demonstrate','Analyze','Evaluate','List','Count']
+    
+    # Flags to denote the status of certain events
+    
+    assumption = [
+        'Key Defined Assumptions',
+        'Imptuation Notes',
+        'Temporal Alignment'
+    ]
+    
+    challenge = [
+        'Concerns Meeting Expectations',    
+        'Noted Constraints'
+    ]
+    
+    deliverable = [
+        'Finalized Problem Statement',
+        'Agreed Deliverables',
+        'Measures of Success',
+        'Core Deliverable(s)'
+    ]
+    
+    question = [
+        'Key Outstanding Questions'
+            ]
+
+    requires_evidence_to_close_status = deliverable + question
+    
+    # Iterate through Dictioanry
+    project_dict_item_list = []
+    for key in project_dict.keys():
+        for item in project_dict[key].keys():
+            
+            # Need to determine if Item in Dictionary is Str, List or Dict
+            dict_record = project_dict[key][item]
+            if isinstance(dict_record, str):
+                project_dict_item_list.append([key,item,dict_record,""])
+            elif isinstance(dict_record, list):
+                for list_item in dict_record:
+                    project_dict_item_list.append([key,item,list_item])
+            elif isinstance(dict_record, dict):
+                # Need to understand what type of object is in Dictionary.
+                for list_item in dict_record.keys():
+                    if isinstance(dict_record[list_item],list):
+                        for q in dict_record[list_item]:
+                            project_dict_item_list.append([key,item,q,list_item])
+                    else:
+                        project_dict_item_list.append([key,item,dict_record[list_item],list_item])                   
+                                                       
+    final_df = pd.DataFrame(project_dict_item_list,columns=['Process','Process Step','Comment','Sub Process'])
+        
+    final_df['first_word'] = final_df['Comment'].str.split().str[0]
+    final_df['Status'] = np.where(
+        (final_df['Comment'].str.len()>2)&
+        (~final_df['first_word'].isin(action_words))&
+        (~final_df['Process Step'].isin(requires_evidence_to_close_status))
+        ,1,0)
+    
+    final_df.drop('first_word',axis=1,inplace=True)
+
+    result = final_df.groupby('Process').agg(completed=('Status', 'sum'),steps=('Status', 'count'),).reset_index()
+    result['completed_perc'] = result['completed']/result['steps']*100
+    result['completed_perc'] = result['completed_perc'].round(2)
+    
+    display(result)
+    
+    condition = [
+        final_df['Process Step'].isin(assumption),
+        final_df['Process Step'].isin(challenge),
+        final_df['Process Step'].isin(deliverable),
+        final_df['Process Step'].isin(question)
+    ]
+
+    value = ['Assumption','Challenge','Deliverable','Question']
+    
+    final_df['Item_Classification'] = np.select(condition,value,"Not Defined")
+    
+    return final_df
+
+
+def generate_summary_status_v0(project_dict):
+    # Iterate through Dictioanry
+    project_dict_item_list = []
+    for key in project_dict.keys():
+        for item in project_dict[key].keys():
+            project_dict_item_list.append([key,item,project_dict[key][item]])
+                
+    final_df = pd.DataFrame(project_dict_item_list,columns=['Process','Process Step','Comment'])
+    
+    def comment_length(x):
+        if isinstance(x, str):
+            return len(x)
+
+        elif isinstance(x, list):
+            return sum(len(str(i)) for i in x)
+
+        elif isinstance(x, dict):
+            return sum(len(str(v)) for v in x.values())
+
+        return 0
+
+    final_df['Status'] = (final_df['Comment'].apply(comment_length) > 5).astype(int)
+    
+    result = final_df.groupby('Process').agg(completed=('Status', 'sum'),steps=('Status', 'count'),).reset_index()
+    result['completed_perc'] = result['completed']/result['steps']*100
+    result['completed_perc'] = result['completed_perc'].round(2)
+    
+    display(result)
+    
+    return final_df
+
+
+
+def ml_validation_data_cleaning(df):
+
+
+    records = []
+
+    for column in df.columns:
+
+        s = df[column]
+        numeric = pd.api.types.is_numeric_dtype(s)
+
+        records.append({
+            'VARIABLE': column,
+            'DTYPE': str(s.dtype),
+            'RECORDS': len(s),
+            'MISSING_COUNT': s.isna().sum(),
+            'MISSING_PCT': s.isna().mean(),
+            'UNIQUE_COUNT': s.nunique(dropna=True),
+            'BLANK_COUNT': s.fillna('').astype(str).str.strip().eq('').sum() if not numeric else 0,
+            'INFINITE_COUNT': np.isinf(s).sum() if numeric else 0,
+            'CONSTANT_FLAG': int(s.nunique(dropna=True) <= 1),
+            'ALL_MISSING_FLAG': int(s.isna().all())
+        })
+
+    temp_df = pd.DataFrame(records)
+    temp_df['REVIEW_FLAG'] = ((temp_df['MISSING_COUNT'] > 0) |(temp_df['BLANK_COUNT'] > 0) |(temp_df['INFINITE_COUNT'] > 0) |(temp_df['CONSTANT_FLAG'] == 1) |(temp_df['ALL_MISSING_FLAG'] == 1)).astype(int)
+
+    # Dataset assessment
+    dataset_assessment = {
+        'RECORD_COUNT': len(df),
+        'COLUMN_COUNT': df.shape[1],
+        'DUPLICATE_RECORDS': df.duplicated().sum(),
+        'DUPLICATE_RECORD_PCT': df.duplicated().mean()
+    }
+
+    return temp_df, dataset_assessment
+
+
+def pixelate_image(image_path, PixelSizeList=[10,50,75,100,125]):
+    '''
+    Function to take a .jpg file and Pixelate it, Developed for Playing a "Fun" Game.
+    
+    Parameters:
+        image_path: Location of JPG File
+        PixelSizeList: List of Pixelation Levels to Apply, 1 being a near replica of the image, 200 being a near unrecognizable generalist Blob.
+
+    Returns:
+        pix
+    
+    '''
+
+    import cv2
+
+    # Load the image
+    image = cv2.imread(image_path)
+    
+    # Get the dimensions of the image
+    height, width = image.shape[:2]
+    
+    for pixel_size in PixelSizeList:
+
+        # Resize to a smaller version
+        small_image = cv2.resize(image, (width // pixel_size, height // pixel_size), interpolation=cv2.INTER_LINEAR)
+
+        # Resize back to original size (creates pixelation effect)
+        pixelated_image = cv2.resize(small_image, (width, height), interpolation=cv2.INTER_NEAREST)
+
+        # Save or display the pixelated image
+        pixelated_path = f"pixelated_image_{pixel_size}.jpg"
+        cv2.imwrite(pixelated_path, pixelated_image)
+    
+    print(f"Pixelated image saved at: {image_path}")
+    
+    return pixelated_path
+
+
+
+
+def JupyterNotebookMarkdown(df,return_value=""):
+    
+    '''
+    Function to Create a Markdown file from Process DF, which is a data frame of the structure, 
+    Title,Header,Description
+    
+    Args:
+        Dataframe( Must be of format, Title, Header, Description)
+        return_value (str: "" or text):
+            If Blank, will render text in HTML Format. 
+            If text, then will return text for rendering in HTML Markdown
+    
+    Returns:
+        Conditional on Return Value. Please read Args.
+    
+    
+    '''
+    
+    try:
+        df1 = df[['Title','Header','Description']]
+    
+    except:
+        
+        print('DataFrame does not meet structure requirement, which must include 3 Column: Title, Header, Description')
+        return ''
+    
+    title= ""
+    step_number = 1
+    text = ""
+
+    l2_bullet = '-'  # Level 2 Bullet
+    l3_bullet = '*'  # Level 3 Bullet
+
+    for index, row in df1.iterrows():
+        # Ensure previous list is closed before starting a new title
+        if title and title != row.iloc[0]:  
+            text += "</ul>\n"  # Close the last unordered list before switching to a new title
+
+        # If it's a new title, start a new section
+        if title == "" or title != row.iloc[0]:
+            text += f"<h4>{step_number}. {row.iloc[0]}</h4>\n<ul>\n"  # Reset indentation
+            step_number += 1
+            title = row.iloc[0]  # Store the new title
+
+        # Add Level 2 content (Column 2)
+        if isinstance(row.iloc[1], str) and row.iloc[1].strip():
+            text += f"  <li>{row.iloc[1]}</li>\n"  # L2 starts here
+
+            # Add Level 3 content (Column 3) only if it exists
+            if isinstance(row.iloc[2], str) and row.iloc[2].strip():
+                text += f"    <ul><li>{row.iloc[2]}</li></ul>\n"  # L3 indented under L2
+
+    text += "</ul>\n"  # Close any remaining lists
+
+    if return_value =="":# Display the formatted HTML output in Jupyter Notebook
+        display(HTML(text))
+        
+    else:
+        return text
+    

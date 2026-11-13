@@ -10,10 +10,14 @@ feature_engineering.py,binary_complex_equivalency,include_difference,bool,Boolea
 feature_engineering.py,create_segment_range,df,,
 feature_engineering.py,create_segment_range,column_name,,
 feature_engineering.py,create_segment_range,segment_range,,
+feature_engineering.py,create_segment_range,new_column_name,,
 feature_engineering.py,create_segment_range,print_,,
 feature_engineering.py,lognormal_distribution_generator,base,,
 feature_engineering.py,lognormal_distribution_generator,std_dev,,
 feature_engineering.py,lognormal_distribution_generator,rng,,
+feature_engineering.py,consolidate_relationship_grouper,df,df,DataFrame containing member relationship pairs.
+feature_engineering.py,consolidate_relationship_grouper,parent_col,str,Column identifying the primary member.
+feature_engineering.py,consolidate_relationship_grouper,child_col,str,Column identifying the related member.
 eda_functions.py,review_dataset_lvl0,df,dataframe,Dataset.
 eda_functions.py,review_dataset_lvl1,df,dataframe,Dataset.
 eda_functions.py,review_dataset_lvl1,top_n,int,Number of Variables to include the Top Observation in right most column of Dataset.
@@ -78,11 +82,59 @@ df_column_engineering.py,word_counts_from_column,lower,bool,Apply Lowercasing fo
 df_column_engineering.py,word_counts_from_column,pattern,re,"r""[A-Za-z']+"". Regex for tokens (words). Adjust for unicode if needed. [A-Za-z0-9']+ if you want to include Numbers"
 df_column_engineering.py,word_counts_from_column,min_len,int,Minimum token length to keep.
 df_column_engineering.py,word_counts_from_column,dropna,bool,Whether to drop empty tokens.
+df_column_engineering.py,set_manual_column_order,df,,
+df_column_engineering.py,set_manual_column_order,column_name,,
+df_column_engineering.py,set_manual_column_order,column_order,,
+df_column_engineering.py,calculate_boundaries,df,df,DataFrame containing the observations.
+df_column_engineering.py,calculate_boundaries,column_name,str,Numeric column to analyze.
+df_column_engineering.py,calculate_boundaries,breaks,int,"Number of percentile divisions.Defaults to 10 (deciles). Retuns: df Date Created: 11-Nov-26 Date Last Modified: 11-Nov-26 Process: TBD Categorization: TBD Usage: from synthetic_member import member_df,activity_df,mbr_profile a = calculate_boundaries(activity_df,'RENT_M') Notes: None Required Functions: None"
 synthetic_datasets.py,synthetic_txn_dataset,months,,
 project_process_tools.py,generate_process_dictionary_from_knowledge_base,df,Dataframe,Can import Knowledge Base Directly to save from calling Git.
 project_process_tools.py,generate_process_dictionary_from_knowledge_base,process,str,Desired Process to be manually documented. Default is Machine Learning Lifecycle
 project_process_tools.py,generate_process_dictionary_from_knowledge_base,return_value,str,"Three Options. print_dict/project_dict project_dict: Returns a Python Dictionary, which can be used to manage the project print_dict: Returns Text, Explaining Steps as Outlined in Knowledge Base"
 project_process_tools.py,update_process_df_status,project_status_dict,dict,Dictionary. Manually created from generate_process_dictionary_from_knowledge_base
+time_series.py,statistical_analytics_time_series,df,dataframe,DataFrame
+time_series.py,statistical_analytics_time_series,index,,
+synthetic_member.py,calculate_member_profile,df,,
+synthetic_member.py,distribute_member_debt,df,,
+synthetic_member.py,distribute_member_debt,market_interest_rates,,
+synthetic_member.py,distribute_member_debt,rng,,
+synthetic_member.py,distribute_member_debt,concentration,,
+synthetic_member.py,car_ownership,df,,
+synthetic_member.py,car_ownership,car_ownership_probability,,
+synthetic_member.py,car_ownership,rng,,
+synthetic_member.py,generate_branch_distribution,branches,,
+synthetic_member.py,generate_branch_distribution,rng,,
+synthetic_member.py,generate_member_income,df,,
+synthetic_member.py,generate_member_income,income_distribution,,
+synthetic_member.py,generate_member_income,rng,,
+synthetic_member.py,generate_homeownership,df,,
+synthetic_member.py,generate_homeownership,homeownership_probability,,
+synthetic_member.py,generate_homeownership,geography_multiplier,,
+synthetic_member.py,generate_homeownership,rng,,
+synthetic_member.py,generate_marital_status,df,,
+synthetic_member.py,generate_marital_status,marital_status_distribution,,
+synthetic_member.py,generate_marital_status,rng,,
+synthetic_member.py,generate_member_financials,df,,
+synthetic_member.py,generate_member_financials,income_distribution,,
+synthetic_member.py,generate_member_financials,zero_debt_probability,,
+synthetic_member.py,generate_member_financials,rng,,
+synthetic_member.py,generate_mbr_expenses,df,,
+synthetic_member.py,generate_mbr_expenses,rng,,
+synthetic_member.py,generate_mbr_expenses,expenses_dict,,
+synthetic_member.py,generate_kids_count,df,,
+synthetic_member.py,generate_kids_count,random_state,,
+synthetic_member.py,generate_member_behaviour_profiles,df,,
+synthetic_member.py,generate_member_behaviour_profiles,random_state,,
+synthetic_member.py,create_mbr_base_df,geography_dict,,
+synthetic_member.py,create_mbr_base_df,age_distribution,,
+synthetic_member.py,create_mbr_base_df,branches,,
+synthetic_member.py,create_mbr_base_df,duration_dict,,
+synthetic_member.py,create_mbr_base_df,entity_map,,
+synthetic_member.py,create_mbr_base_df,income_distribution,,
+synthetic_member.py,create_mbr_base_df,geography_multiplier,,
+synthetic_member.py,create_mbr_base_df,seed,,
+synthetic_member.py,create_mbr_base_df,members,,
 taxonomy_admin_functions.py,create_knowledge_base,df,dataframe,"File, if None it will call Google Sheet."
 taxonomy_admin_functions.py,create_knowledge_base,columns,list,Default columns to include in extract
 taxonomy_admin_functions.py,create_knowledge_base,file_name,str,"File Name of Export File, If Blank it WILL NOT export a file."
@@ -116,6 +168,17 @@ df_creation_maint.py,dict_to_dataframe,data,,
 data_validation.py,df_compare,df,,
 data_validation.py,df_compare,df1,,
 data_validation.py,df_compare,primary_key_list,list,List of Elements to Merge DataFrame on. If left blank it will only test column structure of Dataframes.
+visualizations.py,apply_chart_format,ax,ax,Chart Axis
+visualizations.py,apply_chart_format,chart_format,dict,Predefined Formating structure.
+visualizations.py,plot_column_distribution_analysis,df,df,Dataframe
+visualizations.py,plot_column_distribution_analysis,column_name,str,Name of Column to be analyzed.
+visualizations.py,plot_column_distribution_analysis,use_log,binary,Indicator to determine whether absolute value or Log should be applied.
+visualizations.py,plot_column_distribution_analysis,breaks_df,list,"Optional List to determne segmentation for chart 3. If False, returns Decile."
+visualizations.py,plot_column_distribution_analysis,figsize,,
+visualizations.py,plot_column_distribution_analysis,chart_format,dict,Default CHart format for consistency.
+visualizations.py,plot_column_distribution_analysis,print_,,
+visualizations.py,dq_search_df_column_for_str,df,df,Dataframe
+visualizations.py,dq_search_df_column_for_str,column_name,str,Column to Test
 storytelling_presentation.py,frame_the_question,question,,
 storytelling_presentation.py,frame_the_question,context,,
 storytelling_presentation.py,frame_the_question,why,,
@@ -194,12 +257,6 @@ storytelling_presentation.py,statistical_assessment_matrix,left_footer,,
 storytelling_presentation.py,statistical_assessment_matrix,right_footer,,
 storytelling_presentation.py,statistical_assessment_matrix,color_dict,,
 storytelling_presentation.py,statistical_assessment_matrix,export_file,,
-storytelling_presentation.py,generate_storytelling_presentation,presentation_dict,,
-storytelling_presentation.py,generate_storytelling_presentation,performance_df,,
-storytelling_presentation.py,generate_storytelling_presentation,df_assessment,,
-storytelling_presentation.py,generate_storytelling_presentation,target_final_assessment,,
-storytelling_presentation.py,generate_storytelling_presentation,process_df,,
-storytelling_presentation.py,generate_storytelling_presentation,export_file,,
 storytelling_presentation.py,load_presentation_font,size,,
 storytelling_presentation.py,load_presentation_font,bold,,
 storytelling_presentation.py,load_presentation_font,font_path,,
@@ -247,9 +304,33 @@ storytelling_presentation.py,one_box,info_dict,,
 storytelling_presentation.py,one_box,width,,
 storytelling_presentation.py,one_box,height,,
 storytelling_presentation.py,one_box,image_size,,
-storytelling_presentation.py,one_box,export_file,,
 storytelling_presentation.py,one_box,font,,
-storytelling_presentation.py,one_box,output,,
+storytelling_presentation.py,engagement_comparison_matrix_appendix,df,,
+storytelling_presentation.py,engagement_comparison_matrix_appendix,title,,
+storytelling_presentation.py,engagement_comparison_matrix_appendix,left_footer,,
+storytelling_presentation.py,engagement_comparison_matrix_appendix,right_footer,,
+storytelling_presentation.py,engagement_comparison_matrix_appendix,font_path,,
+storytelling_presentation.py,engagement_comparison_matrix_appendix,row_formats,,
+storytelling_presentation.py,engagement_comparison_matrix_appendix,output,,
+storytelling_presentation.py,engagement_comparison_matrix_appendix,color_dict,,
+storytelling_presentation.py,engagement_comparison_matrix_appendix,export_file,,
+storytelling_presentation.py,three_boxes_with_shaded_title_horizontal,info_dict,,
+storytelling_presentation.py,three_boxes_with_shaded_title_horizontal,width,,
+storytelling_presentation.py,three_boxes_with_shaded_title_horizontal,height,,
+storytelling_presentation.py,three_boxes_with_shaded_title_horizontal,image_size,,
+storytelling_presentation.py,three_boxes_with_shaded_title_horizontal,image_centering,,
+storytelling_presentation.py,three_boxes_with_shaded_title_horizontal,font_size,,
+storytelling_presentation.py,html_text_box_display,title,,
+storytelling_presentation.py,html_text_box_display,text_list,,
+storytelling_presentation.py,html_text_box_display,font_size,,
+storytelling_presentation.py,html_text_box_display,background_color,,
+storytelling_presentation.py,html_text_box_display,border,,
+storytelling_presentation.py,generate_storytelling_presentation,presentation_dict,,
+storytelling_presentation.py,generate_storytelling_presentation,performance_df,,
+storytelling_presentation.py,generate_storytelling_presentation,df_assessment,,
+storytelling_presentation.py,generate_storytelling_presentation,target_final_assessment,,
+storytelling_presentation.py,generate_storytelling_presentation,process_df,,
+storytelling_presentation.py,generate_storytelling_presentation,export_file,,
 d_daily_test.py,sample_knowledge_test_single_df,base_df,,
 d_daily_test.py,sample_knowledge_test_single_df,pause,,
 d_daily_test.py,sample_knowledge_test_single_df,test_name,,
@@ -269,6 +350,34 @@ statistical_analysis.py,t_value_test,std_col,,
 statistical_analysis.py,t_value_test,observations,,
 statistical_analysis.py,t_value_test,confidence_level,,
 statistical_analysis.py,t_value_test,alternative,,
+statistical_analysis.py,welch_t_test,df,,
+statistical_analysis.py,welch_t_test,observed_mean_col,,
+statistical_analysis.py,welch_t_test,observed_std_col,,
+statistical_analysis.py,welch_t_test,observed_n_col,,
+statistical_analysis.py,welch_t_test,reference_mean_col,,
+statistical_analysis.py,welch_t_test,reference_std_col,,
+statistical_analysis.py,welch_t_test,reference_n_col,,
+statistical_analysis.py,welch_t_test,confidence_level,,
+statistical_analysis.py,welch_t_test,alternative,,
+statistical_analysis.py,predictive_t_test,df,,
+statistical_analysis.py,predictive_t_test,observed_col,,
+statistical_analysis.py,predictive_t_test,mean_col,,
+statistical_analysis.py,predictive_t_test,std_col,,
+statistical_analysis.py,predictive_t_test,observations,,
+statistical_analysis.py,predictive_t_test,confidence_level,,
+statistical_analysis.py,predictive_t_test,alternative,,
+statistical_analysis.py,create_stratified_sample,df,df,Dataframe
+statistical_analysis.py,create_stratified_sample,column_list,list,List of Columns to Match Target Group
+statistical_analysis.py,create_stratified_sample,flag_name,str,Name of New Segment. If blank default to SAMPLE_FLAG.
+statistical_analysis.py,create_stratified_sample,target_flag,str,Name of column in DF which is Target Group. MUST be included. Must be Binary.
+statistical_analysis.py,create_stratified_sample,dropna,binary,Condition for Group By.
+statistical_analysis.py,create_stratified_sample,rng,object,Random Number Generator. By Default will create with seed 42.
+statistical_analysis.py,create_stratified_sample,review_distribution,Binary,"OPtional argument to display some visualizations after processing, to help assess impact of creation."
+statistical_analysis.py,create_target_population,df,df,DataFrame containing the population.
+statistical_analysis.py,create_target_population,include_condition,Series,Boolean condition identifying members eligible for selection.
+statistical_analysis.py,create_target_population,percent_include,float,Probability of including each eligible member. Defaults to 0.5 (50%).
+statistical_analysis.py,create_target_population,new_column_name,str,Name of the new binary target flag. Defaults to TARGET_MBR.
+statistical_analysis.py,create_target_population,rng,object,"Random Number Generator. By default, creates a generator with seed 42."
 archive.py,extract_object_dot_py,object_dict,dict,Dictionary Object from either objects_manual or objects_automated
 archive.py,extract_object_dot_py,export_location,str,Location where .xlsx file will be saved.
 archive.py,ETL,print_,bool,To Be Determined Utilization.
@@ -314,6 +423,13 @@ archive.py,univariate_analysis,sparsity_threshold,,
 archive.py,univariate_analysis,skew_threshold,,
 archive.py,univariate_analysis,extreme_threshold,,
 archive.py,univariate_analysis,high_cardinality_threshold,,
+archive.py,generate_summary_status,project_dict,,
+archive.py,generate_summary_status_v0,project_dict,,
+archive.py,ml_validation_data_cleaning,df,,
+archive.py,pixelate_image,image_path,,
+archive.py,pixelate_image,PixelSizeList,,
+archive.py,JupyterNotebookMarkdown,df,,
+archive.py,JupyterNotebookMarkdown,return_value,,
 object_rendering.py,txt_to_python,file_name,str,"Name of File, including path location for import"
 object_rendering.py,txt_to_python,encoding,str,Encoding to be applied by With Open call. Default is utf-8.
 object_rendering.py,export_formatted_df_to_single_xlsx,df,dataframe,Any Dataframe
