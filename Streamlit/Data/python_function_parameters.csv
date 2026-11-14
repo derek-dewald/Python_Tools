@@ -18,6 +18,21 @@ feature_engineering.py,lognormal_distribution_generator,rng,,
 feature_engineering.py,consolidate_relationship_grouper,df,df,DataFrame containing member relationship pairs.
 feature_engineering.py,consolidate_relationship_grouper,parent_col,str,Column identifying the primary member.
 feature_engineering.py,consolidate_relationship_grouper,child_col,str,Column identifying the related member.
+feature_engineering.py,df_column_map_text_patterns,df,df,DataFrame
+feature_engineering.py,df_column_map_text_patterns,column_name,str,Name of column which will have the .map applied to
+feature_engineering.py,df_column_map_text_patterns,new_column_name,str,Name of New column which is mapped.
+feature_engineering.py,df_column_map_text_patterns,mapping_dict,dict,"Dictionary, which will be mapped to column and create new column name"
+feature_engineering.py,df_column_map_text_patterns,print_,binary,Determine whether a summary value count will be provided to validate Output. Default to Suppress.
+feature_engineering.py,df_column_map_text_patterns,default_value,str,If you would like to override the default value where conditions are not Met. None will return the value from Column
+feature_engineering.py,log_transformation,df,df,DataFrame containing the values to transform.
+feature_engineering.py,log_transformation,column_name,str,Name of the numeric column to transform.
+feature_engineering.py,log_transformation,new_column_name,str,Name of the transformed column. Defaults to the original column name with '_LOG' appended.
+feature_engineering.py,log_transformation,include_negative,binary,Determines whether negative values are preserved using a signed logarithmic transformation. Defaults to False.
+feature_engineering.py,clip_distribution,df,df,DataFrame containing the values to clip.
+feature_engineering.py,clip_distribution,column_name,str,Name of the numeric column to transform.
+feature_engineering.py,clip_distribution,new_column_name,str,Name of the resulting column. Defaults to the original column name with '_CLIPPED'.
+feature_engineering.py,clip_distribution,head,float,Upper boundary (ceiling). Values exceeding this threshold are replaced with the threshold. Defaults to None.
+feature_engineering.py,clip_distribution,tail,float,Lower boundary (floor). Values below this threshold are replaced with the threshold. Defaults to None.
 eda_functions.py,review_dataset_lvl0,df,dataframe,Dataset.
 eda_functions.py,review_dataset_lvl1,df,dataframe,Dataset.
 eda_functions.py,review_dataset_lvl1,top_n,int,Number of Variables to include the Top Observation in right most column of Dataset.
@@ -88,6 +103,8 @@ df_column_engineering.py,set_manual_column_order,column_order,,
 df_column_engineering.py,calculate_boundaries,df,df,DataFrame containing the observations.
 df_column_engineering.py,calculate_boundaries,column_name,str,Numeric column to analyze.
 df_column_engineering.py,calculate_boundaries,breaks,int,"Number of percentile divisions.Defaults to 10 (deciles). Retuns: df Date Created: 11-Nov-26 Date Last Modified: 11-Nov-26 Process: TBD Categorization: TBD Usage: from synthetic_member import member_df,activity_df,mbr_profile a = calculate_boundaries(activity_df,'RENT_M') Notes: None Required Functions: None"
+df_column_engineering.py,dq_search_df_column_for_str,df,df,Dataframe
+df_column_engineering.py,dq_search_df_column_for_str,column_name,str,Column to Test
 synthetic_datasets.py,synthetic_txn_dataset,months,,
 project_process_tools.py,generate_process_dictionary_from_knowledge_base,df,Dataframe,Can import Knowledge Base Directly to save from calling Git.
 project_process_tools.py,generate_process_dictionary_from_knowledge_base,process,str,Desired Process to be manually documented. Default is Machine Learning Lifecycle
@@ -168,6 +185,13 @@ df_creation_maint.py,dict_to_dataframe,data,,
 data_validation.py,df_compare,df,,
 data_validation.py,df_compare,df1,,
 data_validation.py,df_compare,primary_key_list,list,List of Elements to Merge DataFrame on. If left blank it will only test column structure of Dataframes.
+data_validation.py,df_column_comparison,df,df,Dataframe.
+data_validation.py,df_column_comparison,column_name,str,Primary column to compare.
+data_validation.py,df_column_comparison,primary_key,str,Reference Column (used when presenting Account DF).
+data_validation.py,df_column_comparison,column_name1,str,"Comparison column. Defaults to f""{column_name}{column_distinction}""."
+data_validation.py,df_column_comparison,secondary_filter,"str, optional",Optional column used to segment summary results.
+data_validation.py,df_column_comparison,column_distinction,str,Suffix used to identify the comparison column.
+data_validation.py,df_column_comparison,bracketing,list,"Breakpoints used to categorize numeric differences. Defaults to [-10000, -1000, -100, -1,0,1, 100, 1000, 10000]"
 visualizations.py,apply_chart_format,ax,ax,Chart Axis
 visualizations.py,apply_chart_format,chart_format,dict,Predefined Formating structure.
 visualizations.py,plot_column_distribution_analysis,df,df,Dataframe
@@ -177,8 +201,6 @@ visualizations.py,plot_column_distribution_analysis,breaks_df,list,"Optional Lis
 visualizations.py,plot_column_distribution_analysis,figsize,,
 visualizations.py,plot_column_distribution_analysis,chart_format,dict,Default CHart format for consistency.
 visualizations.py,plot_column_distribution_analysis,print_,,
-visualizations.py,dq_search_df_column_for_str,df,df,Dataframe
-visualizations.py,dq_search_df_column_for_str,column_name,str,Column to Test
 storytelling_presentation.py,frame_the_question,question,,
 storytelling_presentation.py,frame_the_question,context,,
 storytelling_presentation.py,frame_the_question,why,,
@@ -372,7 +394,7 @@ statistical_analysis.py,create_stratified_sample,flag_name,str,Name of New Segme
 statistical_analysis.py,create_stratified_sample,target_flag,str,Name of column in DF which is Target Group. MUST be included. Must be Binary.
 statistical_analysis.py,create_stratified_sample,dropna,binary,Condition for Group By.
 statistical_analysis.py,create_stratified_sample,rng,object,Random Number Generator. By Default will create with seed 42.
-statistical_analysis.py,create_stratified_sample,review_distribution,Binary,"OPtional argument to display some visualizations after processing, to help assess impact of creation."
+statistical_analysis.py,create_stratified_sample,print_,Binary,"OPtional argument to display some visualizations after processing, to help assess impact of creation."
 statistical_analysis.py,create_target_population,df,df,DataFrame containing the population.
 statistical_analysis.py,create_target_population,include_condition,Series,Boolean condition identifying members eligible for selection.
 statistical_analysis.py,create_target_population,percent_include,float,Probability of including each eligible member. Defaults to 0.5 (50%).
@@ -430,6 +452,9 @@ archive.py,pixelate_image,image_path,,
 archive.py,pixelate_image,PixelSizeList,,
 archive.py,JupyterNotebookMarkdown,df,,
 archive.py,JupyterNotebookMarkdown,return_value,,
+archive.py,generate_summary_status,project_dict,,
+archive.py,create_ml_dictionary_template,df,,
+archive.py,generate_summary_status,project_dict,,
 object_rendering.py,txt_to_python,file_name,str,"Name of File, including path location for import"
 object_rendering.py,txt_to_python,encoding,str,Encoding to be applied by With Open call. Default is utf-8.
 object_rendering.py,export_formatted_df_to_single_xlsx,df,dataframe,Any Dataframe
@@ -493,4 +518,5 @@ text_parsing.py,compare_function,func1,function,Python Function
 text_parsing.py,compare_function,func2,function,Python Function
 text_parsing.py,compare_function,additional_records,int,Number of String Characters for each function which will be displayed after the point of identifying difference.
 text_parsing.py,compare_function,strip_docstring,bool,Boolean to determine whether you wish to compare the Doc String aswell as the function.
+text_parsing.py,string_to_python_literal,x,str,String Text. Ideally could be in a better python format
 ml_project.py,create_ml_dictionary_template,source,str,location of manual Excel File. Can be updated to take multiple input types is necessary

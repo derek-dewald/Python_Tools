@@ -338,7 +338,7 @@ def create_stratified_sample(
     target_flag="TARGET_MBR",
     dropna=False,
     rng=None,
-    review_distribution=False,
+    print_=False,
 ):
   
     '''
@@ -352,7 +352,7 @@ def create_stratified_sample(
         target_flag(str): Name of column in DF which is Target Group. MUST be included. Must be Binary.
         dropna(binary): Condition for Group By.
         rng(object): Random Number Generator. By Default will create with seed 42.
-        review_distribution(Binary): OPtional argument to display some visualizations after processing, to help assess impact of creation.
+        print_(Binary): OPtional argument to display some visualizations after processing, to help assess impact of creation.
 
     Returns:
         df
@@ -383,7 +383,7 @@ def create_stratified_sample(
     
     if not flag_name:
         flag_name = 'SAMPLE_FLAG'
-        df[flag_name] = (df[target_flag]==0).astype(int)
+    df[flag_name] = (df[target_flag]==0).astype(int)
     
     col_list = column_list + [target_flag]
     
@@ -413,12 +413,13 @@ def create_stratified_sample(
     if len(pt[(pt[target_flag]==1)&(pt[flag_name]==1)]):
         display(Markdown('### ERROR Members in Target and Qualification'))
         visualize_dataframe_in_notebook(pt[(pt[target_flag]==1)&(pt[flag_name]==1)])
+
+    if print_:
+        display(Markdown('### Summary of Total Records Flagged in Sample'))
+        visualize_dataframe_in_notebook(pt.head(20))
         
-    display(Markdown('### Summary of Total Records Flagged in Sample'))
-    visualize_dataframe_in_notebook(pt.head(20))
-    
-    display(Markdown('### Summary of Total Records Flagged in Target'))
-    visualize_dataframe_in_notebook(pt[pt['TARGET_MBR']==1].sort_values('COUNT',ascending=False).head(20))
+        display(Markdown('### Summary of Total Records Flagged in Target'))
+        visualize_dataframe_in_notebook(pt[pt[target_flag]==1].sort_values('COUNT',ascending=False).head(20))
 
     return df.drop(columns=["MAX_RECORDS", "n",'COUNT'])
 

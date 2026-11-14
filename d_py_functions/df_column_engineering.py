@@ -165,3 +165,39 @@ def calculate_boundaries(df, column_name, breaks=10):
     })
 
     return final_df.set_index('Segment')
+
+
+def dq_search_df_column_for_str(df,column_name):
+    """
+    Definition:
+        Identifies observations that would cause an integer conversion to fail, supporting data quality validation.
+        Used when trying to merge and running into Errors/Issues, and need to track wonky column down.
+        
+    Parameters:
+        df(df): Dataframe
+        column_name(str): Column to Test
+    
+    Returns:
+        render
+        
+    Date Created:
+        11-Nov-26
+    Date Last Modified:
+        11-Nov-26
+    Process:
+        Data Quality
+    Categorization:
+        Troubleshooting
+    Usage:
+        TBD
+    Notes:
+        None
+    Required Functions:
+        None
+    """
+    for idx, val in df[column_name].items():
+        try:
+            int(val)
+        except Exception as e:
+            print(f"Row {idx}: {val!r} -> {e}")
+    

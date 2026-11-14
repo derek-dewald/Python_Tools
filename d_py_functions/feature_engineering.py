@@ -3,6 +3,7 @@ module_word: feature_engineering
 module_definition: Repo for functions which create data elements within the context of an existing Data Frame. Does not include the creation of New Data Sets.
 
 '''
+from object_rendering import visualize_dataframe_in_notebook
 
 import numpy as np
 import pandas as pd
@@ -231,3 +232,165 @@ def consolidate_relationship_grouper(
         'MEMBERNBR': list(roots),
         'GROUP_ID': [root_ids[r] for r in roots.values()]
     })
+
+
+def df_column_map_text_patterns(
+    df,
+    column_name,
+    new_column_name,
+    mapping_dict,
+    print_=False,
+    default_value=None
+):
+    """
+    Definition:
+        Function which text mines a dataframe column and allows the application of a provisional dictionary to replace values into a new column, using .str.contains(na=False).
+    Parameters:
+        df(df): DataFrame
+        column_name(str): Name of column which will have the .map applied to
+        new_column_name(str): Name of New column which is mapped.
+        mapping_dict(dict): Dictionary, which will be mapped to column and create new column name
+        print_(binary): Determine whether a summary value count will be provided to validate Output. Default to Suppress.
+        default_value(str): If you would like to override the default value where conditions are not Met. None will return the value from Column
+        
+    Returns:
+        TBD
+    Date Created:
+        11-Nov-26
+    Date Last Modified:
+        11-Nov-26
+    Process:
+        TBD
+    Categorization:
+        TBD
+    Usage:
+        TBD
+    Notes:
+        TBD
+    Required Functions:
+        visualize_dataframe_in_notebook
+        numpy
+
+    
+    """
+    if not default_value:
+        default_value = df[column_name]
+    
+    df = df.copy()
+    conditions = [df[column_name].str.contains(key, na=False) for key in mapping_dict]
+    df[new_column_name] = np.select(conditions,mapping_dict.values(),default=default_value)
+
+    if print_:
+        visualize_dataframe_in_notebook(pd.DataFrame(df[new_column_name].value_counts()),hide_index=False)
+    
+    return df
+
+
+def log_transformation(
+    df,
+    column_name,
+    new_column_name=None,
+    include_negative=False
+):
+    '''
+    Definition:
+        Applies a logarithmic transformation to a numeric column, reducing the influence of extreme values while preserving relative differences between observations.
+
+    Parameters:
+        df(df): DataFrame containing the values to transform.
+        column_name(str): Name of the numeric column to transform.
+        new_column_name(str): Name of the transformed column. Defaults to the original column name with '_LOG' appended.
+        include_negative(binary): Determines whether negative values are preserved using a signed logarithmic transformation. Defaults to False.
+
+    Returns:
+        None
+
+    Date Created:
+        13-Nov-26
+
+    Date Last Modified:
+        13-Nov-26
+
+    Process:
+        TBD
+
+    Categorization:
+        TBD
+
+    Usage:
+        og_transformation(df,column_name='TRANSACTION_VALUE',include_negative=True)
+
+    Notes:
+        TBD
+
+    Required Functions:
+        numpy
+    '''
+
+    if new_column_name is None:
+        new_column_name = f"{column_name}_LOG"
+
+    if include_negative:
+        col = np.abs(df[column_name])
+        sign = np.sign(df[column_name])
+        df.loc[:, new_column_name] = np.log1p(col) * sign
+
+    else:
+        col = df[column_name].clip(lower=0)
+        df.loc[:, new_column_name] = np.log1p(col)
+
+
+def clip_distribution(
+    df,
+    column_name,
+    new_column_name=None,
+    head=None,
+    tail=None
+):
+    '''
+    Definition:
+        Applies optional upper and lower boundaries to a numeric column, limiting extreme values without removing records. Values outside the specified boundaries are replaced with the nearest boundary value.
+
+    Parameters:
+        df(df): DataFrame containing the values to clip.
+        column_name(str): Name of the numeric column to transform.
+        new_column_name(str): Name of the resulting column. Defaults to the original column name with '_CLIPPED'.
+        head(float): Upper boundary (ceiling). Values exceeding this threshold are replaced with the threshold. Defaults to None.
+        tail(float): Lower boundary (floor). Values below this threshold are replaced with the threshold. Defaults to None.
+
+    Returns:
+        None
+
+    Date Created:
+        13-Nov-26
+
+    Date Last Modified:
+        13-Nov-26
+
+    Process:
+        TBD
+    Categorization:
+        TBD
+
+    Usage:
+        clip_distribution(df=member_df,column_name='TRANSACTION_VALUE',head=10000,tail=0)
+
+    Notes:
+        TBD
+
+    Required Functions:
+        pandas
+    '''
+
+    if new_column_name is None:
+        new_column_name = f"{column_name}_CLIPPED"
+
+    col = df[column_name]
+
+    if head is not None:
+        col = col.clip(upper=head)
+
+    if tail is not None:
+        col = col.clip(lower=tail)
+
+    df[new_column_name] = col

@@ -8,6 +8,10 @@ Duplicate and circular relationships are handled.
 Members without valid relationships are excluded.
 Group IDs may change when the underlying data changes.
 Groups represent connected networks, not necessarily households or families.",pandas,feature_engineering.py
+df_column_map_text_patterns,"Function which text mines a dataframe column and allows the application of a provisional dictionary to replace values into a new column, using .str.contains(na=False).","['df', 'column_name', 'new_column_name', 'mapping_dict', 'print_', 'default_value']",TBD,11-Nov-26,11-Nov-26,TBD,TBD,TBD,TBD,"visualize_dataframe_in_notebook
+numpy",feature_engineering.py
+log_transformation,"Applies a logarithmic transformation to a numeric column, reducing the influence of extreme values while preserving relative differences between observations.","['df', 'column_name', 'new_column_name', 'include_negative']",None,13-Nov-26,13-Nov-26,TBD,TBD,"og_transformation(df,column_name='TRANSACTION_VALUE',include_negative=True)",TBD,numpy,feature_engineering.py
+clip_distribution,"Applies optional upper and lower boundaries to a numeric column, limiting extreme values without removing records. Values outside the specified boundaries are replaced with the nearest boundary value.","['df', 'column_name', 'new_column_name', 'head', 'tail']",None,13-Nov-26,13-Nov-26,TBD,TBD,"clip_distribution(df=member_df,column_name='TRANSACTION_VALUE',head=10000,tail=0)",TBD,pandas,feature_engineering.py
 review_dataset_lvl0,"Function used to provide a level 0 assessment of the data to understand a mimimum state of the dataset.
 Used as Step 1 in Exploratory Data Analysis.",['df'],rendered_object,09-Oct-26,03-Nov-26,TBD,TBD,test = review_dataset_lvl0(df),None,"visualize_dataframe_in_notebook
 display
@@ -49,6 +53,8 @@ standardize_column_text,"Function which is used to Standardize Text, specificall
 word_counts_from_column,,"['df', 'column_name', 'lower', 'pattern', 'min_len', 'dropna']",pd.Series. Word counts indexed by token (sorted desc). date_created:01-Feb-26 date_last_modified: 01-Feb-26 classification:TBD sub_classification:TBD,,,,,Example Function Call,,,df_column_engineering.py
 set_manual_column_order,,"['df', 'column_name', 'column_order']",,,,,,,,,df_column_engineering.py
 calculate_boundaries,,"['df', 'column_name', 'breaks']",,,,,,,,,df_column_engineering.py
+dq_search_df_column_for_str,"Identifies observations that would cause an integer conversion to fail, supporting data quality validation.
+Used when trying to merge and running into Errors/Issues, and need to track wonky column down.","['df', 'column_name']",render,11-Nov-26,11-Nov-26,Data Quality,Troubleshooting,TBD,None,None,df_column_engineering.py
 synthetic_txn_dataset,,['months'],,,,,,,,,synthetic_datasets.py
 generate_process_dictionary_from_knowledge_base,"Function Used to created a Dataframe and Dictionary which Extracts the Expected Processes for a specific activity from Knowledge Base. To be used to help
 guidance project requirements and activities required.","['df', 'process', 'return_value']","dict_, rendered object",09-Oct-26,26-Oct-26,TBD,TBD,project_df = generate_process(knowledge_base),None,"print_dict
@@ -108,11 +114,10 @@ visualize_dataframe_in_notebook
 display
 markdown
 pandas",data_validation.py
+df_column_comparison,"Compare 2 Columns in a Dataframe. Excellent for a quick understand of Time Series Data, or DQ analysis when attempting to validate lack (or presence of change).","['df', 'column_name', 'primary_key', 'column_name1', 'secondary_filter', 'column_distinction', 'bracketing']",dict,21-Aug-25,11-Nov-26,TBD,TBD,"a=ColumnDQComparison(df=activity_df[['MEMBERNBR','RENT_M']],column_name='RENT_M',primary_key='MEMBERNBR',column_name1='RENT_M1',)",None,None,data_validation.py
 apply_chart_format,Intermediary function created solely for the purposes of applying formating to charts. Created by GPT,"['ax', 'chart_format']",ax,11-Nov-26,11-Nov-26,TBD,TBD,TBD,None,None,visualizations.py
 plot_column_distribution_analysis,"Visualization Function, which plots 3 Graphs to help understand the distribution and values of a column.","['df', 'column_name', 'use_log', 'breaks_df', 'figsize', 'chart_format', 'print_']",fig,11-Nov-26,11-Nov-26,TBD,TBD,"from synthetic_member import member_df,activity_df,mbr_profile
 a = plot_column_distribution_analysis(activity_df,'RENT_M')",None,None,visualizations.py
-dq_search_df_column_for_str,"Identifies observations that would cause an integer conversion to fail, supporting data quality validation.
-Used when trying to merge and running into Errors/Issues, and need to track wonky column down.","['df', 'column_name']",render,11-Nov-26,11-Nov-26,Data Quality,Troubleshooting,TBD,None,None,visualizations.py
 frame_the_question,"Creates a 1600x900 presentation slide with a central
 analytical question and three supporting sections.","['question', 'context', 'why', 'scope', 'title', 'header', 'left_footer', 'right_footer', 'context_image', 'why_image', 'scope_image', 'image_size', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
 member_population_overview,,"['demographics', 'activity', 'observations', 'images', 'title', 'header', 'left_footer', 'right_footer', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
@@ -147,7 +152,7 @@ d_daily_test,,"['words', 'sample', 'pause', 'exclude_processes']",,,,,,,,,d_dail
 t_value_test,,"['df', 'observed_col', 'mean_col', 'std_col', 'observations', 'confidence_level', 'alternative']",,,,,,,,,statistical_analysis.py
 welch_t_test,,"['df', 'observed_mean_col', 'observed_std_col', 'observed_n_col', 'reference_mean_col', 'reference_std_col', 'reference_n_col', 'confidence_level', 'alternative']",,,,,,,,,statistical_analysis.py
 predictive_t_test,,"['df', 'observed_col', 'mean_col', 'std_col', 'observations', 'confidence_level', 'alternative']",,,,,,,,,statistical_analysis.py
-create_stratified_sample,TBD,"['df', 'column_list', 'flag_name', 'target_flag', 'dropna', 'rng', 'review_distribution']",df,12-Nov-26,12-Nov-26,TBD,TBD,"member_df = create_stratified_sample(member_df,column_list = ['AGE_SEGMENT','DURATION_YEARS_SEGMENT'])",None,None,statistical_analysis.py
+create_stratified_sample,TBD,"['df', 'column_list', 'flag_name', 'target_flag', 'dropna', 'rng', 'print_']",df,12-Nov-26,12-Nov-26,TBD,TBD,"member_df = create_stratified_sample(member_df,column_list = ['AGE_SEGMENT','DURATION_YEARS_SEGMENT'])",None,None,statistical_analysis.py
 create_target_population,"Creates a randomly selected target population based on
 specified eligibility conditions and inclusion probability.","['df', 'include_condition', 'percent_include', 'new_column_name', 'rng']",None,13-Nov-26,13-Nov-26,TBD,TBD,"create_target_population(df=member_df,include_condition=(member_df['CITY'].isin(['Burnaby', 'Vancouver']) &(member_df['LEGACY_CU'] == 'Fishermans Friend')),percent_include=0.5)",TBD,numpy,statistical_analysis.py
 extract_object_dot_py,Generate an Excel file of all parameters which are manually stored and maintained. File which is generated is used a input component for generate_knowledgebase.,"['object_dict', 'export_location']",df date_created:29-Jun-26 date_last_modified: 3-Jul-26 classification:TBD sub_classification:TBD,,,,,"manual_object_df(object_dict_manual,'/Users/derekdewald/Documents/Python/Github_Repo/Streamlit/Data/object_manual_published.xlsx')
@@ -203,6 +208,9 @@ generate_summary_status_v0,,['project_dict'],,,,,,,,,archive.py
 ml_validation_data_cleaning,,['df'],,,,,,,,,archive.py
 pixelate_image,,"['image_path', 'PixelSizeList']",pix,,,,,,,,archive.py
 JupyterNotebookMarkdown,,"['df', 'return_value']",Conditional on Return Value. Please read Args.,,,,,,,,archive.py
+generate_summary_status,,['project_dict'],,,,,,,,,archive.py
+create_ml_dictionary_template,,['df'],,,,,,,,,archive.py
+generate_summary_status,,['project_dict'],,,,,,,,,archive.py
 txt_to_python,Function Used to Import .txt or .py File into Python.,"['file_name', 'encoding']",Dataframe,3-Dec-25,3-Dec-25,OS Folder Management,File Management,"location = '/Users/derekdewald/Documents/Python/Github_Repo/d_py_functions/DFProcessing.py'
 file = TextFileImport(location)",,,object_rendering.py
 export_formatted_df_to_single_xlsx,Function Used to Simplify the required formating to a excel output from Python to Excel,"['df', 'file_name', 'sheet_name', 'index', 'freeze_header', 'column_formats']",TBD,28-Aug-26,28-Aug-26,TBD,TBD,TBD,None,None,object_rendering.py
@@ -229,4 +237,7 @@ output_location='/Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebook
 FunctionToSTR,,['func'],list date_created:17-Dec-25 date_last_modified: 17-Dec-25 classification:TBD sub_classification:TBD,,,,,"from data_d_strings import template_doc_string_print
 FunctionToSTR(template_doc_string_print)",,,text_parsing.py
 compare_function,,"['func1', 'func2', 'additional_records', 'strip_docstring']",Object Type date_created:17-Dec-25 date_last_modified: 17-Dec-25 classification:TBD sub_classification:TBD,,,,,Example Function Call,,,text_parsing.py
+string_to_python_literal,"Python Function which takes a string Text, often from unformated and converts it into python code. Useful wben having read
+.txt or other dumped information not in python format.",['x'],str,13-Nov-26,13-Nov-26,TBD,TBD,"string_to_python_literal('[1,2,3]')
+df[column_name].appy(string_to_python_literal)",None,ast,text_parsing.py
 create_ml_dictionary_template,Function used to create a Data Dictionary for a New Data set using a residual manual definition arepository.,['source'],str,28-Aug-26,28-Aug-26,TBD,TBD,create_blank_function_doc_string(),None,NoneGood,ml_project.py

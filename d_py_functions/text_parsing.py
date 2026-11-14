@@ -1,13 +1,4 @@
 '''
-module_word: utility_functions
-module_definition: Location for functions which do not fall within the scope of any other classification and are Simple, High Generalized, General Purpose functions.
-
-'''
-import pandas as pd
-import numpy as np
-import inspect
-
-'''
 module_word: text_parsing
 module_definition: Functions that related to the Comparison, Updating, Maintenance of Strings in Python.
 
@@ -116,5 +107,39 @@ def compare_function(func1,func2,additional_records=20,strip_docstring=True):
             break
 
     print('Reconcilation Complete')
+
+
+def string_to_python_literal(x):
+    '''
+    Definition:
+        Python Function which takes a string Text, often from unformated and converts it into python code. Useful wben having read 
+        .txt or other dumped information not in python format.
+    
+    Parameters:
+        x(str): String Text. Ideally could be in a better python format
+
+    Returns:
+        str
+    Date Created:
+        13-Nov-26
+    Date Last Modified:
+        13-Nov-26
+    Process:
+        TBD
+    Categorization:
+        TBD
+    Usage:
+        string_to_python_literal('[1,2,3]')
+        df[column_name].appy(string_to_python_literal)
+    Notes:
+        None
+    Required Functions:
+        ast
+    '''
+    
+    if isinstance(x, str):
+        return ast.literal_eval(x)
+    return x
+
 
 

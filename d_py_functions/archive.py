@@ -2235,3 +2235,141 @@ def JupyterNotebookMarkdown(df,return_value=""):
     else:
         return text
     
+def generate_summary_status(
+    project_dict
+):
+    
+    # Indicators to turn off Status Completed
+    action_words = ['Create','Develop','Identify','Reconcile','Translate','Demonstrate','Analyze','Evaluate']
+    
+    # Flags to denote the status of certain events
+    
+    assumption = [
+        'Key Defined Assumptions',
+    ]
+    
+    challenge = [
+        'Concerns Meeting Expectations',    
+        'Noted Constraints'
+    ]
+    
+    deliverable = [
+        'Finalized Problem Statement',
+        'Agreed Deliverables',
+        'Measures of Success',
+        'Core Deliverable(s)'
+    ]
+    
+    question = [
+        'Key Outstanding Questions',
+        'Core Deliverables'
+            ]
+
+    requires_evidence_to_close_status = deliverable + question
+    
+    # Iterate through Dictioanry
+    project_dict_item_list = []
+    for key in project_dict.keys():
+        for item in project_dict[key].keys():
+            
+            # Need to determine if Item in Dictionary is Str, List or Dict
+            dict_record = project_dict[key][item]
+            if isinstance(dict_record, str):
+                project_dict_item_list.append([key,item,dict_record,""])
+            elif isinstance(dict_record, list):
+                for list_item in dict_record:
+                    project_dict_item_list.append([key,item,list_item])
+            elif isinstance(dict_record, dict):
+                # Need to understand what type of object is in Dictionary.
+                for list_item in dict_record.keys():
+                    if isinstance(dict_record[list_item],list):
+                        for q in dict_record[list_item]:
+                            project_dict_item_list.append([key,item,q,list_item])
+                    else:
+                        project_dict_item_list.append([key,item,dict_record[list_item],list_item])                   
+                                                       
+    final_df = pd.DataFrame(project_dict_item_list,columns=['Process','Process Step','Comment','Sub Process'])
+        
+    final_df['first_word'] = final_df['Comment'].str.split().str[0]
+    final_df['Status'] = np.where(
+        (final_df['Comment'].str.len()>2)&
+        (~final_df['first_word'].isin(action_words))&
+        (~final_df['Process Step'].isin(requires_evidence_to_close_status))
+        ,1,0)
+    
+    final_df.drop('first_word',axis=1,inplace=True)
+
+    result = final_df.groupby('Process').agg(completed=('Status', 'sum'),steps=('Status', 'count'),).reset_index()
+    result['completed_perc'] = result['completed']/result['steps']*100
+    result['completed_perc'] = result['completed_perc'].round(2)
+    
+    display(result)
+    
+    condition = [
+        final_df['Process Step'].isin(assumption),
+        final_df['Process Step'].isin(challenge),
+        final_df['Process Step'].isin(deliverable),
+        final_df['Process Step'].isin(question)
+    ]
+
+    value = ['Assumption','Challenge','Deliverable','Question']
+    
+    final_df['Item_Classification'] = np.select(condition,value,"Not Defined")
+    
+    return final_df
+def create_ml_dictionary_template(df):
+    
+    temp_df = df[
+        (df['Process'].str.contains('Machine Learning Lifecycle'))&
+        (df['Source']!='LVL2')&
+        (df['Word']!='Definition')
+    ]
+    
+    reference_dict = {}
+    project_dict = {}
+    
+    for index,row in temp_df.iterrows():
+        if row['Source']=='Knowledge Base':
+            word = row['Word']
+            definition = row['Definition'] 
+            reference_dict[word] = {'Process Overview':definition}
+            project_dict[word] = {}
+        else:
+            # Word Defined above. Use it for reference
+            reference_dict[word][row['Word']] = row['Definition']
+            project_dict[word][row['Word']] = ""
+
+    return reference_dict,project_dict
+
+
+
+def generate_summary_status(project_dict):
+    # Iterate through Dictioanry
+    project_dict_item_list = []
+    for key in project_dict.keys():
+        for item in project_dict[key].keys():
+            project_dict_item_list.append([key,item,project_dict[key][item]])
+                
+    final_df = pd.DataFrame(project_dict_item_list,columns=['Process','Process Step','Comment'])
+    
+    def comment_length(x):
+        if isinstance(x, str):
+            return len(x)
+
+        elif isinstance(x, list):
+            return sum(len(str(i)) for i in x)
+
+        elif isinstance(x, dict):
+            return sum(len(str(v)) for v in x.values())
+
+        return 0
+
+    final_df['Status'] = (final_df['Comment'].apply(comment_length) > 5).astype(int)
+    
+    result = final_df.groupby('Process').agg(completed=('Status', 'sum'),steps=('Status', 'count'),).reset_index()
+    result['completed_perc'] = result['completed']/result['steps']*100
+    result['completed_perc'] = result['completed_perc'].round(2)
+    
+    display(result)
+    
+    return final_df
