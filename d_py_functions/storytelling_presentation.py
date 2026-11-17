@@ -5406,11 +5406,1038 @@ def html_text_box_display(
     display(HTML(text))
 
 
+def measurement_framework_slide(
+    data,
+    images=None,
+    color_dict=color_dict,
+    font_path=None,
+    export_file=None
+):
+    """
+    Create a 1600 x 900 presentation slide.
+
+    Parameters
+    ----------
+    data : dict
+        Slide content, structured like MEASUREMENT_SLIDE_DATA.
+
+    images : dict, optional
+        Paths or PIL Image objects:
+
+        {
+            "visual": ...,
+            "measurement": ...,
+            "metric": ...,
+            "kpi": ...
+        }
+
+        All images are optional.
+
+    color_dict : dict
+        Your existing presentation colour dictionary.
+
+    font_path : str or Path, optional
+        Passed to your existing load_presentation_font().
+
+    export_file : str or Path, optional
+        Save the slide as a PNG.
+
+    Returns
+    -------
+    PIL.Image.Image
+        Rendered slide.
+    """
+
+    W, H = 1600, 900
+    images = images or {}
+
+    C = color_dict
+
+    img = Image.new(
+        "RGB",
+        (W, H),
+        C["white"]
+    )
+
+    draw = ImageDraw.Draw(img)
+
+    # ---------------------------------------------
+    # Font and text helpers
+    # ---------------------------------------------
+
+    def font(size, bold=False):
+        return load_presentation_font(
+            size,
+            bold=bold,
+            font_path=font_path
+        )
+
+    def text_width(text, f):
+        return draw.textbbox(
+            (0, 0),
+            str(text),
+            font=f
+        )[2]
+
+    def wrap_text(text, f, max_width):
+        lines = []
+        current = ""
+
+        for word in str(text).split():
+            candidate = f"{current} {word}".strip()
+
+            if text_width(candidate, f) <= max_width:
+                current = candidate
+            else:
+                if current:
+                    lines.append(current)
+                current = word
+
+        if current:
+            lines.append(current)
+
+        return lines
+
+    def draw_wrapped(
+        text,
+        x,
+        y,
+        width,
+        size=22,
+        line_height=31,
+        color=None,
+        bold=False,
+        max_lines=None
+    ):
+        f = font(size, bold)
+        lines = wrap_text(text, f, width)
+
+        if max_lines and len(lines) > max_lines:
+            raise ValueError(
+                f"Text exceeds {max_lines} lines: {text}"
+            )
+
+        for line in lines:
+            draw.text(
+                (x, y),
+                line,
+                font=f,
+                fill=color or C["navy"]
+            )
+            y += line_height
+
+        return y
+
+    # ---------------------------------------------
+    # Image helper
+    # ---------------------------------------------
+
+    def place_image(source, cx, cy, size):
+        if source is None:
+            return False
+
+        if isinstance(source, Image.Image):
+            icon = source.copy()
+        else:
+            path = Path(source).expanduser()
+
+            if not path.is_file():
+                raise FileNotFoundError(
+                    f"Presentation image not found: {path}"
+                )
+
+            with Image.open(path) as opened:
+                icon = opened.copy()
+
+        icon = ImageOps.contain(
+            icon.convert("RGBA"),
+            size,
+            method=Image.Resampling.LANCZOS
+        )
+
+        x = round(cx - icon.width / 2)
+        y = round(cy - icon.height / 2)
+
+        img.paste(icon, (x, y), icon)
+
+        return True
+
+    # ---------------------------------------------
+    # Title and introduction
+    # ---------------------------------------------
+
+    title = data["title"]
+    title_font = font(43, True)
+
+    while text_width(title, title_font) > 1460:
+        title_font = font(title_font.size - 1, True)
+
+    draw.text(
+        (70, 44),
+        title,
+        font=title_font,
+        fill=C["navy"]
+    )
+
+    draw.line(
+        (70, 112, 1530, 112),
+        fill=C["line"],
+        width=2
+    )
+
+    intro_bottom = draw_wrapped(
+        data["introduction"],
+        70,
+        137,
+        1460,
+        size=21,
+        line_height=30,
+        color=C["muted"],
+        max_lines=4
+    )
+
+    content_top = max(
+        265,
+        intro_bottom + 23
+    )
+
+    # ---------------------------------------------
+    # Nested Measurement / Metric / KPI visual
+    # ---------------------------------------------
+
+    if not place_image(
+        images.get("visual"),
+        cx=335,
+        cy=content_top + 237,
+        size=(520, 485)
+    ):
+
+        # Simple fallback diagram when no image is supplied.
+        cx = 335
+        bottom = content_top + 465
+
+        circles = [
+            (225, C["pale"]),
+            (165, C["teal"]),
+            (105, C["navy"])
+        ]
+
+        for radius, color in circles:
+            draw.ellipse(
+                (
+                    cx - radius,
+                    bottom - 2 * radius,
+                    cx + radius,
+                    bottom
+                ),
+                fill=color,
+                outline=C["white"],
+                width=4
+            )
+
+        labels = [
+            ("Measurement", bottom - 408),
+            ("Metric", bottom - 297),
+            ("KPI", bottom - 160)
+        ]
+
+        for label, y in labels:
+            f = font(28, True)
+
+            draw.text(
+                (cx - text_width(label, f) / 2, y),
+                label,
+                font=f,
+                fill=C["white"]
+            )
+
+    # ---------------------------------------------
+    # Definition cards
+    # ---------------------------------------------
+
+    x1, x2 = 650, 1530
+    gap = 14
+    total_height = 470
+
+    card_height = (
+        total_height - 2 * gap
+    ) / 3
+
+    image_keys = [
+        "measurement",
+        "metric",
+        "kpi"
+    ]
+
+    for i, item in enumerate(data["definitions"]):
+
+        y1 = content_top + i * (card_height + gap)
+        y2 = y1 + card_height
+
+        draw.rounded_rectangle(
+            (x1, y1, x2, y2),
+            radius=17,
+            fill=C["white"],
+            outline=C["line"],
+            width=2
+        )
+
+        # Thin accent bar
+        draw.rounded_rectangle(
+            (
+                x1 + 20,
+                y1 + 22,
+                x1 + 26,
+                y2 - 22
+            ),
+            radius=2,
+            fill=C["teal"]
+        )
+
+        image_key = image_keys[i]
+        has_icon = images.get(image_key) is not None
+
+        text_x = (
+            x1 + 142
+            if has_icon
+            else x1 + 48
+        )
+
+        if has_icon:
+            place_image(
+                images[image_key],
+                cx=x1 + 82,
+                cy=(y1 + y2) / 2,
+                size=(120, 120)
+            )
+
+        draw.text(
+            (text_x, y1 + 9),
+            item["name"],
+            font=font(27, True),
+            fill=C["navy"]
+        )
+
+        draw_wrapped(
+            item["description"],
+            text_x,
+            y1 + 50,
+            x2 - text_x - 35,
+            size=20,
+            line_height=29,
+            color=C["muted"],
+            max_lines=3
+        )
+
+    # ---------------------------------------------
+    # Key message and relationship
+    # ---------------------------------------------
+
+    statement_y = content_top + 493
+
+    draw.line(
+        (70, statement_y, 1530, statement_y),
+        fill=C["line"],
+        width=2
+    )
+
+    draw_wrapped(
+        data["takeaway"],
+        70,
+        statement_y + 16,
+        1460,
+        size=20,
+        line_height=28,
+        color=C["navy"],
+        bold=True,
+        max_lines=2
+    )
+
+    draw_wrapped(
+        data["relationship"],
+        70,
+        statement_y + 51,
+        1460,
+        size=16,
+        line_height=23,
+        color=C["muted"],
+        max_lines=2
+    )
+
+    # ---------------------------------------------
+    # Footer
+    # ---------------------------------------------
+
+    draw.line(
+        (70, 850, 1530, 850),
+        fill=C["line"],
+        width=1
+    )
+
+    draw.text(
+        (70, 866),
+        data.get("left_footer", ""),
+        font=font(15),
+        fill=C["muted"]
+    )
+
+    right_footer = data.get("right_footer", "")
+
+    draw.text(
+        (
+            1530 - text_width(right_footer, font(15)),
+            866
+        ),
+        right_footer,
+        font=font(15),
+        fill=C["muted"]
+    )
+
+    # ---------------------------------------------
+    # Save and return
+    # ---------------------------------------------
+
+    if export_file:
+        img.save(export_file)
+
+    display(img)
+    return img
+
+
+def measurement_examples_slide(
+    data,
+    images=None,
+    color_dict=color_dict,
+    font_loader=load_presentation_font,
+    export_file=None,
+    width=1600,
+    height=900
+):
+    """Render Measurement → Metric → KPI slide with arrows on all three rows."""
+
+    from pathlib import Path
+    from PIL import Image, ImageDraw, ImageFont, ImageOps
+
+    images = images or {}
+
+
+    C = color_dict
+
+    img = Image.new("RGB", (width, height), C["white"])
+    d = ImageDraw.Draw(img)
+
+    def f(size, bold=False):
+        if font_loader:
+            return font_loader(size, bold=bold)
+        name = "DejaVuSans-Bold.ttf" if bold else "DejaVuSans.ttf"
+        return ImageFont.truetype(name, size)
+
+    def tw(s, font):
+        box = d.textbbox((0, 0), str(s), font=font)
+        return box[2] - box[0]
+
+    def wrap(s, font, max_width):
+        lines = []
+        line = ""
+
+        for word in str(s).split():
+            trial = f"{line} {word}".strip()
+
+            if tw(trial, font) <= max_width:
+                line = trial
+            else:
+                if line:
+                    lines.append(line)
+                line = word
+
+        if line:
+            lines.append(line)
+
+        return lines
+
+    def paragraph(
+        text, x, y, max_width,
+        size=20, leading=28,
+        color=None, bold=False,
+        max_lines=None
+    ):
+        font = f(size, bold)
+        lines = wrap(text, font, max_width)
+
+        if max_lines is not None and len(lines) > max_lines:
+            raise ValueError(
+                f"Text needs {len(lines)} lines "
+                f"(maximum {max_lines}): {text}"
+            )
+
+        for line in lines:
+            d.text((x, y), line, font=font, fill=color or C["muted"])
+            y += leading
+
+        return y
+
+    def place(source, x, y, w, h):
+        if source is None:
+            return
+
+        if isinstance(source, Image.Image):
+            art = source.copy()
+        else:
+            with Image.open(Path(source).expanduser()) as opened:
+                art = opened.copy()
+
+        art = ImageOps.contain(
+            art.convert("RGBA"),
+            (w, h),
+            Image.Resampling.LANCZOS
+        )
+
+        img.paste(
+            art,
+            (
+                round(x + (w - art.width) / 2),
+                round(y + (h - art.height) / 2)
+            ),
+            art
+        )
+
+    # --------------------------------------------------
+    # Slide title and introduction
+    # --------------------------------------------------
+
+    title = data["title"]
+    title_font = f(43, True)
+
+    while tw(title, title_font) > width - 140:
+        title_font = f(title_font.size - 1, True)
+
+    d.text(
+        (70, 49),
+        title,
+        font=title_font,
+        fill=C["navy"]
+    )
+
+    d.line(
+        (70, 119, width - 70, 119),
+        fill=C["line"],
+        width=2
+    )
+
+    paragraph(
+        data["introduction"],
+        70, 140,
+        width - 140,
+        size=21,
+        leading=30,
+        max_lines=3
+    )
+
+    # --------------------------------------------------
+    # Layout
+    # --------------------------------------------------
+
+    col_x = [70, 578, 1086]
+    col_w = 444
+
+    head_y = 216
+    head_h = 120
+
+    row_y = [347, 514, 658]
+    box_h = 115
+
+    # --------------------------------------------------
+    # Column headers and content boxes
+    # --------------------------------------------------
+
+    for j, col in enumerate(data["columns"]):
+
+        x = col_x[j]
+
+        # Header
+        d.rounded_rectangle(
+            (x, head_y, x + col_w, head_y + head_h),
+            radius=17,
+            fill=C.get("light_teal", C["pale"]),
+            outline=C["line"],
+            width=2
+        )
+
+        place(
+            images.get(col["image_key"]),
+            x + 13,
+            head_y + 5,
+            105,
+            108
+        )
+
+        d.text(
+            (x + 127, head_y + 27),
+            col["name"],
+            font=f(28, True),
+            fill=C["navy"]
+        )
+
+        subtitle = col.get("subtitle", "")
+        sub_size = 18
+
+        while (
+            tw(subtitle, f(sub_size)) > col_w - 137
+            and sub_size > 13
+        ):
+            sub_size -= 1
+
+        d.text(
+            (x + 127, head_y + 74),
+            subtitle,
+            font=f(sub_size),
+            fill=C["muted"]
+        )
+
+        # Three content boxes
+        for k, entry in enumerate(col["boxes"]):
+
+            y = row_y[k]
+
+            d.rounded_rectangle(
+                (x, y, x + col_w, y + box_h),
+                radius=14,
+                fill=C["white"],
+                outline=C["line"],
+                width=2
+            )
+
+            # Vertical accent
+            d.rounded_rectangle(
+                (x + 17, y + 15, x + 22, y + box_h - 15),
+                radius=2,
+                fill=C["teal"]
+            )
+
+            paragraph(
+                entry["text"],
+                x + 39,
+                y + 12,
+                col_w - 61,
+                size=16,
+                leading=19,
+                color=C["muted"],
+                max_lines=6
+            )
+
+    # --------------------------------------------------
+    # Examples heading
+    # --------------------------------------------------
+
+    d.text(
+        (70, 482),
+        data.get("example_heading", "Examples"),
+        font=f(18, True),
+        fill=C["navy"]
+    )
+
+    # --------------------------------------------------
+    # Progression arrows — ALL THREE ROWS
+    # --------------------------------------------------
+
+    arrow_color = C["navy"]
+    arrow_width = 4
+    arrow_head_length = 13
+    arrow_head_half_height = 9
+    arrow_margin = 9
+
+    for y in row_y:
+
+        cy = y + box_h // 2
+
+        for j in range(2):
+
+            # Actual right edge of current box
+            box_right = col_x[j] + col_w
+
+            # Actual left edge of next box
+            next_box_left = col_x[j + 1]
+
+            # Keep arrow within the inter-column gap
+            start_x = box_right + arrow_margin
+            end_x = next_box_left - arrow_margin
+
+            # Shaft
+            d.line(
+                (
+                    start_x,
+                    cy,
+                    end_x - arrow_head_length + 2,
+                    cy
+                ),
+                fill=arrow_color,
+                width=arrow_width
+            )
+
+            # Arrowhead
+            d.polygon(
+                [
+                    (end_x, cy),
+                    (
+                        end_x - arrow_head_length,
+                        cy - arrow_head_half_height
+                    ),
+                    (
+                        end_x - arrow_head_length,
+                        cy + arrow_head_half_height
+                    )
+                ],
+                fill=arrow_color
+            )
+
+    # --------------------------------------------------
+    # Takeaway
+    # --------------------------------------------------
+
+    paragraph(
+        data["takeaway"],
+        70,
+        816,
+        width - 140,
+        size=19,
+        leading=27,
+        color=C["navy"],
+        bold=True,
+        max_lines=2
+    )
+
+    if export_file:
+        img.save(export_file)
+
+    display(img)
+    return img
+
+
+def meaningful_metrics_slide(
+    data,
+    color_dict=color_dict,
+    font_loader=load_presentation_font
+):
+
+    # --------------------------------------------------
+    # Canvas
+    # --------------------------------------------------
+
+    img = create_slide()
+    d = ImageDraw.Draw(img)
+
+    W, H = img.size
+
+    navy = color_dict["navy"]
+    muted = color_dict["muted"]
+    line = color_dict["line"]
+    pale = color_dict["pale"]
+    white = color_dict["white"]
+    light_teal = color_dict["light_teal"]
+
+    header_bg = color_dict.get("light_teal", pale)
+
+    def font(size, bold=False):
+        return font_loader(size, bold=bold)
+
+    # --------------------------------------------------
+    # Text helpers
+    # --------------------------------------------------
+
+    def text_width(text, text_font):
+        bbox = d.textbbox((0, 0), str(text), font=text_font)
+        return bbox[2] - bbox[0]
+
+    def wrap_text(text, text_font, max_width):
+
+        lines = []
+        current = ""
+
+        for word in str(text).split():
+
+            trial = f"{current} {word}".strip()
+
+            if text_width(trial, text_font) <= max_width:
+                current = trial
+            else:
+                if current:
+                    lines.append(current)
+                current = word
+
+        if current:
+            lines.append(current)
+
+        return lines
+
+    def draw_paragraph(
+        text,
+        x,
+        y,
+        max_width,
+        size=20,
+        leading=27,
+        fill=None,
+        bold=False,
+    ):
+
+        text_font = font(size, bold=bold)
+        lines = wrap_text(text, text_font, max_width)
+
+        for text_line in lines:
+            d.text(
+                (x, y),
+                text_line,
+                font=text_font,
+                fill=fill or muted,
+            )
+            y += leading
+
+        return y
+
+    # --------------------------------------------------
+    # Image helper
+    # --------------------------------------------------
+
+    def draw_image(image_path, x, y, width, height):
+
+        if not image_path:
+            return
+
+        image_path = Path(image_path)
+
+        if not image_path.exists():
+            print(f"Image not found: {image_path}")
+            return
+
+        with Image.open(image_path) as source:
+            art = source.convert("RGBA")
+
+        art = ImageOps.contain(
+            art,
+            (int(width), int(height)),
+            Image.Resampling.LANCZOS,
+        )
+
+        px = int(x + (width - art.width) / 2)
+        py = int(y + (height - art.height) / 2)
+
+        img.paste(art, (px, py), art)
+
+    # --------------------------------------------------
+    # Title and introduction
+    # --------------------------------------------------
+
+    draw_title(img, data["title"])
+
+    draw_paragraph(
+        data["introduction"],
+        x=68,
+        y=130,
+        max_width=W - 140,
+        size=20,
+        leading=28,
+        fill=muted,
+    )
+
+    # --------------------------------------------------
+    # Section 1: Four considerations
+    # --------------------------------------------------
+
+    d.text(
+        (70, 225),
+        "Four Considerations for Defining Metrics",
+        font=font(25, bold=True),
+        fill=navy,
+    )
+
+    considerations = data["considerations"]
+
+    left_margin = 70
+    right_margin = 70
+    gap = 16
+
+    col_width = (
+        W - left_margin - right_margin - gap * 3
+    ) / 4
+
+    card_y = 265
+    card_h = 222
+
+    for i, item in enumerate(considerations):
+
+        x = int(left_margin + i * (col_width + gap))
+        cw = int(col_width)
+
+        # Outer card
+        d.rounded_rectangle(
+            (x, card_y, x + cw, card_y + card_h),
+            radius=15,
+            fill=white,
+            outline=line,
+            width=2,
+        )
+
+        # Header band
+        d.rounded_rectangle(
+            (x + 5, card_y + 5, x + cw - 5, card_y + 111),
+            radius=12,
+            fill=header_bg,
+        )
+
+        # Image
+        draw_image(
+            item.get("image"),
+            x + 12,
+            card_y + 9,
+            100,
+            96,
+        )
+
+        # Title
+        title_lines = wrap_text(
+            item["title"],
+            font(19, bold=True),
+            cw - 125,
+        )
+
+        title_y = card_y + 33
+
+        for title_line in title_lines:
+            d.text(
+                (x + 120, title_y),
+                title_line,
+                font=font(19, bold=True),
+                fill=navy,
+            )
+            title_y += 24
+
+        # Description
+        draw_paragraph(
+            item["text"],
+            x=x + 19,
+            y=card_y + 129,
+            max_width=cw - 38,
+            size=18,
+            leading=25,
+            fill=muted,
+        )
+
+    # --------------------------------------------------
+    # Section 2: Four types of metrics
+    # --------------------------------------------------
+
+    d.text(
+        (70, 507),
+        "Different Metrics Answer Different Questions",
+        font=font(25, bold=True),
+        fill=navy,
+    )
+
+    # Use first four types from the dictionary
+    metric_types = data["types"][:4]
+
+    # Match the widths and spacing of the upper cards
+    type_gap = gap
+    type_width = col_width
+
+    type_y = 550
+    type_h = 195
+
+    for i, item in enumerate(metric_types):
+
+        x = int(left_margin + i * (type_width + type_gap))
+        cw = int(type_width)
+
+        # Outer card — same style as upper boxes
+        d.rounded_rectangle(
+            (x, type_y, x + cw, type_y + type_h),
+            radius=15,
+            fill=white,
+            outline=line,
+            width=2,
+        )
+
+        # Header band — slightly shorter
+        d.rounded_rectangle(
+            (x + 5, type_y + 5, x + cw - 5, type_y + 91),
+            radius=12,
+            fill=header_bg,
+        )
+
+        # Image
+        draw_image(
+            item.get("image"),
+            x + 12,
+            type_y + 7,
+            83,
+            80,
+        )
+
+        # Title
+        title_lines = wrap_text(
+            item["title"],
+            font(19, bold=True),
+            cw - 125,
+        )
+
+        title_y = type_y + 31
+
+        for title_line in title_lines:
+            d.text(
+                (x + 120, title_y),
+                title_line,
+                font=font(19, bold=True),
+                fill=navy,
+            )
+            title_y += 24
+
+        # Description
+        draw_paragraph(
+            item.get("text", item.get("test", "")),
+            x=x + 19,
+            y=type_y + 103,
+            max_width=cw - 38,
+            size=18,
+            leading=25,
+            fill=muted,
+        )
+
+    # --------------------------------------------------
+    # Takeaway
+    # --------------------------------------------------
+
+    d.line(
+        (70, 785, W - 70, 785),
+        fill=line,
+        width=2,
+    )
+
+    draw_paragraph(
+        data["takeaway"],
+        x=70,
+        y=808,
+        max_width=W - 140,
+        size=19,
+        leading=27,
+        fill=navy,
+        bold=True,
+    )
+
+    # --------------------------------------------------
+    # Render
+    # --------------------------------------------------
+
+    display(img)
+
+
+
 #####################################################################################################################
 
 ### Generate Presentation
 
 #####################################################################################################################
+
+
 
 
 

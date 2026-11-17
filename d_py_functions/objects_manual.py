@@ -27,6 +27,7 @@ object_dict['color_dict'] = {
     'neutral': '#F0F2F3',
     'green':'#1B6B45',
     'red':'#A12D35',
+    'black':'#1C232B'
 }
 
 object_dict['Example'] = {
@@ -497,42 +498,3 @@ Before finalizing any image, verify:
 
 """
 
-object_dict['chart_format'] = {
-
-    # Figure
-    'figsize': (15, 5),
-    'dpi': 200,
-    'background': 'white',
-
-    # Typography
-    'title_size': 15,
-    'subtitle_size': 11,
-    'label_size': 10,
-    'tick_size': 9,
-    'legend_size': 9,
-
-    # Colours
-    'primary': object_dict['color_dict']['navy'],
-    'secondary': object_dict['color_dict']['teal'],
-    'tertiary': object_dict['color_dict']['pale'],
-    'muted': object_dict['color_dict']['muted'],
-    'grid': object_dict['color_dict']['line'],
-
-    # Axes
-    'show_top_spine': False,
-    'show_right_spine': False,
-    'grid_alpha': 0.20,
-    'grid_axis': 'y',
-
-    # Lines
-    'line_width': 2.2,
-    'marker_size': 5,
-
-    # Bars
-    'bar_alpha': 0.85,
-    'bar_width': 0.65,
-
-    # Layout
-    'title_pad': 12,
-    'subplot_spacing': 0.30
-}

@@ -94,3 +94,94 @@ def statistical_analytics_time_series(df,index=None):
         df[key] = value_dict[key]
     
     return df
+
+
+
+def visualize_overtime_change(
+    pivot_df,
+    decimals=1,
+    cmap='RdYlGn',
+    calculation='percentage',
+    return_value='render',
+    hide_index=False
+):
+    '''
+    
+    
+    
+    
+    '''
+
+    pct_change_df = (
+        pivot_df
+        .pct_change(axis=1)
+        .replace([np.inf, -np.inf], np.nan).iloc[:, 1:]
+    )
+
+    def color_change(v):
+
+        if pd.isna(v):
+            return ''
+
+        # Material decline
+        if v <= -0.20:
+            return 'background-color:#8B0000;color:white'
+
+        # Moderate decline
+        elif v <= -0.10:
+            return 'background-color:#F4CCCC'
+
+        # Minor decline
+        elif v < -0.05:
+            return 'background-color:#FCE5CD'
+
+        # Stable
+        elif v <= 0.05:
+            return 'background-color:white'
+
+        # Minor increase
+        elif v < 0.10:
+            return 'background-color:#D9EAD3'
+
+        # Moderate increase
+        elif v < 0.20:
+            return 'background-color:#93C47D'
+
+        # Material increase
+        else:
+            return 'background-color:#38761D;color:white'
+
+    if calculation == 'percentage':
+
+        formated_df = (
+        pct_change_df
+            .style
+            #.applymap(color_change)
+            .map(color_change)
+            .format(f'{{:.{decimals}%}}')
+            .format_index(lambda x: x.strftime('%Y-%m-%d'), axis='columns')
+            .set_table_styles(COMMON_TABLE_STYLE)
+            
+        )
+
+    
+    else:
+
+        formated_df = (
+            pivot_df
+            .style
+            #.applymap(color_change, subset=pct_change_df.columns)
+            .map(color_change, subset=pct_change_df.columns)  
+            .format(f'{{:,.{decimals}f}}')
+            .format_index(lambda x: x.strftime('%Y-%m-%d'), axis='columns')
+            .set_table_styles(COMMON_TABLE_STYLE)
+        )
+    
+    if hide_index:
+        formated_df = formated_df.hide(axis='index')
+
+    if return_value !='render':
+        return formated_df
+    
+    display(formated_df)
+    return pd.DataFrame()

@@ -64,6 +64,7 @@ visualize_dataframe_in_notebook
 Markdown
 display",project_process_tools.py
 statistical_analytics_time_series,Apply Statistical Analysis to all columns in a Time Series Dataframe,"['df', 'index']",df,10-Sep-26,10-Sep-26,TBD,TBD,df = statistical_analytics_time_series(df),None,None,time_series.py
+visualize_overtime_change,,"['pivot_df', 'decimals', 'cmap', 'calculation', 'return_value', 'hide_index']",,,,,,,,,time_series.py
 calculate_member_profile,,['df'],,,,,,,,,synthetic_member.py
 distribute_member_debt,,"['df', 'market_interest_rates', 'rng', 'concentration']",,,,,,,,,synthetic_member.py
 car_ownership,,"['df', 'car_ownership_probability', 'rng']",,,,,,,,,synthetic_member.py
@@ -115,9 +116,81 @@ display
 markdown
 pandas",data_validation.py
 df_column_comparison,"Compare 2 Columns in a Dataframe. Excellent for a quick understand of Time Series Data, or DQ analysis when attempting to validate lack (or presence of change).","['df', 'column_name', 'primary_key', 'column_name1', 'secondary_filter', 'column_distinction', 'bracketing']",dict,21-Aug-25,11-Nov-26,TBD,TBD,"a=ColumnDQComparison(df=activity_df[['MEMBERNBR','RENT_M']],column_name='RENT_M',primary_key='MEMBERNBR',column_name1='RENT_M1',)",None,None,data_validation.py
-apply_chart_format,Intermediary function created solely for the purposes of applying formating to charts. Created by GPT,"['ax', 'chart_format']",ax,11-Nov-26,11-Nov-26,TBD,TBD,TBD,None,None,visualizations.py
-plot_column_distribution_analysis,"Visualization Function, which plots 3 Graphs to help understand the distribution and values of a column.","['df', 'column_name', 'use_log', 'breaks_df', 'figsize', 'chart_format', 'print_']",fig,11-Nov-26,11-Nov-26,TBD,TBD,"from synthetic_member import member_df,activity_df,mbr_profile
-a = plot_column_distribution_analysis(activity_df,'RENT_M')",None,None,visualizations.py
+set_report_style,,[],,,,,,,,,visualizations.py
+set_axis_number_format,"Standardizes numeric axis labels using automatic
+magnitude detection (K, M, B) or explicit formatting.","['ax', 'values', 'axis', 'format_type', 'decimals']",formatter: Matplotlib FuncFormatter.,,,,,,,"numpy
+matplotlib",visualizations.py
+presentation_histogram,"Creates a standardized presentation histogram showing the distribution of a numeric DataFrame column, with optional statistical reference lines and distribution curves.","['df', 'column_name', 'bins', 'title', 'xlabel', 'ylabel', 'show_mean', 'show_median', 'show_normal', 'show_kde', 'ax', 'show', 'dpi', 'file_name', 'fig_size']","tuple: (fig, ax), allowing reuse in chart matrices.",14-Nov-26,14-Nov-26,,Data Visualization / Presentation Charts,"fig, ax = presentation_histogram(
+df=activity_df,
+column_name='RENT_M',
+bins=40,
+title='Distribution of Monthly Rent',
+show_mean=True,
+show_median=True,
+show_normal=True,
+show_kde=True
+)","Uses standardized set_report_style() and color_dict.
+Normal distribution is fitted using the sample mean and standard deviation.
+KDE estimates the observed probability density.
+Distribution curves are scaled to histogram frequency.
+Optional ax allows integration into subplot matrices.
+Returned fig and ax permit additional customization.","set_report_style()
+color_dict
+numpy
+pandas
+matplotlib
+scipy",visualizations.py
+presentation_distribution_analysis,"Creates a standardized 1 x 3 presentation showing:
+1. Ranked distribution of observations.
+2. Cumulative concentration of values.
+3. Segment boundary comparison.","['df', 'column_name', 'use_log', 'breaks_df', 'title', 'figsize', 'show', 'dpi', 'file_name', 'print_', 'ylabel']","tuple: (fig, axes), where axes contains the three charts.",14-Nov-26,14-Nov-26,,Data Visualization / Presentation Charts,"fig, axes = presentation_distribution_analysis(
+df=activity_df,
+column_name='RENT_M',
+use_log=False,
+show=True
+)","Maintains a fixed 1 x 3 chart arrangement.
+Chart 1 highlights observations above the 90th percentile.
+Chart 2 compares actual concentration to equal distribution.
+Chart 3 compares boundaries including and excluding zeros.
+Uses standardized set_report_style() and color_dict.
+Returned axes allow customization of individual charts.","set_report_style()
+calculate_boundaries()
+color_dict
+numpy
+pandas
+matplotlib",visualizations.py
+presentation_bar_chart,Creates a standardized presentation bar chart showing categorical frequencies or aggregated numerical values.,"['df', 'column_name', 'value_column', 'title', 'xlabel', 'ylabel', 'orientation', 'xrotation', 'sort', 'ascending', 'show_values', 'rotation', 'value_format', 'agg', 'ax', 'show', 'dpi', 'file_name', 'fig_size']","tuple: (fig, ax), allowing reuse in chart matrices.",14-Nov-26,14-Nov-26,,Data Visualization / Presentation Charts,"fig, ax = presentation_bar_chart(
+df=member_df,
+column_name='BRANCH',
+value_column='TOTAL_DEPOSIT',
+title='Total Deposits by Branch',
+xlabel='Branch',
+ylabel='Total Deposits ($)',
+rotation=25
+)","Automatically formats large values using K, M, or B.
+Supports counts or aggregation of a numeric column.
+Uses standardized set_report_style() and color_dict.
+Uses set_axis_number_format() for numeric formatting.
+Supports standalone figures and subplot integration.
+Returns fig and ax for further customization.","set_report_style()
+set_axis_number_format()
+color_dict
+numpy
+pandas
+matplotlib",visualizations.py
+generate_data_header_box,"Creates a standardized KPI dashboard using the global
+color_dict, with a configurable number of columns.","['value_dict', 'leading_text', 'trailing_text', 'columns', 'width']",Rendered HTML dashboard.,21-Oct-26,14-Nov-26,,Data Visualization / Presentation Dashboards,"generate_data_header_box(
+value_dict=kpi_dict,
+columns=4
+)","Uses color_dict for consistent presentation styling.
+Supports 1 x 4, 2 x 4, 2 x 3 and other arrangements.
+Numeric values automatically receive comma formatting.
+Preformatted strings are displayed unchanged.","color_dict
+html
+IPython.display",visualizations.py
+presentation_heatmap,Creates a standardized heatmap from an existing pivot table.,"['df', 'title', 'xlabel', 'ylabel', 'show_values', 'value_format', 'figsize', 'dpi', 'ax', 'show', 'file_name']","tuple: (fig, ax)",14-Nov-26,,,Data Visualization / Heatmap,,,"set_report_style()
+color_dict
+chart_format",visualizations.py
 frame_the_question,"Creates a 1600x900 presentation slide with a central
 analytical question and three supporting sections.","['question', 'context', 'why', 'scope', 'title', 'header', 'left_footer', 'right_footer', 'context_image', 'why_image', 'scope_image', 'image_size', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
 member_population_overview,,"['demographics', 'activity', 'observations', 'images', 'title', 'header', 'left_footer', 'right_footer', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
@@ -140,6 +213,9 @@ one_box,,"['info_dict', 'width', 'height', 'image_size', 'font']",,,,,,,,,storyt
 engagement_comparison_matrix_appendix,,"['df', 'title', 'left_footer', 'right_footer', 'font_path', 'row_formats', 'output', 'color_dict', 'export_file']",,,,,,,,,storytelling_presentation.py
 three_boxes_with_shaded_title_horizontal,,"['info_dict', 'width', 'height', 'image_size', 'image_centering', 'font_size']",,,,,,,,,storytelling_presentation.py
 html_text_box_display,,"['title', 'text_list', 'font_size', 'background_color', 'border']",,,,,,,,,storytelling_presentation.py
+measurement_framework_slide,,"['data', 'images', 'color_dict', 'font_path', 'export_file']",,,,,,,,,storytelling_presentation.py
+measurement_examples_slide,,"['data', 'images', 'color_dict', 'font_loader', 'export_file', 'width', 'height']",,,,,,,,,storytelling_presentation.py
+meaningful_metrics_slide,,"['data', 'color_dict', 'font_loader']",,,,,,,,,storytelling_presentation.py
 generate_storytelling_presentation,,"['presentation_dict', 'performance_df', 'df_assessment', 'target_final_assessment', 'process_df', 'export_file']",,,,,,,,,storytelling_presentation.py
 sample_knowledge_test_single_df,,"['base_df', 'pause', 'test_name']",,,,,,,,,d_daily_test.py
 test_previous_errors,,"['max_correct', 'max_incorrect']",,,,,,,,,d_daily_test.py
@@ -216,20 +292,7 @@ file = TextFileImport(location)",,,object_rendering.py
 export_formatted_df_to_single_xlsx,Function Used to Simplify the required formating to a excel output from Python to Excel,"['df', 'file_name', 'sheet_name', 'index', 'freeze_header', 'column_formats']",TBD,28-Aug-26,28-Aug-26,TBD,TBD,TBD,None,None,object_rendering.py
 print_dict,Print Text from Dictionary into a structured output in Console.,"['d', 'indent', 'width']",None. Prints Structured Text in Console.,28-Aug-26,28-Aug-26,TBD,TBD,TBD,Developed for usage with Machine Learning Project.,None,object_rendering.py
 generate_formated_excel_file,,"['df', 'filename', 'sheet_name', 'wrap', 'align', 'valign', 'currency_columns', 'balance_columns', 'date_columns', 'int_columns', 'decimal_columns']",,,,,,,,,object_rendering.py
-generate_data_header_box,Function Used to Create a Psedu-Dashboard header. Used to quickly visualize information in header box with leading and trailing text.,"['value_dict', 'leading_text', 'trailing_text', 'width']",Rendered Output,21-Oct-26,21-Oct-26,TBD,TBD,"generate_data_header_box(example,leading_text,trailing_text)",None,"html
-Markdown
-display",object_rendering.py
-generate_metric_val_perc_pivot_heatmap,"Function to create 2 Heatmaps, which Display the Total Value of 1 Column, and the Relative Percentage. Used to articulate how values are distributed absolutely and relatively within segmentation in a bi-variable relationship.","['df', 'index', 'columns', 'numerator', 'denominator', 'leading_text', 'trailing_text']",Rendered Object,21-Oct-26,21-Oct-26,TBD,TBD,"generate_metric_val_perc_pivot_heatmap(
-df2,
-""FINAL_TRANSACTION"",
-""TRANSACTION_VAL_SEGMENT"",
-numerator=""FINAL_DECISION_COUNT"",
-denominator='Total',
-leading_text='# Leading Test',
-trailing_text='# Trailing Test'
-)",None,None,object_rendering.py
 visualize_dataframe_in_notebook,Function which applies some modest formating to a Dataframe to increase visual astetic.,"['df', 'show_as_int', 'show_as_number', 'show_as_currency', 'show_as_currency_without_dec', 'show_as_percentage', 'normalize_percentage', 'return_value', 'hide_index']",Object Type date_created: 27-Aug-26 date_last_modified: 27-Aug-26 classification:TBD sub_classification:TBD,,,,,visualize_dataframe_in_notebook(df),,,object_rendering.py
-visualize_overtime_change,,"['pivot_df', 'decimals', 'cmap', 'calculation', 'return_value', 'hide_index']",,,,,,,,,object_rendering.py
 visualize_dataframe_by_row,,"['df', 'show_as_int', 'show_as_number', 'show_as_currency', 'show_as_currency_without_dec', 'show_as_percentage', 'return_value']",,,,,,,,,object_rendering.py
 extract_py_folder_from_git_repo,Function Used to Extract Files from Git Hub Manually. Where a direct Git Connection can not be utilzied.,"['folder_git_url', 'output_location', 'file_extension']",TXT Files,05-Oct-26,05-Oct-26,TBD,TBD,"extract_py_folder_from_git_repo(
 folder_git_url='https://api.github.com/repos/derek-dewald/Python_Tools/contents/d_py_functions',

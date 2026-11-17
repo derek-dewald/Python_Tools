@@ -181,13 +181,13 @@ st.set_page_config(page_title="Python Function Catalog", layout="wide")
 st.markdown(
     """
     <style>
-      .block-container {
-        max-width: 100% !important;
-        padding-left: 1rem;
-        padding-right: 1rem;
+    .block-container {
+        max-width: 95% !important;
+        padding-left: 1.5rem;
+        padding-right: 1.5rem;
         padding-top: 0.75rem;
         padding-bottom: 0.5rem;
-      }
+    }
     </style>
     """,
     unsafe_allow_html=True
@@ -1062,7 +1062,7 @@ elif page == "Read Me - Taxonomies":
     st.dataframe(
         q_pivot,
         hide_index=True,
-        use_container_width=True
+        width='stretch'
     )
 
     st.markdown("### Primary Category Entries")
@@ -1083,20 +1083,20 @@ elif page == "Read Me - Taxonomies":
                 }),
                 column_config={
                     'Process': st.column_config.TextColumn(
-                        'Process', width='small'
+                        'Process', width=140
                     ),
                     'Categorization': st.column_config.TextColumn(
-                        'Categorization', width='small'
+                        'Categorization', width=140
                     ),
                     'Word': st.column_config.TextColumn(
-                        'Word', width='small'
+                        'Word', width=140
                     ),
                     'Definition': st.column_config.TextColumn(
-                        'Definition', width='large'
+                        'Definition', width=900
                     )
                 },
                 hide_index=True,
-                use_container_width=True,
+                width='stretch',
                 row_height=100
             )
 

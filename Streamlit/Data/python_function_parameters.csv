@@ -112,6 +112,12 @@ project_process_tools.py,generate_process_dictionary_from_knowledge_base,return_
 project_process_tools.py,update_process_df_status,project_status_dict,dict,Dictionary. Manually created from generate_process_dictionary_from_knowledge_base
 time_series.py,statistical_analytics_time_series,df,dataframe,DataFrame
 time_series.py,statistical_analytics_time_series,index,,
+time_series.py,visualize_overtime_change,pivot_df,,
+time_series.py,visualize_overtime_change,decimals,,
+time_series.py,visualize_overtime_change,cmap,,
+time_series.py,visualize_overtime_change,calculation,,
+time_series.py,visualize_overtime_change,return_value,,
+time_series.py,visualize_overtime_change,hide_index,,
 synthetic_member.py,calculate_member_profile,df,,
 synthetic_member.py,distribute_member_debt,df,,
 synthetic_member.py,distribute_member_debt,market_interest_rates,,
@@ -192,15 +198,72 @@ data_validation.py,df_column_comparison,column_name1,str,"Comparison column. Def
 data_validation.py,df_column_comparison,secondary_filter,"str, optional",Optional column used to segment summary results.
 data_validation.py,df_column_comparison,column_distinction,str,Suffix used to identify the comparison column.
 data_validation.py,df_column_comparison,bracketing,list,"Breakpoints used to categorize numeric differences. Defaults to [-10000, -1000, -100, -1,0,1, 100, 1000, 10000]"
-visualizations.py,apply_chart_format,ax,ax,Chart Axis
-visualizations.py,apply_chart_format,chart_format,dict,Predefined Formating structure.
-visualizations.py,plot_column_distribution_analysis,df,df,Dataframe
-visualizations.py,plot_column_distribution_analysis,column_name,str,Name of Column to be analyzed.
-visualizations.py,plot_column_distribution_analysis,use_log,binary,Indicator to determine whether absolute value or Log should be applied.
-visualizations.py,plot_column_distribution_analysis,breaks_df,list,"Optional List to determne segmentation for chart 3. If False, returns Decile."
-visualizations.py,plot_column_distribution_analysis,figsize,,
-visualizations.py,plot_column_distribution_analysis,chart_format,dict,Default CHart format for consistency.
-visualizations.py,plot_column_distribution_analysis,print_,,
+visualizations.py,set_axis_number_format,ax,,
+visualizations.py,set_axis_number_format,values,,
+visualizations.py,set_axis_number_format,axis,str,'x' or 'y'.
+visualizations.py,set_axis_number_format,format_type,str,"'auto', 'commas', or 'percent'."
+visualizations.py,set_axis_number_format,decimals,int,Maximum decimal places for compact values.
+visualizations.py,presentation_histogram,df,pd.DataFrame,Source dataset.
+visualizations.py,presentation_histogram,column_name,str,Numeric column to visualize.
+visualizations.py,presentation_histogram,bins,int,Number of histogram bins.
+visualizations.py,presentation_histogram,title,str,Optional chart title.
+visualizations.py,presentation_histogram,xlabel,str,Optional horizontal axis label.
+visualizations.py,presentation_histogram,ylabel,str,Vertical axis label.
+visualizations.py,presentation_histogram,show_mean,bool,Display mean reference line.
+visualizations.py,presentation_histogram,show_median,bool,Display median reference line.
+visualizations.py,presentation_histogram,show_normal,bool,Overlay theoretical normal distribution.
+visualizations.py,presentation_histogram,show_kde,bool,Overlay actual distribution using KDE.
+visualizations.py,presentation_histogram,ax,matplotlib.axes.Axes,Optional existing axis.
+visualizations.py,presentation_histogram,show,bool,Display chart when True.
+visualizations.py,presentation_histogram,dpi,int,Resolution of saved image.
+visualizations.py,presentation_histogram,file_name,str,"Optional output filename, including path."
+visualizations.py,presentation_histogram,fig_size,,
+visualizations.py,presentation_distribution_analysis,df,pd.DataFrame,Source dataset.
+visualizations.py,presentation_distribution_analysis,column_name,str,Numeric column to analyze.
+visualizations.py,presentation_distribution_analysis,use_log,bool,Apply log1p transformation to charts 1 and 3.
+visualizations.py,presentation_distribution_analysis,breaks_df,pd.DataFrame,Optional segment boundaries. Defaults to calculate_boundaries().
+visualizations.py,presentation_distribution_analysis,title,str,Optional overall figure title.
+visualizations.py,presentation_distribution_analysis,figsize,tuple,Overall figure dimensions.
+visualizations.py,presentation_distribution_analysis,show,bool,Display figure when True.
+visualizations.py,presentation_distribution_analysis,dpi,int,Resolution of saved image.
+visualizations.py,presentation_distribution_analysis,file_name,str,"Optional output filename, including path."
+visualizations.py,presentation_distribution_analysis,print_,bool,Display brief chart descriptions.
+visualizations.py,presentation_distribution_analysis,ylabel,,
+visualizations.py,presentation_bar_chart,df,pd.DataFrame,Source dataset.
+visualizations.py,presentation_bar_chart,column_name,str,Categorical column to visualize.
+visualizations.py,presentation_bar_chart,value_column,str,"Optional numeric column. If None, displays frequency counts."
+visualizations.py,presentation_bar_chart,title,str,Optional chart title.
+visualizations.py,presentation_bar_chart,xlabel,str,Optional horizontal axis label.
+visualizations.py,presentation_bar_chart,ylabel,str,Optional vertical axis label.
+visualizations.py,presentation_bar_chart,orientation,str,'vertical' or 'horizontal'.
+visualizations.py,presentation_bar_chart,xrotation,,
+visualizations.py,presentation_bar_chart,sort,bool,Sort bars by value.
+visualizations.py,presentation_bar_chart,ascending,bool,Sort direction.
+visualizations.py,presentation_bar_chart,show_values,bool,Display values on bars.
+visualizations.py,presentation_bar_chart,rotation,int,Rotation of category labels.
+visualizations.py,presentation_bar_chart,value_format,str,"'auto', 'commas', or 'percent'."
+visualizations.py,presentation_bar_chart,agg,str,"Aggregation for value_column, e.g. 'sum', 'mean', 'median', 'count'."
+visualizations.py,presentation_bar_chart,ax,matplotlib.axes.Axes,Optional existing axis.
+visualizations.py,presentation_bar_chart,show,bool,Display chart when True.
+visualizations.py,presentation_bar_chart,dpi,int,Resolution of saved image.
+visualizations.py,presentation_bar_chart,file_name,str,"Optional output filename, including path."
+visualizations.py,presentation_bar_chart,fig_size,,
+visualizations.py,generate_data_header_box,value_dict,dict,Dictionary containing KPI labels and values.
+visualizations.py,generate_data_header_box,leading_text,str,Optional Markdown before dashboard.
+visualizations.py,generate_data_header_box,trailing_text,str,Optional Markdown after dashboard.
+visualizations.py,generate_data_header_box,columns,int,Number of columns in the dashboard. Rows are calculated automatically.
+visualizations.py,generate_data_header_box,width,int,Maximum dashboard width in pixels.
+visualizations.py,presentation_heatmap,df,DataFrame,Pivot table to visualize.
+visualizations.py,presentation_heatmap,title,str,Optional chart title.
+visualizations.py,presentation_heatmap,xlabel,str,Optional X-axis label.
+visualizations.py,presentation_heatmap,ylabel,str,Optional Y-axis label.
+visualizations.py,presentation_heatmap,show_values,bool,Display cell values.
+visualizations.py,presentation_heatmap,value_format,str,Number formatting for annotations.
+visualizations.py,presentation_heatmap,figsize,tuple,Optional figure dimensions.
+visualizations.py,presentation_heatmap,dpi,int,Optional figure resolution.
+visualizations.py,presentation_heatmap,ax,Axes,Optional existing Matplotlib axis.
+visualizations.py,presentation_heatmap,show,bool,Whether to display the figure.
+visualizations.py,presentation_heatmap,file_name,str,Optional file path for saving.
 storytelling_presentation.py,frame_the_question,question,,
 storytelling_presentation.py,frame_the_question,context,,
 storytelling_presentation.py,frame_the_question,why,,
@@ -347,6 +410,21 @@ storytelling_presentation.py,html_text_box_display,text_list,,
 storytelling_presentation.py,html_text_box_display,font_size,,
 storytelling_presentation.py,html_text_box_display,background_color,,
 storytelling_presentation.py,html_text_box_display,border,,
+storytelling_presentation.py,measurement_framework_slide,data,,
+storytelling_presentation.py,measurement_framework_slide,images,,
+storytelling_presentation.py,measurement_framework_slide,color_dict,,
+storytelling_presentation.py,measurement_framework_slide,font_path,,
+storytelling_presentation.py,measurement_framework_slide,export_file,,
+storytelling_presentation.py,measurement_examples_slide,data,,
+storytelling_presentation.py,measurement_examples_slide,images,,
+storytelling_presentation.py,measurement_examples_slide,color_dict,,
+storytelling_presentation.py,measurement_examples_slide,font_loader,,
+storytelling_presentation.py,measurement_examples_slide,export_file,,
+storytelling_presentation.py,measurement_examples_slide,width,,
+storytelling_presentation.py,measurement_examples_slide,height,,
+storytelling_presentation.py,meaningful_metrics_slide,data,,
+storytelling_presentation.py,meaningful_metrics_slide,color_dict,,
+storytelling_presentation.py,meaningful_metrics_slide,font_loader,,
 storytelling_presentation.py,generate_storytelling_presentation,presentation_dict,,
 storytelling_presentation.py,generate_storytelling_presentation,performance_df,,
 storytelling_presentation.py,generate_storytelling_presentation,df_assessment,,
@@ -477,17 +555,6 @@ object_rendering.py,generate_formated_excel_file,balance_columns,,
 object_rendering.py,generate_formated_excel_file,date_columns,,
 object_rendering.py,generate_formated_excel_file,int_columns,,
 object_rendering.py,generate_formated_excel_file,decimal_columns,,
-object_rendering.py,generate_data_header_box,value_dict,dict,"Dictionary in the format  dict_ = {'item1': {'Text': 'Total Transactions', 'Value': f""{20000:,.0f}""}}"
-object_rendering.py,generate_data_header_box,leading_text,str,HTML formatted Text. Displayed before Visual
-object_rendering.py,generate_data_header_box,trailing_text,str,HTML formatted Text. Displayed After Visual
-object_rendering.py,generate_data_header_box,width,,
-object_rendering.py,generate_metric_val_perc_pivot_heatmap,df,dataframe,
-object_rendering.py,generate_metric_val_perc_pivot_heatmap,index,str,Column Name to be used as heatmap Index.
-object_rendering.py,generate_metric_val_perc_pivot_heatmap,columns,str,Column Name to be used as heatmap Column
-object_rendering.py,generate_metric_val_perc_pivot_heatmap,numerator,str,Column Name of value to be Used in Primary Heat Map
-object_rendering.py,generate_metric_val_perc_pivot_heatmap,denominator,,
-object_rendering.py,generate_metric_val_perc_pivot_heatmap,leading_text,str,HTML Formatted text to proceed Visualization
-object_rendering.py,generate_metric_val_perc_pivot_heatmap,trailing_text,str,HTML Formatted text to follow Visualization
 object_rendering.py,visualize_dataframe_in_notebook,df,dataframe,Any DataFrame
 object_rendering.py,visualize_dataframe_in_notebook,show_as_int,list,"List of Columns which are to be displayed as format :,.0f"
 object_rendering.py,visualize_dataframe_in_notebook,show_as_number,list,"List of Columns which are to be displayed as format :,.2f"
@@ -497,12 +564,6 @@ object_rendering.py,visualize_dataframe_in_notebook,show_as_percentage,list,List
 object_rendering.py,visualize_dataframe_in_notebook,normalize_percentage,binary,"Optional Argument to multiple Percentage Column by 100, to take ensure percentages display consistent visually."
 object_rendering.py,visualize_dataframe_in_notebook,return_value,,
 object_rendering.py,visualize_dataframe_in_notebook,hide_index,,
-object_rendering.py,visualize_overtime_change,pivot_df,,
-object_rendering.py,visualize_overtime_change,decimals,,
-object_rendering.py,visualize_overtime_change,cmap,,
-object_rendering.py,visualize_overtime_change,calculation,,
-object_rendering.py,visualize_overtime_change,return_value,,
-object_rendering.py,visualize_overtime_change,hide_index,,
 object_rendering.py,visualize_dataframe_by_row,df,,
 object_rendering.py,visualize_dataframe_by_row,show_as_int,,
 object_rendering.py,visualize_dataframe_by_row,show_as_number,,
