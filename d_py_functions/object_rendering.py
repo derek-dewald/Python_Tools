@@ -22,6 +22,9 @@ from docx.oxml import OxmlElement
 from docx.oxml.ns import qn
 import textwrap
 
+
+from objects_manual import COMMON_TABLE_STYLE
+
 def txt_to_python(file_name,encoding="utf-8"):
 
     

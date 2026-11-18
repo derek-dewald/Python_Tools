@@ -498,3 +498,36 @@ Before finalizing any image, verify:
 
 """
 
+COMMON_TABLE_STYLE = [
+    {
+        'selector': 'th',
+        'props': [
+            ('background-color', '#003366'),
+            ('color', 'white'),
+            ('font-weight', 'bold'),
+            ('text-align', 'center'),
+            ('font-size', '10pt'),
+            ('padding', '2px'),
+            ('border', '1px solid #D3D3D3')
+        ]
+    },
+    {
+        'selector': 'td',
+        'props': [
+            ('text-align', 'center'),
+            ('font-size', '10pt'),
+            ('padding', '2px'),
+            ('border', '1px solid #D3D3D3')
+        ]
+    },
+    {
+        'selector': '.row_heading',
+        'props': [
+            ('font-size', '10pt'),
+            ('min-width', '250px'),
+            ('max-width', '250px'),
+            ('padding', '2px'),
+            ('border', '1px solid #D3D3D3')
+        ]
+    }
+]

@@ -11,6 +11,9 @@ from IPython.display import Markdown,display
 from feature_engineering import binary_complex_equivalency
 from object_rendering import visualize_dataframe_in_notebook
 
+
+from feature_engineering import create_segment_range
+
 def df_compare(df,df1,primary_key_list=[]):
     """
     Definition:
@@ -102,12 +105,12 @@ def df_compare(df,df1,primary_key_list=[]):
     return pd.DataFrame()
 
 
-def df_column_comparison(
+def df_single_column_comparison(
     df,
     column_name,
     primary_key,
     column_name1=None,
-    secondary_filter=None,
+    secondary_filter_list=None,
     column_distinction='_',
     bracketing=None
 ):
@@ -120,7 +123,7 @@ def df_column_comparison(
         column_name (str): Primary column to compare.
         primary_key (str): Reference Column (used when presenting Account DF).
         column_name1 (str):Comparison column. Defaults to f"{column_name}{column_distinction}".
-        secondary_filter (str, optional): Optional column used to segment summary results.
+        secondary_filter_list (list, optional): Optional column used to segment summary results.
         column_distinction (str): Suffix used to identify the comparison column.
         bracketing (list): Breakpoints used to categorize numeric differences. Defaults to [-10000, -1000, -100, -1,0,1, 100, 1000, 10000]
 
@@ -129,15 +132,16 @@ def df_column_comparison(
     Date Created:
         21-Aug-25
     Date Last Modified:
-        11-Nov-26
+        18-Nov-26
     Process:
         TBD
     Categorization:
         TBD
     Usage:
-        a=ColumnDQComparison(df=activity_df[['MEMBERNBR','RENT_M']],column_name='RENT_M',primary_key='MEMBERNBR',column_name1='RENT_M1',)
+        a=df_single_column_comparison(final_df,'ANNUAL_INCOME','MEMBERNBR')
     Notes:
-        None
+        Updated, to have Primary Key and Secondary Filter be Lists. 
+        
     Required Functions:
         None
 
@@ -153,10 +157,13 @@ def df_column_comparison(
     # Build working dataframe
     # --------------------------------------------------
 
-    columns = [primary_key]
-
-    if secondary_filter:
-        columns.append(secondary_filter)
+    if isinstance(primary_key, str):
+        columns = [primary_key]
+    else:
+        columns = primary_key
+        
+    if secondary_filter_list:
+        columns.extend(secondary_filter_list)
 
     columns.extend([column_name, column_name1])
 
@@ -207,8 +214,8 @@ def df_column_comparison(
 
     group_columns = ['COLUMN_NAME', 'DF', 'DF1']
 
-    if secondary_filter:
-        group_columns.insert(0, secondary_filter)
+    if secondary_filter_list:
+        group_columns = secondary_filter_list + group_columns
 
     groupby_df = (
         temp_df1
@@ -246,11 +253,11 @@ def df_column_comparison(
             'Mean Difference': data['DIFFERENCE'].mean()
         })
 
-    if secondary_filter:
+    if secondary_filter_list:
 
         summary_df = (
             temp_df
-            .groupby(secondary_filter, dropna=False)
+            .groupby(secondary_filter_list, dropna=False)
             .apply(create_summary)
             .reset_index()
         )
@@ -276,3 +283,86 @@ def df_column_comparison(
         'account_df': temp_df,
         'groupby_df': groupby_df
     }
+
+
+
+def df_column_comparison(
+    df,
+    primary_key_list,
+    secondary_filter_list=None,
+    column_distinction='_',
+    bracketing=None
+):
+    
+    '''
+    Definition:
+        Function which applies df_single_column_comparison to a Dataframe automatically, by searching for columns which are relevant and then applying.
+        
+    
+    Parameters:
+        df(df):Dataframe.
+        primary_key (str): Reference Column (used when presenting Account DF).
+        column_name1 (str):Comparison column. Defaults to f"{column_name}{column_distinction}".
+        secondary_filter_list (list, optional): Optional column used to segment summary results.
+        column_distinction (str): Suffix used to identify the comparison column.
+        bracketing (list): Breakpoints used to categorize numeric differences. Defaults to [-10000, -1000, -100, -1,0,1, 100, 1000, 10000]
+
+    Returns:
+        dict
+    Date Created:
+        18-Nov-26
+    Date Last Modified:
+        18-Nov-26
+    Process:
+        TBD
+    Categorization:
+        TBD
+    Usage:
+        a=df_column_comparison(final_df,'MEMBERNBR')
+    Notes:
+        Updated, to have Primary Key and Secondary Filter be Lists. 
+    Required Functions:
+        display
+        Markdown
+        visualize_dataframe_in_notebook
+        df_single_column_comparison
+        
+        
+    '''
+
+    columns = [x for x in df.columns if x not in primary_key_list]
+
+    col =  [x for x in columns if not x.endswith('_')]
+    col1 = [x for x in columns if x.endswith('_')]
+    col2 = [x[:-1] for x in col1]
+
+    test_list = [x for x in col if x in col2]
+
+    final_dict = {
+        'summary_df':pd.DataFrame(),
+        'account_df':pd.DataFrame(),
+        'groupby_df':pd.DataFrame()   
+    }
+
+    for column in test_list:
+        temp_dict = df_single_column_comparison(df,column,primary_key_list,secondary_filter_list)
+
+        for item in ['summary_df','account_df','groupby_df']:
+            final_dict[item] = pd.concat([
+                final_dict[item],
+                temp_dict[item]
+            ])
+    display(Markdown('Summary Dataframe'))
+    visualize_dataframe_in_notebook(final_dict['summary_df'],
+                                    show_as_int=['Total Combined Records','Values Equal','Values Not Equal','Total Difference','Null Records DF','Null Records DF1'],
+                                    show_as_percentage=['Percent Values Equal'],
+                                    show_as_number=['Mean Difference']
+                                   )
+    display(Markdown('Account Record Dataframe (Deduplicated on Column Name)'))
+    visualize_dataframe_in_notebook(final_dict['account_df'].drop_duplicates('COLUMN_NAME'),
+                                   show_as_number=['DIFFERENCE'])
+
+    display(Markdown('Group By Dataframe (Deduplicated on Column Name)'))
+    visualize_dataframe_in_notebook(final_dict['groupby_df'].drop_duplicates('COLUMN_NAME'))
+
+    return final_dict

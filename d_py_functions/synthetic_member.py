@@ -332,6 +332,9 @@ def distribute_member_debt(df, market_interest_rates,rng, concentration=15):
        payments=300
     )
     
+    df['MINIMUM_INTEREST_PMT'] = df['TOTAL_DEBT']*df['EAR']*1/12
+    df['PRINCIPAL'] = df['MONTHLY_DEBT_PAYMENT']-df['MINIMUM_INTEREST_PMT']
+    
     return df
 
 def car_ownership(df,car_ownership_probability,rng):
@@ -814,6 +817,16 @@ def generate_member_behaviour_profiles(df, random_state=42):
     return profile[behaviour_columns]
 
 
+def assign_renewal_date(df,column,rng,new_column_name='RENEWAL_DATE'):
+
+    month_ends = pd.date_range(start=pd.Timestamp.today(),periods=60,freq='ME')
+    month_ends = [x.date() for x in month_ends]
+    weights = np.array([2] * 30 + [1] * 30)
+    probabilities = weights / weights.sum()
+    selected_month = rng.choice(month_ends, p=probabilities,size=len(df))
+
+    df[new_column_name] = np.where(df[column]>0,selected_month,pd.NaT)
+
 def create_mbr_base_df(
     geography_dict,   
     age_distribution,
@@ -938,7 +951,7 @@ def create_mbr_base_df(
             p=[.1,.1,.2,.1,.1,.1,.1,.1,.1]
         )*(df['MORTGAGE_DEBT']+df['LOC_DEBT']+df['PERSONAL_LOAN_DEBT'])
                           )
-        
+    assign_renewal_date(df,'MORTGAGE_DEBT',rng=rng)
     df = generate_mbr_expenses(df,rng=rng,expenses_dict=expenses_dict)
         
     df['MONTHLY_CF_AFTER_DEBT'] = (df['HOUSEHOLD_INCOME']*.7)/12 - df['MONTHLY_DEBT_PAYMENT'] # HOUSEHOLD. Less Tax.
@@ -948,7 +961,6 @@ def create_mbr_base_df(
     df = generate_kids_count(df,seed) 
     mbr_profile = generate_member_behaviour_profiles(df)
 
-
     activity_cols = [
         'MEMBERNBR','RENT_M', 'HOME_INSURNACE_A', 'PROPERTY_TAX_A','HOME_MAINTAINENCE_M', 'UTILITIES_M', 'GROCERIES_M', 'PHONE_INTERNET_M','DINING_OUT_M', 
         'ENTERTAINMENT_M', 'GAS_M','CAR_INSURANCE_M','OTHER_M', 'TOTAL_NON_LOAN_MONTHLY_EXPENSES', 'MONTHLY_CF_AFTER_DEBT','MONTHLY_CF','MONTHLY_DEBT_PAYMENT'
@@ -956,10 +968,13 @@ def create_mbr_base_df(
     
     activity_df = df[activity_cols]
     member_df = df.drop([x for x in activity_cols if x not in ['MEMBERNBR']],axis=1)
-                                                                 
-    return member_df,activity_df,mbr_profile
 
-member_df,activity_df,mbr_profile = create_mbr_base_df(
+    final_df = member_df.merge(activity_df,on='MEMBERNBR',how='left').merge(mbr_profile,on='MEMBERNBR',how='left')
+    final_df['SNAPSHOTDATE'] = pd.date_range(start=pd.Timestamp.today(),periods=1,freq='ME')[0].date()
+                                                             
+    return final_df
+
+df = create_mbr_base_df(
     age_distribution=age_dict,
     geography_dict=geography_dict,
     branches=branches,

@@ -12,9 +12,9 @@ feature_engineering.py,create_segment_range,column_name,,
 feature_engineering.py,create_segment_range,segment_range,,
 feature_engineering.py,create_segment_range,new_column_name,,
 feature_engineering.py,create_segment_range,print_,,
-feature_engineering.py,lognormal_distribution_generator,base,,
-feature_engineering.py,lognormal_distribution_generator,std_dev,,
-feature_engineering.py,lognormal_distribution_generator,rng,,
+feature_engineering.py,lognormal_distribution_generator,base,list,List of Numbers to be applied to
+feature_engineering.py,lognormal_distribution_generator,std_dev,float,Standard Dev to be used
+feature_engineering.py,lognormal_distribution_generator,rng,rng,"Random Number Genarator Object to be used. Default will create one with a seed of 42, can use existing to insure consistency and replicatability."
 feature_engineering.py,consolidate_relationship_grouper,df,df,DataFrame containing member relationship pairs.
 feature_engineering.py,consolidate_relationship_grouper,parent_col,str,Column identifying the primary member.
 feature_engineering.py,consolidate_relationship_grouper,child_col,str,Column identifying the related member.
@@ -84,10 +84,6 @@ utility_functions.py,net_present_value_calculator,payment,,
 utility_functions.py,net_present_value_calculator,total_amount,,
 utility_functions.py,net_present_value_calculator,payments,,
 utility_functions.py,net_present_value_calculator,annual_payments,,
-utility_functions.py,preview_images_in_n_by_n_matrix,folder_location,str,Directory containing PNG images.
-utility_functions.py,preview_images_in_n_by_n_matrix,columns,int,Number of columns in the gallery.
-utility_functions.py,preview_images_in_n_by_n_matrix,image_size,int,Size of each gallery cell in inches.
-utility_functions.py,preview_images_in_n_by_n_matrix,show_filename,bool,Whether to display filenames beneath images.
 df_column_engineering.py,standardize_column_text,df,,
 df_column_engineering.py,standardize_column_text,column_name,str,Column Name of DF column to update.
 df_column_engineering.py,standardize_column_text,new_column_name,str,"New Column Name of Updated Field. If Blank, then it replaces exists column"
@@ -149,6 +145,10 @@ synthetic_member.py,generate_kids_count,df,,
 synthetic_member.py,generate_kids_count,random_state,,
 synthetic_member.py,generate_member_behaviour_profiles,df,,
 synthetic_member.py,generate_member_behaviour_profiles,random_state,,
+synthetic_member.py,assign_renewal_date,df,,
+synthetic_member.py,assign_renewal_date,column,,
+synthetic_member.py,assign_renewal_date,rng,,
+synthetic_member.py,assign_renewal_date,new_column_name,,
 synthetic_member.py,create_mbr_base_df,geography_dict,,
 synthetic_member.py,create_mbr_base_df,age_distribution,,
 synthetic_member.py,create_mbr_base_df,branches,,
@@ -191,11 +191,16 @@ df_creation_maint.py,dict_to_dataframe,data,,
 data_validation.py,df_compare,df,,
 data_validation.py,df_compare,df1,,
 data_validation.py,df_compare,primary_key_list,list,List of Elements to Merge DataFrame on. If left blank it will only test column structure of Dataframes.
+data_validation.py,df_single_column_comparison,df,df,Dataframe.
+data_validation.py,df_single_column_comparison,column_name,str,Primary column to compare.
+data_validation.py,df_single_column_comparison,primary_key,str,Reference Column (used when presenting Account DF).
+data_validation.py,df_single_column_comparison,column_name1,str,"Comparison column. Defaults to f""{column_name}{column_distinction}""."
+data_validation.py,df_single_column_comparison,secondary_filter_list,"list, optional",Optional column used to segment summary results.
+data_validation.py,df_single_column_comparison,column_distinction,str,Suffix used to identify the comparison column.
+data_validation.py,df_single_column_comparison,bracketing,list,"Breakpoints used to categorize numeric differences. Defaults to [-10000, -1000, -100, -1,0,1, 100, 1000, 10000]"
 data_validation.py,df_column_comparison,df,df,Dataframe.
-data_validation.py,df_column_comparison,column_name,str,Primary column to compare.
-data_validation.py,df_column_comparison,primary_key,str,Reference Column (used when presenting Account DF).
-data_validation.py,df_column_comparison,column_name1,str,"Comparison column. Defaults to f""{column_name}{column_distinction}""."
-data_validation.py,df_column_comparison,secondary_filter,"str, optional",Optional column used to segment summary results.
+data_validation.py,df_column_comparison,primary_key_list,,
+data_validation.py,df_column_comparison,secondary_filter_list,"list, optional",Optional column used to segment summary results.
 data_validation.py,df_column_comparison,column_distinction,str,Suffix used to identify the comparison column.
 data_validation.py,df_column_comparison,bracketing,list,"Breakpoints used to categorize numeric differences. Defaults to [-10000, -1000, -100, -1,0,1, 100, 1000, 10000]"
 visualizations.py,set_axis_number_format,ax,,

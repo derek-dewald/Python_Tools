@@ -1,7 +1,7 @@
 Function,Definition,Parameters,Returns,Date Created,Date Last Modified,Process,Categorization,Usage,Notes,Required Functions,Folder
 binary_complex_equivalency,Function which tests the Equivalence of 2 Columns in a dataframe to determine whether they are Equal or Not.,"['df', 'column_name', 'column_name1', 'new_column_name', 'eq', 'ne', 'tolerance', 'include_difference']",df,28-Aug-26,28-Aug-26,TBD,TBD,"binary_complex_equivalency(df,'SCORE1','SCORE2')",None,None,feature_engineering.py
 create_segment_range,,"['df', 'column_name', 'segment_range', 'new_column_name', 'print_']",,,,,,,,,feature_engineering.py
-lognormal_distribution_generator,,"['base', 'std_dev', 'rng']",,,,,,,,,feature_engineering.py
+lognormal_distribution_generator,"Random number generator that produces values according to a specific distribution, rather than distributing them uniformly.","['base', 'std_dev', 'rng']",TBD,11-Nov-26,11-Nov-26,TBD,TBD,TBD,None,None,feature_engineering.py
 consolidate_relationship_grouper,"Identifies groups of interconnected members based on direct and indirect relationships using the Union-Find algorithm. Members are assigned to the same group when a relationship exists between them, either directly or through other members.","['df', 'parent_col', 'child_col']",df,,,TBD,TBD,"identify_connected_member_groups(df,parent,child)","Relationships are treated as bidirectional.
 Indirect relationships are included (transitive grouping).
 Duplicate and circular relationships are handled.
@@ -48,7 +48,6 @@ InspectFunction,,['function_name'],,,,,,,,,utility_functions.py
 extract_tables_from_db,,"['db_name', 'table_dictionary_source', 'include_columns', 'exclude_schemas']",,,,,,,,,utility_functions.py
 gpt_question,,['list_'],,,,,,,,,utility_functions.py
 net_present_value_calculator,,"['annual_interest', 'payment', 'total_amount', 'payments', 'annual_payments']",,,,,,,,,utility_functions.py
-preview_images_in_n_by_n_matrix,Display all PNG images in a directory as a gallery.,"['folder_location', 'columns', 'image_size', 'show_filename']",Rendered,04-Nov-26,04-Nov-26,TBD,TBD,TBD,None,None,utility_functions.py
 standardize_column_text,"Function which is used to Standardize Text, specifically it replaces anything that is [^\w\s] - anything that is not a word character (\w) and not whitespace (\s) or [\d] is a digit (0–9), and lower cases it.","['df', 'column_name', 'new_column_name']",TBD,09-Sep-26,09-Sep-26,TBD,TBD,TBD,None,None,df_column_engineering.py
 word_counts_from_column,,"['df', 'column_name', 'lower', 'pattern', 'min_len', 'dropna']",pd.Series. Word counts indexed by token (sorted desc). date_created:01-Feb-26 date_last_modified: 01-Feb-26 classification:TBD sub_classification:TBD,,,,,Example Function Call,,,df_column_engineering.py
 set_manual_column_order,,"['df', 'column_name', 'column_order']",,,,,,,,,df_column_engineering.py
@@ -76,6 +75,7 @@ generate_member_financials,,"['df', 'income_distribution', 'zero_debt_probabilit
 generate_mbr_expenses,,"['df', 'rng', 'expenses_dict']",,,,,,,,,synthetic_member.py
 generate_kids_count,,"['df', 'random_state']",,,,,,,,,synthetic_member.py
 generate_member_behaviour_profiles,,"['df', 'random_state']",,,,,,,,,synthetic_member.py
+assign_renewal_date,,"['df', 'column', 'rng', 'new_column_name']",,,,,,,,,synthetic_member.py
 create_mbr_base_df,,"['geography_dict', 'age_distribution', 'branches', 'duration_dict', 'entity_map', 'income_distribution', 'geography_multiplier', 'seed', 'members']",,,,,,,,,synthetic_member.py
 create_knowledge_base,"Process Utilized to create Knowledge Base.
 Knowledge base has had multiple iterations, currently it is Definitions, with Process Steps Merged back into Process to Make a completely and simply filterable file","['df', 'columns', 'file_name']",knowledge_base.xlsx,02-Jul-26,7-Oct-26,TBD,TBD,create_knowledge_base(),"22-Jul - Overhauled merge. Attempted to streamline, simplify and reduce duplication. Increase Visability.
@@ -115,7 +115,11 @@ visualize_dataframe_in_notebook
 display
 markdown
 pandas",data_validation.py
-df_column_comparison,"Compare 2 Columns in a Dataframe. Excellent for a quick understand of Time Series Data, or DQ analysis when attempting to validate lack (or presence of change).","['df', 'column_name', 'primary_key', 'column_name1', 'secondary_filter', 'column_distinction', 'bracketing']",dict,21-Aug-25,11-Nov-26,TBD,TBD,"a=ColumnDQComparison(df=activity_df[['MEMBERNBR','RENT_M']],column_name='RENT_M',primary_key='MEMBERNBR',column_name1='RENT_M1',)",None,None,data_validation.py
+df_single_column_comparison,"Compare 2 Columns in a Dataframe. Excellent for a quick understand of Time Series Data, or DQ analysis when attempting to validate lack (or presence of change).","['df', 'column_name', 'primary_key', 'column_name1', 'secondary_filter_list', 'column_distinction', 'bracketing']",dict,21-Aug-25,18-Nov-26,TBD,TBD,"a=df_single_column_comparison(final_df,'ANNUAL_INCOME','MEMBERNBR')","Updated, to have Primary Key and Secondary Filter be Lists.",None,data_validation.py
+df_column_comparison,"Function which applies df_single_column_comparison to a Dataframe automatically, by searching for columns which are relevant and then applying.","['df', 'primary_key_list', 'secondary_filter_list', 'column_distinction', 'bracketing']",dict,18-Nov-26,18-Nov-26,TBD,TBD,"a=df_column_comparison(final_df,'MEMBERNBR')","Updated, to have Primary Key and Secondary Filter be Lists.","display
+Markdown
+visualize_dataframe_in_notebook
+df_single_column_comparison",data_validation.py
 set_report_style,,[],,,,,,,,,visualizations.py
 set_axis_number_format,"Standardizes numeric axis labels using automatic
 magnitude detection (K, M, B) or explicit formatting.","['ax', 'values', 'axis', 'format_type', 'decimals']",formatter: Matplotlib FuncFormatter.,,,,,,,"numpy

@@ -117,21 +117,30 @@ def create_segment_range(
 
 def lognormal_distribution_generator(base, std_dev=0.30, rng=None):
     """
-    Takes a Number 
-
-    Parameters
-    ----------
-    base : float or array-like
-        Expected expense (arithmetic mean).
-    std_dev : float
-        Standard deviation as a proportion of the mean.
-    rng : numpy.random.Generator
-        Random number generator.
-
-    Returns
-    -------
-    float or ndarray
-        Generated expense amounts.
+    
+    Definition:
+        Random number generator that produces values according to a specific distribution, rather than distributing them uniformly. 
+    Parameters:
+        base(list): List of Numbers to be applied to
+        std_dev(float): Standard Dev to be used
+        rng(rng): Random Number Genarator Object to be used. Default will create one with a seed of 42, can use existing to insure consistency and replicatability.
+    Returns:
+        TBD
+    Date Created:
+        11-Nov-26
+    Date Last Modified:
+        11-Nov-26
+    Process:
+        TBD
+    Categorization:
+        TBD
+    Usage:
+        TBD
+    Notes:
+        None
+    Required Functions:
+        None
+    
     """
     if rng is None:
         rng = np.random.default_rng(42)
