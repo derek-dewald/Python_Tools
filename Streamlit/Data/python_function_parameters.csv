@@ -33,7 +33,6 @@ feature_engineering.py,clip_distribution,column_name,str,Name of the numeric col
 feature_engineering.py,clip_distribution,new_column_name,str,Name of the resulting column. Defaults to the original column name with '_CLIPPED'.
 feature_engineering.py,clip_distribution,head,float,Upper boundary (ceiling). Values exceeding this threshold are replaced with the threshold. Defaults to None.
 feature_engineering.py,clip_distribution,tail,float,Lower boundary (floor). Values below this threshold are replaced with the threshold. Defaults to None.
-eda_functions.py,review_dataset_lvl0,df,dataframe,Dataset.
 eda_functions.py,review_dataset_lvl1,df,dataframe,Dataset.
 eda_functions.py,review_dataset_lvl1,top_n,int,Number of Variables to include the Top Observation in right most column of Dataset.
 eda_functions.py,review_dataset_lvl1,min_top_count,int,Minimum Number of records which must be present in dataset in order to include in output.
@@ -579,6 +578,46 @@ object_rendering.py,visualize_dataframe_by_row,return_value,,
 external_connections.py,extract_py_folder_from_git_repo,folder_git_url,str,Link to Git Repo
 external_connections.py,extract_py_folder_from_git_repo,output_location,str,"Location to Export Files. If Blank, then returns to local directory where file is read from."
 external_connections.py,extract_py_folder_from_git_repo,file_extension,str,Filter Applied to limit types of file
+data_preparation.py,review_dataset_lvl0,df,dataframe,Dataset.
+data_preparation.py,review_dataset_lvl1,df,dataframe,Dataset.
+data_preparation.py,review_dataset_lvl1,top_n,int,Number of Variables to include the Top Observation in right most column of Dataset.
+data_preparation.py,review_dataset_lvl1,min_top_count,int,Minimum Number of records which must be present in dataset in order to include in output.
+data_preparation.py,plot_categorical_bar_frequency_distribution,df,,
+data_preparation.py,plot_categorical_bar_frequency_distribution,column,,
+data_preparation.py,plot_categorical_bar_frequency_distribution,top_n,,
+data_preparation.py,plot_categorical_bar_frequency_distribution,ax,,
+data_preparation.py,plot_numeric_histogram,df,,
+data_preparation.py,plot_numeric_histogram,column,,
+data_preparation.py,plot_numeric_histogram,bins,,
+data_preparation.py,plot_numeric_histogram,ax,,
+data_preparation.py,plot_visualization_grid,visualizations,,
+data_preparation.py,plot_visualization_grid,ncols,,
+data_preparation.py,plot_visualization_grid,figsize,,
+data_preparation.py,classify_distribution,skew,,
+data_preparation.py,recommend_log_scale,s,,
+data_preparation.py,recommend_log_scale,threshold,,
+data_preparation.py,review_dataset_lvl1,df,dataframe,Dataset.
+data_preparation.py,review_dataset_lvl1,top_n,int,Number of top observations to include.
+data_preparation.py,review_dataset_lvl1,min_top_count,int,Minimum frequency required for top observations.
+data_preparation.py,plot_categorical_bar_frequency_distribution,df,,
+data_preparation.py,plot_categorical_bar_frequency_distribution,column,,
+data_preparation.py,plot_categorical_bar_frequency_distribution,top_n,,
+data_preparation.py,plot_categorical_bar_frequency_distribution,ax,,
+data_preparation.py,plot_numeric_histogram,df,,
+data_preparation.py,plot_numeric_histogram,column,,
+data_preparation.py,plot_numeric_histogram,bins,,
+data_preparation.py,plot_numeric_histogram,ax,,
+data_preparation.py,plot_numeric_histogram,log_scale,,
+data_preparation.py,plot_visualization_grid_,visualizations,,
+data_preparation.py,plot_visualization_grid_,ncols,,
+data_preparation.py,plot_visualization_grid_,figsize,,
+data_preparation.py,plot_visualization_grid,visualizations,,
+data_preparation.py,plot_visualization_grid,ncols,,
+data_preparation.py,plot_visualization_grid,figsize,,
+data_preparation.py,plot_visualization_grid,max_rows,,
+data_preparation.py,review_dataset_lvl2,df,,
+data_preparation.py,review_dataset_lvl2,exclude_columns,,
+data_preparation.py,review_dataset_lvl2,top_n,,
 text_parsing.py,FunctionToSTR,func,function,Python Function
 text_parsing.py,compare_function,func1,function,Python Function
 text_parsing.py,compare_function,func2,function,Python Function

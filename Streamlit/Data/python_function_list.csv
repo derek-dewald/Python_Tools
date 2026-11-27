@@ -12,10 +12,6 @@ df_column_map_text_patterns,"Function which text mines a dataframe column and al
 numpy",feature_engineering.py
 log_transformation,"Applies a logarithmic transformation to a numeric column, reducing the influence of extreme values while preserving relative differences between observations.","['df', 'column_name', 'new_column_name', 'include_negative']",None,13-Nov-26,13-Nov-26,TBD,TBD,"og_transformation(df,column_name='TRANSACTION_VALUE',include_negative=True)",TBD,numpy,feature_engineering.py
 clip_distribution,"Applies optional upper and lower boundaries to a numeric column, limiting extreme values without removing records. Values outside the specified boundaries are replaced with the nearest boundary value.","['df', 'column_name', 'new_column_name', 'head', 'tail']",None,13-Nov-26,13-Nov-26,TBD,TBD,"clip_distribution(df=member_df,column_name='TRANSACTION_VALUE',head=10000,tail=0)",TBD,pandas,feature_engineering.py
-review_dataset_lvl0,"Function used to provide a level 0 assessment of the data to understand a mimimum state of the dataset.
-Used as Step 1 in Exploratory Data Analysis.",['df'],rendered_object,09-Oct-26,03-Nov-26,TBD,TBD,test = review_dataset_lvl0(df),None,"visualize_dataframe_in_notebook
-display
-Markdown",eda_functions.py
 review_dataset_lvl1,"Function used to provide a level 1 assessment of the data to understand a mimimum state of the dataset.
 Used as Step 1 in Exploratory Data Analysis.","['df', 'top_n', 'min_top_count']","dict, df",09-Oct-26,09-Oct-26,TBD,TBD,test = review_dataset_lvl1(df),None,"visualize_dataframe_in_notebook
 display
@@ -301,6 +297,38 @@ visualize_dataframe_by_row,,"['df', 'show_as_int', 'show_as_number', 'show_as_cu
 extract_py_folder_from_git_repo,Function Used to Extract Files from Git Hub Manually. Where a direct Git Connection can not be utilzied.,"['folder_git_url', 'output_location', 'file_extension']",TXT Files,05-Oct-26,05-Oct-26,TBD,TBD,"extract_py_folder_from_git_repo(
 folder_git_url='https://api.github.com/repos/derek-dewald/Python_Tools/contents/d_py_functions',
 output_location='/Users/derekdewald/Documents/Python/Github_Repo/JupyterNotebooks/test/')",None,None,external_connections.py
+review_dataset_lvl0,"Function used to provide a level 0 assessment of the data to understand a mimimum state of the dataset.
+Used as Step 1 in Exploratory Data Analysis.",['df'],rendered_object,09-Oct-26,03-Nov-26,TBD,TBD,test = review_dataset_lvl0(df),None,"visualize_dataframe_in_notebook
+display
+Markdown",data_preparation.py
+review_dataset_lvl1,"Function used to provide a level 1 assessment of the data to understand a mimimum state of the dataset.
+Used as Step 1 in Exploratory Data Analysis.","['df', 'top_n', 'min_top_count']","dict, df",09-Oct-26,09-Oct-26,TBD,TBD,test = review_dataset_lvl1(df),None,"visualize_dataframe_in_notebook
+display
+Markdown",data_preparation.py
+plot_categorical_bar_frequency_distribution,,"['df', 'column', 'top_n', 'ax']",,,,,,,,,data_preparation.py
+plot_numeric_histogram,,"['df', 'column', 'bins', 'ax']",,,,,,,,,data_preparation.py
+plot_visualization_grid,,"['visualizations', 'ncols', 'figsize']",,,,,,,,,data_preparation.py
+classify_distribution,,['skew'],,,,,,,,,data_preparation.py
+recommend_log_scale,,"['s', 'threshold']",,,,,,,,,data_preparation.py
+review_dataset_lvl1,"Function used to provide a Level 1 assessment of
+the dataset through descriptive statistics,
+distribution analysis and visualizations.","['df', 'top_n', 'min_top_count']",dict: Numerical Columns Text Columns,,,"1. Calculate descriptive statistics.
+2. Classify numeric distribution shape.
+3. Recommend logarithmic visualization.
+4. Display numeric and categorical summaries.
+5. Plot standard distributions (N x 3).
+6. Plot linear/log comparisons (N x 2).
+7. Plot categorical distributions (N x 3).",,,,"visualize_dataframe_in_notebook
+classify_distribution
+recommend_log_scale
+plot_numeric_histogram
+plot_categorical_bar_frequency_distribution
+plot_visualization_grid",data_preparation.py
+plot_categorical_bar_frequency_distribution,,"['df', 'column', 'top_n', 'ax']",,,,,,,,,data_preparation.py
+plot_numeric_histogram,,"['df', 'column', 'bins', 'ax', 'log_scale']",,,,,,,,,data_preparation.py
+plot_visualization_grid_,,"['visualizations', 'ncols', 'figsize']",,,,,,,,,data_preparation.py
+plot_visualization_grid,,"['visualizations', 'ncols', 'figsize', 'max_rows']",,,,,,,,,data_preparation.py
+review_dataset_lvl2,,"['df', 'exclude_columns', 'top_n']",,,,,,,,,data_preparation.py
 FunctionToSTR,,['func'],list date_created:17-Dec-25 date_last_modified: 17-Dec-25 classification:TBD sub_classification:TBD,,,,,"from data_d_strings import template_doc_string_print
 FunctionToSTR(template_doc_string_print)",,,text_parsing.py
 compare_function,,"['func1', 'func2', 'additional_records', 'strip_docstring']",Object Type date_created:17-Dec-25 date_last_modified: 17-Dec-25 classification:TBD sub_classification:TBD,,,,,Example Function Call,,,text_parsing.py
